@@ -1,0 +1,169 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.appcompat.widget.LinearLayoutCompat xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main_linear_layout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="0.5"
+        android:background="@color/menu_color">
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+            android:fontFamily="@font/noto_sans_t_c_medium"
+            android:text="@string/activity_title"
+            android:textColor="@color/white"
+            android:textSize="25sp" />
+
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/personImage"
+            android:layout_width="@dimen/sizeOfPicture"
+            android:layout_height="@dimen/sizeOfPicture"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="50sp"
+            android:src="@drawable/avatar" />
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:layout_width="@dimen/sizeOfPicture"
+            android:layout_height="@dimen/sizeOfPicture"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="50sp"
+            android:src="@drawable/circle" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/personName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/personImage"
+            android:layout_centerHorizontal="true"
+            android:layout_margin="1sp"
+            android:fontFamily="@font/noto_sans_t_c_medium"
+            android:gravity="center"
+            android:text="@string/image_text"
+            android:textColor="@color/white"
+            android:textSize="20sp" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/personProfession"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/personName"
+            android:layout_alignStart="@+id/personName"
+            android:layout_alignEnd="@+id/personName"
+            android:layout_marginTop="5sp"
+            android:fontFamily="@font/noto_sans_t_c_medium"
+            android:gravity="center"
+            android:text="@string/name_of_profession"
+            android:textColor="@color/gray"
+            android:textSize="15sp" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/residenceAddressOfPerson"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/personProfession"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="8sp"
+            android:fontFamily="@font/noto_sans_t_c_medium"
+            android:gravity="center"
+            android:text="@string/residence_address"
+            android:textColor="@color/gray"
+            android:textSize="15sp" />
+
+    </RelativeLayout>
+
+    <RelativeLayout
+
+        android:id="@+id/main_bottom_relative_layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="0.5"
+        android:background="@color/white">
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/main_edit_profile_btn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:layout_margin="15dp"
+            android:background="@drawable/rounded_corner"
+            android:fontFamily="@font/noto_sans_t_c_medium"
+            android:padding="20dp"
+            android:text="@string/edit_profile"
+            android:textColor="@color/white" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/main_social_network_facebook"
+            style="@style/Widget.MaterialComponents.ExtendedFloatingActionButton"
+            android:layout_width="@dimen/size_of_circle_button"
+            android:layout_height="@dimen/size_of_circle_button"
+            android:layout_alignParentStart="true"
+            android:layout_marginLeft="@dimen/distanceFromBorder"
+            android:layout_marginTop="55dp"
+            android:layout_marginRight="@dimen/distanceFromBorder"
+            android:backgroundTint="@color/transparent_color"
+            android:fontFamily="@font/poppins_bold"
+            android:stateListAnimator="@null"
+            android:text="@string/facebook_logo"
+            android:textAllCaps="false"
+            android:textColor="@color/orange"
+            android:textSize="30sp"
+            app:cornerRadius="@dimen/corner_radius_of_circle_button"
+            app:strokeColor="@color/orange"
+            app:strokeWidth="@dimen/border_radius_of_circle_button" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/main_social_network_linkedin"
+            style="@style/Widget.MaterialComponents.ExtendedFloatingActionButton"
+            android:layout_width="@dimen/size_of_circle_button"
+            android:layout_height="@dimen/size_of_circle_button"
+            android:layout_centerHorizontal="true"
+            android:layout_marginLeft="@dimen/distanceFromBorder"
+            android:layout_marginTop="55dp"
+            android:layout_marginRight="@dimen/distanceFromBorder"
+            android:backgroundTint="@color/transparent_color"
+            android:fontFamily="@font/poppins_bold"
+            android:stateListAnimator="@null"
+            android:text="@string/linkedin_logo"
+            android:textAllCaps="false"
+            android:textColor="@color/orange"
+            android:textSize="30sp"
+            app:cornerRadius="@dimen/corner_radius_of_circle_button"
+            app:strokeColor="@color/orange"
+            app:strokeWidth="@dimen/border_radius_of_circle_button" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/main_social_network_vkontakte"
+            style="@style/Widget.MaterialComponents.ExtendedFloatingActionButton"
+            android:layout_width="@dimen/size_of_circle_button"
+            android:layout_height="@dimen/size_of_circle_button"
+            android:layout_alignParentEnd="true"
+            android:layout_marginLeft="@dimen/distanceFromBorder"
+            android:layout_marginTop="55dp"
+            android:layout_marginRight="@dimen/distanceFromBorder"
+            android:backgroundTint="@color/transparent_color"
+            android:fontFamily="@font/poppins_bold"
+            android:stateListAnimator="@null"
+            android:text="@string/vkontakte_logo"
+            android:textAllCaps="false"
+            android:textColor="@color/orange"
+            android:textSize="30sp"
+            app:cornerRadius="@dimen/corner_radius_of_circle_button"
+            app:strokeColor="@color/orange"
+            app:strokeWidth="@dimen/border_radius_of_circle_button" />
+
+
+    </RelativeLayout>
+
+
+</androidx.appcompat.widget.LinearLayoutCompat>

@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="size_of_circle_button">90dp</dimen>
+    <dimen name="corner_radius_of_circle_button">55dp</dimen>
+    <dimen name="border_radius_of_circle_button">3dp</dimen>
+    <dimen name="distanceFromBorder">25dp</dimen>
+    <dimen name="sizeOfPicture">130dp</dimen>
+</resources>

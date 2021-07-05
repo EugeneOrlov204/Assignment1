@@ -1,0 +1,11 @@
+<resources>
+    <string name="app_name">""</string>
+    <string name="edit_profile">EDIT PROFILE</string>
+    <string name="facebook_logo">f</string>
+    <string name="linkedin_logo">in</string>
+    <string name="vkontakte_logo">vk</string>
+    <string name="activity_title">Settings</string>
+    <string name="image_text">Lucile Alvarado</string>
+    <string name="name_of_profession">Graphic designer</string>
+    <string name="residence_address">5295 Gaylord Walks Apk. 110</string>
+</resources>
