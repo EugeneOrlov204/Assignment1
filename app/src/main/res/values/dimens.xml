@@ -1,8 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <dimen name="size_of_circle_button">90dp</dimen>
-    <dimen name="corner_radius_of_circle_button">55dp</dimen>
-    <dimen name="border_radius_of_circle_button">3dp</dimen>
-    <dimen name="distanceFromBorder">25dp</dimen>
-    <dimen name="sizeOfPicture">130dp</dimen>
+    <dimen name="size_of_circle_button_phone3">90dp</dimen>
+    <dimen name="corner_radius_of_circle_button_phone3">55dp</dimen>
+    <dimen name="border_radius_of_circle_button_phone3">3dp</dimen>
+    <dimen name="distanceFromBorder_phone3">35dp</dimen>
+    <dimen name="sizeOfPicture_phone3">110dp</dimen>
+    <dimen name="titleTextSize_phone3">25sp</dimen>
+    <dimen name="titleMarginTopSize_phone3">5dp</dimen>
+    <dimen name="imageTopMarginSize_phone3">50dp</dimen>
+    <dimen name="regularTextSize_phone3">20sp</dimen>
+    <dimen name="imageNameMarginSize_phone3">1dp</dimen>
+    <dimen name="descriptionTextSize_phone3">15sp</dimen>
+    <dimen name="professionMarginTopSize_phone3">5dp</dimen>
+    <dimen name="residenceAddressMarginTopSize_phone3">8dp</dimen>
+    <dimen name="socialNetworkBtnMarginTopSize_phone3">65dp</dimen>
+    <dimen name="socialNetworkBtnTextSize_phone3">25sp</dimen>
+    <dimen name="profileButtonMarginSize_phone3">15dp</dimen>
+    <dimen name="editBtnPaddingSize_phone3">20dp</dimen>
+    <dimen name="sizeOfTitleName_phone1">20sp</dimen>
+    <dimen name="textEmailAddressTextSize_phone1">15sp</dimen>
 </resources>

@@ -8,4 +8,11 @@
     <string name="image_text">Lucile Alvarado</string>
     <string name="name_of_profession">Graphic designer</string>
     <string name="residence_address">5295 Gaylord Walks Apk. 110</string>
+    <string name="titleName_phone1">Let\'s get acquainted</string>
+    <string name="description_phone1">Fill out the profile and go to the application!</string>
+    <string name="preEmailInput_phone1">Enter your email</string>
+    <string name="textOfPasswordTitle_phone1">Password</string>
+    <string name="textOfRegisterButton_phone1">REGISTER</string>
+    <string name="textOfCopyright_phone1">By clicking Register you agree to our Terms and Conditions</string>
+    <string name="textOfEmailAddress_phone1">Email</string>
 </resources>
