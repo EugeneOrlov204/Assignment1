@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+
+    android:id="@+id/constraintlayout_auth_container"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/steel_gray"
+    android:orientation="vertical">
+
+
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/textview_auth_title"
+        style="@style/regular_text"
+        android:layout_marginTop="@dimen/margintop_auth_title_133dp"
+        android:text="@string/auth_nameoftitle"
+        app:layout_constraintBottom_toTopOf="@+id/textview_auth_fillouttheprofile"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/textview_auth_fillouttheprofile"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/margintop_auth_password_8dp"
+        android:fontFamily="@font/open_sans"
+        android:text="@string/auth_fillouttheprofile"
+        android:textColor="@color/alabaster"
+        android:textSize="@dimen/textsize_auth_fillouttheprofile_12sp"
+        app:layout_constraintEnd_toEndOf="@+id/textview_auth_title"
+        app:layout_constraintStart_toStartOf="@+id/textview_auth_title"
+        app:layout_constraintTop_toBottomOf="@+id/textview_auth_title" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/textview_auth_emailtitle"
+        style="@style/description_text"
+        android:layout_marginStart="@dimen/marginstart_auth_emailtitle_16dp"
+        android:layout_marginTop="@dimen/margintop_auth_emailtitle_80dp"
+        android:text="@string/auth_emailtitle"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textview_auth_fillouttheprofile" />
+
+
+    <androidx.appcompat.widget.AppCompatEditText
+        android:id="@+id/edittext_auth_email"
+        style="@style/login_field"
+        android:layout_marginHorizontal="@dimen/marginhorizontal_auth_password_13dp"
+        android:layout_marginTop="@dimen/margintop_auth_password_8dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textview_auth_emailtitle" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/textview_auth_passwordtitle"
+        style="@style/description_text"
+        android:layout_marginHorizontal="@dimen/marginhorizontal_auth_passwordtitle_16dp"
+        android:layout_marginTop="@dimen/margintop_auth_passwordtitle_24dp"
+        android:text="@string/auth_passwordtitle"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/edittext_auth_email" />
+
+
+    <androidx.appcompat.widget.AppCompatEditText
+        android:id="@+id/edittext_auth_password"
+        style="@style/password_field"
+        android:layout_marginHorizontal="@dimen/marginhorizontal_auth_password_13dp"
+        android:layout_marginTop="@dimen/margintop_auth_password_8dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textview_auth_passwordtitle" />
+
+    <androidx.appcompat.widget.AppCompatCheckBox
+        android:id="@+id/checkbox_auth_rememberme"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/auth_text"
+        android:textColor="@color/alabaster"
+        android:fontFamily="@font/open_sans"
+        android:textSize="@dimen/checkbox_auth_rememberme_18sp"
+        android:buttonTint="@color/orange"
+        android:layout_marginTop="@dimen/margintop_auth_rememberme_16dp"
+        app:layout_constraintStart_toStartOf="@+id/edittext_auth_password"
+        app:layout_constraintTop_toBottomOf="@+id/edittext_auth_password" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/button_auth_register"
+        style="@style/profile_button"
+        android:layout_margin="@dimen/margin_auth_register_16dp"
+        android:background="@drawable/auth_registerbutton"
+        android:onClick="goToMainActivity"
+        android:text="@string/auth_registerbuttontext"
+        app:layout_constraintBottom_toTopOf="@+id/textview_auth_copyright"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/textview_auth_copyright"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/margin_auth_copyright_16dp"
+        android:text="@string/auth_copyright"
+        android:textColor="@color/silver"
+        android:textSize="@dimen/textsize_auth_copyright_12sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

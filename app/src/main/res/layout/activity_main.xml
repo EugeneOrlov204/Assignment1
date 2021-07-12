@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <View
+        android:id="@+id/view_main_topcontainer"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:background="@color/steel_gray"
+        app:layout_constraintBottom_toTopOf="@id/view_main_bottomcontainer"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_weight="0.5" />
+
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/textview_main_settings"
+        style="@style/regular_text"
+
+        android:layout_marginStart="@dimen/marginstart_main_settings_17dp"
+        android:layout_marginTop="@dimen/margintop_main_settings_16dp"
+        android:text="@string/main_settings"
+        app:layout_constraintStart_toStartOf="@id/view_main_topcontainer"
+        app:layout_constraintTop_toTopOf="@id/view_main_topcontainer" />
+
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/imageview_main_imageofperson"
+        android:layout_width="@dimen/width_main_sizeofpicture_108dp"
+        android:layout_height="@dimen/height_main_sizeofpicture_108dp"
+        android:layout_marginTop="@dimen/margintop_main_imageofperson_71dp"
+        app:layout_constraintEnd_toEndOf="@id/view_main_topcontainer"
+        app:layout_constraintStart_toStartOf="@id/view_main_topcontainer"
+        app:layout_constraintTop_toTopOf="@id/view_main_topcontainer" />
+
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/textview_main_nameofperson"
+        style="@style/name_of_person"
+        android:layout_marginTop="@dimen/margintop_main_nameofperson_24dp"
+        android:text="@string/main_nameofperson"
+        app:layout_constraintEnd_toEndOf="@id/imageview_main_imageofperson"
+        app:layout_constraintStart_toStartOf="@id/imageview_main_imageofperson"
+        app:layout_constraintTop_toBottomOf="@id/imageview_main_imageofperson" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/textview_main_professionofperson"
+        style="@style/description_text"
+        android:layout_marginTop="@dimen/margintop_main_nameofprofession_8dp"
+        android:text="@string/main_nameofprofession"
+        app:layout_constraintEnd_toEndOf="@id/textview_main_nameofperson"
+        app:layout_constraintStart_toStartOf="@id/textview_main_nameofperson"
+        app:layout_constraintTop_toBottomOf="@id/textview_main_nameofperson" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/textview_main_residenceofperson"
+        style="@style/description_text"
+        android:layout_marginTop="@dimen/margintop_main_residenceaddress_16dp"
+        android:text="@string/main_residenceaddress"
+        app:layout_constraintEnd_toEndOf="@id/textview_main_professionofperson"
+        app:layout_constraintStart_toStartOf="@id/textview_main_professionofperson"
+        app:layout_constraintTop_toBottomOf="@id/textview_main_professionofperson" />
+
+
+    <View
+        android:id="@+id/view_main_bottomcontainer"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:background="@color/alabaster"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/view_main_topcontainer"
+        app:layout_constraintVertical_weight="0.5"
+        tools:layout_editor_absoluteX="0dp" />
+
+    <androidx.appcompat.widget.AppCompatImageButton
+        android:id="@+id/imagebutton_main_facebook"
+        style="@style/social_network_button"
+        android:layout_marginStart="@dimen/marginstart_main_facebookbutton_48dp"
+        android:layout_marginTop="@dimen/margintop_main_facebookbutton_62dp"
+        android:src="@drawable/main_facebook"
+        app:layout_constraintStart_toStartOf="@+id/view_main_bottomcontainer"
+        app:layout_constraintTop_toTopOf="@+id/view_main_bottomcontainer" />
+
+    <androidx.appcompat.widget.AppCompatImageButton
+        android:id="@+id/imagebutton_main_linkedin"
+        style="@style/social_network_button"
+        android:layout_marginTop="@dimen/margintop_main_linkedinbutton_62dp"
+        android:src="@drawable/main_linkedin"
+        app:layout_constraintEnd_toStartOf="@+id/imagebutton_main_vkontakte"
+        app:layout_constraintStart_toEndOf="@+id/imagebutton_main_facebook"
+        app:layout_constraintTop_toTopOf="@+id/view_main_bottomcontainer" />
+
+    <androidx.appcompat.widget.AppCompatImageButton
+        android:id="@+id/imagebutton_main_vkontakte"
+        style="@style/social_network_button"
+        android:layout_marginTop="@dimen/margintop_main_vkontaktebutton_62dp"
+        android:layout_marginEnd="@dimen/marginend_main_vkontaktebutton_48dp"
+        android:src="@drawable/main_vkontakte"
+        app:layout_constraintEnd_toEndOf="@+id/view_main_bottomcontainer"
+        app:layout_constraintTop_toTopOf="@+id/view_main_bottomcontainer" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/button_main_editprofile"
+        style="@style/profile_button"
+        android:background="@drawable/main_roundedcorner"
+        android:onClick="goToAuthActivity"
+        android:text="@string/main_editprofile"
+        android:layout_margin="@dimen/margin_main_editprofile_16dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@id/view_main_bottomcontainer"
+        app:layout_constraintStart_toStartOf="@id/view_main_bottomcontainer" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
