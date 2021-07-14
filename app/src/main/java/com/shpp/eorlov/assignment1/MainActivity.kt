@@ -31,42 +31,35 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
 
         super.onCreate(savedInstanceState)
-        requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
         setContentView(R.layout.activity_main)
         Glide.with(this)
-            .load(R.mipmap.eugene_orlov)
+            .load(R.mipmap.lucile_alvarado)
             .circleCrop()
             .into(findViewById(R.id.imageview_main_imageofperson))
 
         val intent = intent
         username = intent.getStringExtra("username")
         password = intent.getStringExtra("password")
-        println("username = " + username)
-        println("password = " + password)
-        val messageText = findViewById<View>(R.id.textview_main_nameofperson) as TextView
-        messageText.text = username
+
+        if (username != "" && username != null) {
+            val messageText = findViewById<View>(R.id.textview_main_nameofperson) as TextView
+            messageText.text = username
+        }
     }
 
     /**
      * Change current activity to AuthActivity
      */
     fun goToAuthActivity(view: View) {
-        val intent = Intent(this, AuthActivity::class.java)
-        startActivity(intent)
-
-        //Finish the activity if it's is on resume state
-        if (lifecycle.currentState.isAtLeast(Lifecycle.State.RESUMED)) {
-            finish()
-        }
-
         startActivity(getDataToSend(username, password))
+        finish()
     }
 
 
     /**
      * Returns data to be send to another activity
      */
-    private fun getDataToSend(username: String?, password: String?): Intent? {
+    private fun getDataToSend(username: String?, password: String?): Intent {
         val intent = Intent(this, AuthActivity::class.java)
         intent.putExtra("username", username)
         intent.putExtra("password", password)

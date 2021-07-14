@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
 
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/constraintlayout_auth_container"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -13,8 +13,7 @@
         android:id="@+id/textview_auth_title"
         style="@style/regular_text"
         android:layout_marginTop="@dimen/margintop_auth_title_133dp"
-        android:text="@string/auth_nameoftitle"
-        app:layout_constraintBottom_toTopOf="@+id/textview_auth_fillouttheprofile"
+        android:text="@string/lets_get_acquainted"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -24,9 +23,9 @@
         android:id="@+id/textview_auth_fillouttheprofile"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/margintop_auth_password_8dp"
+        android:layout_marginTop="@dimen/margin_top_normal_8dp"
         android:fontFamily="@font/open_sans"
-        android:text="@string/auth_fillouttheprofile"
+        android:text="@string/fill_out_the_profile"
         android:textColor="@color/alabaster"
         android:textSize="@dimen/textsize_auth_fillouttheprofile_12sp"
         app:layout_constraintEnd_toEndOf="@+id/textview_auth_title"
@@ -38,7 +37,7 @@
         style="@style/description_text"
         android:layout_marginStart="@dimen/marginstart_auth_emailtitle_16dp"
         android:layout_marginTop="@dimen/margintop_auth_emailtitle_80dp"
-        android:text="@string/auth_emailtitle"
+        android:text="@string/email_title"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textview_auth_fillouttheprofile" />
 
@@ -47,7 +46,7 @@
         android:id="@+id/edittext_auth_email"
         style="@style/login_field"
         android:layout_marginHorizontal="@dimen/marginhorizontal_auth_password_13dp"
-        android:layout_marginTop="@dimen/margintop_auth_password_8dp"
+        android:layout_marginTop="@dimen/margin_top_normal_8dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textview_auth_emailtitle" />
 
@@ -56,7 +55,7 @@
         style="@style/description_text"
         android:layout_marginHorizontal="@dimen/marginhorizontal_auth_passwordtitle_16dp"
         android:layout_marginTop="@dimen/margintop_auth_passwordtitle_24dp"
-        android:text="@string/auth_passwordtitle"
+        android:text="@string/password"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/edittext_auth_email" />
 
@@ -65,7 +64,7 @@
         android:id="@+id/edittext_auth_password"
         style="@style/password_field"
         android:layout_marginHorizontal="@dimen/marginhorizontal_auth_password_13dp"
-        android:layout_marginTop="@dimen/margintop_auth_password_8dp"
+        android:layout_marginTop="@dimen/margin_top_normal_8dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textview_auth_passwordtitle" />
 
@@ -73,12 +72,12 @@
         android:id="@+id/checkbox_auth_rememberme"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/auth_text"
-        android:textColor="@color/alabaster"
-        android:fontFamily="@font/open_sans"
-        android:textSize="@dimen/checkbox_auth_rememberme_18sp"
-        android:buttonTint="@color/orange"
         android:layout_marginTop="@dimen/margintop_auth_rememberme_16dp"
+        android:buttonTint="@color/orange"
+        android:fontFamily="@font/open_sans"
+        android:text="@string/remember_me"
+        android:textColor="@color/alabaster"
+        android:textSize="@dimen/checkbox_auth_rememberme_18sp"
         app:layout_constraintStart_toStartOf="@+id/edittext_auth_password"
         app:layout_constraintTop_toBottomOf="@+id/edittext_auth_password" />
 
@@ -88,7 +87,7 @@
         android:layout_margin="@dimen/margin_auth_register_16dp"
         android:background="@drawable/auth_registerbutton"
         android:onClick="goToMainActivity"
-        android:text="@string/auth_registerbuttontext"
+        android:text="@string/register_button_text"
         app:layout_constraintBottom_toTopOf="@+id/textview_auth_copyright"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
@@ -98,9 +97,10 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/margin_auth_copyright_16dp"
-        android:text="@string/auth_copyright"
+        android:text="@string/copyright"
         android:textColor="@color/silver"
         android:textSize="@dimen/textsize_auth_copyright_12sp"
+        android:textAlignment="center"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />

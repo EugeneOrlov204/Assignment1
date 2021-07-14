@@ -1,20 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <dimen name="radius_all_socialnetworkbutton_60dp">60dp</dimen>
-    <dimen name="width_main_sizeofpicture_108dp">108dp</dimen>
+    <dimen name="size_of_picture">108dp</dimen>
     <dimen name="textsize_main_personname_18sp">18sp</dimen>
     <dimen name="margintop_main_nameofprofession_8dp">8dp</dimen>
     <dimen name="margintop_main_residenceaddress_16dp">16dp</dimen>
-    <dimen name="marginstart_main_settings_17dp">17dp</dimen>
-    <dimen name="margintop_main_settings_16dp">16dp</dimen>
+    <dimen name="margin_normal_18dp">18dp</dimen>
     <dimen name="height_main_sizeofpicture_108dp">108dp</dimen>
     <dimen name="margintop_main_imageofperson_71dp">71dp</dimen>
     <dimen name="margintop_main_nameofperson_24dp">24dp</dimen>
-    <dimen name="marginstart_main_facebookbutton_48dp">48dp</dimen>
-    <dimen name="margintop_main_facebookbutton_62dp">62dp</dimen>
-    <dimen name="margintop_main_linkedinbutton_62dp">62dp</dimen>
-    <dimen name="margintop_main_vkontaktebutton_62dp">62dp</dimen>
-    <dimen name="marginend_main_vkontaktebutton_48dp">48dp</dimen>
+    <dimen name="margin_horizontal_socials_48dp">48dp</dimen>
+    <dimen name="margin_top_socials_62dp">62dp</dimen>
     <dimen name="margintop_auth_title_133dp">133dp</dimen>
     <dimen name="textsize_auth_fillouttheprofile_12sp">12sp</dimen>
     <dimen name="margintop_auth_password_8dp">8dp</dimen>
