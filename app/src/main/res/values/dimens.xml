@@ -27,4 +27,5 @@
     <dimen name="borderradius_all_socialnetworkbutton_3dp">3dp</dimen>
     <dimen name="checkbox_auth_rememberme_18sp">18sp</dimen>
     <dimen name="margintop_auth_rememberme_16dp">16dp</dimen>
+    <dimen name="margin_top_normal_8dp" />
 </resources>

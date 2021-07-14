@@ -29,8 +29,8 @@
 
     <androidx.appcompat.widget.AppCompatImageView
         android:id="@+id/imageview_main_imageofperson"
-        android:layout_width="@dimen/width_main_picture_size_113dp"
-        android:layout_height="@dimen/height_main_sizeofpicture_113dp"
+        android:layout_width="@dimen/size_of_picture"
+        android:layout_height="@dimen/size_of_picture"
         android:layout_marginTop="@dimen/margintop_main_imageofperson_71dp"
         app:layout_constraintEnd_toEndOf="@id/view_main_topcontainer"
         app:layout_constraintStart_toStartOf="@id/view_main_topcontainer"

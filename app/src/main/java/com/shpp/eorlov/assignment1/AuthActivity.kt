@@ -24,11 +24,6 @@ class AuthActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_auth)
 
-        val animation = AnimationUtils.loadAnimation(applicationContext, R.anim.anim_test)
-
-        val layout = findViewById<ConstraintLayout>(R.id.constraintlayout_auth_container)
-        layout.startAnimation(animation)
-
         val intent = intent
 
         if (intent.getStringExtra("username") != null) {
