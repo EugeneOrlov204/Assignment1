@@ -8,8 +8,8 @@
     <string name="lets_get_acquainted">Let\'s get acquainted</string>
     <string name="fill_out_the_profile">Fill out the profile and go to the application!</string>
     <string name="password">Password</string>
-    <string name="register_button_text">REGISTER</string>
+    <string name="register">REGISTER</string>
     <string name="copyright">By clicking Register you agree\nto our Terms and Conditions</string>
-    <string name="email_title">Email</string>
+    <string name="email">Email</string>
     <string name="remember_me">Remember me</string>
 </resources>

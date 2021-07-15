@@ -1,31 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <dimen name="radius_all_socialnetworkbutton_60dp">60dp</dimen>
+    <dimen name="radius_socials_60dp">60dp</dimen>
     <dimen name="size_of_picture">108dp</dimen>
-    <dimen name="textsize_main_personname_18sp">18sp</dimen>
-    <dimen name="margintop_main_nameofprofession_8dp">8dp</dimen>
-    <dimen name="margintop_main_residenceaddress_16dp">16dp</dimen>
-    <dimen name="margin_normal_18dp">18dp</dimen>
-    <dimen name="height_main_sizeofpicture_108dp">108dp</dimen>
-    <dimen name="margintop_main_imageofperson_71dp">71dp</dimen>
-    <dimen name="margintop_main_nameofperson_24dp">24dp</dimen>
+    <dimen name="text_size_normal_18sp">18sp</dimen>
+    <dimen name="margin_top_person">71dp</dimen>
+    <dimen name="margin_top_person_name">24dp</dimen>
     <dimen name="margin_horizontal_socials_48dp">48dp</dimen>
     <dimen name="margin_top_socials_62dp">62dp</dimen>
-    <dimen name="margintop_auth_title_133dp">133dp</dimen>
-    <dimen name="textsize_auth_fillouttheprofile_12sp">12sp</dimen>
-    <dimen name="margintop_auth_password_8dp">8dp</dimen>
-    <dimen name="marginstart_auth_emailtitle_16dp">16dp</dimen>
-    <dimen name="margintop_auth_emailtitle_80dp">80dp</dimen>
-    <dimen name="marginhorizontal_auth_password_13dp">13dp</dimen>
-    <dimen name="marginhorizontal_auth_passwordtitle_16dp">16dp</dimen>
-    <dimen name="margintop_auth_passwordtitle_24dp">24dp</dimen>
-    <dimen name="margin_main_editprofile_16dp">16dp</dimen>
-    <dimen name="margintop_auth_register_163dp">163dp</dimen>
-    <dimen name="margin_auth_register_16dp">16dp</dimen>
-    <dimen name="margin_auth_copyright_16dp">16dp</dimen>
-    <dimen name="textsize_auth_copyright_12sp">12sp</dimen>
-    <dimen name="borderradius_all_socialnetworkbutton_3dp">3dp</dimen>
-    <dimen name="checkbox_auth_rememberme_18sp">18sp</dimen>
-    <dimen name="margintop_auth_rememberme_16dp">16dp</dimen>
-    <dimen name="margin_top_normal_8dp" />
+    <dimen name="margin_horizontal_email_field">13dp</dimen>
+    <dimen name="margin_top_password">24dp</dimen>
+    <dimen name="margin_register">16dp</dimen>
+    <dimen name="text_size_small_12sp">12sp</dimen>
+    <dimen name="border_radius_socials_3dp">3dp</dimen>
+    <dimen name="margin_size_small_8dp">8dp</dimen>
+    <dimen name="margin_size_normal_16dp">16dp</dimen>
 </resources>

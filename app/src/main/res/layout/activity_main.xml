@@ -8,117 +8,113 @@
 
 
     <View
-        android:id="@+id/view_main_topcontainer"
+        android:id="@+id/view_top_container"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:background="@color/steel_gray"
-        app:layout_constraintBottom_toTopOf="@id/view_main_bottomcontainer"
+        app:layout_constraintBottom_toTopOf="@id/view_bottom_container"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_weight="0.5"
         tools:layout_editor_absoluteX="0dp" />
 
     <androidx.appcompat.widget.AppCompatTextView
-        android:id="@+id/textview_main_settings"
+        android:id="@+id/text_view_settings"
         style="@style/regular_text"
-        android:layout_marginStart="@dimen/margin_normal_18dp"
-        android:layout_marginTop="@dimen/margin_normal_18dp"
+        android:layout_marginStart="@dimen/margin_size_normal_16dp"
+        android:layout_marginTop="@dimen/margin_size_normal_16dp"
         android:text="@string/settings"
-        app:layout_constraintStart_toStartOf="@id/view_main_topcontainer"
-        app:layout_constraintTop_toTopOf="@id/view_main_topcontainer" />
+        app:layout_constraintStart_toStartOf="@id/view_top_container"
+        app:layout_constraintTop_toTopOf="@id/view_top_container" />
 
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guide_line_person_image"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.09"/>
 
     <androidx.appcompat.widget.AppCompatImageView
-        android:id="@+id/imageview_main_imageofperson"
+        android:id="@+id/image_view_person_image"
         android:layout_width="@dimen/size_of_picture"
         android:layout_height="@dimen/size_of_picture"
-        android:layout_marginTop="@dimen/margintop_main_imageofperson_71dp"
-        app:layout_constraintEnd_toEndOf="@id/view_main_topcontainer"
-        app:layout_constraintStart_toStartOf="@id/view_main_topcontainer"
-        app:layout_constraintTop_toTopOf="@id/view_main_topcontainer" />
+        app:layout_constraintEnd_toEndOf="@id/view_top_container"
+        app:layout_constraintStart_toStartOf="@id/view_top_container"
+        app:layout_constraintTop_toTopOf="@id/guide_line_person_image" />
 
 
     <androidx.appcompat.widget.AppCompatTextView
-        android:id="@+id/textview_main_nameofperson"
-        style="@style/name_of_person"
-        android:layout_marginTop="@dimen/margintop_main_nameofperson_24dp"
+        android:id="@+id/text_view_person_name"
+        style="@style/person_name"
+        android:layout_marginTop="@dimen/margin_top_person_name"
         android:text="@string/person_name"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/imageview_main_imageofperson" />
+        app:layout_constraintTop_toBottomOf="@id/image_view_person_image" />
 
     <androidx.appcompat.widget.AppCompatTextView
-        android:id="@+id/textview_main_professionofperson"
+        android:id="@+id/text_view_person_profession"
         style="@style/description_text"
-        android:layout_marginTop="@dimen/margin_top_normal_8dp"
+        android:layout_marginTop="@dimen/margin_size_small_8dp"
         android:text="@string/profession_name"
-        app:layout_constraintEnd_toEndOf="@id/textview_main_nameofperson"
-        app:layout_constraintStart_toStartOf="@id/textview_main_nameofperson"
-        app:layout_constraintTop_toBottomOf="@id/textview_main_nameofperson" />
+        app:layout_constraintEnd_toEndOf="@id/text_view_person_name"
+        app:layout_constraintStart_toStartOf="@id/text_view_person_name"
+        app:layout_constraintTop_toBottomOf="@id/text_view_person_name" />
 
     <androidx.appcompat.widget.AppCompatTextView
-        android:id="@+id/textview_main_residenceofperson"
+        android:id="@+id/text_view_person_residence"
         style="@style/description_text"
-        android:layout_marginTop="@dimen/margintop_main_residenceaddress_16dp"
+        android:layout_marginTop="@dimen/margin_size_normal_16dp"
         android:text="@string/residence_address"
-        app:layout_constraintEnd_toEndOf="@id/textview_main_professionofperson"
-        app:layout_constraintStart_toStartOf="@id/textview_main_professionofperson"
-        app:layout_constraintTop_toBottomOf="@id/textview_main_professionofperson" />
+        app:layout_constraintEnd_toEndOf="@id/text_view_person_profession"
+        app:layout_constraintStart_toStartOf="@id/text_view_person_profession"
+        app:layout_constraintTop_toBottomOf="@id/text_view_person_profession" />
 
 
     <View
-        android:id="@+id/view_main_bottomcontainer"
+        android:id="@+id/view_bottom_container"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:background="@color/alabaster"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/view_main_topcontainer"
-        app:layout_constraintVertical_weight="0.5"
-        tools:layout_editor_absoluteX="0dp" />
+        app:layout_constraintTop_toBottomOf="@id/view_top_container"
+        app:layout_constraintVertical_weight="0.5" />
 
     <androidx.appcompat.widget.AppCompatImageButton
-        android:id="@+id/imagebutton_main_facebook"
+        android:id="@+id/image_button_facebook"
         style="@style/social_network_button"
         android:layout_marginStart="@dimen/margin_horizontal_socials_48dp"
         android:src="@drawable/main_facebook"
         android:layout_marginHorizontal="@dimen/margin_horizontal_socials_48dp"
-        app:layout_constraintStart_toStartOf="@+id/view_main_bottomcontainer"
-        app:layout_constraintTop_toTopOf="@+id/imagebutton_main_linkedin" />
+        app:layout_constraintStart_toStartOf="@+id/view_bottom_container"
+        app:layout_constraintTop_toTopOf="@+id/image_button_linkedin" />
 
     <androidx.appcompat.widget.AppCompatImageButton
-        android:id="@+id/imagebutton_main_linkedin"
+        android:id="@+id/image_button_linkedin"
         style="@style/social_network_button"
         android:layout_marginTop="@dimen/margin_top_socials_62dp"
         android:src="@drawable/main_linkedin"
-        app:layout_constraintEnd_toStartOf="@+id/imagebutton_main_vkontakte"
-        app:layout_constraintStart_toEndOf="@+id/imagebutton_main_facebook"
-        app:layout_constraintTop_toTopOf="@+id/view_main_bottomcontainer" />
+        app:layout_constraintEnd_toStartOf="@+id/image_button_vkontakte"
+        app:layout_constraintStart_toEndOf="@+id/image_button_facebook"
+        app:layout_constraintTop_toTopOf="@+id/view_bottom_container" />
 
     <androidx.appcompat.widget.AppCompatImageButton
-        android:id="@+id/imagebutton_main_vkontakte"
+        android:id="@+id/image_button_vkontakte"
         style="@style/social_network_button"
         android:layout_marginHorizontal="@dimen/margin_horizontal_socials_48dp"
         android:src="@drawable/main_vkontakte"
-        app:layout_constraintEnd_toEndOf="@+id/view_main_bottomcontainer"
-        app:layout_constraintTop_toTopOf="@+id/imagebutton_main_linkedin" />
+        app:layout_constraintEnd_toEndOf="@+id/view_bottom_container"
+        app:layout_constraintTop_toTopOf="@+id/image_button_linkedin" />
 
     <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/button_main_editprofile"
+
+        android:id="@+id/button_edit_profile"
         style="@style/profile_button"
-        android:background="@drawable/main_roundedcorner"
+        android:background="@drawable/round_corner_7dp"
         android:onClick="goToAuthActivity"
         android:text="@string/edit_profile"
-        android:layout_margin="@dimen/margin_main_editprofile_16dp"
+        android:layout_margin="@dimen/margin_size_normal_16dp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="@id/view_main_bottomcontainer"
-        app:layout_constraintStart_toStartOf="@id/view_main_bottomcontainer" />
-
-    <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/guideline"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:layout_constraintGuide_percent="0.5"
-        android:orientation="horizontal"
-        app:layout_constraintGuide_begin="540dp" />
-
+        app:layout_constraintEnd_toEndOf="@id/view_bottom_container"
+        app:layout_constraintStart_toStartOf="@id/view_bottom_container" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

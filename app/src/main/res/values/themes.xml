@@ -14,7 +14,7 @@
         <!-- Customize your theme here. -->
     </style>
     
-    <style name="name_of_person">
+    <style name="person_name">
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:fontFamily">@font/open_sans</item>
@@ -30,7 +30,7 @@
     </style>
 
     <style name="profile_button">
-        <item name="android:textColor">@android:color/white</item>
+        <item name="android:textColor">@color/button_text</item>
         <item name="android:layout_width">0dp</item>
         <item name="android:layout_height">55dp</item>
         <item name="android:fontFamily">@font/open_sans</item>

@@ -2,12 +2,10 @@ package com.shpp.eorlov.assignment1
 
 
 import android.content.Intent
-import android.content.pm.ActivityInfo
 import android.os.Bundle
 import android.view.View
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
-import androidx.lifecycle.Lifecycle
 import com.bumptech.glide.Glide
 
 
@@ -35,14 +33,14 @@ class MainActivity : AppCompatActivity() {
         Glide.with(this)
             .load(R.mipmap.lucile_alvarado)
             .circleCrop()
-            .into(findViewById(R.id.imageview_main_imageofperson))
+            .into(findViewById(R.id.image_view_person_image))
 
         val intent = intent
         username = intent.getStringExtra("username")
         password = intent.getStringExtra("password")
 
         if (username != "" && username != null) {
-            val messageText = findViewById<View>(R.id.textview_main_nameofperson) as TextView
+            val messageText = findViewById<View>(R.id.text_view_person_name) as TextView
             messageText.text = username
         }
     }

@@ -1,20 +1,11 @@
 package com.shpp.eorlov.assignment1
 
-import android.app.ActivityOptions
 import android.content.Intent
-import android.content.pm.ActivityInfo
 import android.os.Bundle
 import android.view.View
-import android.view.animation.AnimationUtils
-import android.widget.Button
 import android.widget.CheckBox
 import android.widget.EditText
 import androidx.appcompat.app.AppCompatActivity
-import androidx.appcompat.widget.AppCompatButton
-import androidx.appcompat.widget.AppCompatImageView
-import androidx.constraintlayout.widget.ConstraintLayout
-import androidx.lifecycle.Lifecycle
-import com.bumptech.glide.Glide
 
 
 class AuthActivity : AppCompatActivity() {
@@ -27,8 +18,8 @@ class AuthActivity : AppCompatActivity() {
         val intent = intent
 
         if (intent.getStringExtra("username") != null) {
-            val usernameField = findViewById<EditText>(R.id.edittext_auth_email)
-            val passwordField = findViewById<EditText>(R.id.edittext_auth_password)
+            val usernameField = findViewById<EditText>(R.id.edit_text_email)
+            val passwordField = findViewById<EditText>(R.id.edit_text_password)
             val username = intent.getStringExtra("username")
             val password = intent.getStringExtra("password")
             usernameField.setText(username)
@@ -41,13 +32,13 @@ class AuthActivity : AppCompatActivity() {
      * Change current activity to MainActivity
      */
     fun goToMainActivity(view: View) {
-        val usernameField = findViewById<EditText>(R.id.edittext_auth_email)
-        val passwordField = findViewById<EditText>(R.id.edittext_auth_password)
+        val usernameField = findViewById<EditText>(R.id.edit_text_email)
+        val passwordField = findViewById<EditText>(R.id.edit_text_password)
         var username = usernameField.text.toString()
         var password = passwordField.text.toString()
 
 
-        val rememberMe = findViewById<View>(R.id.checkbox_auth_rememberme) as CheckBox
+        val rememberMe = findViewById<View>(R.id.check_box_remember_me) as CheckBox
         if (!rememberMe.isChecked) {
             username = ""
             password = ""
@@ -55,26 +46,6 @@ class AuthActivity : AppCompatActivity() {
 
         startActivity(getDataToSend(username, password))
         finish()
-    }
-
-    override fun onPause() {
-        super.onPause()
-    }
-
-    override fun onStop() {
-        super.onStop()
-    }
-
-    override fun onStart() {
-        super.onStart()
-    }
-
-    override fun onResume() {
-        super.onResume()
-    }
-
-    override fun onDestroy() {
-        super.onDestroy()
     }
 
     /**

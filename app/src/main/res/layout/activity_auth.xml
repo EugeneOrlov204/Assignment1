@@ -2,104 +2,117 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
 
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/constraintlayout_auth_container"
+    android:id="@+id/constraint_layout_auth_container"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/steel_gray"
     android:orientation="vertical">
 
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guide_line_lets_get_acquainted"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.2"
+        />
 
     <com.google.android.material.textview.MaterialTextView
-        android:id="@+id/textview_auth_title"
+        android:id="@+id/text_view_lets_get_acquainted"
         style="@style/regular_text"
-        android:layout_marginTop="@dimen/margintop_auth_title_133dp"
         android:text="@string/lets_get_acquainted"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="@id/guide_line_lets_get_acquainted" />
 
 
     <com.google.android.material.textview.MaterialTextView
-        android:id="@+id/textview_auth_fillouttheprofile"
+        android:id="@+id/text_view_fill_out_the_profile"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/margin_top_normal_8dp"
+        android:layout_marginTop="@dimen/margin_size_small_8dp"
         android:fontFamily="@font/open_sans"
         android:text="@string/fill_out_the_profile"
         android:textColor="@color/alabaster"
-        android:textSize="@dimen/textsize_auth_fillouttheprofile_12sp"
-        app:layout_constraintEnd_toEndOf="@+id/textview_auth_title"
-        app:layout_constraintStart_toStartOf="@+id/textview_auth_title"
-        app:layout_constraintTop_toBottomOf="@+id/textview_auth_title" />
+        android:textSize="@dimen/text_size_small_12sp"
+        app:layout_constraintEnd_toEndOf="@+id/text_view_lets_get_acquainted"
+        app:layout_constraintStart_toStartOf="@+id/text_view_lets_get_acquainted"
+        app:layout_constraintTop_toBottomOf="@+id/text_view_lets_get_acquainted" />
 
-    <androidx.appcompat.widget.AppCompatTextView
-        android:id="@+id/textview_auth_emailtitle"
-        style="@style/description_text"
-        android:layout_marginStart="@dimen/marginstart_auth_emailtitle_16dp"
-        android:layout_marginTop="@dimen/margintop_auth_emailtitle_80dp"
-        android:text="@string/email_title"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textview_auth_fillouttheprofile" />
-
-
-    <androidx.appcompat.widget.AppCompatEditText
-        android:id="@+id/edittext_auth_email"
-        style="@style/login_field"
-        android:layout_marginHorizontal="@dimen/marginhorizontal_auth_password_13dp"
-        android:layout_marginTop="@dimen/margin_top_normal_8dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textview_auth_emailtitle" />
-
-    <androidx.appcompat.widget.AppCompatTextView
-        android:id="@+id/textview_auth_passwordtitle"
-        style="@style/description_text"
-        android:layout_marginHorizontal="@dimen/marginhorizontal_auth_passwordtitle_16dp"
-        android:layout_marginTop="@dimen/margintop_auth_passwordtitle_24dp"
-        android:text="@string/password"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/edittext_auth_email" />
-
-
-    <androidx.appcompat.widget.AppCompatEditText
-        android:id="@+id/edittext_auth_password"
-        style="@style/password_field"
-        android:layout_marginHorizontal="@dimen/marginhorizontal_auth_password_13dp"
-        android:layout_marginTop="@dimen/margin_top_normal_8dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textview_auth_passwordtitle" />
-
-    <androidx.appcompat.widget.AppCompatCheckBox
-        android:id="@+id/checkbox_auth_rememberme"
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guide_line_email"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/margintop_auth_rememberme_16dp"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.39"
+        />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/text_view_email"
+        style="@style/description_text"
+        android:layout_marginStart="@dimen/margin_size_normal_16dp"
+        android:text="@string/email"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/guide_line_email" />
+
+
+    <androidx.appcompat.widget.AppCompatEditText
+        android:id="@+id/edit_text_email"
+        style="@style/login_field"
+        android:layout_marginHorizontal="@dimen/margin_horizontal_email_field"
+        android:layout_marginTop="@dimen/margin_size_small_8dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/text_view_email" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/text_view_password"
+        style="@style/description_text"
+        android:layout_marginHorizontal="@dimen/margin_size_normal_16dp"
+        android:layout_marginTop="@dimen/margin_top_password"
+        android:text="@string/password"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/edit_text_email" />
+
+
+    <androidx.appcompat.widget.AppCompatEditText
+        android:id="@+id/edit_text_password"
+        style="@style/password_field"
+        android:layout_marginHorizontal="@dimen/margin_horizontal_email_field"
+        android:layout_marginTop="@dimen/margin_size_small_8dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/text_view_password" />
+
+    <androidx.appcompat.widget.AppCompatCheckBox
+        android:id="@+id/check_box_remember_me"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/margin_size_normal_16dp"
         android:buttonTint="@color/orange"
         android:fontFamily="@font/open_sans"
         android:text="@string/remember_me"
         android:textColor="@color/alabaster"
-        android:textSize="@dimen/checkbox_auth_rememberme_18sp"
-        app:layout_constraintStart_toStartOf="@+id/edittext_auth_password"
-        app:layout_constraintTop_toBottomOf="@+id/edittext_auth_password" />
+        android:textSize="@dimen/text_size_normal_18sp"
+        app:layout_constraintStart_toStartOf="@+id/edit_text_password"
+        app:layout_constraintTop_toBottomOf="@+id/edit_text_password" />
 
     <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/button_auth_register"
+        android:id="@+id/button_register"
         style="@style/profile_button"
-        android:layout_margin="@dimen/margin_auth_register_16dp"
-        android:background="@drawable/auth_registerbutton"
+        android:layout_margin="@dimen/margin_register"
+        android:background="@drawable/register_button"
         android:onClick="goToMainActivity"
-        android:text="@string/register_button_text"
-        app:layout_constraintBottom_toTopOf="@+id/textview_auth_copyright"
+        android:text="@string/register"
+        app:layout_constraintBottom_toTopOf="@+id/text_view_copyright"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
     <androidx.appcompat.widget.AppCompatTextView
-        android:id="@+id/textview_auth_copyright"
+        android:id="@+id/text_view_copyright"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_margin="@dimen/margin_auth_copyright_16dp"
+        android:layout_margin="@dimen/margin_size_normal_16dp"
         android:text="@string/copyright"
         android:textColor="@color/silver"
-        android:textSize="@dimen/textsize_auth_copyright_12sp"
+        android:textSize="@dimen/text_size_small_12sp"
         android:textAlignment="center"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
