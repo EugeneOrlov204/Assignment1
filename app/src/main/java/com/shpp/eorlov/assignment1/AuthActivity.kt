@@ -1,31 +1,50 @@
 package com.shpp.eorlov.assignment1
 
 import android.content.Intent
+import android.content.SharedPreferences
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
 import android.util.Patterns
 import android.view.View
 import android.view.WindowManager
+import android.widget.CheckBox
+import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
-import java.lang.StringBuilder
+import kotlin.math.log
 
 
 class AuthActivity : AppCompatActivity() {
 
-    var emailErrorMessage: TextInputLayout? = null
-    var emailField: TextInputEditText? = null
+    private var emailErrorMessage: TextInputLayout? = null
+    private var emailField: TextInputEditText? = null
 
-    var passwordErrorMessage: TextInputLayout? = null
-    var passwordField: TextInputEditText? = null
+    private var passwordErrorMessage: TextInputLayout? = null
+    private var passwordField: TextInputEditText? = null
+
+    private val PREF_LOGIN = "Login"
+    private val PREF_PASSWORD = "Password"
+
+    private lateinit var settings: SharedPreferences
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_auth)
 
         initializeData()
+        restoreLoginData()
+    }
+
+    private fun restoreLoginData() {
+        val login = settings.getString(PREF_LOGIN, "")
+        val password = settings.getString(PREF_PASSWORD, "")
+        emailField?.setText(login)
+        passwordField?.setText(password)
+
+        //Clears shared preferences
+        settings.edit().clear().apply()
     }
 
     /**
@@ -39,6 +58,8 @@ class AuthActivity : AppCompatActivity() {
         passwordErrorMessage = findViewById(R.id.text_input_layout_password)
         passwordField = findViewById(R.id.text_input_edit_text_password)
         passwordField?.addTextChangedListener(ValidationTextWatcher(passwordField!!))
+
+        settings = getPreferences(MODE_PRIVATE)
     }
 
     /**
@@ -95,8 +116,23 @@ class AuthActivity : AppCompatActivity() {
         val intent = Intent(this, MainActivity::class.java)
         intent.putExtra("personName", getPersonName())
 
+        val rememberMe = findViewById<CheckBox>(R.id.check_box_remember_me)
+        if (rememberMe.isChecked) {
+            saveLoginData(
+                emailField!!.text.toString(), //Login
+                passwordField!!.text.toString() //Password
+            )
+        }
+
         startActivity(intent)
         finish()
+    }
+
+    private fun saveLoginData(login: String, password: String) {
+        val prefEditor = settings.edit()
+        prefEditor.putString(PREF_LOGIN, login)
+        prefEditor.putString(PREF_PASSWORD, password)
+        prefEditor.apply()
     }
 
     /**
