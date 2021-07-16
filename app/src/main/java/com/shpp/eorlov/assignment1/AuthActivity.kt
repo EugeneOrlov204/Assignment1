@@ -10,6 +10,7 @@ import android.view.WindowManager
 import androidx.appcompat.app.AppCompatActivity
 import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
+import java.lang.StringBuilder
 
 
 class AuthActivity : AppCompatActivity() {
@@ -91,9 +92,35 @@ class AuthActivity : AppCompatActivity() {
         if (!validateEmail() || !validatePassword()) {
             return
         }
+        val intent = Intent(this, MainActivity::class.java)
+        intent.putExtra("personName", getPersonName())
 
-        startActivity(Intent(this, MainActivity::class.java))
+        startActivity(intent)
         finish()
+    }
+
+    /**
+     * Returns parsed login in the format "Name Surname"
+     */
+    private fun getPersonName(): String {
+        //Removes part of login from '@' to the end
+        val email = emailField!!.text.toString().replace(Regex("@+.*"), "")
+
+        val pattern = Regex("[^.]+")
+
+        //Gets part of login before '.'
+        val name = StringBuilder(pattern.find(email, 0)!!.value)
+
+        //Gets part of login after '.' if it exists
+        val surname = StringBuilder(
+            email
+                .replace("$name", "")
+                .replace(".", "")
+        )
+        //Makes first letters in upper case
+        name[0] = name[0].toUpperCase()
+        if (!surname.isEmpty()) surname[0] = surname[0].toUpperCase()
+        return "$name $surname"
     }
 
 

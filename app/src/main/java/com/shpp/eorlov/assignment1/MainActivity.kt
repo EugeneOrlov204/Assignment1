@@ -21,7 +21,13 @@ class MainActivity : AppCompatActivity() {
             .circleCrop()
             .into(findViewById(R.id.image_view_person_image))
 
+        setNameOfPerson(intent)
+    }
 
+    private fun setNameOfPerson(intent: Intent) {
+        val messageText = findViewById<TextView>(R.id.text_view_person_name)
+        val message = intent.getStringExtra("personName").toString()
+        messageText.text = message
     }
 
     /**
