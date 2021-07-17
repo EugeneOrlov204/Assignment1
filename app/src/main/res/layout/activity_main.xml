@@ -31,7 +31,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.09"/>
+        app:layout_constraintGuide_percent="0.09" />
 
     <androidx.appcompat.widget.AppCompatImageView
         android:id="@+id/image_view_person_image"
@@ -39,7 +39,8 @@
         android:layout_height="@dimen/size_of_picture"
         app:layout_constraintEnd_toEndOf="@id/view_top_container"
         app:layout_constraintStart_toStartOf="@id/view_top_container"
-        app:layout_constraintTop_toTopOf="@id/guide_line_person_image" />
+        app:layout_constraintTop_toTopOf="@id/guide_line_person_image"
+        tools:src="@tools:sample/avatars" />
 
 
     <androidx.appcompat.widget.AppCompatTextView
@@ -54,7 +55,7 @@
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/text_view_person_profession"
         style="@style/description_text"
-        android:layout_marginTop="@dimen/margin_size_small_8dp"
+        android:layout_marginTop="@dimen/margin_small_8dp"
         android:text="@string/profession_name"
         app:layout_constraintEnd_toEndOf="@id/text_view_person_name"
         app:layout_constraintStart_toStartOf="@id/text_view_person_name"
@@ -82,9 +83,9 @@
     <androidx.appcompat.widget.AppCompatImageButton
         android:id="@+id/image_button_facebook"
         style="@style/social_network_button"
+        android:layout_marginHorizontal="@dimen/margin_horizontal_socials_48dp"
         android:layout_marginStart="@dimen/margin_horizontal_socials_48dp"
         android:src="@drawable/main_facebook"
-        android:layout_marginHorizontal="@dimen/margin_horizontal_socials_48dp"
         app:layout_constraintStart_toStartOf="@+id/view_bottom_container"
         app:layout_constraintTop_toTopOf="@+id/image_button_linkedin" />
 
@@ -109,10 +110,9 @@
 
         android:id="@+id/button_edit_profile"
         style="@style/profile_button"
-        android:background="@drawable/round_corner_7dp"
-        android:onClick="goToAuthActivity"
-        android:text="@string/edit_profile"
         android:layout_margin="@dimen/margin_size_normal_16dp"
+        android:background="@drawable/round_corner_7dp"
+        android:text="@string/edit_profile"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="@id/view_bottom_container"
         app:layout_constraintStart_toStartOf="@id/view_bottom_container" />
