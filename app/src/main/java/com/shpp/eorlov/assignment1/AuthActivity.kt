@@ -112,6 +112,8 @@ class AuthActivity : AppCompatActivity() {
                 emailEditText.text.toString(), //Login
                 passwordEditText.text.toString() //Password
             )
+        } else {
+            settings.edit().clear().apply()
         }
 
         startActivity(intent)
