@@ -13,7 +13,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.2" />
+        app:layout_constraintGuide_begin="146dp" />
 
     <com.google.android.material.textview.MaterialTextView
         android:id="@+id/text_view_lets_get_acquainted"
@@ -28,7 +28,7 @@
         android:id="@+id/text_view_fill_out_the_profile"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/margin_size_small_8dp"
+        android:layout_marginTop="@dimen/margin_small_8dp"
         android:fontFamily="@font/open_sans"
         android:text="@string/fill_out_the_profile"
         android:textColor="@color/alabaster"
@@ -42,7 +42,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.39" />
+        app:layout_constraintGuide_begin="285dp" />
 
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/text_view_email"
@@ -127,7 +127,6 @@
         style="@style/profile_button"
         android:layout_margin="@dimen/margin_register"
         android:background="@drawable/register_button"
-        android:onClick="goToMainActivity"
         android:text="@string/register"
         app:layout_constraintBottom_toTopOf="@+id/text_view_copyright"
         app:layout_constraintEnd_toEndOf="parent"

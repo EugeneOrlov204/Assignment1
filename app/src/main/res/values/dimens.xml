@@ -12,6 +12,6 @@
     <dimen name="margin_register">16dp</dimen>
     <dimen name="text_size_small_12sp">12sp</dimen>
     <dimen name="border_radius_socials_3dp">3dp</dimen>
-    <dimen name="margin_size_small_8dp">8dp</dimen>
+    <dimen name="margin_small_8dp">8dp</dimen>
     <dimen name="margin_size_normal_16dp">16dp</dimen>
 </resources>

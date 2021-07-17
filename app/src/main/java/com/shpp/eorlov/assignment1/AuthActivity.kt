@@ -3,29 +3,24 @@ package com.shpp.eorlov.assignment1
 import android.content.Intent
 import android.content.SharedPreferences
 import android.os.Bundle
-import android.text.Editable
-import android.text.TextWatcher
 import android.util.Patterns
-import android.view.View
-import android.view.WindowManager
+import android.widget.Button
 import android.widget.CheckBox
-import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.AppCompatButton
+import androidx.core.widget.addTextChangedListener
 import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
-import kotlin.math.log
+import com.shpp.eorlov.assignment1.utils.Constants
 
 
 class AuthActivity : AppCompatActivity() {
 
-    private var emailErrorMessage: TextInputLayout? = null
-    private var emailField: TextInputEditText? = null
+    private lateinit var emailErrorMessage: TextInputLayout
+    private lateinit var emailField: TextInputEditText
 
-    private var passwordErrorMessage: TextInputLayout? = null
-    private var passwordField: TextInputEditText? = null
-
-    private val PREF_LOGIN = "Login"
-    private val PREF_PASSWORD = "Password"
+    private lateinit var passwordErrorMessage: TextInputLayout
+    private lateinit var passwordFieldEditText: TextInputEditText
 
     private lateinit var settings: SharedPreferences
 
@@ -35,16 +30,17 @@ class AuthActivity : AppCompatActivity() {
 
         initializeData()
         restoreLoginData()
+
+        findViewById<AppCompatButton>(R.id.button_register).setOnClickListener {
+            goToMainActivity()
+        }
     }
 
     private fun restoreLoginData() {
-        val login = settings.getString(PREF_LOGIN, "")
-        val password = settings.getString(PREF_PASSWORD, "")
-        emailField?.setText(login)
-        passwordField?.setText(password)
-
-        //Clears shared preferences
-        settings.edit().clear().apply()
+        val login = settings.getString(Constants.PREF_LOGIN, "")
+        val password = settings.getString(Constants.PREF_PASSWORD, "")
+        emailField.setText(login)
+        passwordFieldEditText.setText(password)
     }
 
     /**
@@ -53,52 +49,54 @@ class AuthActivity : AppCompatActivity() {
     private fun initializeData() {
         emailErrorMessage = findViewById(R.id.text_input_layout_email)
         emailField = findViewById(R.id.text_input_edit_text_email)
-        emailField?.addTextChangedListener(ValidationTextWatcher(emailField!!))
+        emailField.addTextChangedListener {
+            validateEmail()
+        }
+
 
         passwordErrorMessage = findViewById(R.id.text_input_layout_password)
-        passwordField = findViewById(R.id.text_input_edit_text_password)
-        passwordField?.addTextChangedListener(ValidationTextWatcher(passwordField!!))
+        passwordFieldEditText = findViewById(R.id.text_input_edit_text_password)
+        passwordFieldEditText.addTextChangedListener {
+            validatePassword()
+        }
 
         settings = getPreferences(MODE_PRIVATE)
     }
 
-    /**
-     * Specify an explicit soft input mode to use for the window,
-     * as per WindowManager.LayoutParams.softInputMode.
-     */
-    private fun requestFocus(view: View) {
-        if (view.requestFocus()) {
-            window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE)
-        }
-    }
+//    /**
+//     * Specify an explicit soft input mode to use for the window,
+//     * as per WindowManager.LayoutParams.softInputMode.
+//     */
+//    private fun requestFocus(view: View) {
+//        if (view.requestFocus()) {
+//            window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE)
+//        }
+//    }
 
     private fun validatePassword(): Boolean {
-        if (passwordField!!.text.toString().trim { it <= ' ' }.isEmpty()) {
-            passwordErrorMessage!!.error = "Password is required"
-            requestFocus(passwordField!!)
+        if (passwordFieldEditText.text.toString().trim { it <= ' ' }.isEmpty()) {
+            passwordErrorMessage.error = "Password is required"
             return false
-        } else if (passwordField!!.text.toString().length < 6) {
-            passwordErrorMessage!!.error = "Password can't be less than 6 digit"
-            requestFocus(passwordField!!)
+        } else if (passwordFieldEditText.text.toString().length < 6) {
+            passwordErrorMessage.error = "Password can't be less than 6 digit"
             return false
         } else {
-            passwordErrorMessage!!.isErrorEnabled = false
+            passwordErrorMessage.error = ""
         }
         return true
     }
 
     fun validateEmail(): Boolean {
-        if (emailField!!.text.toString().trim { it <= ' ' }.isEmpty()) {
-            emailErrorMessage!!.isErrorEnabled = false
+        if (emailField.text.toString().trim { it <= ' ' }.isEmpty()) {
+            emailErrorMessage.error = ""
         } else {
-            val emailId = emailField!!.text.toString()
+            val emailId = emailField.text.toString()
             val isValid = Patterns.EMAIL_ADDRESS.matcher(emailId).matches()
             if (!isValid) {
-                emailErrorMessage!!.error = "Invalid Email address, ex: abc@example.com"
-                requestFocus(emailField!!)
+                emailErrorMessage.error = "Invalid Email address, ex: abc@example.com"
                 return false
             } else {
-                emailErrorMessage!!.isErrorEnabled = false
+                emailErrorMessage.error = ""
             }
         }
         return true
@@ -108,19 +106,20 @@ class AuthActivity : AppCompatActivity() {
     /**
      * Change current activity to MainActivity
      */
-    fun goToMainActivity(view: View) {
+    private fun goToMainActivity() {
 
         if (!validateEmail() || !validatePassword()) {
             return
         }
+
         val intent = Intent(this, MainActivity::class.java)
         intent.putExtra("personName", getPersonName())
 
         val rememberMe = findViewById<CheckBox>(R.id.check_box_remember_me)
         if (rememberMe.isChecked) {
             saveLoginData(
-                emailField!!.text.toString(), //Login
-                passwordField!!.text.toString() //Password
+                emailField.text.toString(), //Login
+                passwordFieldEditText.text.toString() //Password
             )
         }
 
@@ -130,8 +129,8 @@ class AuthActivity : AppCompatActivity() {
 
     private fun saveLoginData(login: String, password: String) {
         val prefEditor = settings.edit()
-        prefEditor.putString(PREF_LOGIN, login)
-        prefEditor.putString(PREF_PASSWORD, password)
+        prefEditor.putString(Constants.PREF_LOGIN, login)
+        prefEditor.putString(Constants.PREF_PASSWORD, password)
         prefEditor.apply()
     }
 
@@ -140,7 +139,7 @@ class AuthActivity : AppCompatActivity() {
      */
     private fun getPersonName(): String {
         //Removes part of login from '@' to the end
-        val email = emailField!!.text.toString().replace(Regex("@+.*"), "")
+        val email = emailField.text.toString().replace(Regex("@+.*"), "")
 
         val pattern = Regex("[^.]+")
 
@@ -155,24 +154,7 @@ class AuthActivity : AppCompatActivity() {
         )
         //Makes first letters in upper case
         name[0] = name[0].toUpperCase()
-        if (!surname.isEmpty()) surname[0] = surname[0].toUpperCase()
+        if (surname.isNotEmpty()) surname[0] = surname[0].toUpperCase()
         return "$name $surname"
-    }
-
-
-    /**
-     * Class to keep track of each character of input text fields
-     * for email and password validation
-     */
-    inner class ValidationTextWatcher constructor(private val view: View) :
-        TextWatcher {
-        override fun beforeTextChanged(charSequence: CharSequence, i: Int, i1: Int, i2: Int) {}
-        override fun onTextChanged(charSequence: CharSequence, i: Int, i1: Int, i2: Int) {}
-        override fun afterTextChanged(editable: Editable) {
-            when (view.id) {
-                R.id.text_input_edit_text_email -> validateEmail()
-                R.id.text_input_edit_text_password -> validatePassword()
-            }
-        }
     }
 }
