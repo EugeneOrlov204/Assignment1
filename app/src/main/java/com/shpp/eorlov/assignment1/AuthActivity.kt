@@ -29,12 +29,20 @@ class AuthActivity : AppCompatActivity() {
 
         initializeData()
         restoreLoginData()
-
+        restoreUIElementsLogic()
         binding.buttonRegister.setOnClickListener {
             goToMainActivity()
         }
 
         setContentView(binding.root)
+    }
+
+    /**
+     * Restores UI elements states.
+     * For example button the button has become enable
+     */
+    private fun restoreUIElementsLogic() {
+        binding.buttonRegister.isEnabled = true
     }
 
     private fun restoreLoginData() {
@@ -115,6 +123,8 @@ class AuthActivity : AppCompatActivity() {
         } else {
             settings.edit().clear().apply()
         }
+
+        binding.buttonRegister.isEnabled = false
 
         startActivity(intent)
         finish()

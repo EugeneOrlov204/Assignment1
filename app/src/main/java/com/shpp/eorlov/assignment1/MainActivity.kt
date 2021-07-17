@@ -15,8 +15,8 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
 
         binding.imageViewPersonImage.loadImage(R.mipmap.lucile_alvarado)
-
-        setNameOfPerson()
+        restoreUIElementsLogic()
+        setNameOfPerson(name = intent.getStringExtra("personName").toString())
 
         binding.buttonEditProfile.setOnClickListener {
             goToAuthActivity()
@@ -26,18 +26,26 @@ class MainActivity : AppCompatActivity() {
     }
 
     /**
+     * Restores UI elements states.
+     * For example button the button has become enable
+     */
+    private fun restoreUIElementsLogic() {
+        binding.buttonEditProfile.isEnabled = true
+    }
+
+    /**
      * Set parsed intent's string to title of person's image
      */
-    private fun setNameOfPerson() {
+    private fun setNameOfPerson(name : String) {
         val messageText = binding.textViewPersonName
-        val message = intent.getStringExtra("personName").toString()
-        messageText.text = message
+        messageText.text = name
     }
 
     /**
      * Change current activity to AuthActivity
      */
     private fun goToAuthActivity() {
+        binding.buttonEditProfile.isEnabled = false
         startActivity(Intent(this, AuthActivity::class.java))
         finish()
     }
