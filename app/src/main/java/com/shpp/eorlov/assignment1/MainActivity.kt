@@ -7,7 +7,6 @@ import androidx.appcompat.app.AppCompatActivity
 import com.shpp.eorlov.assignment1.databinding.ActivityMainBinding
 import com.shpp.eorlov.assignment1.utils.ext.loadImage
 
-
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
 
@@ -17,17 +16,18 @@ class MainActivity : AppCompatActivity() {
 
         binding.imageViewPersonImage.loadImage(R.mipmap.lucile_alvarado)
 
-
         setNameOfPerson()
 
         binding.buttonEditProfile.setOnClickListener {
             goToAuthActivity()
         }
 
-
         setContentView(binding.root)
     }
 
+    /**
+     * Set parsed intent's string to title of person's image
+     */
     private fun setNameOfPerson() {
         val messageText = binding.textViewPersonName
         val message = intent.getStringExtra("personName").toString()
@@ -42,3 +42,5 @@ class MainActivity : AppCompatActivity() {
         finish()
     }
 }
+
+

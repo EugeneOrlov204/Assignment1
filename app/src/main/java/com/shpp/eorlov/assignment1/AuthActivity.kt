@@ -4,10 +4,7 @@ import android.content.Intent
 import android.content.SharedPreferences
 import android.os.Bundle
 import android.util.Patterns
-import android.widget.Button
-import android.widget.CheckBox
 import androidx.appcompat.app.AppCompatActivity
-import androidx.appcompat.widget.AppCompatButton
 import androidx.core.widget.addTextChangedListener
 import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
@@ -18,11 +15,11 @@ import com.shpp.eorlov.assignment1.utils.Constants
 class AuthActivity : AppCompatActivity() {
     private lateinit var binding: ActivityAuthBinding
 
-    private lateinit var emailErrorMessage: TextInputLayout
-    private lateinit var emailField: TextInputEditText
+    private lateinit var emailErrorMessageLayout: TextInputLayout
+    private lateinit var emailEditText: TextInputEditText
 
-    private lateinit var passwordErrorMessage: TextInputLayout
-    private lateinit var passwordFieldEditText: TextInputEditText
+    private lateinit var passwordErrorMessageLayout: TextInputLayout
+    private lateinit var passwordEditText: TextInputEditText
 
     private lateinit var settings: SharedPreferences
 
@@ -43,23 +40,23 @@ class AuthActivity : AppCompatActivity() {
     private fun restoreLoginData() {
         val login = settings.getString(Constants.PREF_LOGIN, "")
         val password = settings.getString(Constants.PREF_PASSWORD, "")
-        emailField.setText(login)
-        passwordFieldEditText.setText(password)
+        emailEditText.setText(login)
+        passwordEditText.setText(password)
     }
 
     /**
      * Initialized objects that contains information about email and password
      */
     private fun initializeData() {
-        emailErrorMessage = binding.textInputLayoutEmail
-        emailField = binding.textInputEditTextEmail
-        emailField.addTextChangedListener {
+        emailErrorMessageLayout = binding.textInputLayoutEmail
+        emailEditText = binding.textInputEditTextEmail
+        emailEditText.addTextChangedListener {
             validateEmail()
         }
 
-        passwordErrorMessage = binding.textInputLayoutPassword
-        passwordFieldEditText = binding.textInputEditTextPassword
-        passwordFieldEditText.addTextChangedListener {
+        passwordErrorMessageLayout = binding.textInputLayoutPassword
+        passwordEditText = binding.textInputEditTextPassword
+        passwordEditText.addTextChangedListener {
             validatePassword()
         }
 
@@ -68,29 +65,29 @@ class AuthActivity : AppCompatActivity() {
 
 
     private fun validatePassword(): Boolean {
-        if (passwordFieldEditText.text.toString().trim { it <= ' ' }.isEmpty()) {
-            passwordErrorMessage.error = "Password is required"
+        if (passwordEditText.text.toString().trim { it <= ' ' }.isEmpty()) {
+            passwordErrorMessageLayout.error = "Password is required"
             return false
-        } else if (passwordFieldEditText.text.toString().length < 6) {
-            passwordErrorMessage.error = "Password can't be less than 6 digit"
+        } else if (passwordEditText.text.toString().length < 6) {
+            passwordErrorMessageLayout.error = "Password can't be less than 6 digit"
             return false
         } else {
-            passwordErrorMessage.error = ""
+            passwordErrorMessageLayout.error = ""
         }
         return true
     }
 
-    fun validateEmail(): Boolean {
-        if (emailField.text.toString().trim { it <= ' ' }.isEmpty()) {
-            emailErrorMessage.error = ""
+    private fun validateEmail(): Boolean {
+        if (emailEditText.text.toString().trim { it <= ' ' }.isEmpty()) {
+            emailErrorMessageLayout.error = ""
         } else {
-            val emailId = emailField.text.toString()
+            val emailId = emailEditText.text.toString()
             val isValid = Patterns.EMAIL_ADDRESS.matcher(emailId).matches()
             if (!isValid) {
-                emailErrorMessage.error = "Invalid Email address, ex: abc@example.com"
+                emailErrorMessageLayout.error = "Invalid Email address, ex: abc@example.com"
                 return false
             } else {
-                emailErrorMessage.error = ""
+                emailErrorMessageLayout.error = ""
             }
         }
         return true
@@ -107,13 +104,13 @@ class AuthActivity : AppCompatActivity() {
         }
 
         val intent = Intent(this, MainActivity::class.java)
-        intent.putExtra("personName", getPersonName())
+        intent.putExtra("personName", getPersonName(emailEditText.text.toString()))
 
         val rememberMe = binding.checkBoxRememberMe
         if (rememberMe.isChecked) {
             saveLoginData(
-                emailField.text.toString(), //Login
-                passwordFieldEditText.text.toString() //Password
+                emailEditText.text.toString(), //Login
+                passwordEditText.text.toString() //Password
             )
         }
 
@@ -131,18 +128,20 @@ class AuthActivity : AppCompatActivity() {
     /**
      * Returns parsed login in the format "Name Surname"
      */
-    private fun getPersonName(): String {
+    private fun getPersonName(email : String): String {
         //Removes part of login from '@' to the end
-        val email = emailField.text.toString().replace(Regex("@+.*"), "")
+        val login = email.replace(Regex("@+.*"), "")
 
         val pattern = Regex("[^.]+")
 
         //Gets part of login before '.'
-        val name = StringBuilder(pattern.find(email, 0)!!.value)
+        val name = StringBuilder(pattern.find(login, 0)?.value ?: "")
+
+        if (name.equals("")) return ""
 
         //Gets part of login after '.' if it exists
         val surname = StringBuilder(
-            email
+            login
                 .replace("$name", "")
                 .replace(".", "")
         )
