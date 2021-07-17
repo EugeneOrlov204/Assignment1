@@ -106,8 +106,8 @@
         app:layout_constraintEnd_toEndOf="@+id/view_bottom_container"
         app:layout_constraintTop_toTopOf="@+id/image_button_linkedin" />
 
-    <androidx.appcompat.widget.AppCompatButton
 
+    <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/button_edit_profile"
         style="@style/profile_button"
         android:layout_margin="@dimen/margin_size_normal_16dp"

@@ -11,10 +11,12 @@ import androidx.appcompat.widget.AppCompatButton
 import androidx.core.widget.addTextChangedListener
 import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
+import com.shpp.eorlov.assignment1.databinding.ActivityAuthBinding
 import com.shpp.eorlov.assignment1.utils.Constants
 
 
 class AuthActivity : AppCompatActivity() {
+    private lateinit var binding: ActivityAuthBinding
 
     private lateinit var emailErrorMessage: TextInputLayout
     private lateinit var emailField: TextInputEditText
@@ -26,14 +28,16 @@ class AuthActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_auth)
+        binding = ActivityAuthBinding.inflate(layoutInflater)
 
         initializeData()
         restoreLoginData()
 
-        findViewById<AppCompatButton>(R.id.button_register).setOnClickListener {
+        binding.buttonRegister.setOnClickListener {
             goToMainActivity()
         }
+
+        setContentView(binding.root)
     }
 
     private fun restoreLoginData() {
@@ -47,15 +51,14 @@ class AuthActivity : AppCompatActivity() {
      * Initialized objects that contains information about email and password
      */
     private fun initializeData() {
-        emailErrorMessage = findViewById(R.id.text_input_layout_email)
-        emailField = findViewById(R.id.text_input_edit_text_email)
+        emailErrorMessage = binding.textInputLayoutEmail
+        emailField = binding.textInputEditTextEmail
         emailField.addTextChangedListener {
             validateEmail()
         }
 
-
-        passwordErrorMessage = findViewById(R.id.text_input_layout_password)
-        passwordFieldEditText = findViewById(R.id.text_input_edit_text_password)
+        passwordErrorMessage = binding.textInputLayoutPassword
+        passwordFieldEditText = binding.textInputEditTextPassword
         passwordFieldEditText.addTextChangedListener {
             validatePassword()
         }
@@ -63,15 +66,6 @@ class AuthActivity : AppCompatActivity() {
         settings = getPreferences(MODE_PRIVATE)
     }
 
-//    /**
-//     * Specify an explicit soft input mode to use for the window,
-//     * as per WindowManager.LayoutParams.softInputMode.
-//     */
-//    private fun requestFocus(view: View) {
-//        if (view.requestFocus()) {
-//            window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE)
-//        }
-//    }
 
     private fun validatePassword(): Boolean {
         if (passwordFieldEditText.text.toString().trim { it <= ' ' }.isEmpty()) {
@@ -115,7 +109,7 @@ class AuthActivity : AppCompatActivity() {
         val intent = Intent(this, MainActivity::class.java)
         intent.putExtra("personName", getPersonName())
 
-        val rememberMe = findViewById<CheckBox>(R.id.check_box_remember_me)
+        val rememberMe = binding.checkBoxRememberMe
         if (rememberMe.isChecked) {
             saveLoginData(
                 emailField.text.toString(), //Login

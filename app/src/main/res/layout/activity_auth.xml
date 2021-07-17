@@ -13,7 +13,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_begin="146dp" />
+        app:layout_constraintGuide_percent="0.2" />
 
     <com.google.android.material.textview.MaterialTextView
         android:id="@+id/text_view_lets_get_acquainted"
@@ -42,7 +42,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_begin="285dp" />
+        app:layout_constraintGuide_percent="0.35"
+        />
 
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/text_view_email"
@@ -117,6 +118,7 @@
         android:buttonTint="@color/orange"
         android:fontFamily="@font/open_sans"
         android:text="@string/remember_me"
+        android:checked="true"
         android:textColor="@color/alabaster"
         android:textSize="@dimen/text_size_normal_18sp"
         app:layout_constraintStart_toStartOf="@+id/text_input_layout_password"
