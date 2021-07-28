@@ -30,6 +30,7 @@ class AuthActivity : AppCompatActivity() {
         initializeData()
         restoreLoginData()
         restoreUIElementsLogic()
+
         binding.buttonRegister.setOnClickListener {
             goToMainActivity()
         }
