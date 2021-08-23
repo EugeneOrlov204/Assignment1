@@ -1,120 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-
-    <View
-        android:id="@+id/view_top_container"
-        android:layout_width="match_parent"
+    <androidx.fragment.app.FragmentContainerView
+        android:id="@+id/fragmentContainerViewMyProfile"
+        android:name="androidx.navigation.fragment.NavHostFragment"
+        android:layout_width="0dp"
         android:layout_height="0dp"
-        android:background="@color/steel_gray"
-        app:layout_constraintBottom_toTopOf="@id/view_bottom_container"
+        app:defaultNavHost="true"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_weight="0.5"
-        tools:layout_editor_absoluteX="0dp" />
-
-    <androidx.appcompat.widget.AppCompatTextView
-        android:id="@+id/text_view_settings"
-        style="@style/regular_text"
-        android:layout_marginStart="@dimen/margin_size_normal_16dp"
-        android:layout_marginTop="@dimen/margin_size_normal_16dp"
-        android:text="@string/settings"
-        app:layout_constraintStart_toStartOf="@id/view_top_container"
-        app:layout_constraintTop_toTopOf="@id/view_top_container" />
-
-    <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/guide_line_person_image"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.09" />
-
-    <androidx.appcompat.widget.AppCompatImageView
-        android:id="@+id/image_view_person_image"
-        android:layout_width="@dimen/size_of_picture"
-        android:layout_height="@dimen/size_of_picture"
-        app:layout_constraintEnd_toEndOf="@id/view_top_container"
-        app:layout_constraintStart_toStartOf="@id/view_top_container"
-        app:layout_constraintTop_toTopOf="@id/guide_line_person_image"
-        tools:src="@tools:sample/avatars" />
-
-
-    <androidx.appcompat.widget.AppCompatTextView
-        android:id="@+id/text_view_person_name"
-        style="@style/person_name"
-        android:layout_marginTop="@dimen/margin_top_person_name"
-        android:text="@string/person_name"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/image_view_person_image" />
-
-    <androidx.appcompat.widget.AppCompatTextView
-        android:id="@+id/text_view_person_profession"
-        style="@style/description_text"
-        android:layout_marginTop="@dimen/margin_small_8dp"
-        android:text="@string/profession_name"
-        app:layout_constraintEnd_toEndOf="@id/text_view_person_name"
-        app:layout_constraintStart_toStartOf="@id/text_view_person_name"
-        app:layout_constraintTop_toBottomOf="@id/text_view_person_name" />
-
-    <androidx.appcompat.widget.AppCompatTextView
-        android:id="@+id/text_view_person_residence"
-        style="@style/description_text"
-        android:layout_marginTop="@dimen/margin_size_normal_16dp"
-        android:text="@string/residence_address"
-        app:layout_constraintEnd_toEndOf="@id/text_view_person_profession"
-        app:layout_constraintStart_toStartOf="@id/text_view_person_profession"
-        app:layout_constraintTop_toBottomOf="@id/text_view_person_profession" />
-
-
-    <View
-        android:id="@+id/view_bottom_container"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:background="@color/alabaster"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/view_top_container"
-        app:layout_constraintVertical_weight="0.5" />
-
-    <androidx.appcompat.widget.AppCompatImageButton
-        android:id="@+id/image_button_facebook"
-        style="@style/social_network_button"
-        android:layout_marginHorizontal="@dimen/margin_horizontal_socials_48dp"
-        android:layout_marginStart="@dimen/margin_horizontal_socials_48dp"
-        android:src="@drawable/main_facebook"
-        app:layout_constraintStart_toStartOf="@+id/view_bottom_container"
-        app:layout_constraintTop_toTopOf="@+id/image_button_linkedin" />
-
-    <androidx.appcompat.widget.AppCompatImageButton
-        android:id="@+id/image_button_linkedin"
-        style="@style/social_network_button"
-        android:layout_marginTop="@dimen/margin_top_socials_62dp"
-        android:src="@drawable/main_linkedin"
-        app:layout_constraintEnd_toStartOf="@+id/image_button_vkontakte"
-        app:layout_constraintStart_toEndOf="@+id/image_button_facebook"
-        app:layout_constraintTop_toTopOf="@+id/view_bottom_container" />
-
-    <androidx.appcompat.widget.AppCompatImageButton
-        android:id="@+id/image_button_vkontakte"
-        style="@style/social_network_button"
-        android:layout_marginHorizontal="@dimen/margin_horizontal_socials_48dp"
-        android:src="@drawable/main_vkontakte"
-        app:layout_constraintEnd_toEndOf="@+id/view_bottom_container"
-        app:layout_constraintTop_toTopOf="@+id/image_button_linkedin" />
-
-
-    <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/button_edit_profile"
-        style="@style/profile_button"
-        android:layout_margin="@dimen/margin_size_normal_16dp"
-        android:background="@drawable/round_corner_7dp"
-        android:text="@string/edit_profile"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="@id/view_bottom_container"
-        app:layout_constraintStart_toStartOf="@id/view_bottom_container" />
+        app:navGraph="@navigation/nav_graph" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

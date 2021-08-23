@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/constraintLayoutMainFragment"
+    android:name="com.shpp.eorlov.assignment1.ui.mainfragment.MyFragment"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ui.mainfragment.MainFragment">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/constraintLayoutHeader"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/header_height_117dp"
+        android:background="@color/steel_gray"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <androidx.appcompat.widget.AppCompatImageButton
+            android:id="@+id/imageButtonMainCloseButton"
+            style="@style/image_button"
+            android:layout_marginStart="@dimen/close_button_margin_start_21dp"
+            android:src="@drawable/ic_arrow_back"
+            app:layout_constraintBottom_toBottomOf="@id/textViewContacts"
+            app:layout_constraintEnd_toStartOf="@+id/textViewContacts"
+            app:layout_constraintHorizontal_chainStyle="spread_inside"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@id/textViewContacts" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/textViewContacts"
+            style="@style/header_text"
+            android:layout_marginTop="@dimen/contacts_text_margin_top_10dp"
+            android:text="@string/contacts"
+            android:textSize="@dimen/contacts_text_size_24sp"
+            app:layout_constraintEnd_toStartOf="@id/imageButtonSearchButton"
+            app:layout_constraintStart_toEndOf="@id/imageButtonMainCloseButton"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <androidx.appcompat.widget.AppCompatImageButton
+            android:id="@+id/imageButtonSearchButton"
+            style="@style/image_button"
+            android:layout_marginEnd="@dimen/search_button_margin_end_19dp"
+            android:src="@drawable/ic_search_button"
+            app:layout_constraintBottom_toBottomOf="@id/textViewContacts"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/textViewContacts"
+            app:layout_constraintTop_toTopOf="@id/textViewContacts" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/textViewAddContacts"
+            style="@style/header_text"
+            android:layout_marginStart="@dimen/margin_normal_16dp"
+            android:layout_marginBottom="@dimen/add_contacts_margin_bottom_26dp"
+            android:text="@string/add_contacts"
+            android:textSize="@dimen/main_activity_text_size_small_14sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/textViewSelect"
+            app:layout_constraintHorizontal_chainStyle="spread_inside"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/textViewSelect"
+            style="@style/header_text"
+            android:layout_marginTop="@dimen/select_margin_top_32dp"
+            android:layout_marginEnd="@dimen/select_margin_end_17dp"
+            android:layout_marginBottom="@dimen/select_margin_bottom_26dp"
+            android:text="@string/select"
+            android:textSize="@dimen/main_activity_text_size_small_14sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/textViewAddContacts" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.core.widget.ContentLoadingProgressBar
+        android:id="@+id/contentLoadingProgressBarRecyclerView"
+        style="?android:attr/progressBarStyleLarge"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recycler_view"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/constraintLayoutHeader" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
