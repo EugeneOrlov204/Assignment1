@@ -1,8 +1,6 @@
 package com.shpp.eorlov.assignment1.ui.dialogfragment
 
 import android.app.Activity.RESULT_OK
-import android.app.AlertDialog
-import android.app.Dialog
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
@@ -16,7 +14,6 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.widget.AppCompatImageView
 import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.DialogFragment
-import androidx.fragment.app.setFragmentResult
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import com.google.android.material.textfield.TextInputEditText
@@ -26,11 +23,8 @@ import com.shpp.eorlov.assignment1.databinding.AddContactDialogBinding
 import com.shpp.eorlov.assignment1.model.UserModel
 import com.shpp.eorlov.assignment1.ui.MainActivity
 import com.shpp.eorlov.assignment1.ui.SharedViewModel
-import com.shpp.eorlov.assignment1.ui.mycontacts.MyContactsFragmentViewModel
 import com.shpp.eorlov.assignment1.utils.Constants
-import com.shpp.eorlov.assignment1.utils.Constants.DIALOG_FRAGMENT_REQUEST_KEY
 import com.shpp.eorlov.assignment1.utils.Constants.GENERATE_ID_CODE
-import com.shpp.eorlov.assignment1.utils.Constants.NEW_CONTACT_KEY
 import com.shpp.eorlov.assignment1.utils.ValidateOperation
 import com.shpp.eorlov.assignment1.utils.evaluateErrorMessage
 import com.shpp.eorlov.assignment1.utils.ext.clicks
@@ -46,7 +40,6 @@ class ContactDialogFragment : DialogFragment() {
 
     @Inject
     lateinit var viewModelFactory: ViewModelProvider.Factory
-
 
     private lateinit var viewModel: ContactDialogFragmentViewModel
     private lateinit var sharedViewModel: SharedViewModel
@@ -71,23 +64,22 @@ class ContactDialogFragment : DialogFragment() {
         viewModel =
             ViewModelProvider(this, viewModelFactory)[ContactDialogFragmentViewModel::class.java]
 
-        sharedViewModel = ViewModelProvider(this, viewModelFactory)[SharedViewModel::class.java]
+        sharedViewModel = ViewModelProvider(requireActivity()).get(SharedViewModel::class.java)
     }
 
-    override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View {
         dialogBinding = AddContactDialogBinding.inflate(LayoutInflater.from(context))
-
-        initializeData()
-        setListeners()
-
-
-        return AlertDialog.Builder(requireContext())
-            .setView(dialogBinding.root)
-            .create()
+        return dialogBinding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        initializeData()
+        setListeners()
         setObserver()
     }
 
@@ -106,10 +98,10 @@ class ContactDialogFragment : DialogFragment() {
 
     private fun setObserver() {
         viewModel.newUser.observe(viewLifecycleOwner) { user ->
-            user?.let {
-                sharedViewModel.newUser.value = user
-            }
+            sharedViewModel.newUser.value = user
+            dismiss()
         }
+
     }
 
     /**
@@ -130,29 +122,25 @@ class ContactDialogFragment : DialogFragment() {
 
         val imageData = pathToLoadedImageFromGallery
 
-        dialogBinding.apply {
 
-            val newContact =
-                UserModel(
-                    GENERATE_ID_CODE,
-                    textInputEditTextUsername.text.toString(),
-                    textInputEditTextCareer.text.toString(),
-                    imageData,
-                    textInputEditTextAddress.text.toString(),
-                    textInputEditTextBirthdate.text.toString(),
-                    textInputEditTextPhone.text.toString(),
-                    textInputEditTextEmail.text.toString()
-                )
+        val newContact =
+            UserModel(
+                GENERATE_ID_CODE,
+                dialogBinding.textInputEditTextUsername.text.toString(),
+                dialogBinding.textInputEditTextCareer.text.toString(),
+                imageData,
+                dialogBinding.textInputEditTextAddress.text.toString(),
+                dialogBinding.textInputEditTextBirthdate.text.toString(),
+                dialogBinding.textInputEditTextPhone.text.toString(),
+                dialogBinding.textInputEditTextEmail.text.toString()
+            )
 
-//            viewModel.addItem(newContact)
-            sharedViewModel.newUser.value = newContact
 //            val bundle = Bundle()
 //            bundle.putParcelable(NEW_CONTACT_KEY, newContact)
 //            setFragmentResult(DIALOG_FRAGMENT_REQUEST_KEY, bundle)
 
-        }
         pathToLoadedImageFromGallery = ""
-        dismiss()
+        viewModel.addItem(newContact)
     }
 
     /**

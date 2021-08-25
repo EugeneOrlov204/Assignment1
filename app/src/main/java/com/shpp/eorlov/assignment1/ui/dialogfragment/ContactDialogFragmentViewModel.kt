@@ -18,9 +18,8 @@ class ContactDialogFragmentViewModel @Inject constructor() : ViewModel() {
     /**
      * Adds item to dataset in the end of list
      */
-    fun addItem(newUser: UserModel) {
-        this.newUser.value = newUser
-        this.newUser.value = this.newUser.value
+    fun addItem(user: UserModel) {
+        newUser.value = user
     }
 
     /**
@@ -45,8 +44,6 @@ class ContactDialogFragmentViewModel @Inject constructor() : ViewModel() {
             ValidateOperation.BIRTHDAY -> validator.validateBirthdate(text)
             else -> validator.checkIfFieldIsNotEmpty(text)
         }
-        val temp = evaluateErrorMessage(validationError)
-        println("(${temp}) = Error? -> $validateOperation")
-        return temp
+        return evaluateErrorMessage(validationError)
     }
 }

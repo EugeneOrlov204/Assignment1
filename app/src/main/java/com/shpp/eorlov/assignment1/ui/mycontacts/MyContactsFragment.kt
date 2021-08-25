@@ -64,10 +64,11 @@ class MyContactsFragment : Fragment(R.layout.fragment_content), ContactClickList
         super.onAttach(context)
 
         (activity as MainActivity).contactComponent.inject(this)
+
         viewModel =
             ViewModelProvider(this, viewModelFactory)[MyContactsFragmentViewModel::class.java]
 
-        sharedViewModel = ViewModelProvider(this, viewModelFactory)[SharedViewModel::class.java]
+        sharedViewModel = ViewModelProvider(requireActivity()).get(SharedViewModel::class.java)
     }
 
     override fun onCreateView(
@@ -194,7 +195,6 @@ class MyContactsFragment : Fragment(R.layout.fragment_content), ContactClickList
 
         viewModel.apply {
             userListLiveData.observe(viewLifecycleOwner) { list ->
-
                 contactsListAdapter.submitList(list.toMutableList())
 
 
@@ -234,9 +234,7 @@ class MyContactsFragment : Fragment(R.layout.fragment_content), ContactClickList
 
         sharedViewModel.newUser.observe(viewLifecycleOwner) { newUser ->
             viewModel.addItem(newUser)
-//                    sharedViewModel.newUser.value = null
-
-
+            println("SHARED WORKS!")
         }
     }
 
