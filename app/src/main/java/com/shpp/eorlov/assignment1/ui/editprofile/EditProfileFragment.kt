@@ -29,5 +29,6 @@ class EditProfileFragment : Fragment() {
         return binding.root
     }
 
+    
 
 }

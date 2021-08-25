@@ -55,7 +55,8 @@
         app:layout_constraintStart_toStartOf="@id/viewTopContainer"
         app:layout_constraintTop_toTopOf="@id/guideLineUserImage"
         app:roundAsCircle="true"
-        fresco:placeholderImage="@mipmap/ic_launcher" />
+        app:placeholderImageScaleType="fitXY"
+        fresco:placeholderImage="@drawable/default_user_image" />
 
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/textViewUserNameDetailView"

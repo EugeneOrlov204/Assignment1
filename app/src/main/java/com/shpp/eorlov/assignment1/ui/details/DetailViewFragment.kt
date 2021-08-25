@@ -21,12 +21,13 @@ class DetailViewFragment : Fragment() {
 
     private lateinit var binding: FragmentDetailViewBinding
 
+
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         sharedElementEnterTransition =
             TransitionInflater.from(context).inflateTransition(android.R.transition.explode)
     }
-
 
     override fun onCreateView(
         inflater: LayoutInflater,

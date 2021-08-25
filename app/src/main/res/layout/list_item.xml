@@ -18,7 +18,8 @@
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:roundAsCircle="true"
-        fresco:placeholderImage="@mipmap/ic_launcher" />
+        app:placeholderImageScaleType="fitXY"
+        fresco:placeholderImage="@drawable/default_user_image" />
 
 
     <androidx.appcompat.widget.AppCompatTextView

@@ -48,7 +48,7 @@ class MyProfileFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        binding.imageViewUserImageMyProfile.loadImage(R.mipmap.ic_launcher)
+        binding.imageViewUserImageMyProfile.loadImage(R.drawable.default_user_image)
 
         userModel = UserModel(
             binding.textViewUserNameMyProfile.text.toString(),

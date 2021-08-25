@@ -21,7 +21,6 @@ class ContactsDatabase @Inject constructor(private val context: Context) : Local
         for (i in 0..9) {
             result.add(
                 UserModel(
-                    i,
                     listOfNames[i],
                     listOfProfessions[i],
                     urlOfPhoto + i,
