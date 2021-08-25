@@ -18,7 +18,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.snackbar.Snackbar
 import com.shpp.eorlov.assignment1.R
-import com.shpp.eorlov.assignment1.databinding.FragmentContentBinding
+import com.shpp.eorlov.assignment1.databinding.FragmentMyContactsBinding
 import com.shpp.eorlov.assignment1.model.UserModel
 import com.shpp.eorlov.assignment1.ui.MainActivity
 import com.shpp.eorlov.assignment1.ui.SharedViewModel
@@ -35,7 +35,7 @@ import javax.inject.Inject
 import kotlin.math.abs
 
 
-class MyContactsFragment : Fragment(R.layout.fragment_content), ContactClickListener {
+class MyContactsFragment : Fragment(R.layout.fragment_my_contacts), ContactClickListener {
 
     @Inject
     lateinit var viewModelFactory: ViewModelProvider.Factory
@@ -49,7 +49,7 @@ class MyContactsFragment : Fragment(R.layout.fragment_content), ContactClickList
         )
     }
 
-    private lateinit var binding: FragmentContentBinding
+    private lateinit var binding: FragmentMyContactsBinding
     private lateinit var dialog: ContactDialogFragment
 
 
@@ -71,7 +71,7 @@ class MyContactsFragment : Fragment(R.layout.fragment_content), ContactClickList
     ): View {
         super.onCreateView(inflater, container, savedInstanceState)
 
-        binding = FragmentContentBinding.inflate(inflater, container, false)
+        binding = FragmentMyContactsBinding.inflate(inflater, container, false)
         return binding.root
     }
 
@@ -112,6 +112,10 @@ class MyContactsFragment : Fragment(R.layout.fragment_content), ContactClickList
 
     override fun onContactSelected(contact: UserModel) {
         sharedElementTransitionWithSelectedContact(contact)
+    }
+
+    override fun onContactsSelected() {
+        println("LONG SELECTED!")
     }
 
 

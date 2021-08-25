@@ -2,11 +2,14 @@
 
 <!--Code from here: https://stackoverflow.com/questions/35783303/how-to-add-rounded-corner-as-a-background-of-recyclerview-in-android-->
 <shape xmlns:android="http://schemas.android.com/apk/res/android">
-    <solid android:color="#fffccc" />
+    <solid android:color="@android:color/transparent" />
+    <stroke
+        android:width="@dimen/view_holder_stroke_width_1dp"
+        android:color="#B2B2B3" />
 
     <corners
-        android:bottomLeftRadius="@dimen/view_holder_radius_30dp"
-        android:bottomRightRadius="@dimen/view_holder_radius_30dp"
-        android:topLeftRadius="@dimen/view_holder_radius_30dp"
-        android:topRightRadius="@dimen/view_holder_radius_30dp" />
+        android:bottomLeftRadius="@dimen/view_holder_radius_6dp"
+        android:bottomRightRadius="@dimen/view_holder_radius_6dp"
+        android:topLeftRadius="@dimen/view_holder_radius_6dp"
+        android:topRightRadius="@dimen/view_holder_radius_6dp" />
 </shape>

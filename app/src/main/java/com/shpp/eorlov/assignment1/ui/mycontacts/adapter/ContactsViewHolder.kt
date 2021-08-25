@@ -1,6 +1,8 @@
 package com.shpp.eorlov.assignment1.ui.mycontacts.adapter
 
 import android.os.SystemClock
+import android.widget.Toast
+import androidx.core.content.ContentProviderCompat.requireContext
 import androidx.recyclerview.widget.RecyclerView
 import com.shpp.eorlov.assignment1.databinding.ListItemBinding
 import com.shpp.eorlov.assignment1.model.UserModel
@@ -36,11 +38,16 @@ class ContactsViewHolder(
             }
         }
 
-        binding.constraintLayoutContact.setOnClickListener {
+        binding.constraintLayoutContactListItem.setOnClickListener {
             if (kotlin.math.abs(SystemClock.uptimeMillis() - previousClickTimestamp) > Constants.BUTTON_CLICK_DELAY) {
                 onContactClickListener.onContactSelected(contact)
                 previousClickTimestamp = SystemClock.uptimeMillis()
             }
+        }
+
+        binding.constraintLayoutContactListItem.setOnLongClickListener {
+            onContactClickListener.onContactsSelected()
+            true
         }
     }
 }

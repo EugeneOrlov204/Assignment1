@@ -11,6 +11,8 @@
     <dimen name="margin_start_socials_48dp">48dp</dimen>
     <dimen name="margin_end_socials_48dp">48dp</dimen>
     <dimen name="margin_top_socials_62dp">62dp</dimen>
+    <dimen name="circle_button_radius_60dp">60dp</dimen>
+
 
     <!--Main Activity-->
     <dimen name="size_of_picture_108dp">108dp</dimen>
@@ -19,7 +21,9 @@
     <dimen name="margin_top_password_24dp">24dp</dimen>
 
     <!--Round View Holder-->
-    <dimen name="view_holder_radius_30dp">30dp</dimen>
+    <dimen name="view_holder_radius_6dp">6dp</dimen>
+    <dimen name="view_holder_stroke_width_1dp">1dp</dimen>
+
 
     <!--List Item-->
     <dimen name="person_image_size_50dp">50dp</dimen>
@@ -52,7 +56,6 @@
 
 
     <!--Social network button-->
-    <dimen name="radius_socials_60dp">60dp</dimen>
     <dimen name="border_radius_socials_3dp">3dp</dimen>
 
 </resources>

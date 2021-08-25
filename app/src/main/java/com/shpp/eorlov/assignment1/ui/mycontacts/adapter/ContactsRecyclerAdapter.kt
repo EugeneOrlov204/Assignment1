@@ -12,6 +12,9 @@ class ContactsRecyclerAdapter(
     private val onContactClickListener: ContactClickListener,
 ) : ListAdapter<UserModel, ContactsViewHolder>(UserItemDiffCallback()) {
 
+    //todo implement https://stackoverflow.com/questions/26245139/how-to-create-recyclerview-with-multiple-view-types
+    //fixme remove white background in go up button
+
     /**
      * Create new views (invoked by the layout manager)
      */
