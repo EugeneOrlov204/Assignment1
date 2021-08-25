@@ -21,8 +21,8 @@ class ContactsViewHolder(
             binding.textViewPersonName.text = name
             binding.textViewPersonProfession.text = profession
             binding.draweeViewPersonImage.setImageURI(photo)
-            setListeners()
         }
+        setListeners()
     }
 
 
@@ -36,12 +36,10 @@ class ContactsViewHolder(
             }
         }
 
-
         binding.constraintLayoutContact.setOnClickListener {
             if (kotlin.math.abs(SystemClock.uptimeMillis() - previousClickTimestamp) > Constants.BUTTON_CLICK_DELAY) {
                 onContactClickListener.onContactSelected(contact)
                 previousClickTimestamp = SystemClock.uptimeMillis()
-
             }
         }
     }

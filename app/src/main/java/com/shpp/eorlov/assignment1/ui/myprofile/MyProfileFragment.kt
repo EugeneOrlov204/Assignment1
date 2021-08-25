@@ -7,6 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import com.shpp.eorlov.assignment1.R
 import com.shpp.eorlov.assignment1.databinding.FragmentMyProfileBinding
@@ -14,8 +15,14 @@ import com.shpp.eorlov.assignment1.model.UserModel
 import com.shpp.eorlov.assignment1.ui.MainActivity
 import com.shpp.eorlov.assignment1.ui.viewpager.CollectionContactFragmentDirections
 import com.shpp.eorlov.assignment1.utils.ext.loadImage
+import javax.inject.Inject
 
 class MyProfileFragment : Fragment() {
+
+    @Inject
+    lateinit var viewModelFactory: ViewModelProvider.Factory
+
+    private lateinit var viewModel: MyProfileViewModel
     private lateinit var binding: FragmentMyProfileBinding
 
     private lateinit var userModel: UserModel //todo Replace with ViewModel
@@ -25,6 +32,7 @@ class MyProfileFragment : Fragment() {
         super.onAttach(context)
 
         (activity as MainActivity).contactComponent.inject(this)
+        viewModel = ViewModelProvider(this, viewModelFactory)[MyProfileViewModel::class.java]
     }
 
     override fun onCreateView(
@@ -41,8 +49,8 @@ class MyProfileFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding.imageViewUserImageMyProfile.loadImage(R.mipmap.ic_launcher)
+
         userModel = UserModel(
-            111, //todo implement id generator
             binding.textViewUserNameMyProfile.text.toString(),
             binding.textViewUserProfessionMyProfile.text.toString(),
             Uri.parse(
@@ -66,7 +74,6 @@ class MyProfileFragment : Fragment() {
                     userModel
                 )
             findNavController().navigate(action)
-
         }
     }
 

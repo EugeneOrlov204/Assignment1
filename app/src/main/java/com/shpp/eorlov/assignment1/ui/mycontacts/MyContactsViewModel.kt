@@ -8,7 +8,7 @@ import com.shpp.eorlov.assignment1.utils.Results
 import javax.inject.Inject
 
 
-class MyContactsFragmentViewModel @Inject constructor() : ViewModel() {
+class MyContactsViewModel @Inject constructor() : ViewModel() {
 
     val userListLiveData = MutableLiveData<MutableList<UserModel>>(ArrayList())
     val loadEvent = MutableLiveData<Results>()

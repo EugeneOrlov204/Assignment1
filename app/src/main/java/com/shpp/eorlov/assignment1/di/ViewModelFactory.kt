@@ -3,9 +3,9 @@ package com.shpp.eorlov.assignment1.di
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.shpp.eorlov.assignment1.ui.SharedViewModel
-import com.shpp.eorlov.assignment1.ui.dialogfragment.ContactDialogFragment
-import com.shpp.eorlov.assignment1.ui.dialogfragment.ContactDialogFragmentViewModel
-import com.shpp.eorlov.assignment1.ui.mycontacts.MyContactsFragmentViewModel
+import com.shpp.eorlov.assignment1.ui.dialogfragment.ContactDialogViewModel
+import com.shpp.eorlov.assignment1.ui.mycontacts.MyContactsViewModel
+import com.shpp.eorlov.assignment1.ui.myprofile.MyProfileViewModel
 import dagger.Binds
 import dagger.MapKey
 import dagger.Module
@@ -44,16 +44,21 @@ abstract class ViewModelModule {
 
     @Binds
     @IntoMap
-    @ViewModelKey(MyContactsFragmentViewModel::class)
-    internal abstract fun contactsViewModel(viewModel: MyContactsFragmentViewModel): ViewModel
+    @ViewModelKey(MyContactsViewModel::class)
+    internal abstract fun contactsViewModel(viewModel: MyContactsViewModel): ViewModel
 
     @Binds
     @IntoMap
-    @ViewModelKey(ContactDialogFragmentViewModel::class)
-    internal abstract fun contactDialogViewModel(viewModel: ContactDialogFragmentViewModel): ViewModel
+    @ViewModelKey(ContactDialogViewModel::class)
+    internal abstract fun contactDialogViewModel(viewModel: ContactDialogViewModel): ViewModel
 
     @Binds
     @IntoMap
     @ViewModelKey(SharedViewModel::class)
     internal abstract fun sharedViewModel(viewModel: SharedViewModel): ViewModel
+
+    @Binds
+    @IntoMap
+    @ViewModelKey(MyProfileViewModel::class)
+    internal abstract fun myProfileViewModel(viewModel: MyProfileViewModel): ViewModel
 }

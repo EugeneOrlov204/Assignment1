@@ -41,7 +41,7 @@ class MyContactsFragment : Fragment(R.layout.fragment_content), ContactClickList
     lateinit var viewModelFactory: ViewModelProvider.Factory
 
     private lateinit var sharedViewModel: SharedViewModel
-    private lateinit var viewModel: MyContactsFragmentViewModel
+    private lateinit var viewModel: MyContactsViewModel
 
     private val contactsListAdapter: ContactsRecyclerAdapter by lazy {
         ContactsRecyclerAdapter(
@@ -59,7 +59,7 @@ class MyContactsFragment : Fragment(R.layout.fragment_content), ContactClickList
         (activity as MainActivity).contactComponent.inject(this)
 
         viewModel =
-            ViewModelProvider(this, viewModelFactory)[MyContactsFragmentViewModel::class.java]
+            ViewModelProvider(this, viewModelFactory)[MyContactsViewModel::class.java]
 
         sharedViewModel = ViewModelProvider(requireActivity()).get(SharedViewModel::class.java)
     }

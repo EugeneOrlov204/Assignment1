@@ -23,7 +23,6 @@ import com.shpp.eorlov.assignment1.model.UserModel
 import com.shpp.eorlov.assignment1.ui.MainActivity
 import com.shpp.eorlov.assignment1.ui.SharedViewModel
 import com.shpp.eorlov.assignment1.utils.Constants
-import com.shpp.eorlov.assignment1.utils.Constants.GENERATE_ID_CODE
 import com.shpp.eorlov.assignment1.utils.ValidateOperation
 import com.shpp.eorlov.assignment1.utils.evaluateErrorMessage
 import com.shpp.eorlov.assignment1.utils.ext.loadImage
@@ -37,7 +36,7 @@ class ContactDialogFragment : DialogFragment() {
     @Inject
     lateinit var viewModelFactory: ViewModelProvider.Factory
 
-    private lateinit var viewModel: ContactDialogFragmentViewModel
+    private lateinit var viewModel: ContactDialogViewModel
     private lateinit var sharedViewModel: SharedViewModel
     private lateinit var dialogBinding: AddContactDialogBinding
 
@@ -58,7 +57,7 @@ class ContactDialogFragment : DialogFragment() {
 
         (activity as MainActivity).contactComponent.inject(this)
         viewModel =
-            ViewModelProvider(this, viewModelFactory)[ContactDialogFragmentViewModel::class.java]
+            ViewModelProvider(this, viewModelFactory)[ContactDialogViewModel::class.java]
 
         sharedViewModel = ViewModelProvider(requireActivity()).get(SharedViewModel::class.java)
     }
@@ -119,7 +118,6 @@ class ContactDialogFragment : DialogFragment() {
 
         val newContact =
             UserModel(
-                GENERATE_ID_CODE,
                 dialogBinding.textInputEditTextUsername.text.toString(),
                 dialogBinding.textInputEditTextCareer.text.toString(),
                 imageData,

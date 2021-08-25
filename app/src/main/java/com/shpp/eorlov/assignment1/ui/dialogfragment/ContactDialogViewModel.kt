@@ -8,7 +8,7 @@ import com.shpp.eorlov.assignment1.utils.evaluateErrorMessage
 import com.shpp.eorlov.assignment1.validator.Validator
 import javax.inject.Inject
 
-class ContactDialogFragmentViewModel @Inject constructor() : ViewModel() {
+class ContactDialogViewModel @Inject constructor() : ViewModel() {
 
     val newUser = MutableLiveData<UserModel>()
 
@@ -28,7 +28,6 @@ class ContactDialogFragmentViewModel @Inject constructor() : ViewModel() {
     fun isValidField(text: String, validateOperation: ValidateOperation): String {
         return getErrorMessage(text, validateOperation)
     }
-
 
     /**
      * Returns empty string if given edit text has valid input
