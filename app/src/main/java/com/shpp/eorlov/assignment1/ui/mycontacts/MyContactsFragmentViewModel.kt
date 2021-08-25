@@ -1,4 +1,4 @@
-package com.shpp.eorlov.assignment1.ui.mainfragment
+package com.shpp.eorlov.assignment1.ui.mycontacts
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -8,7 +8,7 @@ import com.shpp.eorlov.assignment1.utils.Results
 import javax.inject.Inject
 
 
-class MainFragmentViewModel @Inject constructor() : ViewModel() {
+class MyContactsFragmentViewModel @Inject constructor() : ViewModel() {
 
     val userListLiveData = MutableLiveData<MutableList<UserModel>>(ArrayList())
     val loadEvent = MutableLiveData<Results>()

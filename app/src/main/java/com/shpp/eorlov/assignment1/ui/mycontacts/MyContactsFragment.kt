@@ -1,4 +1,4 @@
-package com.shpp.eorlov.assignment1.ui.mainfragment
+package com.shpp.eorlov.assignment1.ui.mycontacts
 
 import android.content.Context
 import android.os.Bundle
@@ -24,8 +24,9 @@ import com.shpp.eorlov.assignment1.ui.MainActivity
 import com.shpp.eorlov.assignment1.model.UserModel
 import com.shpp.eorlov.assignment1.ui.SharedViewModel
 import com.shpp.eorlov.assignment1.ui.dialogfragment.ContactDialogFragment
-import com.shpp.eorlov.assignment1.ui.mainfragment.adapter.ContactClickListener
-import com.shpp.eorlov.assignment1.ui.mainfragment.adapter.ContactsRecyclerAdapter
+import com.shpp.eorlov.assignment1.ui.mycontacts.adapter.ContactClickListener
+import com.shpp.eorlov.assignment1.ui.mycontacts.adapter.ContactsRecyclerAdapter
+import com.shpp.eorlov.assignment1.ui.viewpager.CollectionContactFragmentDirections
 import com.shpp.eorlov.assignment1.utils.Constants.BUTTON_CLICK_DELAY
 import com.shpp.eorlov.assignment1.utils.Constants.CONTACT_DIALOG_TAG
 import com.shpp.eorlov.assignment1.utils.Constants.DIALOG_FRAGMENT_REQUEST_KEY
@@ -40,10 +41,10 @@ import javax.inject.Inject
 import kotlin.math.abs
 
 
-class MainFragment : Fragment(R.layout.fragment_content), ContactClickListener {
+class MyContactsFragment : Fragment(R.layout.fragment_content), ContactClickListener {
 
     @Inject
-    lateinit var viewModel: MainFragmentViewModel
+    lateinit var viewModel: MyContactsFragmentViewModel
 
     @Inject
     lateinit var sharedViewModel: SharedViewModel
@@ -69,6 +70,8 @@ class MainFragment : Fragment(R.layout.fragment_content), ContactClickListener {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
+        super.onCreateView(inflater, container, savedInstanceState)
+
         binding = FragmentContentBinding.inflate(inflater, container, false)
         return binding.root
     }
@@ -166,16 +169,16 @@ class MainFragment : Fragment(R.layout.fragment_content), ContactClickListener {
             //Implement swipe-to-delete
             ItemTouchHelper(itemTouchHelperCallBack).attachToRecyclerView(this)
         }
-
     }
 
     private fun sharedElementTransitionWithSelectedContact(
         contact: UserModel,
     ) {
 
-        val action = MainFragmentDirections.actionMainFragmentToDetailViewFragment(
-            contact
-        )
+        val action =
+            CollectionContactFragmentDirections.actionCollectionContactFragmentToDetailViewFragment(
+                contact
+            )
         findNavController().navigate(action)
     }
 
@@ -187,7 +190,7 @@ class MainFragment : Fragment(R.layout.fragment_content), ContactClickListener {
         viewModel.apply {
             userListLiveData.observe(viewLifecycleOwner) { list ->
 
-                contactsListAdapter.submitList(list)
+                contactsListAdapter.submitList(list.toMutableList())
 
 
                 // Start the transition once all views have been

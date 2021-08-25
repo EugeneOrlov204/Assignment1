@@ -5,7 +5,7 @@ import com.shpp.eorlov.assignment1.model.UserModel
 
 class UserItemDiffCallback : DiffUtil.ItemCallback<UserModel>() {
     override fun areItemsTheSame(oldItem: UserModel, newItem: UserModel): Boolean =
-        oldItem.email == newItem.email
+        oldItem == newItem
 
     override fun areContentsTheSame(oldItem: UserModel, newItem: UserModel): Boolean =
         oldItem == newItem

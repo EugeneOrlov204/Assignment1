@@ -16,6 +16,7 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.widget.AppCompatImageView
 import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.DialogFragment
+import androidx.fragment.app.setFragmentResult
 import androidx.lifecycle.lifecycleScope
 import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
@@ -25,7 +26,9 @@ import com.shpp.eorlov.assignment1.model.UserModel
 import com.shpp.eorlov.assignment1.ui.MainActivity
 import com.shpp.eorlov.assignment1.ui.SharedViewModel
 import com.shpp.eorlov.assignment1.utils.Constants
+import com.shpp.eorlov.assignment1.utils.Constants.DIALOG_FRAGMENT_REQUEST_KEY
 import com.shpp.eorlov.assignment1.utils.Constants.GENERATE_ID_CODE
+import com.shpp.eorlov.assignment1.utils.Constants.NEW_CONTACT_KEY
 import com.shpp.eorlov.assignment1.utils.ValidateOperation
 import com.shpp.eorlov.assignment1.utils.evaluateErrorMessage
 import com.shpp.eorlov.assignment1.utils.ext.clicks
@@ -100,7 +103,6 @@ class ContactDialogFragment : DialogFragment() {
         viewModel.newUser.observe(viewLifecycleOwner) { user ->
             user?.let {
                 sharedViewModel.newUser.value = user
-                sharedViewModel.newUser.value = sharedViewModel.newUser.value
             }
         }
     }
@@ -139,9 +141,9 @@ class ContactDialogFragment : DialogFragment() {
 
             viewModel.addItem(newContact)
 
-//            val bundle = Bundle()
-//            bundle.putParcelable(NEW_CONTACT_KEY, newContact)
-//            setFragmentResult(DIALOG_FRAGMENT_REQUEST_KEY, bundle)
+            val bundle = Bundle()
+            bundle.putParcelable(NEW_CONTACT_KEY, newContact)
+            setFragmentResult(DIALOG_FRAGMENT_REQUEST_KEY, bundle)
 
         }
         pathToLoadedImageFromGallery = ""

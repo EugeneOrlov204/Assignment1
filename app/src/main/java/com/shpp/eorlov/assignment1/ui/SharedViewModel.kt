@@ -6,5 +6,5 @@ import com.shpp.eorlov.assignment1.model.UserModel
 import javax.inject.Inject
 
 class SharedViewModel @Inject constructor() : ViewModel() {
-    val newUser = MutableLiveData<UserModel>(null)
+    val newUser = MutableLiveData<UserModel>()
 }

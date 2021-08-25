@@ -1,4 +1,4 @@
-package com.shpp.eorlov.assignment1.ui.mainfragment.adapter
+package com.shpp.eorlov.assignment1.ui.mycontacts.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -29,8 +29,7 @@ class ContactsRecyclerAdapter(
             ListItemBinding.inflate(
                 LayoutInflater.from(parent.context), parent, false
             ),
-            onContactClickListener,
-            parent.findViewTreeLifecycleOwner()!!.lifecycleScope
+            onContactClickListener
         )
     }
 

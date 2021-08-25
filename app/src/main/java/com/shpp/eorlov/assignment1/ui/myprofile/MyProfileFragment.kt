@@ -1,27 +1,25 @@
 package com.shpp.eorlov.assignment1.ui.myprofile
 
 import android.content.Context
-import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.viewpager2.widget.ViewPager2
+import androidx.navigation.fragment.findNavController
 import com.shpp.eorlov.assignment1.R
 import com.shpp.eorlov.assignment1.databinding.FragmentMyProfileBinding
+import com.shpp.eorlov.assignment1.model.UserModel
 import com.shpp.eorlov.assignment1.ui.MainActivity
-import com.shpp.eorlov.assignment1.ui.auth.AuthActivity
+import com.shpp.eorlov.assignment1.ui.viewpager.CollectionContactFragmentDirections
 import com.shpp.eorlov.assignment1.utils.ext.loadImage
-import com.shpp.eorlov.assignment1.viewpager.ContactCollectionAdapter
 
 class MyProfileFragment : Fragment() {
     private lateinit var binding: FragmentMyProfileBinding
 
-    // When requested, this adapter returns a DemoObjectFragment,
-    // representing an object in the collection.
-    private lateinit var demoCollectionAdapter: ContactCollectionAdapter
-    private lateinit var viewPager: ViewPager2
+    private lateinit var userModel: UserModel //todo Replace with ViewModel
+
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
@@ -42,23 +40,40 @@ class MyProfileFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        binding.imageViewPersonImage.loadImage(R.mipmap.ic_launcher)
+        binding.imageViewUserImageMyProfile.loadImage(R.mipmap.ic_launcher)
+        userModel = UserModel(
+            -1, //todo implement id generator
+            binding.textViewPersonNameMyProfile.text.toString(),
+            binding.textViewPersonProfessionMyProfile.text.toString(),
+            Uri.parse(
+                "android.resource://com.shpp.eorlov.assignment1.ui.myprofile/" + binding.imageViewUserImageMyProfile.drawable
+                    ?: ""
+            ).toString(),
+            binding.textViewPersonResidence.text.toString(),
+            "",
+            "",
+            ""
+        )
+        setListeners()
         restoreUIElementsLogic()
 
         setNameOfPerson(name = activity?.intent?.getStringExtra("personName").toString())
+    }
 
+    private fun setListeners() {
         binding.buttonEditProfile.setOnClickListener {
-            goToAuthActivity()
-        }
+            val action =
+                CollectionContactFragmentDirections.actionCollectionContactFragmentToEditProfileFragment(
+                    userModel
+                )
+            findNavController().navigate(action)
 
-        demoCollectionAdapter = ContactCollectionAdapter(this)
-        viewPager = binding.pager
-        viewPager.adapter = demoCollectionAdapter
+        }
     }
 
     /**
      * Restores UI elements states.
-     * For example button the button has become enable
+     * For example a button has become enable
      */
     private fun restoreUIElementsLogic() {
         binding.buttonEditProfile.isEnabled = true
@@ -68,16 +83,7 @@ class MyProfileFragment : Fragment() {
      * Set parsed intent's string to title of person's image
      */
     private fun setNameOfPerson(name: String) {
-        val messageText = binding.textViewPersonName
+        val messageText = binding.textViewPersonNameMyProfile //todo rename to user
         messageText.text = name
-    }
-
-    /**
-     * Change current activity to AuthActivity
-     */
-    private fun goToAuthActivity() {
-        binding.buttonEditProfile.isEnabled = false
-        startActivity(Intent(activity, AuthActivity::class.java))
-        activity?.onBackPressed()
     }
 }

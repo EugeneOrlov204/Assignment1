@@ -1,4 +1,4 @@
-package com.shpp.eorlov.assignment1.ui.mainfragment.adapter
+package com.shpp.eorlov.assignment1.ui.mycontacts.adapter
 
 import com.shpp.eorlov.assignment1.model.UserModel
 

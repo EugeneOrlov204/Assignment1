@@ -3,22 +3,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph.xml"
-    app:startDestination="@id/myProfileFragment2">
+    app:startDestination="@id/collectionContactFragment">
 
-    <fragment
-        android:id="@+id/myProfileFragment2"
-        android:name="com.shpp.eorlov.assignment1.ui.myprofile.MyProfileFragment"
-        android:label="my_profile_fragment"
-        tools:layout="@layout/fragment_my_profile" />
-    <fragment
-        android:id="@+id/mainFragment"
-        android:name="com.shpp.eorlov.assignment1.ui.mainfragment.MainFragment"
-        android:label="fragment_content"
-        tools:layout="@layout/fragment_content" >
-        <action
-            android:id="@+id/action_mainFragment_to_detailViewFragment"
-            app:destination="@id/detailViewFragment" />
-    </fragment>
     <fragment
         android:id="@+id/detailViewFragment"
         android:name="com.shpp.eorlov.assignment1.ui.details.DetailViewFragment"
@@ -26,6 +12,27 @@
         tools:layout="@layout/fragment_detail_view" >
         <argument
             android:name="contact"
+            app:argType="com.shpp.eorlov.assignment1.model.UserModel" />
+    </fragment>
+    <fragment
+        android:id="@+id/collectionContactFragment"
+        android:name="com.shpp.eorlov.assignment1.ui.viewpager.CollectionContactFragment"
+        android:label="fragment_view_pager"
+        tools:layout="@layout/fragment_view_pager" >
+        <action
+            android:id="@+id/action_collectionContactFragment_to_detailViewFragment"
+            app:destination="@id/detailViewFragment" />
+        <action
+            android:id="@+id/action_collectionContactFragment_to_editProfileFragment"
+            app:destination="@id/editProfileFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/editProfileFragment"
+        android:name="com.shpp.eorlov.assignment1.ui.editprofile.EditProfileFragment"
+        android:label="fragment_edit_profile"
+        tools:layout="@layout/fragment_edit_profile" >
+        <argument
+            android:name="UserData"
             app:argType="com.shpp.eorlov.assignment1.model.UserModel" />
     </fragment>
 </navigation>
