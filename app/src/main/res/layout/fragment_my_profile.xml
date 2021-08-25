@@ -43,8 +43,8 @@
 
 
     <androidx.appcompat.widget.AppCompatTextView
-        android:id="@+id/textViewPersonNameMyProfile"
-        style="@style/person_name"
+        android:id="@+id/textViewUserNameMyProfile"
+        style="@style/user_name_text_view"
         android:layout_marginTop="@dimen/margin_top_person_name_24dp"
         android:text="@string/person_name"
         app:layout_constraintEnd_toEndOf="parent"
@@ -52,22 +52,22 @@
         app:layout_constraintTop_toBottomOf="@id/imageViewUserImageMyProfile" />
 
     <androidx.appcompat.widget.AppCompatTextView
-        android:id="@+id/textViewPersonProfessionMyProfile"
+        android:id="@+id/textViewUserProfessionMyProfile"
         style="@style/description_text"
         android:layout_marginTop="@dimen/margin_small_8dp"
         android:text="@string/profession_name"
-        app:layout_constraintEnd_toEndOf="@id/textViewPersonNameMyProfile"
-        app:layout_constraintStart_toStartOf="@id/textViewPersonNameMyProfile"
-        app:layout_constraintTop_toBottomOf="@id/textViewPersonNameMyProfile" />
+        app:layout_constraintEnd_toEndOf="@id/textViewUserNameMyProfile"
+        app:layout_constraintStart_toStartOf="@id/textViewUserNameMyProfile"
+        app:layout_constraintTop_toBottomOf="@id/textViewUserNameMyProfile" />
 
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/textViewPersonResidence"
         style="@style/description_text"
         android:layout_marginTop="@dimen/margin_normal_16dp"
         android:text="@string/residence_address"
-        app:layout_constraintEnd_toEndOf="@id/textViewPersonProfessionMyProfile"
-        app:layout_constraintStart_toStartOf="@id/textViewPersonProfessionMyProfile"
-        app:layout_constraintTop_toBottomOf="@id/textViewPersonProfessionMyProfile" />
+        app:layout_constraintEnd_toEndOf="@id/textViewUserProfessionMyProfile"
+        app:layout_constraintStart_toStartOf="@id/textViewUserProfessionMyProfile"
+        app:layout_constraintTop_toBottomOf="@id/textViewUserProfessionMyProfile" />
 
 
     <View

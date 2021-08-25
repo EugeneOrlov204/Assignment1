@@ -15,7 +15,6 @@ import androidx.appcompat.widget.AppCompatImageView
 import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.DialogFragment
 import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.lifecycleScope
 import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
 import com.shpp.eorlov.assignment1.R
@@ -27,11 +26,8 @@ import com.shpp.eorlov.assignment1.utils.Constants
 import com.shpp.eorlov.assignment1.utils.Constants.GENERATE_ID_CODE
 import com.shpp.eorlov.assignment1.utils.ValidateOperation
 import com.shpp.eorlov.assignment1.utils.evaluateErrorMessage
-import com.shpp.eorlov.assignment1.utils.ext.clicks
 import com.shpp.eorlov.assignment1.utils.ext.loadImage
 import com.shpp.eorlov.assignment1.validator.Validator
-import kotlinx.coroutines.flow.launchIn
-import kotlinx.coroutines.flow.onEach
 import javax.inject.Inject
 import kotlin.math.abs
 
@@ -101,7 +97,6 @@ class ContactDialogFragment : DialogFragment() {
             sharedViewModel.newUser.value = user
             dismiss()
         }
-
     }
 
     /**
@@ -122,7 +117,6 @@ class ContactDialogFragment : DialogFragment() {
 
         val imageData = pathToLoadedImageFromGallery
 
-
         val newContact =
             UserModel(
                 GENERATE_ID_CODE,
@@ -134,10 +128,6 @@ class ContactDialogFragment : DialogFragment() {
                 dialogBinding.textInputEditTextPhone.text.toString(),
                 dialogBinding.textInputEditTextEmail.text.toString()
             )
-
-//            val bundle = Bundle()
-//            bundle.putParcelable(NEW_CONTACT_KEY, newContact)
-//            setFragmentResult(DIALOG_FRAGMENT_REQUEST_KEY, bundle)
 
         pathToLoadedImageFromGallery = ""
         viewModel.addItem(newContact)

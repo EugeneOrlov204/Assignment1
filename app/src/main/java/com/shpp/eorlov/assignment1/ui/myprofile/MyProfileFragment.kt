@@ -43,11 +43,10 @@ class MyProfileFragment : Fragment() {
         binding.imageViewUserImageMyProfile.loadImage(R.mipmap.ic_launcher)
         userModel = UserModel(
             111, //todo implement id generator
-            binding.textViewPersonNameMyProfile.text.toString(),
-            binding.textViewPersonProfessionMyProfile.text.toString(),
+            binding.textViewUserNameMyProfile.text.toString(),
+            binding.textViewUserProfessionMyProfile.text.toString(),
             Uri.parse(
                 "android.resource://com.shpp.eorlov.assignment1.ui.myprofile/" + binding.imageViewUserImageMyProfile.drawable
-                    ?: ""
             ).toString(),
             binding.textViewPersonResidence.text.toString(),
             "",
@@ -83,7 +82,7 @@ class MyProfileFragment : Fragment() {
      * Set parsed intent's string to title of person's image
      */
     private fun setNameOfPerson(name: String) {
-        val messageText = binding.textViewPersonNameMyProfile //todo rename to user
+        val messageText = binding.textViewUserNameMyProfile
         messageText.text = name
     }
 }
