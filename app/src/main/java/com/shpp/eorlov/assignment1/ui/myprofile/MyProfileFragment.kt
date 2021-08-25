@@ -42,7 +42,7 @@ class MyProfileFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         binding.imageViewUserImageMyProfile.loadImage(R.mipmap.ic_launcher)
         userModel = UserModel(
-            -1, //todo implement id generator
+            111, //todo implement id generator
             binding.textViewPersonNameMyProfile.text.toString(),
             binding.textViewPersonProfessionMyProfile.text.toString(),
             Uri.parse(

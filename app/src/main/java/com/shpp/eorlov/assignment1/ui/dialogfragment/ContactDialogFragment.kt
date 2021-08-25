@@ -17,6 +17,7 @@ import androidx.appcompat.widget.AppCompatImageView
 import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.setFragmentResult
+import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
@@ -25,6 +26,7 @@ import com.shpp.eorlov.assignment1.databinding.AddContactDialogBinding
 import com.shpp.eorlov.assignment1.model.UserModel
 import com.shpp.eorlov.assignment1.ui.MainActivity
 import com.shpp.eorlov.assignment1.ui.SharedViewModel
+import com.shpp.eorlov.assignment1.ui.mycontacts.MyContactsFragmentViewModel
 import com.shpp.eorlov.assignment1.utils.Constants
 import com.shpp.eorlov.assignment1.utils.Constants.DIALOG_FRAGMENT_REQUEST_KEY
 import com.shpp.eorlov.assignment1.utils.Constants.GENERATE_ID_CODE
@@ -43,15 +45,14 @@ import kotlin.math.abs
 class ContactDialogFragment : DialogFragment() {
 
     @Inject
-    lateinit var viewModel: ContactDialogFragmentViewModel
+    lateinit var viewModelFactory: ViewModelProvider.Factory
 
-    @Inject
-    lateinit var sharedViewModel: SharedViewModel
 
-    private var pathToLoadedImageFromGallery: String = ""
-
+    private lateinit var viewModel: ContactDialogFragmentViewModel
+    private lateinit var sharedViewModel: SharedViewModel
     private lateinit var dialogBinding: AddContactDialogBinding
 
+    private var pathToLoadedImageFromGallery: String = ""
     private var imageLoaderLauncher =
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
             val imageView: AppCompatImageView = dialogBinding.imageViewPersonPhoto
@@ -67,6 +68,10 @@ class ContactDialogFragment : DialogFragment() {
         super.onAttach(context)
 
         (activity as MainActivity).contactComponent.inject(this)
+        viewModel =
+            ViewModelProvider(this, viewModelFactory)[ContactDialogFragmentViewModel::class.java]
+
+        sharedViewModel = ViewModelProvider(this, viewModelFactory)[SharedViewModel::class.java]
     }
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
@@ -139,11 +144,11 @@ class ContactDialogFragment : DialogFragment() {
                     textInputEditTextEmail.text.toString()
                 )
 
-            viewModel.addItem(newContact)
-
-            val bundle = Bundle()
-            bundle.putParcelable(NEW_CONTACT_KEY, newContact)
-            setFragmentResult(DIALOG_FRAGMENT_REQUEST_KEY, bundle)
+//            viewModel.addItem(newContact)
+            sharedViewModel.newUser.value = newContact
+//            val bundle = Bundle()
+//            bundle.putParcelable(NEW_CONTACT_KEY, newContact)
+//            setFragmentResult(DIALOG_FRAGMENT_REQUEST_KEY, bundle)
 
         }
         pathToLoadedImageFromGallery = ""

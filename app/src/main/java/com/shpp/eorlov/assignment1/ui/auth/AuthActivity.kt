@@ -164,8 +164,8 @@ class AuthActivity : AppCompatActivity() {
                 .replace(".", "")
         )
         //Makes first letters in upper case
-        name[0] = name[0].toUpperCase()
-        if (surname.isNotEmpty()) surname[0] = surname[0].toUpperCase()
+        name[0] = name[0].uppercaseChar()
+        if (surname.isNotEmpty()) surname[0] = surname[0].uppercaseChar()
         return "$name $surname"
     }
 }

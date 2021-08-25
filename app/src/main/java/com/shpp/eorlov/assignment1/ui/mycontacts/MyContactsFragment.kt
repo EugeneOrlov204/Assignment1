@@ -12,6 +12,7 @@ import androidx.core.view.doOnPreDraw
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.setFragmentResultListener
+import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.ItemTouchHelper
@@ -44,10 +45,10 @@ import kotlin.math.abs
 class MyContactsFragment : Fragment(R.layout.fragment_content), ContactClickListener {
 
     @Inject
-    lateinit var viewModel: MyContactsFragmentViewModel
+    lateinit var viewModelFactory: ViewModelProvider.Factory
 
-    @Inject
-    lateinit var sharedViewModel: SharedViewModel
+    private lateinit var sharedViewModel: SharedViewModel
+    private lateinit var viewModel: MyContactsFragmentViewModel
 
     private val contactsListAdapter: ContactsRecyclerAdapter by lazy {
         ContactsRecyclerAdapter(
@@ -63,6 +64,10 @@ class MyContactsFragment : Fragment(R.layout.fragment_content), ContactClickList
         super.onAttach(context)
 
         (activity as MainActivity).contactComponent.inject(this)
+        viewModel =
+            ViewModelProvider(this, viewModelFactory)[MyContactsFragmentViewModel::class.java]
+
+        sharedViewModel = ViewModelProvider(this, viewModelFactory)[SharedViewModel::class.java]
     }
 
     override fun onCreateView(
@@ -227,13 +232,11 @@ class MyContactsFragment : Fragment(R.layout.fragment_content), ContactClickList
         }
 
 
-        sharedViewModel.apply {
-            newUser.observe(viewLifecycleOwner) { newUser ->
-                newUser?.let {
-                    viewModel.addItem(newUser)
-                    sharedViewModel.newUser.value = null
-                }
-            }
+        sharedViewModel.newUser.observe(viewLifecycleOwner) { newUser ->
+            viewModel.addItem(newUser)
+//                    sharedViewModel.newUser.value = null
+
+
         }
     }
 
@@ -255,14 +258,14 @@ class MyContactsFragment : Fragment(R.layout.fragment_content), ContactClickList
                     dialog = ContactDialogFragment()
                     dialog.show(childFragmentManager, CONTACT_DIALOG_TAG)
 
-                    dialog.setFragmentResultListener(DIALOG_FRAGMENT_REQUEST_KEY) { key, bundle ->
-                        if (key == DIALOG_FRAGMENT_REQUEST_KEY) {
-                            viewModel.addItem(
-                                bundle.getParcelable(NEW_CONTACT_KEY)
-                                    ?: return@setFragmentResultListener
-                            )
-                        }
-                    }
+//                    dialog.setFragmentResultListener(DIALOG_FRAGMENT_REQUEST_KEY) { key, bundle ->
+//                        if (key == DIALOG_FRAGMENT_REQUEST_KEY) {
+//                            viewModel.addItem(
+//                                bundle.getParcelable(NEW_CONTACT_KEY)
+//                                    ?: return@setFragmentResultListener
+//                            )
+//                        }
+//                    }
 
                     previousClickTimestamp = SystemClock.uptimeMillis()
                 }
