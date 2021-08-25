@@ -11,9 +11,7 @@ import android.widget.Toast
 import androidx.core.view.doOnPreDraw
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.setFragmentResultListener
 import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -21,8 +19,8 @@ import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.snackbar.Snackbar
 import com.shpp.eorlov.assignment1.R
 import com.shpp.eorlov.assignment1.databinding.FragmentContentBinding
-import com.shpp.eorlov.assignment1.ui.MainActivity
 import com.shpp.eorlov.assignment1.model.UserModel
+import com.shpp.eorlov.assignment1.ui.MainActivity
 import com.shpp.eorlov.assignment1.ui.SharedViewModel
 import com.shpp.eorlov.assignment1.ui.dialogfragment.ContactDialogFragment
 import com.shpp.eorlov.assignment1.ui.mycontacts.adapter.ContactClickListener
@@ -30,14 +28,9 @@ import com.shpp.eorlov.assignment1.ui.mycontacts.adapter.ContactsRecyclerAdapter
 import com.shpp.eorlov.assignment1.ui.viewpager.CollectionContactFragmentDirections
 import com.shpp.eorlov.assignment1.utils.Constants.BUTTON_CLICK_DELAY
 import com.shpp.eorlov.assignment1.utils.Constants.CONTACT_DIALOG_TAG
-import com.shpp.eorlov.assignment1.utils.Constants.DIALOG_FRAGMENT_REQUEST_KEY
 import com.shpp.eorlov.assignment1.utils.Constants.LIST_OF_CONTACTS_KEY
-import com.shpp.eorlov.assignment1.utils.Constants.NEW_CONTACT_KEY
 import com.shpp.eorlov.assignment1.utils.Constants.SNACKBAR_DURATION
 import com.shpp.eorlov.assignment1.utils.Results
-import com.shpp.eorlov.assignment1.utils.ext.clicks
-import kotlinx.coroutines.flow.launchIn
-import kotlinx.coroutines.flow.onEach
 import javax.inject.Inject
 import kotlin.math.abs
 
@@ -197,7 +190,6 @@ class MyContactsFragment : Fragment(R.layout.fragment_content), ContactClickList
             userListLiveData.observe(viewLifecycleOwner) { list ->
                 contactsListAdapter.submitList(list.toMutableList())
 
-
                 // Start the transition once all views have been
                 // measured and laid out
                 (view?.parent as? ViewGroup)?.doOnPreDraw {
@@ -233,8 +225,10 @@ class MyContactsFragment : Fragment(R.layout.fragment_content), ContactClickList
 
 
         sharedViewModel.newUser.observe(viewLifecycleOwner) { newUser ->
-            viewModel.addItem(newUser)
-            println("SHARED WORKS!")
+            newUser?.let {
+                viewModel.addItem(newUser)
+                sharedViewModel.newUser.value = null
+            }
         }
     }
 
@@ -250,24 +244,13 @@ class MyContactsFragment : Fragment(R.layout.fragment_content), ContactClickList
 
 
     private fun setListeners() {
-        binding.textViewAddContacts.clicks()
-            .onEach {
-                if (abs(SystemClock.uptimeMillis() - previousClickTimestamp) > BUTTON_CLICK_DELAY) {
-                    dialog = ContactDialogFragment()
-                    dialog.show(childFragmentManager, CONTACT_DIALOG_TAG)
+        binding.textViewAddContacts.setOnClickListener {
+            if (abs(SystemClock.uptimeMillis() - previousClickTimestamp) > BUTTON_CLICK_DELAY) {
+                dialog = ContactDialogFragment()
+                dialog.show(childFragmentManager, CONTACT_DIALOG_TAG)
 
-//                    dialog.setFragmentResultListener(DIALOG_FRAGMENT_REQUEST_KEY) { key, bundle ->
-//                        if (key == DIALOG_FRAGMENT_REQUEST_KEY) {
-//                            viewModel.addItem(
-//                                bundle.getParcelable(NEW_CONTACT_KEY)
-//                                    ?: return@setFragmentResultListener
-//                            )
-//                        }
-//                    }
-
-                    previousClickTimestamp = SystemClock.uptimeMillis()
-                }
+                previousClickTimestamp = SystemClock.uptimeMillis()
             }
-            .launchIn(lifecycleScope)
+        }
     }
 }

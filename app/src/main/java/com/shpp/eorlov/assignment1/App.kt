@@ -25,7 +25,7 @@ open class App : Application() {
     override fun onCreate() {
         super.onCreate()
 
-        Fresco.initialize(this@App)
+        Fresco.initialize(applicationContext)
     }
 
     // Instance of the AppComponent that will be used by all the Activities in the project

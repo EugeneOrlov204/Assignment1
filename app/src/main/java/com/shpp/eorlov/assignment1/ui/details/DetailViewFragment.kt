@@ -62,14 +62,12 @@ class DetailViewFragment : Fragment() {
 
     private fun setListeners() {
 
-        binding.imageButtonContactDialogCloseButton.clicks()
-            .onEach {
-                if (abs(SystemClock.uptimeMillis() - previousClickTimestamp) > Constants.BUTTON_CLICK_DELAY) {
-                    activity?.onBackPressed()
-                    previousClickTimestamp = SystemClock.uptimeMillis()
-                }
+        binding.imageButtonContactDialogCloseButton.setOnClickListener {
+            if (abs(SystemClock.uptimeMillis() - previousClickTimestamp) > Constants.BUTTON_CLICK_DELAY) {
+                activity?.onBackPressed()
+                previousClickTimestamp = SystemClock.uptimeMillis()
             }
-            .launchIn(lifecycleScope)
+        }
     }
 
     private fun initViews() {

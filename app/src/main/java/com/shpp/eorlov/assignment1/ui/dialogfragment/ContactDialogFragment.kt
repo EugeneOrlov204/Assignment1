@@ -230,35 +230,28 @@ class ContactDialogFragment : DialogFragment() {
             )
 
 
-            imageViewImageLoader.clicks()
-                .onEach {
-                    if (abs(SystemClock.uptimeMillis() - previousClickTimestamp) > Constants.BUTTON_CLICK_DELAY) {
-                        loadImageFromGallery()
-                        previousClickTimestamp = SystemClock.uptimeMillis()
-                    }
+            imageViewImageLoader.setOnClickListener {
+                if (abs(SystemClock.uptimeMillis() - previousClickTimestamp) > Constants.BUTTON_CLICK_DELAY) {
+                    loadImageFromGallery()
+                    previousClickTimestamp = SystemClock.uptimeMillis()
                 }
-                .launchIn(lifecycleScope)
+            }
 
 
-            imageButtonContactDialogCloseButton.clicks()
-                .onEach {
-                    if (abs(SystemClock.uptimeMillis() - previousClickTimestamp) > Constants.BUTTON_CLICK_DELAY) {
-                        dismiss()
-                        previousClickTimestamp = SystemClock.uptimeMillis()
-                    }
+            imageButtonContactDialogCloseButton.setOnClickListener {
+                if (abs(SystemClock.uptimeMillis() - previousClickTimestamp) > Constants.BUTTON_CLICK_DELAY) {
+                    dismiss()
+                    previousClickTimestamp = SystemClock.uptimeMillis()
                 }
-                .launchIn(lifecycleScope)
+            }
 
 
-            buttonSave.clicks()
-                .onEach {
-                    if (abs(SystemClock.uptimeMillis() - previousClickTimestamp) > Constants.BUTTON_CLICK_DELAY) {
-                        addContact()
-                        previousClickTimestamp = SystemClock.uptimeMillis()
-                    }
+            buttonSave.setOnClickListener {
+                if (abs(SystemClock.uptimeMillis() - previousClickTimestamp) > Constants.BUTTON_CLICK_DELAY) {
+                    addContact()
+                    previousClickTimestamp = SystemClock.uptimeMillis()
                 }
-                .launchIn(lifecycleScope)
-
+            }
         }
     }
 
