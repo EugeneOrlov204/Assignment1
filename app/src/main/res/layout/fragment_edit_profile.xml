@@ -1,0 +1,218 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    tools:context=".ui.editprofile.EditProfileFragment">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <View
+            android:id="@+id/viewHeader"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/header_height_244dp"
+            android:background="@color/steel_gray"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <androidx.appcompat.widget.AppCompatImageButton
+            android:id="@+id/imageButtonContactDialogCloseButton"
+            style="@style/image_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/close_button_margin_start_21dp"
+            android:src="@drawable/ic_arrow_back"
+            app:layout_constraintBottom_toBottomOf="@id/textViewAddContact"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@id/textViewAddContact" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/textViewAddContact"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/add_contact_margin_top_20dp"
+            android:fontFamily="@font/open_sans"
+            android:text="@string/edit_profile"
+            android:textColor="@color/alabaster"
+            android:textSize="@dimen/text_size_normal_18sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@id/viewHeader" />
+
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/imageViewPersonPhoto"
+            android:layout_width="@dimen/person_photo_size_113dp"
+            android:layout_height="@dimen/person_photo_size_113dp"
+            android:layout_marginTop="@dimen/person_photo_margin_top_28dp"
+            app:layout_constraintEnd_toEndOf="@id/viewHeader"
+            app:layout_constraintStart_toStartOf="@id/viewHeader"
+            app:layout_constraintTop_toBottomOf="@id/textViewAddContact"
+            tools:src="@tools:sample/avatars" />
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/imageViewImageLoader"
+            android:layout_width="@dimen/image_loader_size_55dp"
+            android:layout_height="@dimen/image_loader_size_55dp"
+            android:layout_marginStart="@dimen/image_loader_margin_start_22dp"
+            android:src="@drawable/load_image"
+            app:layout_constraintBottom_toBottomOf="@+id/imageViewPersonPhoto"
+            app:layout_constraintStart_toEndOf="@id/imageViewPersonPhoto"
+            app:layout_constraintTop_toTopOf="@id/imageViewPersonPhoto" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/textViewUsername"
+            style="@style/add_contact_title_text"
+            android:text="@string/add_contact_username"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/viewHeader" />
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/textInputLayoutUsername"
+            style="@style/add_contact_text_input_layout"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textViewUsername">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/textInputEditTextUsername"
+                style="@style/add_contact_text_input_edit_text"
+                android:text="@string/username"
+                android:inputType="text" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/textViewCareer"
+            style="@style/add_contact_title_text"
+            android:text="@string/career"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textInputLayoutUsername" />
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/textInputLayoutCareer"
+            style="@style/add_contact_text_input_layout"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textViewCareer">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/textInputEditTextCareer"
+                style="@style/add_contact_text_input_edit_text"
+                android:inputType="text"
+                android:text="@string/career"/>
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/textViewEmail"
+            style="@style/add_contact_title_text"
+            android:text="@string/email"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textInputLayoutCareer" />
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/textInputLayoutEmail"
+            style="@style/add_contact_text_input_layout"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textViewEmail">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/textInputEditTextEmail"
+                style="@style/add_contact_text_input_edit_text"
+                android:text="@string/hardcoded_email"
+                android:inputType="textEmailAddress" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/textViewPhone"
+            style="@style/add_contact_title_text"
+            android:text="@string/phone"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textInputLayoutEmail" />
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/textInputLayoutPhone"
+            style="@style/add_contact_text_input_layout"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textViewPhone">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/textInputEditTextPhone"
+                style="@style/add_contact_text_input_edit_text"
+                android:text="@string/hardcoded_phone_number"
+                android:inputType="phone" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/textViewAddress"
+            style="@style/add_contact_title_text"
+            android:text="@string/address"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textInputLayoutPhone" />
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/textInputLayoutAddress"
+            style="@style/add_contact_text_input_layout"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textViewAddress">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/textInputEditTextAddress"
+                style="@style/add_contact_text_input_edit_text"
+                android:text="@string/address"
+                android:inputType="textMultiLine" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/textViewBirthdate"
+            style="@style/add_contact_title_text"
+            android:text="@string/date_of_birth"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textInputLayoutAddress" />
+
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/textInputLayoutBirthdate"
+            style="@style/add_contact_text_input_layout"
+            android:textColor="@color/black_russian"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textViewBirthdate">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/textInputEditTextBirthdate"
+                style="@style/add_contact_text_input_edit_text"
+                android:text="@string/hardcoded_birthdate"
+                android:inputType="date" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/buttonSave"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/save_button_height_55dp"
+            android:layout_margin="@dimen/margin_normal_16dp"
+            android:backgroundTint="@color/orange"
+            android:letterSpacing="0.09"
+            android:text="@string/save"
+            android:textColor="@android:color/white"
+            android:textSize="@dimen/save_button_text_size_16sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/textInputLayoutBirthdate" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</ScrollView>
