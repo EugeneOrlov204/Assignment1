@@ -2,12 +2,11 @@ package com.shpp.eorlov.assignment1.ui.mycontacts.adapter.viewholders
 
 import androidx.recyclerview.widget.RecyclerView
 import com.shpp.eorlov.assignment1.databinding.FragmentGoUpButtonBinding
-import com.shpp.eorlov.assignment1.model.UserModel
-import com.shpp.eorlov.assignment1.ui.mycontacts.adapter.listeners.GoUpButtonClickListener
+import com.shpp.eorlov.assignment1.ui.mycontacts.adapter.listeners.ButtonClickListener
 
-class ButtonViewHolder(
+class GoUpButtonViewHolder(
     private val binding: FragmentGoUpButtonBinding,
-    private val onGoUpButtonClickListener: GoUpButtonClickListener
+    private val onButtonClickListener: ButtonClickListener
 ) :
     RecyclerView.ViewHolder(binding.root) {
 
@@ -17,7 +16,7 @@ class ButtonViewHolder(
 
     private fun setListeners() {
         binding.buttonGoUp.setOnClickListener {
-            onGoUpButtonClickListener.onGoUpClicked()
+            onButtonClickListener.onGoUpClicked()
         }
     }
 }

@@ -12,7 +12,8 @@ object Constants {
     const val PREF_LOGIN = "Login"
     const val PREF_PASSWORD = "Password"
     const val CONTACT_VIEW_HOLDER_TYPE_CODE = 0
-    const val BUTTON_VIEW_HOLDER_TYPE_CODE = 1
+    const val GO_UP_BUTTON_VIEW_HOLDER_TYPE_CODE = 1
+    const val REMOVE_CONTACTS_BUTTON_VIEW_HOLDER_TYPE_CODE = 2
     const val MAX_AMOUNT_OF_CONTACTS_IN_SCREEN = 6
 
 }

@@ -25,7 +25,7 @@ import com.shpp.eorlov.assignment1.ui.SharedViewModel
 import com.shpp.eorlov.assignment1.ui.dialogfragment.ContactDialogFragment
 import com.shpp.eorlov.assignment1.ui.mycontacts.adapter.ContactsRecyclerAdapter
 import com.shpp.eorlov.assignment1.ui.mycontacts.adapter.listeners.ContactClickListener
-import com.shpp.eorlov.assignment1.ui.mycontacts.adapter.listeners.GoUpButtonClickListener
+import com.shpp.eorlov.assignment1.ui.mycontacts.adapter.listeners.ButtonClickListener
 import com.shpp.eorlov.assignment1.ui.viewpager.CollectionContactFragmentDirections
 import com.shpp.eorlov.assignment1.utils.Constants.BUTTON_CLICK_DELAY
 import com.shpp.eorlov.assignment1.utils.Constants.CONTACT_DIALOG_TAG
@@ -38,7 +38,7 @@ import kotlin.math.abs
 
 class MyContactsFragment : Fragment(R.layout.fragment_my_contacts),
     ContactClickListener,
-    GoUpButtonClickListener {
+    ButtonClickListener {
 
     @Inject
     lateinit var viewModelFactory: ViewModelProvider.Factory
@@ -129,6 +129,13 @@ class MyContactsFragment : Fragment(R.layout.fragment_my_contacts),
         binding.recyclerView.apply {
             smoothScrollToPosition(0)
         }
+    }
+
+    override fun onRemoveSelectedContactsClicked() {
+
+        println("Remove button work!")
+
+//        viewModel.removeItem(contact)
     }
 
     /**
