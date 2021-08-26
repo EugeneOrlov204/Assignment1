@@ -54,21 +54,8 @@
             android:text="@string/add_contacts"
             android:textSize="@dimen/main_activity_text_size_small_14sp"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/textViewSelect"
-            app:layout_constraintHorizontal_chainStyle="spread_inside"
             app:layout_constraintStart_toStartOf="parent" />
 
-        <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/textViewSelect"
-            style="@style/header_text"
-            android:layout_marginTop="@dimen/select_margin_top_32dp"
-            android:layout_marginEnd="@dimen/select_margin_end_17dp"
-            android:layout_marginBottom="@dimen/select_margin_bottom_26dp"
-            android:text="@string/select"
-            android:textSize="@dimen/main_activity_text_size_small_14sp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@id/textViewAddContacts" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

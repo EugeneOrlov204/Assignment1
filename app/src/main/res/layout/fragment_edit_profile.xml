@@ -59,7 +59,7 @@
             android:layout_width="@dimen/image_loader_size_55dp"
             android:layout_height="@dimen/image_loader_size_55dp"
             android:layout_marginStart="@dimen/image_loader_margin_start_22dp"
-            android:src="@drawable/load_image"
+            android:src="@drawable/ic_load_image"
             app:layout_constraintBottom_toBottomOf="@+id/imageViewPersonPhoto"
             app:layout_constraintStart_toEndOf="@id/imageViewPersonPhoto"
             app:layout_constraintTop_toTopOf="@id/imageViewPersonPhoto" />

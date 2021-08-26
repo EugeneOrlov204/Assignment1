@@ -29,6 +29,7 @@
     <dimen name="person_image_size_50dp">50dp</dimen>
     <dimen name="line_height_1dp">1dp</dimen>
     <dimen name="line_margin_top_8dp">8dp</dimen>
+    <dimen name="list_item_height_66dp">66dp</dimen>
 
     <!--Main Activity-->
     <dimen name="header_height_117dp">117dp</dimen>
@@ -54,8 +55,8 @@
     <!--FragmentDetailView-->
     <dimen name="size_of_picture_113dp">113dp</dimen>
 
-
     <!--Social network button-->
     <dimen name="border_radius_socials_3dp">3dp</dimen>
+    <dimen name="circle_button_margin_vertical_36dp">36dp</dimen>
 
 </resources>

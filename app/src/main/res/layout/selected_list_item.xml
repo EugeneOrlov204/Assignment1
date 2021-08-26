@@ -2,12 +2,26 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:fresco="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/constraintLayoutContactListItem"
+    android:id="@+id/constraintLayoutSelectedContactListItem"
     android:layout_width="match_parent"
     android:layout_height="@dimen/list_item_height_66dp"
     android:layout_marginHorizontal="@dimen/margin_normal_16dp"
     android:layout_marginTop="@dimen/margin_normal_16dp"
-    android:background="@drawable/round_view_holder">
+
+    android:background="@drawable/round_view_holder_selected">
+
+    <androidx.appcompat.widget.AppCompatCheckBox
+        android:id="@+id/imageButtonSelectedState"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:button="@drawable/image_button_contact_to_remove"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="12dp"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+
+        />
 
     <com.facebook.drawee.view.SimpleDraweeView
         android:id="@+id/draweeViewPersonImage"
@@ -16,7 +30,7 @@
         android:layout_marginStart="@dimen/margin_normal_16dp"
         android:transitionName="contactPhoto"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/imageButtonSelectedState"
         app:layout_constraintTop_toTopOf="parent"
         app:roundAsCircle="true"
         app:placeholderImageScaleType="fitXY"
@@ -56,16 +70,6 @@
         android:transitionName="contactResidence"
         app:layout_constraintBottom_toBottomOf="@+id/draweeViewPersonImage"
         app:layout_constraintStart_toStartOf="@id/textViewPersonName" />
-
-    <androidx.appcompat.widget.AppCompatImageView
-        android:id="@+id/imageViewRemoveButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="@dimen/margin_normal_16dp"
-        android:src="@drawable/ic_trash_bin"
-        app:layout_constraintBottom_toBottomOf="@+id/textViewPersonProfession"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/textViewPersonName" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

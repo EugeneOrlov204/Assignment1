@@ -23,8 +23,9 @@ import com.shpp.eorlov.assignment1.model.UserModel
 import com.shpp.eorlov.assignment1.ui.MainActivity
 import com.shpp.eorlov.assignment1.ui.SharedViewModel
 import com.shpp.eorlov.assignment1.ui.dialogfragment.ContactDialogFragment
-import com.shpp.eorlov.assignment1.ui.mycontacts.adapter.ContactClickListener
 import com.shpp.eorlov.assignment1.ui.mycontacts.adapter.ContactsRecyclerAdapter
+import com.shpp.eorlov.assignment1.ui.mycontacts.adapter.listeners.ContactClickListener
+import com.shpp.eorlov.assignment1.ui.mycontacts.adapter.listeners.GoUpButtonClickListener
 import com.shpp.eorlov.assignment1.ui.viewpager.CollectionContactFragmentDirections
 import com.shpp.eorlov.assignment1.utils.Constants.BUTTON_CLICK_DELAY
 import com.shpp.eorlov.assignment1.utils.Constants.CONTACT_DIALOG_TAG
@@ -35,7 +36,9 @@ import javax.inject.Inject
 import kotlin.math.abs
 
 
-class MyContactsFragment : Fragment(R.layout.fragment_my_contacts), ContactClickListener {
+class MyContactsFragment : Fragment(R.layout.fragment_my_contacts),
+    ContactClickListener,
+    GoUpButtonClickListener {
 
     @Inject
     lateinit var viewModelFactory: ViewModelProvider.Factory
@@ -45,6 +48,7 @@ class MyContactsFragment : Fragment(R.layout.fragment_my_contacts), ContactClick
 
     private val contactsListAdapter: ContactsRecyclerAdapter by lazy {
         ContactsRecyclerAdapter(
+            this,
             this
         )
     }
@@ -115,9 +119,17 @@ class MyContactsFragment : Fragment(R.layout.fragment_my_contacts), ContactClick
     }
 
     override fun onContactsSelected() {
-        println("LONG SELECTED!")
+        binding.recyclerView.apply {
+            (adapter as ContactsRecyclerAdapter).isSelected = true
+             viewModel.userListLiveData.value = viewModel.userListLiveData.value?.toMutableList()
+        }
     }
 
+    override fun onGoUpClicked() {
+        binding.recyclerView.apply {
+            smoothScrollToPosition(0)
+        }
+    }
 
     /**
      * Removes item on given position from RecyclerView
@@ -139,7 +151,7 @@ class MyContactsFragment : Fragment(R.layout.fragment_my_contacts), ContactClick
     }
 
     private fun initRecycler() {
-        viewModel.getPersonData()
+        viewModel.initializeData()
         /* Variable that implements swipe-to-delete */
         val itemTouchHelperCallBack: ItemTouchHelper.SimpleCallback =
             object : ItemTouchHelper.SimpleCallback(
@@ -168,7 +180,6 @@ class MyContactsFragment : Fragment(R.layout.fragment_my_contacts), ContactClick
                 false
             )
             adapter = contactsListAdapter
-
             //Implement swipe-to-delete
             ItemTouchHelper(itemTouchHelperCallBack).attachToRecyclerView(this)
         }

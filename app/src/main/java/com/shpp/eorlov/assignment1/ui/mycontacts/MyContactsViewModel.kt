@@ -16,10 +16,7 @@ class MyContactsViewModel @Inject constructor() : ViewModel() {
     @Inject
     lateinit var contactsDatabase: ContactsDatabase
 
-    /**
-     * Returns value of dataset
-     */
-    fun getPersonData() {
+    fun initializeData() {
         if (userListLiveData.value == null) {
             loadEvent.value = Results.INIT_RECYCLER_VIEW_ERROR
         } else {

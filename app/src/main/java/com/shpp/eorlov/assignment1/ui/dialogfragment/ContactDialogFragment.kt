@@ -102,7 +102,7 @@ class ContactDialogFragment : DialogFragment() {
      * Initialize date and set listeners to EditTexts
      */
     private fun initializeData() {
-        dialogBinding.imageViewPersonPhoto.loadImage(R.drawable.default_user_image)
+        dialogBinding.imageViewPersonPhoto.loadImage(R.drawable.ic_default_user_image)
     }
 
 
