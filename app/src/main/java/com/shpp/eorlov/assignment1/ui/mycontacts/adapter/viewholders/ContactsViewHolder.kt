@@ -1,11 +1,10 @@
 package com.shpp.eorlov.assignment1.ui.mycontacts.adapter.viewholders
 
 import android.os.SystemClock
+import androidx.recyclerview.selection.ItemDetailsLookup
 import androidx.recyclerview.widget.RecyclerView
 import androidx.viewbinding.ViewBinding
-import com.shpp.eorlov.assignment1.R
 import com.shpp.eorlov.assignment1.databinding.ListItemBinding
-import com.shpp.eorlov.assignment1.databinding.SelectedListItemBinding
 import com.shpp.eorlov.assignment1.model.UserModel
 import com.shpp.eorlov.assignment1.ui.mycontacts.adapter.listeners.ContactClickListener
 import com.shpp.eorlov.assignment1.utils.Constants
@@ -19,7 +18,7 @@ class ContactsViewHolder(
 
     private lateinit var contact: UserModel
 
-    fun bindTo(contact: UserModel) {
+    fun bindTo(contact: UserModel, isActivated: Boolean = false) {
         this.contact = contact
         when (binding) {
             is ListItemBinding -> {
@@ -27,15 +26,16 @@ class ContactsViewHolder(
                     binding.textViewPersonName.text = name
                     binding.textViewPersonProfession.text = profession
                     binding.draweeViewPersonImage.setImageURI(photo)
+                    binding.constraintLayoutContactListItem.isActivated = isActivated
                 }
             }
-            is SelectedListItemBinding -> {
-                contact.apply {
-                    binding.textViewPersonName.text = name
-                    binding.textViewPersonProfession.text = profession
-                    binding.draweeViewPersonImage.setImageURI(photo)
-                }
-            }
+//            is SelectedListItemBinding -> {
+//                contact.apply {
+//                    binding.textViewPersonName.text = name
+//                    binding.textViewPersonProfession.text = profession
+//                    binding.draweeViewPersonImage.setImageURI(photo)
+//                }
+//            }
             else -> {
             }
         }
@@ -68,12 +68,18 @@ class ContactsViewHolder(
                 }
             }
 
-            is SelectedListItemBinding -> {
-                binding.constraintLayoutSelectedContactListItem.setOnClickListener {
-                    binding.imageButtonSelectedState.isChecked =
-                        !binding.imageButtonSelectedState.isChecked
-                }
-            }
+//            is SelectedListItemBinding -> {
+//                binding.constraintLayoutSelectedContactListItem.setOnClickListener {
+//                    binding.imageButtonSelectedState.isChecked =
+//                        !binding.imageButtonSelectedState.isChecked
+//                }
+//            }
         }
     }
+
+    fun getItemDetails(): ItemDetailsLookup.ItemDetails<Long> =
+        object : ItemDetailsLookup.ItemDetails<Long>() {
+            override fun getPosition(): Int = absoluteAdapterPosition
+            override fun getSelectionKey(): Long = itemId
+        }
 }

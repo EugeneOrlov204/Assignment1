@@ -13,6 +13,10 @@ import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.selection.SelectionPredicates
+import androidx.recyclerview.selection.SelectionTracker
+import androidx.recyclerview.selection.StableIdKeyProvider
+import androidx.recyclerview.selection.StorageStrategy
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -24,8 +28,8 @@ import com.shpp.eorlov.assignment1.ui.MainActivity
 import com.shpp.eorlov.assignment1.ui.SharedViewModel
 import com.shpp.eorlov.assignment1.ui.dialogfragment.ContactDialogFragment
 import com.shpp.eorlov.assignment1.ui.mycontacts.adapter.ContactsRecyclerAdapter
-import com.shpp.eorlov.assignment1.ui.mycontacts.adapter.listeners.ContactClickListener
 import com.shpp.eorlov.assignment1.ui.mycontacts.adapter.listeners.ButtonClickListener
+import com.shpp.eorlov.assignment1.ui.mycontacts.adapter.listeners.ContactClickListener
 import com.shpp.eorlov.assignment1.ui.viewpager.CollectionContactFragmentDirections
 import com.shpp.eorlov.assignment1.utils.Constants.BUTTON_CLICK_DELAY
 import com.shpp.eorlov.assignment1.utils.Constants.CONTACT_DIALOG_TAG
@@ -45,6 +49,10 @@ class MyContactsFragment : Fragment(R.layout.fragment_my_contacts),
 
     private lateinit var sharedViewModel: SharedViewModel
     private lateinit var viewModel: MyContactsViewModel
+    private lateinit var binding: FragmentMyContactsBinding
+    private lateinit var dialog: ContactDialogFragment
+
+    private var tracker: SelectionTracker<Long>? = null
 
     private val contactsListAdapter: ContactsRecyclerAdapter by lazy {
         ContactsRecyclerAdapter(
@@ -53,8 +61,6 @@ class MyContactsFragment : Fragment(R.layout.fragment_my_contacts),
         )
     }
 
-    private lateinit var binding: FragmentMyContactsBinding
-    private lateinit var dialog: ContactDialogFragment
 
 
     override fun onAttach(context: Context) {
@@ -119,10 +125,7 @@ class MyContactsFragment : Fragment(R.layout.fragment_my_contacts),
     }
 
     override fun onContactsSelected() {
-        binding.recyclerView.apply {
-            (adapter as ContactsRecyclerAdapter).isSelected = true
-             viewModel.userListLiveData.value = viewModel.userListLiveData.value?.toMutableList()
-        }
+
     }
 
     override fun onGoUpClicked() {
@@ -166,6 +169,7 @@ class MyContactsFragment : Fragment(R.layout.fragment_my_contacts),
                 ItemTouchHelper.RIGHT
             ) {
                 override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
+                    //fixme disable onSwipe in multi select
                     removeItemFromRecyclerView(
                         viewHolder.bindingAdapterPosition
                     )
@@ -187,9 +191,42 @@ class MyContactsFragment : Fragment(R.layout.fragment_my_contacts),
                 false
             )
             adapter = contactsListAdapter
+
             //Implement swipe-to-delete
             ItemTouchHelper(itemTouchHelperCallBack).attachToRecyclerView(this)
         }
+        setupTracker()
+
+
+    }
+
+    private fun setupTracker() {
+        tracker = SelectionTracker.Builder(
+            "mySelection",
+            binding.recyclerView,
+            MyItemKeyProvider(binding.recyclerView),
+            MyItemDetailsLookup(binding.recyclerView),
+            StorageStrategy.createLongStorage()
+        ).withSelectionPredicate(
+            SelectionPredicates.createSelectAnything()
+        ).build()
+
+        tracker?.addObserver(
+            object : SelectionTracker.SelectionObserver<Long>() {
+                override fun onSelectionChanged() {
+                    super.onSelectionChanged()
+                    val nItems: Int? = tracker?.selection?.size()
+                    nItems?.let {
+                        if (nItems > 0) {
+                            //todo Enable remove button
+                        } else {
+                            //todo disable remove button
+                        }
+                    }
+                }
+            })
+
+        contactsListAdapter.tracker = tracker
     }
 
     private fun sharedElementTransitionWithSelectedContact(
