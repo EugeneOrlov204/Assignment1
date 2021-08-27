@@ -61,7 +61,11 @@ class MyContactsFragment : Fragment(R.layout.fragment_my_contacts),
         )
     }
 
-
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        if (savedInstanceState != null)
+            tracker?.onRestoreInstanceState(savedInstanceState)
+    }
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
@@ -99,6 +103,8 @@ class MyContactsFragment : Fragment(R.layout.fragment_my_contacts),
             LIST_OF_CONTACTS_KEY,
             currentState.toTypedArray()
         )
+
+        tracker?.onSaveInstanceState(outState)
     }
 
     override fun onViewStateRestored(savedInstanceState: Bundle?) {
@@ -217,12 +223,13 @@ class MyContactsFragment : Fragment(R.layout.fragment_my_contacts),
                     super.onSelectionChanged()
                     val nItems: Int? = tracker?.selection?.size()
                     nItems?.let {
-                        if (nItems > 0) {
-                            //todo Enable remove button
-                        } else {
-                            //todo disable remove button
-                        }
+//                        if (nItems > 0) {
+//                            //todo Enable remove button
+//                        } else {
+//                            //todo disable remove button
+//                        }
                     }
+
                 }
             })
 

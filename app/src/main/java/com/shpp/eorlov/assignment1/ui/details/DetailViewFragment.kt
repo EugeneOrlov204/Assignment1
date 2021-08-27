@@ -72,7 +72,6 @@ class DetailViewFragment : Fragment() {
             binding.draweeViewUserImageDetailView.setImageURI(photo)
             binding.textViewUserNameDetailView.text = name
             binding.textViewUserProfessionDetailView.text = profession
-            binding.textViewUserResidence.text = residenceAddress
         }
     }
 }

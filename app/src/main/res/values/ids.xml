@@ -8,7 +8,7 @@
     <item name="draweeViewUserImageDetailView" type="id" />
     <item name="textViewUserNameDetailView" type="id" />
     <item name="textViewUserProfessionDetailView" type="id" />
-    <item name="textViewUserResidence" type="id" />
+    <item name="textViewUserResidenceUnselected" type="id" />
     <item name="imageButtonFacebook" type="id" />
     <item name="imageButtonLinkedin" type="id" />
     <item name="imageButtonVkontakte" type="id" />

@@ -2,7 +2,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:fresco="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/constraintLayoutSelectedContactListItem"
+    android:id="@+id/constraintLayoutContactSelectedListItem"
     android:layout_width="match_parent"
     android:layout_height="@dimen/list_item_height_66dp"
     android:layout_marginHorizontal="@dimen/margin_normal_16dp"
@@ -24,7 +24,7 @@
         />
 
     <com.facebook.drawee.view.SimpleDraweeView
-        android:id="@+id/draweeViewPersonImage"
+        android:id="@+id/draweeViewPersonImageUnselected"
         android:layout_width="@dimen/person_image_size_50dp"
         android:layout_height="@dimen/person_image_size_50dp"
         android:layout_marginStart="@dimen/margin_normal_16dp"
@@ -38,7 +38,7 @@
 
 
     <androidx.appcompat.widget.AppCompatTextView
-        android:id="@+id/textViewPersonName"
+        android:id="@+id/textViewPersonNameUnselected"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/margin_normal_16dp"
@@ -46,30 +46,30 @@
         android:textColor="@color/black_russian"
         android:textSize="@dimen/text_size_normal_18sp"
         android:transitionName="contactName"
-        app:layout_constraintBottom_toTopOf="@+id/textViewPersonProfession"
-        app:layout_constraintStart_toEndOf="@id/draweeViewPersonImage"
-        app:layout_constraintTop_toTopOf="@id/draweeViewPersonImage"
+        app:layout_constraintBottom_toTopOf="@+id/textViewPersonProfessionUnselected"
+        app:layout_constraintStart_toEndOf="@id/draweeViewPersonImageUnselected"
+        app:layout_constraintTop_toTopOf="@id/draweeViewPersonImageUnselected"
         tools:text="Ava Smith" />
 
     <androidx.appcompat.widget.AppCompatTextView
-        android:id="@+id/textViewPersonProfession"
+        android:id="@+id/textViewPersonProfessionUnselected"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:fontFamily="@font/open_sans"
         android:textColor="@color/gray"
         android:textSize="@dimen/text_size_small_12sp"
         android:transitionName="contactProfession"
-        app:layout_constraintBottom_toBottomOf="@+id/draweeViewPersonImage"
-        app:layout_constraintStart_toStartOf="@id/textViewPersonName"
+        app:layout_constraintBottom_toBottomOf="@+id/draweeViewPersonImageUnselected"
+        app:layout_constraintStart_toStartOf="@id/textViewPersonNameUnselected"
         tools:text="Photograph" />
 
     <androidx.appcompat.widget.AppCompatTextView
-        android:id="@+id/textViewUserResidence"
+        android:id="@+id/textViewUserResidenceUnselected"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:transitionName="contactResidence"
-        app:layout_constraintBottom_toBottomOf="@+id/draweeViewPersonImage"
-        app:layout_constraintStart_toStartOf="@id/textViewPersonName" />
+        app:layout_constraintBottom_toBottomOf="@+id/draweeViewPersonImageUnselected"
+        app:layout_constraintStart_toStartOf="@id/textViewPersonNameUnselected" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

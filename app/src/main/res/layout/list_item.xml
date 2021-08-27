@@ -6,67 +6,132 @@
     android:layout_width="match_parent"
     android:layout_height="@dimen/list_item_height_66dp"
     android:layout_marginHorizontal="@dimen/margin_normal_16dp"
-    android:layout_marginTop="@dimen/margin_normal_16dp"
-    android:background="@drawable/item_background">
+    android:layout_marginTop="@dimen/margin_normal_16dp">
 
-    <com.facebook.drawee.view.SimpleDraweeView
-        android:id="@+id/draweeViewPersonImage"
-        android:layout_width="@dimen/person_image_size_50dp"
-        android:layout_height="@dimen/person_image_size_50dp"
-        android:layout_marginStart="@dimen/margin_normal_16dp"
-        android:transitionName="contactPhoto"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:roundAsCircle="true"
-        app:placeholderImageScaleType="fitXY"
-        fresco:placeholderImage="@drawable/ic_default_user_image" />
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/constraintLayoutContactUnselectedListItem"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/round_view_holder">
+
+        <com.facebook.drawee.view.SimpleDraweeView
+            android:id="@+id/draweeViewPersonImageUnselected"
+            android:layout_width="@dimen/person_image_size_50dp"
+            android:layout_height="@dimen/person_image_size_50dp"
+            android:layout_marginStart="@dimen/margin_normal_16dp"
+            android:transitionName="contactPhoto"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:placeholderImageScaleType="fitXY"
+            app:roundAsCircle="true"
+            fresco:placeholderImage="@drawable/ic_default_user_image" />
 
 
-    <androidx.appcompat.widget.AppCompatTextView
-        android:id="@+id/textViewPersonName"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/margin_normal_16dp"
-        android:fontFamily="@font/open_sans"
-        android:textColor="@color/black_russian"
-        android:textSize="@dimen/text_size_normal_18sp"
-        android:transitionName="contactName"
-        app:layout_constraintBottom_toTopOf="@+id/textViewPersonProfession"
-        app:layout_constraintStart_toEndOf="@id/draweeViewPersonImage"
-        app:layout_constraintTop_toTopOf="@id/draweeViewPersonImage"
-        tools:text="Ava Smith" />
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/textViewPersonNameUnselected"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/margin_normal_16dp"
+            android:fontFamily="@font/open_sans"
+            android:textColor="@color/black_russian"
+            android:textSize="@dimen/text_size_normal_18sp"
+            android:transitionName="contactName"
+            app:layout_constraintBottom_toTopOf="@+id/textViewPersonProfessionUnselected"
+            app:layout_constraintStart_toEndOf="@id/draweeViewPersonImageUnselected"
+            app:layout_constraintTop_toTopOf="@id/draweeViewPersonImageUnselected"
+            tools:text="Ava Smith" />
 
-    <androidx.appcompat.widget.AppCompatTextView
-        android:id="@+id/textViewPersonProfession"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:fontFamily="@font/open_sans"
-        android:textColor="@color/gray"
-        android:textSize="@dimen/text_size_small_12sp"
-        android:transitionName="contactProfession"
-        app:layout_constraintBottom_toBottomOf="@+id/draweeViewPersonImage"
-        app:layout_constraintStart_toStartOf="@id/textViewPersonName"
-        tools:text="Photograph" />
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/textViewPersonProfessionUnselected"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/open_sans"
+            android:textColor="@color/gray"
+            android:textSize="@dimen/text_size_small_12sp"
+            android:transitionName="contactProfession"
+            app:layout_constraintBottom_toBottomOf="@+id/draweeViewPersonImageUnselected"
+            app:layout_constraintStart_toStartOf="@id/textViewPersonNameUnselected"
+            tools:text="Photograph" />
 
-    <androidx.appcompat.widget.AppCompatTextView
-        android:id="@+id/textViewUserResidence"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:transitionName="contactResidence"
-        app:layout_constraintBottom_toBottomOf="@+id/draweeViewPersonImage"
-        app:layout_constraintStart_toStartOf="@id/textViewPersonName" />
 
-    <androidx.appcompat.widget.AppCompatImageView
-        android:id="@+id/imageViewRemoveButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="@dimen/margin_normal_16dp"
-        android:src="@drawable/ic_trash_bin"
-        app:layout_constraintBottom_toBottomOf="@+id/textViewPersonProfession"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/textViewPersonName" />
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/imageViewRemoveButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/margin_normal_16dp"
+            android:src="@drawable/ic_trash_bin"
+            app:layout_constraintBottom_toBottomOf="@+id/textViewPersonProfessionUnselected"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/textViewPersonNameUnselected" />
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/constraintLayoutContactSelectedListItem"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="invisible"
+        android:background="@drawable/round_view_holder_selected">
+
+        <androidx.appcompat.widget.AppCompatCheckBox
+            android:id="@+id/imageButtonSelectedState"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginEnd="12dp"
+            android:button="@drawable/image_button_contact_to_remove"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+
+            />
+
+        <com.facebook.drawee.view.SimpleDraweeView
+            android:id="@+id/draweeViewPersonImageSelected"
+            android:layout_width="@dimen/person_image_size_50dp"
+            android:layout_height="@dimen/person_image_size_50dp"
+            android:layout_marginStart="@dimen/margin_normal_16dp"
+            android:transitionName="contactPhoto"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/imageButtonSelectedState"
+            app:layout_constraintTop_toTopOf="parent"
+            app:placeholderImageScaleType="fitXY"
+            app:roundAsCircle="true"
+            fresco:placeholderImage="@drawable/ic_default_user_image" />
+
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/textViewPersonNameSelected"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/margin_normal_16dp"
+            android:fontFamily="@font/open_sans"
+            android:textColor="@color/black_russian"
+            android:textSize="@dimen/text_size_normal_18sp"
+            android:transitionName="contactName"
+            app:layout_constraintBottom_toTopOf="@+id/textViewPersonProfessionSelected"
+            app:layout_constraintStart_toEndOf="@id/draweeViewPersonImageSelected"
+            app:layout_constraintTop_toTopOf="@id/draweeViewPersonImageSelected"
+            tools:text="Ava Smith" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/textViewPersonProfessionSelected"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/open_sans"
+            android:textColor="@color/gray"
+            android:textSize="@dimen/text_size_small_12sp"
+            android:transitionName="contactProfession"
+            app:layout_constraintBottom_toBottomOf="@+id/draweeViewPersonImageSelected"
+            app:layout_constraintStart_toStartOf="@id/textViewPersonNameSelected"
+            tools:text="Photograph" />
+
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
-
