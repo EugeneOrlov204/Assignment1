@@ -49,13 +49,19 @@ class MyProfileFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         binding = FragmentMyProfileBinding.inflate(inflater, container, false)
-
-        initializeProfile()
-        setListeners()
-
         return binding.root
     }
 
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        initializeProfile()
+        setListeners()
+        setObservers()
+    }
+
+    private fun setObservers() {
+
+    }
 
     private fun initializeProfile() {
         userModel = UserModel(

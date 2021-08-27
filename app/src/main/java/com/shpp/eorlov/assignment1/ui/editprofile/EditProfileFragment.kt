@@ -3,17 +3,19 @@ package com.shpp.eorlov.assignment1.ui.editprofile
 import android.app.Activity
 import android.content.Context
 import android.content.Intent
-import android.net.Uri
 import android.os.Bundle
 import android.os.SystemClock
 import android.provider.MediaStore
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.WindowManager
+import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.widget.AppCompatImageView
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProvider
 import com.shpp.eorlov.assignment1.databinding.FragmentEditProfileBinding
 import com.shpp.eorlov.assignment1.di.SharedPrefStorage
 import com.shpp.eorlov.assignment1.model.UserModel
@@ -27,20 +29,24 @@ import com.shpp.eorlov.assignment1.utils.Constants.MY_PROFILE_PHONE_KEY
 import com.shpp.eorlov.assignment1.utils.Constants.MY_PROFILE_PHOTO_KEY
 import com.shpp.eorlov.assignment1.utils.Constants.MY_PROFILE_PROFESSION_KEY
 import com.shpp.eorlov.assignment1.utils.Constants.MY_PROFILE_RESIDENCE_KEY
+import com.shpp.eorlov.assignment1.utils.Results
 import com.shpp.eorlov.assignment1.utils.ext.loadImage
 import javax.inject.Inject
 import kotlin.math.abs
 
 class EditProfileFragment : Fragment() {
 
+    //todo add validation to edit texts' fields
+    //todo remove ALL hardcoded data in dialog fragment and edit profile fields
+
+    @Inject
+    lateinit var viewModelFactory: ViewModelProvider.Factory
 
     @Inject
     @field:SharedPrefStorage
     lateinit var storage: Storage
 
-    //todo add validation to edit texts' fields
-    //todo remove ALL hardcoded data in dialog fragment and edit profile fields
-
+    private lateinit var viewModel: EditProfileViewModel
     private lateinit var binding: FragmentEditProfileBinding
     private lateinit var userModel: UserModel
 
@@ -59,7 +65,11 @@ class EditProfileFragment : Fragment() {
         super.onAttach(context)
 
         (activity as MainActivity).contactComponent.inject(this)
+
+        viewModel =
+            ViewModelProvider(this, viewModelFactory)[EditProfileViewModel::class.java]
     }
+
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -67,12 +77,64 @@ class EditProfileFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         binding = FragmentEditProfileBinding.inflate(inflater, container, false)
-        restoreInputFields()
-        setListeners()
         return binding.root
     }
 
-    private fun restoreInputFields() {
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        initializeData()
+        setListeners()
+        setObservers()
+    }
+
+    private fun setObservers() {
+        viewModel.apply {
+            userLiveData.observe(viewLifecycleOwner) { userModel ->
+
+            }
+
+            loadEvent.apply {
+                observe(viewLifecycleOwner) { event ->
+                    when (event) {
+                        Results.OK -> {
+                            unlockUI()
+                            binding.contentLoadingProgressBarRecyclerView.isVisible = false
+                        }
+
+                        Results.LOADING -> {
+                            lockUI()
+                            binding.contentLoadingProgressBarRecyclerView.isVisible = true
+                        }
+
+                        Results.INITIALIZE_DATA_ERROR -> {
+                            unlockUI()
+                            binding.contentLoadingProgressBarRecyclerView.isVisible = false
+                            Toast.makeText(requireContext(), event.name, Toast.LENGTH_LONG).show()
+                        }
+                        else -> {
+                        }
+                    }
+
+                }
+            }
+        }
+    }
+
+    //todo move to another class
+    private fun lockUI() {
+        activity?.window?.addFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE)
+    }
+
+    private fun unlockUI() {
+        activity?.window?.clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE)
+    }
+
+
+    private fun initializeData() {
+
+        viewModel.initializeData()
+
+        //todo move to view model
         userModel = UserModel(
             name = storage.getString(MY_PROFILE_NAME_KEY) ?: "",
             profession = storage.getString(MY_PROFILE_PROFESSION_KEY) ?: "",
@@ -99,21 +161,38 @@ class EditProfileFragment : Fragment() {
     private var previousClickTimestamp = SystemClock.uptimeMillis()
 
     private fun setListeners() {
-        binding.buttonSave.setOnClickListener {
-            if (abs(SystemClock.uptimeMillis() - previousClickTimestamp) > Constants.BUTTON_CLICK_DELAY) {
-                saveUserData()
-                activity?.onBackPressed()
-                previousClickTimestamp = SystemClock.uptimeMillis()
-            }
-        }
+       binding.apply {
+           buttonSave.setOnClickListener {
+               if (abs(SystemClock.uptimeMillis() - previousClickTimestamp) > Constants.BUTTON_CLICK_DELAY) {
+                   saveUserData()
+                   activity?.onBackPressed()
+                   previousClickTimestamp = SystemClock.uptimeMillis()
+               }
+           }
 
-        binding.imageViewImageLoader.setOnClickListener {
-            if (abs(SystemClock.uptimeMillis() - previousClickTimestamp) > Constants.BUTTON_CLICK_DELAY) {
-                loadImageFromGallery()
-                previousClickTimestamp = SystemClock.uptimeMillis()
-            }
-        }
+           imageViewImageLoader.setOnClickListener {
+               if (abs(SystemClock.uptimeMillis() - previousClickTimestamp) > Constants.BUTTON_CLICK_DELAY) {
+                   loadImageFromGallery()
+                   previousClickTimestamp = SystemClock.uptimeMillis()
+               }
+           }
+
+           imageButtonContactDialogCloseButton.setOnClickListener {
+               if (abs(SystemClock.uptimeMillis() - previousClickTimestamp) > Constants.BUTTON_CLICK_DELAY) {
+                   activity?.onBackPressed()
+               }
+           }
+
+//         textInputEditTextUsername.onChange
+//         textInputEditTextCareer
+//        imageViewPersonPhoto
+//          textInputEditTextAddress
+//           textInputEditTextBirthdate
+//          textInputEditTextPhone
+//          textInputEditTextEmail
+       }
     }
+
 
     private fun loadImageFromGallery() {
         val gallery = Intent(

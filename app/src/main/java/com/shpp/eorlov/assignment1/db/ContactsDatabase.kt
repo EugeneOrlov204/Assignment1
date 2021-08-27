@@ -10,7 +10,10 @@ import javax.inject.Inject
 class ContactsDatabase @Inject constructor(private val context: Context) : LocalDB {
 
     val listOfContacts: MutableList<UserModel> by lazy { loadPersonData() }
-    
+    override fun getDefaultUserModel(): UserModel {
+        TODO("Not yet implemented")
+    }
+
     override fun loadPersonData(): MutableList<UserModel> {
         val listOfNames: List<String> = getNames()
         val listOfProfessions: List<String> = getCareers()
@@ -40,7 +43,7 @@ class ContactsDatabase @Inject constructor(private val context: Context) : Local
      * Returns list of careers
      * Temporary hardcoded
      */
-    override fun getCareers(): List<String> {
+    private fun getCareers(): List<String> {
         return listOf(
             context.getString(R.string.user1_profession),
             context.getString(R.string.user2_profession),
@@ -59,7 +62,7 @@ class ContactsDatabase @Inject constructor(private val context: Context) : Local
      * Returns list of names
      * Temporary hardcoded
      */
-    override fun getNames(): List<String> {
+    private fun getNames(): List<String> {
         return listOf(
             context.getString(R.string.user1_name),
             context.getString(R.string.user2_name),
@@ -78,7 +81,7 @@ class ContactsDatabase @Inject constructor(private val context: Context) : Local
      * Returns list of names
      * Temporary hardcoded
      */
-    override fun getEmails(): List<String> {
+    private fun getEmails(): List<String> {
         return listOf(
             context.getString(R.string.user1_email),
             context.getString(R.string.user2_email),
@@ -97,7 +100,7 @@ class ContactsDatabase @Inject constructor(private val context: Context) : Local
      * Returns list of residence
      * Temporary hardcoded
      */
-    override fun getResidence(): List<String> {
+    private fun getResidence(): List<String> {
         return listOf(
             context.getString(R.string.user1_residence),
             context.getString(R.string.user2_residence),

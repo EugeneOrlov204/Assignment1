@@ -18,7 +18,7 @@ class MyContactsViewModel @Inject constructor() : ViewModel() {
 
     fun initializeData() {
         if (userListLiveData.value == null) {
-            loadEvent.value = Results.INIT_RECYCLER_VIEW_ERROR
+            loadEvent.value = Results.INITIALIZE_DATA_ERROR
         } else {
             loadEvent.value = Results.LOADING
             val data = contactsDatabase.listOfContacts
@@ -26,7 +26,7 @@ class MyContactsViewModel @Inject constructor() : ViewModel() {
                 loadEvent.value = Results.OK
                 userListLiveData.value = data
             } else {
-                loadEvent.value = Results.INIT_RECYCLER_VIEW_ERROR
+                loadEvent.value = Results.INITIALIZE_DATA_ERROR
             }
         }
     }
