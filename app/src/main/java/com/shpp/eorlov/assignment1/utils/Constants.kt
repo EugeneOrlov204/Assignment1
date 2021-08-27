@@ -1,6 +1,13 @@
 package com.shpp.eorlov.assignment1.utils
 
 object Constants {
+    const val MY_PROFILE_NAME_KEY: String = "My profile name"
+    const val MY_PROFILE_PROFESSION_KEY: String = "My profile profession"
+    const val MY_PROFILE_PHOTO_KEY: String = "My profile photo"
+    const val MY_PROFILE_RESIDENCE_KEY: String = "My profile residence"
+    const val MY_PROFILE_BIRTHDATE_KEY: String = "My profile birthdate"
+    const val MY_PROFILE_PHONE_KEY: String = "My profile phone"
+    const val MY_PROFILE_EMAIL_KEY: String = "My profile email"
     val SNACKBAR_DURATION: Int = 5000
     const val PREFS_FILE = "Common preference file"
     const val DATE_FORMAT = "dd/MM/yyyy"

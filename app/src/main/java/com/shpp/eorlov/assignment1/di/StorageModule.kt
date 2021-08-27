@@ -16,21 +16,35 @@
 
 package com.shpp.eorlov.assignment1.di
 
+import android.content.Context
 import com.shpp.eorlov.assignment1.db.ContactsDatabase
 import com.shpp.eorlov.assignment1.db.LocalDB
 import com.shpp.eorlov.assignment1.storage.SharedPreferencesStorage
 import com.shpp.eorlov.assignment1.storage.Storage
-import dagger.Binds
 import dagger.Module
+import dagger.Provides
+import javax.inject.Qualifier
 
-// Tells Dagger this is a Dagger module
+@Retention(AnnotationRetention.BINARY)
+@Qualifier
+annotation class SharedPrefStorage
+
+@Retention(AnnotationRetention.BINARY)
+@Qualifier
+annotation class ContactsDatabaseStorage
+
 @Module
-abstract class StorageModule {
+class StorageModule {
 
-    // Makes Dagger provide SharedPreferencesStorage when a Storage type is requested
-    @Binds
-    abstract fun provideStorage(storage: SharedPreferencesStorage): Storage
+    @SharedPrefStorage
+    @Provides
+    fun provideStorage(context: Context): Storage {
+        return SharedPreferencesStorage(context)
+    }
 
-    @Binds
-    abstract fun provideDatabase(contactsDatabase: ContactsDatabase): LocalDB
+    @ContactsDatabaseStorage
+    @Provides
+    fun provideDatabase(context: Context): LocalDB {
+        return ContactsDatabase(context)
+    }
 }

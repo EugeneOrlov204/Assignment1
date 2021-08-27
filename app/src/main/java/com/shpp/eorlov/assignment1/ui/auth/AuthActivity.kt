@@ -74,6 +74,7 @@ class AuthActivity : AppCompatActivity() {
     }
 
 
+    // fixme Replace with validator
     private fun validatePassword(): Boolean {
         when {
             passwordEditText.text.toString().trim { it <= ' ' }.isEmpty() -> {

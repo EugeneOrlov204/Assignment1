@@ -83,8 +83,6 @@ class MyContactsFragment : Fragment(R.layout.fragment_my_contacts),
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        super.onCreateView(inflater, container, savedInstanceState)
-
         binding = FragmentMyContactsBinding.inflate(inflater, container, false)
         return binding.root
     }
