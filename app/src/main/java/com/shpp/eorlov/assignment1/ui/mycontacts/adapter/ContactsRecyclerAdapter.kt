@@ -26,6 +26,8 @@ class ContactsRecyclerAdapter(
 
     var tracker: SelectionTracker<Long>? = null
 
+    private var hasSelectedItem = false
+
     //fixme bug with removing 6 element
 
     /**
@@ -60,18 +62,18 @@ class ContactsRecyclerAdapter(
         }
     }
 
+
     /**
      * Replace the contents of a view (invoked by the layout manager)
      */
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         when (holder.itemViewType) {
             Constants.CONTACT_VIEW_HOLDER_TYPE_CODE -> {
-                tracker?.let {
-                    (holder as ContactsViewHolder).bindTo(
-                        getItem(position),
-                        it.isSelected(position.toLong())
-                    )
-                }
+                hasSelectedItem = checkIfHasSelectedItem(currentList)
+                (holder as ContactsViewHolder).bindTo(
+                    getItem(position),
+                    hasSelectedItem
+                )
             }
             Constants.REMOVE_CONTACTS_BUTTON_VIEW_HOLDER_TYPE_CODE -> {
                 (holder as RemoveButtonViewHolder).bindTo()
@@ -82,6 +84,18 @@ class ContactsRecyclerAdapter(
             else -> {
             }
         }
+    }
+
+    private fun checkIfHasSelectedItem(currentList: List<UserModel>): Boolean {
+        currentList.forEachIndexed { index, _ ->
+            tracker?.let {
+                if (it.isSelected(index.toLong())) {
+                    return true
+                }
+            }
+        }
+
+        return false
     }
 
     override fun getItemViewType(position: Int): Int {

@@ -222,14 +222,7 @@ class MyContactsFragment : Fragment(R.layout.fragment_my_contacts),
                 override fun onSelectionChanged() {
                     super.onSelectionChanged()
                     val nItems: Int? = tracker?.selection?.size()
-                    nItems?.let {
-//                        if (nItems > 0) {
-//                            //todo Enable remove button
-//                        } else {
-//                            //todo disable remove button
-//                        }
-                    }
-
+                    viewModel.userListLiveData.value = viewModel.userListLiveData.value
                 }
             })
 

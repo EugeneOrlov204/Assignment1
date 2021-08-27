@@ -20,17 +20,21 @@ class ContactsViewHolder(
 
     fun bindTo(contact: UserModel, isItemSelected: Boolean = false) {
         this.contact = contact
-        contact.apply {
-            binding.textViewPersonNameSelected.text = name
-            binding.textViewPersonNameUnselected.text = name
-            binding.textViewPersonProfessionSelected.text = profession
-            binding.textViewPersonProfessionUnselected.text = profession
-            binding.draweeViewPersonImageSelected.setImageURI(photo)
-            binding.draweeViewPersonImageUnselected.setImageURI(photo)
-            binding.constraintLayoutContactSelectedListItem.isVisible = isItemSelected
-            binding.constraintLayoutContactUnselectedListItem.isVisible = !isItemSelected
-        }
 
+        binding.constraintLayoutContactSelectedListItem.isVisible = isItemSelected
+        binding.constraintLayoutContactUnselectedListItem.isVisible = !isItemSelected
+
+        contact.apply {
+            if (binding.constraintLayoutContactSelectedListItem.isVisible) {
+                binding.textViewPersonNameSelected.text = name
+                binding.textViewPersonProfessionSelected.text = profession
+                binding.draweeViewPersonImageSelected.setImageURI(photo)
+            } else {
+                binding.textViewPersonNameUnselected.text = name
+                binding.textViewPersonProfessionUnselected.text = profession
+                binding.draweeViewPersonImageUnselected.setImageURI(photo)
+            }
+        }
 
         setListeners()
     }
@@ -39,7 +43,6 @@ class ContactsViewHolder(
     private var previousClickTimestamp = SystemClock.uptimeMillis()
 
     private fun setListeners() {
-
 
         binding.imageViewRemoveButton.setOnClickListener {
             if (kotlin.math.abs(SystemClock.uptimeMillis() - previousClickTimestamp) > Constants.BUTTON_CLICK_DELAY) {
@@ -54,12 +57,6 @@ class ContactsViewHolder(
                 previousClickTimestamp = SystemClock.uptimeMillis()
             }
         }
-
-//        binding.constraintLayoutContactListItem.setOnLongClickListener {
-//            onContactClickListener.onContactsSelected()
-//            true
-//        }
-
     }
 
 
