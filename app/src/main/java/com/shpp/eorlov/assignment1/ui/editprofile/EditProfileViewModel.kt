@@ -5,27 +5,63 @@ import androidx.lifecycle.ViewModel
 import com.shpp.eorlov.assignment1.db.ContactsDatabase
 import com.shpp.eorlov.assignment1.model.UserModel
 import com.shpp.eorlov.assignment1.utils.Results
+import com.shpp.eorlov.assignment1.utils.ValidateOperation
+import com.shpp.eorlov.assignment1.utils.evaluateErrorMessage
+import com.shpp.eorlov.assignment1.validator.Validator
 import javax.inject.Inject
 
 
 class EditProfileViewModel @Inject constructor() : ViewModel() {
 
     val userLiveData = MutableLiveData<UserModel>()
+
     val loadEvent = MutableLiveData<Results>()
+
 
     @Inject
     lateinit var contactsDatabase: ContactsDatabase
 
-    fun initializeData() {
-        if (userLiveData.value == null) {
-            loadEvent.value = Results.INITIALIZE_DATA_ERROR
-        } else {
-            loadEvent.value = Results.LOADING
-            val data = contactsDatabase.getDefaultUserModel()
+    @Inject
+    lateinit var validator: Validator
 
+    fun initializeData() {
+       /* if (userLiveData.value == null) {
+            loadEvent.value = Results.INITIALIZE_DATA_ERROR
+        } else {*/
+            loadEvent.value = Results.LOADING
+
+            val data = contactsDatabase.getUserModelFromStorage()
             userLiveData.value = data
+
             loadEvent.value = Results.OK
-        }
+//        }
     }
 
+    /**
+     * Return true if all field in add contact's dialog are valid, otherwise false
+     */
+    fun isValidField(text: String, validateOperation: ValidateOperation): String {
+        return getErrorMessage(text, validateOperation)
+    }
+
+    fun saveUserData() {
+        contactsDatabase.saveUserModelToStorage(userLiveData.value)
+    }
+
+    /**
+     * Returns empty string if given edit text has valid input
+     * otherwise returns error message
+     */
+    private fun getErrorMessage(
+        text: String,
+        validateOperation: ValidateOperation
+    ): String {
+        val validationError = when (validateOperation) {
+            ValidateOperation.EMAIL -> validator.validateEmail(text)
+            ValidateOperation.PHONE_NUMBER -> validator.validatePhoneNumber(text)
+            ValidateOperation.BIRTHDAY -> validator.validateBirthdate(text)
+            else -> validator.checkIfFieldIsNotEmpty(text)
+        }
+        return evaluateErrorMessage(validationError)
+    }
 }

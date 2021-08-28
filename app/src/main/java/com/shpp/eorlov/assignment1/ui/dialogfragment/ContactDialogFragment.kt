@@ -36,6 +36,9 @@ class ContactDialogFragment : DialogFragment() {
     @Inject
     lateinit var viewModelFactory: ViewModelProvider.Factory
 
+    @Inject
+    lateinit var validator: Validator
+
     private lateinit var viewModel: ContactDialogViewModel
     private lateinit var sharedViewModel: SharedViewModel
     private lateinit var dialogBinding: AddContactDialogBinding
@@ -260,7 +263,6 @@ class ContactDialogFragment : DialogFragment() {
         textInput: TextInputLayout,
         validateOperation: ValidateOperation
     ) {
-        val validator = Validator(requireContext())
         editText.addTextChangedListener {
             textInput.error =
                 when (validateOperation) {

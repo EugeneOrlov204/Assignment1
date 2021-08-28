@@ -2,17 +2,43 @@ package com.shpp.eorlov.assignment1.db
 
 import android.content.Context
 import com.shpp.eorlov.assignment1.R
+import com.shpp.eorlov.assignment1.di.SharedPrefStorage
 import com.shpp.eorlov.assignment1.model.UserModel
+import com.shpp.eorlov.assignment1.storage.Storage
+import com.shpp.eorlov.assignment1.utils.Constants
 import com.shpp.eorlov.assignment1.utils.Constants.DEFAULT_PATH_TO_IMAGE
 import javax.inject.Inject
 
 
 class ContactsDatabase @Inject constructor(private val context: Context) : LocalDB {
 
+    @Inject
+    @field:SharedPrefStorage
+    lateinit var storage: Storage
+
     val listOfContacts: MutableList<UserModel> by lazy { loadPersonData() }
-    override fun getDefaultUserModel(): UserModel {
-        TODO("Not yet implemented")
-    }
+    override fun getDefaultUserModel(): UserModel =
+        UserModel(
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            ""
+        )
+
+    override fun getUserModelFromStorage(): UserModel =
+        UserModel(
+            name = storage.getString(Constants.MY_PROFILE_NAME_KEY) ?: "",
+            profession = storage.getString(Constants.MY_PROFILE_PROFESSION_KEY) ?: "",
+            photo = storage.getString(Constants.MY_PROFILE_PHOTO_KEY) ?: "",
+            residenceAddress = storage.getString(Constants.MY_PROFILE_RESIDENCE_KEY) ?: "",
+            birthDate = storage.getString(Constants.MY_PROFILE_BIRTHDATE_KEY) ?: "",
+            phoneNumber = storage.getString(Constants.MY_PROFILE_PHONE_KEY) ?: "",
+            email = storage.getString(Constants.MY_PROFILE_EMAIL_KEY) ?: ""
+        )
+
 
     override fun loadPersonData(): MutableList<UserModel> {
         val listOfNames: List<String> = getNames()
@@ -37,6 +63,18 @@ class ContactsDatabase @Inject constructor(private val context: Context) : Local
 
 
         return result
+    }
+
+    override fun saveUserModelToStorage(userModel: UserModel?) {
+        userModel?.apply {
+            storage.save(Constants.MY_PROFILE_NAME_KEY, name)
+            storage.save(Constants.MY_PROFILE_PROFESSION_KEY, profession)
+            storage.save(Constants.MY_PROFILE_PHOTO_KEY, photo)
+            storage.save(Constants.MY_PROFILE_RESIDENCE_KEY, residenceAddress)
+            storage.save(Constants.MY_PROFILE_BIRTHDATE_KEY, birthDate)
+            storage.save(Constants.MY_PROFILE_PHONE_KEY, phoneNumber)
+            storage.save(Constants.MY_PROFILE_EMAIL_KEY, email)
+        }
     }
 
     /**

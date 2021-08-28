@@ -22,7 +22,6 @@ class SharedPreferencesStorage @Inject constructor(private val context: Context)
         val prefs = context.getSharedPreferences(PREFS_FILE, Context.MODE_PRIVATE)
         val prefsEdit = prefs.edit()
 
-
         prefsEdit.putInt(_key, _value)
         prefsEdit.apply()
     }

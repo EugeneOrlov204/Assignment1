@@ -4,6 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.shpp.eorlov.assignment1.ui.SharedViewModel
 import com.shpp.eorlov.assignment1.ui.dialogfragment.ContactDialogViewModel
+import com.shpp.eorlov.assignment1.ui.editprofile.EditProfileViewModel
 import com.shpp.eorlov.assignment1.ui.mycontacts.MyContactsViewModel
 import com.shpp.eorlov.assignment1.ui.myprofile.MyProfileViewModel
 import dagger.Binds
@@ -61,4 +62,9 @@ abstract class ViewModelModule {
     @IntoMap
     @ViewModelKey(MyProfileViewModel::class)
     internal abstract fun myProfileViewModel(viewModel: MyProfileViewModel): ViewModel
+
+    @Binds
+    @IntoMap
+    @ViewModelKey(EditProfileViewModel::class)
+    internal abstract fun editProfileViewModel(viewModel: EditProfileViewModel): ViewModel
 }

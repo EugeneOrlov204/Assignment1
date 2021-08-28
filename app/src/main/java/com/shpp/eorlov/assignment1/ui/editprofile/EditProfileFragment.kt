@@ -14,33 +14,33 @@ import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.widget.AppCompatImageView
 import androidx.core.view.isVisible
+import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import com.google.android.material.textfield.TextInputEditText
+import com.google.android.material.textfield.TextInputLayout
 import com.shpp.eorlov.assignment1.databinding.FragmentEditProfileBinding
 import com.shpp.eorlov.assignment1.di.SharedPrefStorage
-import com.shpp.eorlov.assignment1.model.UserModel
 import com.shpp.eorlov.assignment1.storage.Storage
 import com.shpp.eorlov.assignment1.ui.MainActivity
 import com.shpp.eorlov.assignment1.utils.Constants
-import com.shpp.eorlov.assignment1.utils.Constants.MY_PROFILE_BIRTHDATE_KEY
-import com.shpp.eorlov.assignment1.utils.Constants.MY_PROFILE_EMAIL_KEY
-import com.shpp.eorlov.assignment1.utils.Constants.MY_PROFILE_NAME_KEY
-import com.shpp.eorlov.assignment1.utils.Constants.MY_PROFILE_PHONE_KEY
-import com.shpp.eorlov.assignment1.utils.Constants.MY_PROFILE_PHOTO_KEY
-import com.shpp.eorlov.assignment1.utils.Constants.MY_PROFILE_PROFESSION_KEY
-import com.shpp.eorlov.assignment1.utils.Constants.MY_PROFILE_RESIDENCE_KEY
 import com.shpp.eorlov.assignment1.utils.Results
+import com.shpp.eorlov.assignment1.utils.ValidateOperation
+import com.shpp.eorlov.assignment1.utils.evaluateErrorMessage
 import com.shpp.eorlov.assignment1.utils.ext.loadImage
+import com.shpp.eorlov.assignment1.validator.Validator
 import javax.inject.Inject
 import kotlin.math.abs
 
 class EditProfileFragment : Fragment() {
 
-    //todo add validation to edit texts' fields
     //todo remove ALL hardcoded data in dialog fragment and edit profile fields
 
     @Inject
     lateinit var viewModelFactory: ViewModelProvider.Factory
+
+    @Inject
+    lateinit var validator: Validator
 
     @Inject
     @field:SharedPrefStorage
@@ -48,7 +48,6 @@ class EditProfileFragment : Fragment() {
 
     private lateinit var viewModel: EditProfileViewModel
     private lateinit var binding: FragmentEditProfileBinding
-    private lateinit var userModel: UserModel
 
     private var pathToLoadedImageFromGallery: String = ""
     private var imageLoaderLauncher =
@@ -89,8 +88,8 @@ class EditProfileFragment : Fragment() {
 
     private fun setObservers() {
         viewModel.apply {
-            userLiveData.observe(viewLifecycleOwner) { userModel ->
-
+            userLiveData.observe(viewLifecycleOwner) {
+                saveUserData()
             }
 
             loadEvent.apply {
@@ -134,65 +133,20 @@ class EditProfileFragment : Fragment() {
 
         viewModel.initializeData()
 
-        //todo move to view model
-        userModel = UserModel(
-            name = storage.getString(MY_PROFILE_NAME_KEY) ?: "",
-            profession = storage.getString(MY_PROFILE_PROFESSION_KEY) ?: "",
-            photo = storage.getString(MY_PROFILE_PHOTO_KEY) ?: "",
-            residenceAddress = storage.getString(MY_PROFILE_RESIDENCE_KEY) ?: "",
-            birthDate = storage.getString(MY_PROFILE_BIRTHDATE_KEY) ?: "",
-            phoneNumber = storage.getString(MY_PROFILE_PHONE_KEY) ?: "",
-            email = storage.getString(MY_PROFILE_EMAIL_KEY) ?: ""
-        )
+        viewModel.userLiveData.value?.apply {
+            pathToLoadedImageFromGallery = photo
 
-        pathToLoadedImageFromGallery = userModel.photo
-
-        binding.apply {
-            textInputEditTextUsername.setText(userModel.name)
-            textInputEditTextCareer.setText(userModel.profession)
-            textInputEditTextAddress.setText(userModel.residenceAddress)
-            textInputEditTextBirthdate.setText(userModel.birthDate)
-            textInputEditTextPhone.setText(userModel.phoneNumber)
-            textInputEditTextEmail.setText(userModel.email)
-            imageViewPersonPhoto.loadImage(userModel.photo)
+            binding.apply {
+                textInputEditTextUsername.setText(name)
+                textInputEditTextCareer.setText(profession)
+                textInputEditTextAddress.setText(residenceAddress)
+                textInputEditTextBirthdate.setText(birthDate)
+                textInputEditTextPhone.setText(phoneNumber)
+                textInputEditTextEmail.setText(email)
+                imageViewPersonPhoto.loadImage(pathToLoadedImageFromGallery)
+            }
         }
     }
-
-    private var previousClickTimestamp = SystemClock.uptimeMillis()
-
-    private fun setListeners() {
-       binding.apply {
-           buttonSave.setOnClickListener {
-               if (abs(SystemClock.uptimeMillis() - previousClickTimestamp) > Constants.BUTTON_CLICK_DELAY) {
-                   saveUserData()
-                   activity?.onBackPressed()
-                   previousClickTimestamp = SystemClock.uptimeMillis()
-               }
-           }
-
-           imageViewImageLoader.setOnClickListener {
-               if (abs(SystemClock.uptimeMillis() - previousClickTimestamp) > Constants.BUTTON_CLICK_DELAY) {
-                   loadImageFromGallery()
-                   previousClickTimestamp = SystemClock.uptimeMillis()
-               }
-           }
-
-           imageButtonContactDialogCloseButton.setOnClickListener {
-               if (abs(SystemClock.uptimeMillis() - previousClickTimestamp) > Constants.BUTTON_CLICK_DELAY) {
-                   activity?.onBackPressed()
-               }
-           }
-
-//         textInputEditTextUsername.onChange
-//         textInputEditTextCareer
-//        imageViewPersonPhoto
-//          textInputEditTextAddress
-//           textInputEditTextBirthdate
-//          textInputEditTextPhone
-//          textInputEditTextEmail
-       }
-    }
-
 
     private fun loadImageFromGallery() {
         val gallery = Intent(
@@ -202,17 +156,154 @@ class EditProfileFragment : Fragment() {
         imageLoaderLauncher.launch(gallery)
     }
 
-    //fixme save only changed fields
-    private fun saveUserData() {
+
+    private var previousClickTimestamp = SystemClock.uptimeMillis()
+
+    private fun setListeners() {
         binding.apply {
-            storage.save(MY_PROFILE_NAME_KEY, textInputEditTextUsername.text.toString())
-            storage.save(MY_PROFILE_PROFESSION_KEY, textInputEditTextCareer.text.toString())
-            storage.save(MY_PROFILE_PHOTO_KEY, pathToLoadedImageFromGallery)
-            storage.save(MY_PROFILE_RESIDENCE_KEY, textInputEditTextAddress.text.toString())
-            storage.save(MY_PROFILE_BIRTHDATE_KEY, textInputEditTextBirthdate.text.toString())
-            storage.save(MY_PROFILE_PHONE_KEY, textInputEditTextPhone.text.toString())
-            storage.save(MY_PROFILE_EMAIL_KEY, textInputEditTextEmail.text.toString())
+            buttonSave.setOnClickListener {
+                if (abs(SystemClock.uptimeMillis() - previousClickTimestamp) > Constants.BUTTON_CLICK_DELAY) {
+                    if (canAddNewContact()) {
+                        viewModel.saveUserData()
+                        activity?.onBackPressed()
+                        previousClickTimestamp = SystemClock.uptimeMillis()
+                    }
+                }
+            }
+
+            imageViewImageLoader.setOnClickListener {
+                if (abs(SystemClock.uptimeMillis() - previousClickTimestamp) > Constants.BUTTON_CLICK_DELAY) {
+                    loadImageFromGallery()
+                    previousClickTimestamp = SystemClock.uptimeMillis()
+                }
+            }
+
+            imageButtonContactDialogCloseButton.setOnClickListener {
+                if (abs(SystemClock.uptimeMillis() - previousClickTimestamp) > Constants.BUTTON_CLICK_DELAY) {
+                    activity?.onBackPressed()
+                }
+            }
+
+
+            addListenerToEditText(
+                textInputEditTextAddress,
+                textInputLayoutAddress,
+                ValidateOperation.EMPTY
+            )
+            addListenerToEditText(
+                textInputEditTextBirthdate,
+                textInputLayoutBirthdate,
+                ValidateOperation.BIRTHDAY
+            )
+            addListenerToEditText(
+                textInputEditTextCareer,
+                textInputLayoutCareer,
+                ValidateOperation.EMPTY
+            )
+            addListenerToEditText(
+                textInputEditTextEmail,
+                textInputLayoutEmail,
+                ValidateOperation.EMAIL
+            )
+            addListenerToEditText(
+                textInputEditTextUsername,
+                textInputLayoutUsername,
+                ValidateOperation.EMPTY
+            )
+            addListenerToEditText(
+                textInputEditTextPhone,
+                textInputLayoutPhone,
+                ValidateOperation.PHONE_NUMBER
+            )
         }
+    }
+
+
+    // todo move to anoter class
+    /**
+     * Returns true if user entered valid data,
+     * otherwise false
+     */
+    private fun canAddNewContact(): Boolean {
+        processEnteredValues()
+        binding.apply {
+
+            return textInputLayoutAddress.error.isNullOrEmpty() &&
+                    textInputLayoutBirthdate.error.isNullOrEmpty() &&
+                    textInputLayoutCareer.error.isNullOrEmpty() &&
+                    textInputLayoutEmail.error.isNullOrEmpty() &&
+                    textInputLayoutUsername.error.isNullOrEmpty() &&
+                    textInputLayoutPhone.error.isNullOrEmpty()
+        }
+    }
+
+    /**
+     * Processing of user-entered values
+     */
+    private fun processEnteredValues() {
+        binding.apply {
+            textInputLayoutAddress.error = viewModel.isValidField(
+                textInputEditTextAddress.text.toString(),
+                ValidateOperation.EMPTY
+            )
+            textInputLayoutBirthdate.error = viewModel.isValidField(
+                textInputEditTextBirthdate.text.toString(),
+                ValidateOperation.BIRTHDAY
+            )
+            textInputLayoutCareer.error = viewModel.isValidField(
+                textInputEditTextCareer.text.toString(),
+                ValidateOperation.EMPTY
+            )
+            textInputLayoutEmail.error = viewModel.isValidField(
+                textInputEditTextEmail.text.toString(),
+                ValidateOperation.EMAIL
+            )
+            textInputLayoutUsername.error = viewModel.isValidField(
+                textInputEditTextUsername.text.toString(),
+                ValidateOperation.EMPTY
+            )
+            textInputLayoutPhone.error = viewModel.isValidField(
+                textInputEditTextPhone.text.toString(),
+                ValidateOperation.PHONE_NUMBER
+            )
+        }
+    }
+
+    /**
+     * Set listener to given EditText
+     */
+    private fun addListenerToEditText(
+        editText: TextInputEditText,
+        textInput: TextInputLayout,
+        validateOperation: ValidateOperation
+    ) {
+        editText.addTextChangedListener {
+            textInput.error =
+                when (validateOperation) {
+                    ValidateOperation.EMAIL -> evaluateErrorMessage(
+                        validator.validateEmail(
+                            editText.text.toString()
+                        )
+                    )
+                    ValidateOperation.PHONE_NUMBER -> evaluateErrorMessage(
+                        validator.validatePhoneNumber(
+                            editText.text.toString()
+                        )
+                    )
+                    ValidateOperation.BIRTHDAY -> evaluateErrorMessage(
+                        validator.validateBirthdate(
+                            editText.text.toString()
+                        )
+                    )
+                    ValidateOperation.EMPTY -> evaluateErrorMessage(
+                        validator.checkIfFieldIsNotEmpty(
+                            editText.text.toString()
+                        )
+                    )
+                }
+        }
+
+        viewModel.userLiveData.value = viewModel.userLiveData.value
     }
 
 }
