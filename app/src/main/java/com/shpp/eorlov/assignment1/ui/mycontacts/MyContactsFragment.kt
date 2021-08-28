@@ -51,8 +51,6 @@ class MyContactsFragment : Fragment(R.layout.fragment_my_contacts),
     private lateinit var binding: FragmentMyContactsBinding
     private lateinit var dialog: ContactDialogFragment
 
-    private var tracker: SelectionTracker<Long>? = null
-
     private val contactsListAdapter: ContactsRecyclerAdapter by lazy {
         ContactsRecyclerAdapter(
             onContactClickListener = this,
@@ -60,11 +58,7 @@ class MyContactsFragment : Fragment(R.layout.fragment_my_contacts),
         )
     }
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        if (savedInstanceState != null)
-            tracker?.onRestoreInstanceState(savedInstanceState)
-    }
+
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
@@ -100,8 +94,6 @@ class MyContactsFragment : Fragment(R.layout.fragment_my_contacts),
             LIST_OF_CONTACTS_KEY,
             currentState.toTypedArray()
         )
-
-        tracker?.onSaveInstanceState(outState)
     }
 
     override fun onViewStateRestored(savedInstanceState: Bundle?) {
@@ -128,7 +120,18 @@ class MyContactsFragment : Fragment(R.layout.fragment_my_contacts),
     }
 
     override fun onContactsSelected() {
-
+        viewModel.selectAllContacts()
+        viewModel.selectedEvent.value = true
+        binding.recyclerView.apply {
+            adapter = null
+            layoutManager = null
+            adapter = contactsListAdapter
+            layoutManager =  LinearLayoutManager(
+                requireContext(),
+                LinearLayoutManager.VERTICAL,
+                false
+            )
+        }
     }
 
     override fun onGoUpClicked() {
@@ -198,33 +201,9 @@ class MyContactsFragment : Fragment(R.layout.fragment_my_contacts),
             //Implement swipe-to-delete
             ItemTouchHelper(itemTouchHelperCallBack).attachToRecyclerView(this)
         }
-        setupTracker()
-
-
     }
 
-    private fun setupTracker() {
-        tracker = SelectionTracker.Builder(
-            "mySelection",
-            binding.recyclerView,
-            MyItemKeyProvider(binding.recyclerView),
-            MyItemDetailsLookup(binding.recyclerView),
-            StorageStrategy.createLongStorage()
-        ).withSelectionPredicate(
-            SelectionPredicates.createSelectAnything()
-        ).build()
 
-        tracker?.addObserver(
-            object : SelectionTracker.SelectionObserver<Long>() {
-                override fun onSelectionChanged() {
-                    super.onSelectionChanged()
-                    val nItems: Int? = tracker?.selection?.size()
-                    viewModel.userListLiveData.value = viewModel.userListLiveData.value
-                }
-            })
-
-        contactsListAdapter.tracker = tracker
-    }
 
     private fun sharedElementTransitionWithSelectedContact(
         contact: UserModel,
@@ -275,6 +254,13 @@ class MyContactsFragment : Fragment(R.layout.fragment_my_contacts),
                         }
                     }
 
+                }
+            }
+
+            selectedEvent.apply {
+                observe(viewLifecycleOwner) {
+                    println("Selected event is working and current value is ${value}")
+                    userListLiveData.value = userListLiveData.value
                 }
             }
         }

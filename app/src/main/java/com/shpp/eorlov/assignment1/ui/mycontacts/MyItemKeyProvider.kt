@@ -1,17 +1,17 @@
 package com.shpp.eorlov.assignment1.ui.mycontacts
 
 import androidx.recyclerview.selection.ItemKeyProvider
+import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import com.shpp.eorlov.assignment1.model.UserModel
+import com.shpp.eorlov.assignment1.ui.mycontacts.adapter.ContactsRecyclerAdapter
 
-class MyItemKeyProvider(private val recyclerView: RecyclerView) :
-    ItemKeyProvider<Long>(SCOPE_MAPPED) {
+class MyItemKeyProvider(private val adapter: ContactsRecyclerAdapter) :
+    ItemKeyProvider<UserModel>(SCOPE_CACHED) {
 
-    override fun getKey(position: Int): Long? {
-        return recyclerView.adapter?.getItemId(position)
-    }
+    override fun getKey(position: Int): UserModel =
+        adapter.currentList[position]
 
-    override fun getPosition(key: Long): Int {
-        val viewHolder = recyclerView.findViewHolderForItemId(key)
-        return viewHolder?.layoutPosition ?: RecyclerView.NO_POSITION
-    }
+    override fun getPosition(key: UserModel): Int =
+        adapter.currentList.indexOfFirst { it == key }
 }

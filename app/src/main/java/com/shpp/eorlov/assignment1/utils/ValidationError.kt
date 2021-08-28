@@ -5,6 +5,7 @@ data class InvalidBirthdate(val message: String) : ValidationError()
 data class EmptyFieldError(val message: String) : ValidationError()
 data class InvalidPhoneNumber(val message: String) : ValidationError()
 data class InvalidEmail(val message: String) : ValidationError()
+data class InvalidPassword(val message: String) : ValidationError()
 object NotAnError : ValidationError()
 
 fun evaluateErrorMessage(validationError: ValidationError): String = when (validationError) {
@@ -12,6 +13,7 @@ fun evaluateErrorMessage(validationError: ValidationError): String = when (valid
     is EmptyFieldError -> validationError.message
     is InvalidPhoneNumber -> validationError.message
     is InvalidEmail -> validationError.message
+    is InvalidPassword -> validationError.message
     NotAnError -> ""
 }
 

@@ -12,6 +12,7 @@ class MyContactsViewModel @Inject constructor() : ViewModel() {
 
     val userListLiveData = MutableLiveData<MutableList<UserModel>>(ArrayList())
     val loadEvent = MutableLiveData<Results>()
+    val selectedEvent = MutableLiveData(false)
 
     @Inject
     lateinit var contactsDatabase: ContactsDatabase
@@ -59,6 +60,17 @@ class MyContactsViewModel @Inject constructor() : ViewModel() {
      */
     fun addItem(addedItem: UserModel) {
         userListLiveData.value?.add(addedItem)
+        userListLiveData.value = userListLiveData.value
+    }
+
+    fun selectAllContacts() {
+        userListLiveData.apply {
+            val list = value ?: emptyList()
+            for(item in list) {
+                item.selected = true
+            }
+        }
+
         userListLiveData.value = userListLiveData.value
     }
 }

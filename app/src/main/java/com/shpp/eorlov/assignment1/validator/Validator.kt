@@ -77,4 +77,17 @@ class Validator @Inject constructor(private val context: Context?) {
             }
         }
     }
+
+    fun validatePassword(_value: String): ValidationError {
+        return if (_value.trim { it <= ' ' }.isEmpty()) {
+            EmptyFieldError(context?.getString(R.string.empty_field) ?: "")
+        } else {
+            val isValid = _value.length >= Constants.MIN_SIZE_OF_PASSWORD
+            if (!isValid) {
+                InvalidPassword(context?.getString(R.string.invalid_password) ?: "")
+            } else {
+                NotAnError
+            }
+        }
+    }
 }
