@@ -259,7 +259,6 @@ class MyContactsFragment : Fragment(R.layout.fragment_my_contacts),
 
             selectedEvent.apply {
                 observe(viewLifecycleOwner) {
-                    println("Selected event is working and current value is ${value}")
                     userListLiveData.value = userListLiveData.value
                 }
             }

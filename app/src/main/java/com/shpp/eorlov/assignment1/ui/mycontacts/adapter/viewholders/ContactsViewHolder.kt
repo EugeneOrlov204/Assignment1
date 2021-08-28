@@ -18,15 +18,16 @@ class ContactsViewHolder(
 
     private lateinit var contact: UserModel
 
-    fun bindTo(contact: UserModel, isItemSelected: Boolean = false) {
+    fun bindTo(contact: UserModel) {
         this.contact = contact
 
         contact.apply {
-            if (selected) {
+            if (multiSelect) {
                 binding.constraintLayoutContactSelectedListItem.isVisible = true
                 binding.constraintLayoutContactUnselectedListItem.isVisible = false
                 binding.textViewPersonNameSelected.text = name
                 binding.textViewPersonProfessionSelected.text = profession
+                binding.checkBoxSelectedState.isChecked = selected
                 binding.draweeViewPersonImageSelected.setImageURI(photo)
             } else {
                 binding.constraintLayoutContactSelectedListItem.isVisible = false
@@ -56,28 +57,21 @@ class ContactsViewHolder(
                 if (kotlin.math.abs(SystemClock.uptimeMillis() - previousClickTimestamp) > Constants.BUTTON_CLICK_DELAY) {
                     if (!contact.selected) {
                         onContactClickListener.onContactSelected(contact)
+                        previousClickTimestamp = SystemClock.uptimeMillis()
                     } else {
                         checkBoxSelectedState.isChecked = !checkBoxSelectedState.isChecked
                     }
-                    previousClickTimestamp = SystemClock.uptimeMillis()
                 }
             }
 
             constraintLayoutContactListItem.setOnLongClickListener {
                 if (kotlin.math.abs(SystemClock.uptimeMillis() - previousClickTimestamp) > Constants.BUTTON_CLICK_DELAY) {
                     onContactClickListener.onContactsSelected()
-                    checkBoxSelectedState.isChecked = true
+                    contact.selected = true
                     previousClickTimestamp = SystemClock.uptimeMillis()
                 }
                 true
             }
         }
     }
-
-
-    fun getItemDetails(): ItemDetailsLookup.ItemDetails<UserModel> =
-        object : ItemDetailsLookup.ItemDetails<UserModel>() {
-            override fun getPosition(): Int = bindingAdapterPosition
-            override fun getSelectionKey(): UserModel = contact
-        }
 }

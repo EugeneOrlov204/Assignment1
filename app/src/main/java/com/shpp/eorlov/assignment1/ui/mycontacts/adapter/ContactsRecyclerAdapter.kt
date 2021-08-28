@@ -2,10 +2,7 @@ package com.shpp.eorlov.assignment1.ui.mycontacts.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import androidx.recyclerview.selection.SelectionTracker
 import androidx.recyclerview.widget.ListAdapter
-import androidx.recyclerview.widget.RecyclerView
-import com.shpp.eorlov.assignment1.databinding.FragmentGoUpButtonBinding
 import com.shpp.eorlov.assignment1.databinding.ListItemBinding
 import com.shpp.eorlov.assignment1.model.UserModel
 import com.shpp.eorlov.assignment1.ui.mycontacts.adapter.listeners.ContactClickListener

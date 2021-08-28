@@ -67,7 +67,7 @@ class MyContactsViewModel @Inject constructor() : ViewModel() {
         userListLiveData.apply {
             val list = value ?: emptyList()
             for(item in list) {
-                item.selected = true
+                item.multiSelect = true
             }
         }
 
