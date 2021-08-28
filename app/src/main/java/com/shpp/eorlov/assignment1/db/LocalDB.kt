@@ -6,5 +6,4 @@ interface LocalDB {
     fun getDefaultUserModel(): UserModel
     fun getUserModelFromStorage(): UserModel
     fun loadPersonData(): MutableList<UserModel>
-    fun saveUserModelToStorage(value: UserModel?)
 }

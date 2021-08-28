@@ -14,6 +14,8 @@ import com.shpp.eorlov.assignment1.utils.Constants
 
 
 class AuthActivity : AppCompatActivity() {
+    //todo implement login design, block create existing account and save existing login data
+
     private lateinit var binding: ActivityAuthBinding
 
     private lateinit var emailErrorMessageLayout: TextInputLayout

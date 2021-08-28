@@ -66,21 +66,21 @@
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/textViewUsername"
-            style="@style/add_contact_title_text"
+            style="@style/input_field_title_text"
             android:text="@string/add_contact_username"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/viewHeader" />
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/textInputLayoutUsername"
-            style="@style/add_contact_text_input_layout"
+            style="@style/text_input_layout"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textViewUsername">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/textInputEditTextUsername"
-                style="@style/add_contact_text_input_edit_text"
+                style="@style/input_field_text_style"
                 android:text="@string/username"
                 android:inputType="text" />
 
@@ -88,21 +88,21 @@
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/textViewCareer"
-            style="@style/add_contact_title_text"
+            style="@style/input_field_title_text"
             android:text="@string/career"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textInputLayoutUsername" />
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/textInputLayoutCareer"
-            style="@style/add_contact_text_input_layout"
+            style="@style/text_input_layout"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textViewCareer">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/textInputEditTextCareer"
-                style="@style/add_contact_text_input_edit_text"
+                style="@style/input_field_text_style"
                 android:inputType="text"
                 android:text="@string/career"/>
 
@@ -111,21 +111,21 @@
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/textViewEmail"
-            style="@style/add_contact_title_text"
+            style="@style/input_field_title_text"
             android:text="@string/email"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textInputLayoutCareer" />
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/textInputLayoutEmail"
-            style="@style/add_contact_text_input_layout"
+            style="@style/text_input_layout"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textViewEmail">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/textInputEditTextEmail"
-                style="@style/add_contact_text_input_edit_text"
+                style="@style/input_field_text_style"
                 android:text="@string/hardcoded_email"
                 android:inputType="textEmailAddress" />
 
@@ -133,21 +133,21 @@
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/textViewPhone"
-            style="@style/add_contact_title_text"
+            style="@style/input_field_title_text"
             android:text="@string/phone"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textInputLayoutEmail" />
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/textInputLayoutPhone"
-            style="@style/add_contact_text_input_layout"
+            style="@style/text_input_layout"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textViewPhone">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/textInputEditTextPhone"
-                style="@style/add_contact_text_input_edit_text"
+                style="@style/input_field_text_style"
                 android:text="@string/hardcoded_phone_number"
                 android:inputType="phone" />
 
@@ -155,29 +155,29 @@
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/textViewAddress"
-            style="@style/add_contact_title_text"
+            style="@style/input_field_title_text"
             android:text="@string/address"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textInputLayoutPhone" />
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/textInputLayoutAddress"
-            style="@style/add_contact_text_input_layout"
+            style="@style/text_input_layout"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textViewAddress">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/textInputEditTextAddress"
-                style="@style/add_contact_text_input_edit_text"
+                style="@style/input_field_text_style"
                 android:text="@string/address"
-                android:inputType="textMultiLine" />
+                android:inputType="text" />
 
         </com.google.android.material.textfield.TextInputLayout>
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/textViewBirthdate"
-            style="@style/add_contact_title_text"
+            style="@style/input_field_title_text"
             android:text="@string/date_of_birth"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textInputLayoutAddress" />
@@ -185,7 +185,7 @@
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/textInputLayoutBirthdate"
-            style="@style/add_contact_text_input_layout"
+            style="@style/text_input_layout"
             android:textColor="@color/black_russian"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -193,7 +193,7 @@
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/textInputEditTextBirthdate"
-                style="@style/add_contact_text_input_edit_text"
+                style="@style/input_field_text_style"
                 android:text="@string/hardcoded_birthdate"
                 android:inputType="date" />
 

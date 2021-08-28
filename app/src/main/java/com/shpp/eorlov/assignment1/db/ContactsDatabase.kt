@@ -17,6 +17,7 @@ class ContactsDatabase @Inject constructor(private val context: Context) : Local
     lateinit var storage: Storage
 
     val listOfContacts: MutableList<UserModel> by lazy { loadPersonData() }
+
     override fun getDefaultUserModel(): UserModel =
         UserModel(
             "",
@@ -65,17 +66,6 @@ class ContactsDatabase @Inject constructor(private val context: Context) : Local
         return result
     }
 
-    override fun saveUserModelToStorage(userModel: UserModel?) {
-        userModel?.apply {
-            storage.save(Constants.MY_PROFILE_NAME_KEY, name)
-            storage.save(Constants.MY_PROFILE_PROFESSION_KEY, profession)
-            storage.save(Constants.MY_PROFILE_PHOTO_KEY, photo)
-            storage.save(Constants.MY_PROFILE_RESIDENCE_KEY, residenceAddress)
-            storage.save(Constants.MY_PROFILE_BIRTHDATE_KEY, birthDate)
-            storage.save(Constants.MY_PROFILE_PHONE_KEY, phoneNumber)
-            storage.save(Constants.MY_PROFILE_EMAIL_KEY, email)
-        }
-    }
 
     /**
      * Returns list of careers

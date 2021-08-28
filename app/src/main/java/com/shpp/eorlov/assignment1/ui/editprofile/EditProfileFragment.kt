@@ -89,7 +89,7 @@ class EditProfileFragment : Fragment() {
     private fun setObservers() {
         viewModel.apply {
             userLiveData.observe(viewLifecycleOwner) {
-                saveUserData()
+//                saveUserProfileData(it)
             }
 
             loadEvent.apply {
@@ -164,7 +164,6 @@ class EditProfileFragment : Fragment() {
             buttonSave.setOnClickListener {
                 if (abs(SystemClock.uptimeMillis() - previousClickTimestamp) > Constants.BUTTON_CLICK_DELAY) {
                     if (canAddNewContact()) {
-                        viewModel.saveUserData()
                         activity?.onBackPressed()
                         previousClickTimestamp = SystemClock.uptimeMillis()
                     }
@@ -242,31 +241,52 @@ class EditProfileFragment : Fragment() {
      */
     private fun processEnteredValues() {
         binding.apply {
-            textInputLayoutAddress.error = viewModel.isValidField(
+            textInputLayoutAddress.error = processErrorOfEnteredValue(
                 textInputEditTextAddress.text.toString(),
                 ValidateOperation.EMPTY
             )
-            textInputLayoutBirthdate.error = viewModel.isValidField(
+
+            textInputLayoutBirthdate.error = processErrorOfEnteredValue(
                 textInputEditTextBirthdate.text.toString(),
                 ValidateOperation.BIRTHDAY
             )
-            textInputLayoutCareer.error = viewModel.isValidField(
+            textInputLayoutCareer.error = processErrorOfEnteredValue(
                 textInputEditTextCareer.text.toString(),
                 ValidateOperation.EMPTY
             )
-            textInputLayoutEmail.error = viewModel.isValidField(
+            textInputLayoutEmail.error = processErrorOfEnteredValue(
                 textInputEditTextEmail.text.toString(),
                 ValidateOperation.EMAIL
             )
-            textInputLayoutUsername.error = viewModel.isValidField(
+            textInputLayoutUsername.error = processErrorOfEnteredValue(
                 textInputEditTextUsername.text.toString(),
                 ValidateOperation.EMPTY
             )
-            textInputLayoutPhone.error = viewModel.isValidField(
+            textInputLayoutPhone.error = processErrorOfEnteredValue(
                 textInputEditTextPhone.text.toString(),
                 ValidateOperation.PHONE_NUMBER
             )
         }
+    }
+
+    /**
+     * Returns error text of given field if it exist,
+     * otherwise returns empty string
+     */
+    private fun processErrorOfEnteredValue(
+        text: String,
+        validateOperation: ValidateOperation
+    ): String {
+        val error = viewModel.isValidField(
+            text,
+            validateOperation
+        )
+
+        if(error.isNullOrEmpty()) {
+//            viewModel.saveUserProfileData()
+        }
+
+        return error
     }
 
     /**

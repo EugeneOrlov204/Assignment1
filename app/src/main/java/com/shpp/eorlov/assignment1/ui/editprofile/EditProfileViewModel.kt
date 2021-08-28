@@ -3,7 +3,10 @@ package com.shpp.eorlov.assignment1.ui.editprofile
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.shpp.eorlov.assignment1.db.ContactsDatabase
+import com.shpp.eorlov.assignment1.di.SharedPrefStorage
 import com.shpp.eorlov.assignment1.model.UserModel
+import com.shpp.eorlov.assignment1.storage.Storage
+import com.shpp.eorlov.assignment1.utils.Constants
 import com.shpp.eorlov.assignment1.utils.Results
 import com.shpp.eorlov.assignment1.utils.ValidateOperation
 import com.shpp.eorlov.assignment1.utils.evaluateErrorMessage
@@ -17,6 +20,9 @@ class EditProfileViewModel @Inject constructor() : ViewModel() {
 
     val loadEvent = MutableLiveData<Results>()
 
+    @Inject
+    @field:SharedPrefStorage
+    lateinit var storage: Storage
 
     @Inject
     lateinit var contactsDatabase: ContactsDatabase
@@ -44,8 +50,9 @@ class EditProfileViewModel @Inject constructor() : ViewModel() {
         return getErrorMessage(text, validateOperation)
     }
 
-    fun saveUserData() {
-        contactsDatabase.saveUserModelToStorage(userLiveData.value)
+
+    fun saveUserProfileData(_key: String, _value: String) {
+        storage.save(_key, _value)
     }
 
     /**
