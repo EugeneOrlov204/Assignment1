@@ -2,7 +2,6 @@ package com.shpp.eorlov.assignment1.ui.mycontacts.adapter.viewholders
 
 import android.os.SystemClock
 import androidx.core.view.isVisible
-import androidx.recyclerview.selection.ItemDetailsLookup
 import androidx.recyclerview.widget.RecyclerView
 import com.shpp.eorlov.assignment1.databinding.ListItemBinding
 import com.shpp.eorlov.assignment1.model.UserModel
@@ -22,7 +21,7 @@ class ContactsViewHolder(
         this.contact = contact
 
         contact.apply {
-            if (multiSelect) {
+            if (onMultiSelect) {
                 binding.constraintLayoutContactSelectedListItem.isVisible = true
                 binding.constraintLayoutContactUnselectedListItem.isVisible = false
                 binding.textViewPersonNameSelected.text = name
@@ -55,22 +54,20 @@ class ContactsViewHolder(
 
             constraintLayoutContactListItem.setOnClickListener {
                 if (kotlin.math.abs(SystemClock.uptimeMillis() - previousClickTimestamp) > Constants.BUTTON_CLICK_DELAY) {
-                    if (!contact.selected) {
+                    if (!contact.onMultiSelect) {
                         onContactClickListener.onContactSelected(contact)
                         previousClickTimestamp = SystemClock.uptimeMillis()
                     } else {
                         checkBoxSelectedState.isChecked = !checkBoxSelectedState.isChecked
+                        contact.selected = !contact.selected
                     }
                 }
             }
 
             constraintLayoutContactListItem.setOnLongClickListener {
-                if (kotlin.math.abs(SystemClock.uptimeMillis() - previousClickTimestamp) > Constants.BUTTON_CLICK_DELAY) {
-                    onContactClickListener.onContactsSelected()
-                    contact.selected = true
-                    previousClickTimestamp = SystemClock.uptimeMillis()
-                }
-                true
+                onContactClickListener.onContactsSelected()
+                contact.selected = true
+                return@setOnLongClickListener true
             }
         }
     }

@@ -43,6 +43,9 @@ class MyContactsFragment : Fragment(R.layout.fragment_my_contacts),
     ContactClickListener,
     ButtonClickListener {
 
+    private var previousClickTimestamp = SystemClock.uptimeMillis()
+
+
     @Inject
     lateinit var viewModelFactory: ViewModelProvider.Factory
 
@@ -119,19 +122,11 @@ class MyContactsFragment : Fragment(R.layout.fragment_my_contacts),
         sharedElementTransitionWithSelectedContact(contact)
     }
 
+    //todo hide add contact button?
     override fun onContactsSelected() {
         viewModel.selectAllContacts()
         viewModel.selectedEvent.value = true
-        binding.recyclerView.apply {
-            adapter = null
-            layoutManager = null
-            adapter = contactsListAdapter
-            layoutManager =  LinearLayoutManager(
-                requireContext(),
-                LinearLayoutManager.VERTICAL,
-                false
-            )
-        }
+        refreshRecyclerView()
     }
 
     override fun onGoUpClicked() {
@@ -164,6 +159,19 @@ class MyContactsFragment : Fragment(R.layout.fragment_my_contacts),
         ).setAction("Cancel") {
             viewModel.addItem(position, removedItem)
         }.show()
+    }
+
+    private fun refreshRecyclerView() {
+        binding.recyclerView.apply {
+            adapter = null
+            layoutManager = null
+            adapter = contactsListAdapter
+            layoutManager =  LinearLayoutManager(
+                requireContext(),
+                LinearLayoutManager.VERTICAL,
+                false
+            )
+        }
     }
 
     private fun initRecycler() {
@@ -280,9 +288,6 @@ class MyContactsFragment : Fragment(R.layout.fragment_my_contacts),
     private fun unlockUI() {
         activity?.window?.clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE)
     }
-
-    private var previousClickTimestamp = SystemClock.uptimeMillis()
-
 
     private fun setListeners() {
         binding.textViewAddContacts.setOnClickListener {
