@@ -71,24 +71,53 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <androidx.recyclerview.widget.RecyclerView
-        android:layout_marginBottom="@dimen/margin_normal_16dp"
         android:id="@+id/recyclerViewMyContacts"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        app:layout_constraintBottom_toTopOf="@+id/buttonGoUp"
+        android:layout_marginBottom="@dimen/margin_normal_16dp"
+        app:layout_constraintBottom_toTopOf="@+id/frameLayoutButtonsContainer"
         app:layout_constraintTop_toBottomOf="@id/constraintLayoutHeader" />
 
-    <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/buttonGoUp"
+
+    <FrameLayout
+        android:id="@+id/frameLayoutButtonsContainer"
         android:visibility="gone"
         android:layout_width="@dimen/circle_button_radius_60dp"
         android:layout_height="@dimen/circle_button_radius_60dp"
-        android:background="@drawable/ic_go_up_button"
-        android:layout_marginEnd="@dimen/margin_normal_16dp"
         android:layout_marginVertical="@dimen/circle_button_margin_vertical_36dp"
-        app:layout_constraintEnd_toEndOf="@+id/recyclerViewMyContacts"
+        android:layout_marginEnd="@dimen/margin_normal_16dp"
         app:layout_constraintBottom_toBottomOf="parent"
-        />
+        app:layout_constraintEnd_toEndOf="parent">
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/buttonGoUp"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@drawable/ic_go_up_button"
+            android:contentDescription="@string/edit_profile"
+            android:visibility="gone" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/buttonRemoveSelectedContacts"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@drawable/ic_circle_trash_bin"
+            android:contentDescription="@string/edit_profile"
+            android:visibility="gone" />
+    </FrameLayout>
+
+    <!--    I HATE THIS!-->
+    <!--    <com.google.android.material.floatingactionbutton.FloatingActionButton-->
+    <!--        android:id="@+id/buttonGoUp"-->
+    <!--        style="?android:attr/colorBackgroundFloating"-->
+    <!--        android:layout_width="wrap_content"-->
+    <!--        android:layout_height="wrap_content"-->
+    <!--        android:layout_gravity="end|bottom"-->
+    <!--        android:src="@drawable/ic_go_up_button"-->
+    <!--        app:layout_constraintEnd_toEndOf="parent"-->
+    <!--        app:layout_constraintBottom_toBottomOf="parent"-->
+    <!--        android:contentDescription="@string/edit_profile"-->
+    <!--        android:layout_margin="16dp" />-->
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -6,15 +6,13 @@ import androidx.recyclerview.widget.ListAdapter
 import com.shpp.eorlov.assignment1.databinding.ListItemBinding
 import com.shpp.eorlov.assignment1.model.UserModel
 import com.shpp.eorlov.assignment1.ui.mycontacts.adapter.listeners.ContactClickListener
-import com.shpp.eorlov.assignment1.ui.mycontacts.adapter.listeners.ButtonClickListener
 import com.shpp.eorlov.assignment1.ui.mycontacts.adapter.viewholders.ContactsViewHolder
 import com.shpp.eorlov.assignment1.utils.Constants
 import com.shpp.eorlov.assignment1.utils.UserItemDiffCallback
 
 
 class ContactsRecyclerAdapter(
-    private val onContactClickListener: ContactClickListener,
-    private val onButtonClickListener: ButtonClickListener
+    private val onContactClickListener: ContactClickListener
 ) : ListAdapter<UserModel, ContactsViewHolder>(UserItemDiffCallback()) {
 
 

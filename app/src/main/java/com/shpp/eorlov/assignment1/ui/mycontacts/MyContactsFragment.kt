@@ -53,8 +53,7 @@ class MyContactsFragment : Fragment(R.layout.fragment_my_contacts),
 
     private val contactsListAdapter: ContactsRecyclerAdapter by lazy {
         ContactsRecyclerAdapter(
-            onContactClickListener = this,
-            onButtonClickListener = this
+            onContactClickListener = this
         )
     }
 
@@ -118,16 +117,21 @@ class MyContactsFragment : Fragment(R.layout.fragment_my_contacts),
         sharedElementTransitionWithSelectedContact(contact)
     }
 
-    //todo replace "add contacts" with "remove contacts"
+    //todo hide "add contacts"
     override fun onContactsSelected() {
         viewModel.selectAllContacts()
+        binding.frameLayoutButtonsContainer.visibility = View.VISIBLE
+        binding.buttonRemoveSelectedContacts.visibility = View.VISIBLE
         viewModel.selectedEvent.value = true
+
         refreshRecyclerView()
     }
 
     override fun onContactUnselected() {
         if (viewModel.areAllContactsUnselected()) {
             viewModel.unselectAllContacts()
+            binding.frameLayoutButtonsContainer.visibility = View.GONE
+            binding.buttonRemoveSelectedContacts.visibility = View.GONE
             viewModel.selectedEvent.value = false
             refreshRecyclerView()
         }
@@ -163,6 +167,18 @@ class MyContactsFragment : Fragment(R.layout.fragment_my_contacts),
         ).setAction("Cancel") {
             viewModel.addItem(position, removedItem)
         }.show()
+    }
+
+
+    private fun removeSelectedItemsFromRecyclerView() {
+        viewModel.loadEvent.value = Results.LOADING
+        for (item in contactsListAdapter.currentList) {
+            if (item.selected) {
+                viewModel.removeItem(item)
+            }
+        }
+        refreshRecyclerView()
+        viewModel.loadEvent.value = Results.OK
     }
 
     private fun refreshRecyclerView() {
@@ -300,9 +316,14 @@ class MyContactsFragment : Fragment(R.layout.fragment_my_contacts),
                     previousClickTimestamp = SystemClock.uptimeMillis()
                 }
             }
+
             buttonGoUp.setOnClickListener {
+                recyclerViewMyContacts.smoothScrollToPosition(0)
+            }
+
+            buttonRemoveSelectedContacts.setOnClickListener {
                 if (abs(SystemClock.uptimeMillis() - previousClickTimestamp) > BUTTON_CLICK_DELAY) {
-                    recyclerViewMyContacts.smoothScrollToPosition(0)
+                    removeSelectedItemsFromRecyclerView()
                     previousClickTimestamp = SystemClock.uptimeMillis()
                 }
             }
@@ -310,15 +331,20 @@ class MyContactsFragment : Fragment(R.layout.fragment_my_contacts),
             recyclerViewMyContacts.addOnScrollListener(object : RecyclerView.OnScrollListener() {
                 override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
                     super.onScrolled(recyclerView, dx, dy)
-                    if (dy < 0 && buttonGoUp.visibility == View.VISIBLE) {
-                        buttonGoUp.visibility = View.GONE
-                    } else if (dy > 0 && buttonGoUp.visibility != View.VISIBLE) {
-                        buttonGoUp.visibility = View.VISIBLE
+                    val userList = contactsListAdapter.currentList
+                    if (userList.isEmpty()) return
+                    if (!userList[0].onMultiSelect) {
+                        if (dy > 0 && buttonGoUp.visibility == View.VISIBLE) {
+                            buttonGoUp.visibility = View.GONE
+                            frameLayoutButtonsContainer.visibility = View.GONE
+                        } else if (dy < 0 && buttonGoUp.visibility != View.VISIBLE) {
+                            frameLayoutButtonsContainer.visibility = View.VISIBLE
+                            buttonGoUp.visibility = View.VISIBLE
+                        }
                     }
                 }
             })
-
-//            recyclerViewMyContacts
         }
     }
+
 }

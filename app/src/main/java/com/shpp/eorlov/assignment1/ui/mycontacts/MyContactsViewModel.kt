@@ -47,6 +47,11 @@ class MyContactsViewModel @Inject constructor() : ViewModel() {
         userListLiveData.value = userListLiveData.value
     }
 
+    fun removeItem(item: UserModel?) {
+        userListLiveData.value?.remove(item)
+        userListLiveData.value = userListLiveData.value
+    }
+
     /**
      * Adds item to dataset by given position
      */
