@@ -45,6 +45,6 @@ class StorageModule {
     @ContactsDatabaseStorage
     @Provides
     fun provideDatabase(context: Context): LocalDB {
-        return ContactsDatabase(context)
+        return ContactsDatabase()
     }
 }

@@ -1,7 +1,5 @@
 package com.shpp.eorlov.assignment1.db
 
-import android.content.Context
-import com.shpp.eorlov.assignment1.R
 import com.shpp.eorlov.assignment1.di.SharedPrefStorage
 import com.shpp.eorlov.assignment1.model.UserModel
 import com.shpp.eorlov.assignment1.storage.Storage
@@ -10,7 +8,7 @@ import com.shpp.eorlov.assignment1.utils.Constants.DEFAULT_PATH_TO_IMAGE
 import javax.inject.Inject
 
 
-class ContactsDatabase @Inject constructor(private val context: Context) : LocalDB {
+class ContactsDatabase @Inject constructor() : LocalDB {
 
     @Inject
     @field:SharedPrefStorage
@@ -66,23 +64,23 @@ class ContactsDatabase @Inject constructor(private val context: Context) : Local
         return result
     }
 
-
+    //todo move to JSON
     /**
      * Returns list of careers
      * Temporary hardcoded
      */
     private fun getCareers(): List<String> {
         return listOf(
-            context.getString(R.string.user1_profession),
-            context.getString(R.string.user2_profession),
-            context.getString(R.string.user3_profession),
-            context.getString(R.string.user4_profession),
-            context.getString(R.string.user5_profession),
-            context.getString(R.string.user6_profession),
-            context.getString(R.string.user7_profession),
-            context.getString(R.string.user8_profession),
-            context.getString(R.string.user9_profession),
-            context.getString(R.string.user10_profession)
+            "Community worker",
+            "Estate agent",
+            "Pilot",
+            "Dentist",
+            "Clockmaker",
+            "Barrister",
+            "Auctioneer",
+            "Printer",
+            "Comedian",
+            "Car dealer"
         )
     }
 
@@ -92,16 +90,16 @@ class ContactsDatabase @Inject constructor(private val context: Context) : Local
      */
     private fun getNames(): List<String> {
         return listOf(
-            context.getString(R.string.user1_name),
-            context.getString(R.string.user2_name),
-            context.getString(R.string.user3_name),
-            context.getString(R.string.user4_name),
-            context.getString(R.string.user5_name),
-            context.getString(R.string.user6_name),
-            context.getString(R.string.user7_name),
-            context.getString(R.string.user8_name),
-            context.getString(R.string.user9_name),
-            context.getString(R.string.user10_name)
+            "Darcy Benn",
+            "Tatiana Matthewson",
+            "Zandra Bailey",
+            "Eliot Stevenson",
+            "Mina Derrickson",
+            "Gyles Breckinridge",
+            "Sharlene Horsfall",
+            "Milton Bryson",
+            "Allissa Tindall",
+            "Frannie Morriss"
         )
     }
 
@@ -111,16 +109,16 @@ class ContactsDatabase @Inject constructor(private val context: Context) : Local
      */
     private fun getEmails(): List<String> {
         return listOf(
-            context.getString(R.string.user1_email),
-            context.getString(R.string.user2_email),
-            context.getString(R.string.user3_email),
-            context.getString(R.string.user4_email),
-            context.getString(R.string.user5_email),
-            context.getString(R.string.user6_email),
-            context.getString(R.string.user7_email),
-            context.getString(R.string.user8_email),
-            context.getString(R.string.user9_email),
-            context.getString(R.string.user10_email),
+            "name1.surname@gmail.com",
+            "name2.surname@gmail.com",
+            "name3.surname@gmail.com",
+            "name4.surname@gmail.com",
+            "name5.surname@gmail.com",
+            "name6.surname@gmail.com",
+            "name7.surname@gmail.com",
+            "name8.surname@gmail.com",
+            "name9.surname@gmail.com",
+            "name10.surname@gmail.com"
         )
     }
 
@@ -130,16 +128,16 @@ class ContactsDatabase @Inject constructor(private val context: Context) : Local
      */
     private fun getResidence(): List<String> {
         return listOf(
-            context.getString(R.string.user1_residence),
-            context.getString(R.string.user2_residence),
-            context.getString(R.string.user3_residence),
-            context.getString(R.string.user4_residence),
-            context.getString(R.string.user5_residence),
-            context.getString(R.string.user6_residence),
-            context.getString(R.string.user7_residence),
-            context.getString(R.string.user8_residence),
-            context.getString(R.string.user9_residence),
-            context.getString(R.string.user10_residence),
+            "5295 Gaylord Walks Apk. 110",
+            "5295 Gaylord Walks Apk. 111",
+            "5295 Gaylord Walks Apk. 112",
+            "5295 Gaylord Walks Apk. 113",
+            "5295 Gaylord Walks Apk. 114",
+            "5295 Gaylord Walks Apk. 115",
+            "5295 Gaylord Walks Apk. 116",
+            "5295 Gaylord Walks Apk. 117",
+            "5295 Gaylord Walks Apk. 118",
+            "5295 Gaylord Walks Apk. 119"
         )
     }
 }

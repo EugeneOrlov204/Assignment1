@@ -3,12 +3,16 @@ package com.shpp.eorlov.assignment1.ui.auth
 import android.content.Intent
 import android.content.SharedPreferences
 import android.os.Bundle
+import android.view.KeyEvent
+import android.view.View
+import android.view.inputmethod.EditorInfo
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.widget.addTextChangedListener
 import com.shpp.eorlov.assignment1.databinding.ActivityAuthBinding
 import com.shpp.eorlov.assignment1.ui.MainActivity
 import com.shpp.eorlov.assignment1.utils.Constants
 import com.shpp.eorlov.assignment1.utils.evaluateErrorMessage
+import com.shpp.eorlov.assignment1.utils.ext.hideKeyboard
 import com.shpp.eorlov.assignment1.validator.Validator
 
 
@@ -35,6 +39,17 @@ class AuthActivity : AppCompatActivity() {
     private fun setListeners() {
         binding.buttonRegister.setOnClickListener {
             goToMyProfile()
+        }
+
+        binding.root.setOnClickListener {
+            it.hideKeyboard()
+        }
+
+        binding.textInputEditTextPassword.setOnEditorActionListener { _, actionId, _ ->
+            if(actionId ==  EditorInfo.IME_ACTION_DONE) {
+                goToMyProfile()
+            }
+            false
         }
     }
 
@@ -139,3 +154,5 @@ class AuthActivity : AppCompatActivity() {
         return "$name $surname"
     }
 }
+
+

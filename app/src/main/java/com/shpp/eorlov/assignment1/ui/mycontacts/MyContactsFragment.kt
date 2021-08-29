@@ -122,7 +122,7 @@ class MyContactsFragment : Fragment(R.layout.fragment_my_contacts),
         sharedElementTransitionWithSelectedContact(contact)
     }
 
-    //todo hide add contact button?
+    //todo replace "add contacts" with "remove contacts"
     override fun onContactsSelected() {
         viewModel.selectAllContacts()
         viewModel.selectedEvent.value = true
