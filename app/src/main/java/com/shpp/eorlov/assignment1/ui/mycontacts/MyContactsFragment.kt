@@ -18,6 +18,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.snackbar.Snackbar
 import com.shpp.eorlov.assignment1.R
+import com.shpp.eorlov.assignment1.base.BaseFragment
 import com.shpp.eorlov.assignment1.databinding.FragmentMyContactsBinding
 import com.shpp.eorlov.assignment1.model.UserModel
 import com.shpp.eorlov.assignment1.ui.MainActivity
@@ -36,7 +37,7 @@ import javax.inject.Inject
 import kotlin.math.abs
 
 
-class MyContactsFragment : Fragment(R.layout.fragment_my_contacts),
+class MyContactsFragment : BaseFragment(),
     ContactClickListener,
     ButtonClickListener {
 
@@ -302,13 +303,6 @@ class MyContactsFragment : Fragment(R.layout.fragment_my_contacts),
         }
     }
 
-    private fun lockUI() {
-        activity?.window?.addFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE)
-    }
-
-    private fun unlockUI() {
-        activity?.window?.clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE)
-    }
 
     private fun setListeners() {
         binding.apply {

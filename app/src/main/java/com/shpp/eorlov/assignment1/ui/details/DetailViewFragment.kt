@@ -16,7 +16,6 @@ import kotlin.math.abs
 
 
 class DetailViewFragment : Fragment() {
-    //fixme some address
     private val args: DetailViewFragmentArgs by navArgs()
 
     private lateinit var binding: FragmentDetailViewBinding

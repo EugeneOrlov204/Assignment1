@@ -9,16 +9,15 @@ import android.provider.MediaStore
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.view.WindowManager
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.widget.AppCompatImageView
 import androidx.core.view.isVisible
 import androidx.core.widget.addTextChangedListener
-import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
+import com.shpp.eorlov.assignment1.base.BaseFragment
 import com.shpp.eorlov.assignment1.databinding.FragmentEditProfileBinding
 import com.shpp.eorlov.assignment1.di.SharedPrefStorage
 import com.shpp.eorlov.assignment1.storage.Storage
@@ -32,9 +31,7 @@ import com.shpp.eorlov.assignment1.validator.Validator
 import javax.inject.Inject
 import kotlin.math.abs
 
-class EditProfileFragment : Fragment() {
-
-    //todo remove ALL hardcoded data in dialog fragment and edit profile fields
+class EditProfileFragment : BaseFragment() {
 
     @Inject
     lateinit var viewModelFactory: ViewModelProvider.Factory
@@ -88,9 +85,6 @@ class EditProfileFragment : Fragment() {
 
     private fun setObservers() {
         viewModel.apply {
-            userLiveData.observe(viewLifecycleOwner) {
-//                saveUserProfileData(it)
-            }
 
             loadEvent.apply {
                 observe(viewLifecycleOwner) { event ->
@@ -119,14 +113,6 @@ class EditProfileFragment : Fragment() {
         }
     }
 
-    //todo move to another class
-    private fun lockUI() {
-        activity?.window?.addFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE)
-    }
-
-    private fun unlockUI() {
-        activity?.window?.clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE)
-    }
 
 
     private fun initializeData() {
@@ -218,7 +204,6 @@ class EditProfileFragment : Fragment() {
     }
 
 
-    // todo move to anoter class
     /**
      * Returns true if user entered valid data,
      * otherwise false

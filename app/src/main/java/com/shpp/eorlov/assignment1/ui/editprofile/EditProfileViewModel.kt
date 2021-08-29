@@ -3,6 +3,7 @@ package com.shpp.eorlov.assignment1.ui.editprofile
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.shpp.eorlov.assignment1.db.ContactsDatabase
+import com.shpp.eorlov.assignment1.di.ContactsDatabaseStorage
 import com.shpp.eorlov.assignment1.di.SharedPrefStorage
 import com.shpp.eorlov.assignment1.model.UserModel
 import com.shpp.eorlov.assignment1.storage.Storage
@@ -16,7 +17,9 @@ import javax.inject.Inject
 
 class EditProfileViewModel @Inject constructor() : ViewModel() {
 
-    val userLiveData = MutableLiveData<UserModel>()
+    val userLiveData: MutableLiveData<UserModel> by lazy {
+        MutableLiveData(contactsDatabase.getDefaultUserModel())
+    }
 
     val loadEvent = MutableLiveData<Results>()
 
@@ -24,6 +27,7 @@ class EditProfileViewModel @Inject constructor() : ViewModel() {
     @field:SharedPrefStorage
     lateinit var storage: Storage
 
+    //todo fix this
     @Inject
     lateinit var contactsDatabase: ContactsDatabase
 
@@ -31,16 +35,16 @@ class EditProfileViewModel @Inject constructor() : ViewModel() {
     lateinit var validator: Validator
 
     fun initializeData() {
-       /* if (userLiveData.value == null) {
+        if (userLiveData.value == null) {
             loadEvent.value = Results.INITIALIZE_DATA_ERROR
-        } else {*/
+        } else {
             loadEvent.value = Results.LOADING
 
             val data = contactsDatabase.getUserModelFromStorage()
             userLiveData.value = data
 
             loadEvent.value = Results.OK
-//        }
+        }
     }
 
     /**
@@ -50,10 +54,6 @@ class EditProfileViewModel @Inject constructor() : ViewModel() {
         return getErrorMessage(text, validateOperation)
     }
 
-
-    fun saveUserProfileData(_key: String, _value: String) {
-        storage.save(_key, _value)
-    }
 
     /**
      * Returns empty string if given edit text has valid input
