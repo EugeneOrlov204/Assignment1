@@ -16,7 +16,7 @@ import kotlin.math.abs
 
 
 class DetailViewFragment : Fragment() {
-
+    //fixme some address
     private val args: DetailViewFragmentArgs by navArgs()
 
     private lateinit var binding: FragmentDetailViewBinding
@@ -72,6 +72,7 @@ class DetailViewFragment : Fragment() {
             binding.draweeViewUserImageDetailView.setImageURI(photo)
             binding.textViewUserNameDetailView.text = name
             binding.textViewUserProfessionDetailView.text = profession
+            binding.textViewUserResidenceDetailView.text = residenceAddress
         }
     }
 }

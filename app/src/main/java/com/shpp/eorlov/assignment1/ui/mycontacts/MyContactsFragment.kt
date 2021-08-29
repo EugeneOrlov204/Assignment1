@@ -178,6 +178,10 @@ class MyContactsFragment : Fragment(R.layout.fragment_my_contacts),
             }
         }
         refreshRecyclerView()
+        if(viewModel.userListLiveData.value?.isEmpty() == true) {
+            binding.frameLayoutButtonsContainer.visibility = View.GONE
+            binding.buttonRemoveSelectedContacts.visibility = View.GONE
+        }
         viewModel.loadEvent.value = Results.OK
     }
 
