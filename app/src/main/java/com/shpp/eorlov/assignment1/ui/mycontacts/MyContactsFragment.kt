@@ -13,9 +13,6 @@ import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
-import androidx.recyclerview.selection.SelectionPredicates
-import androidx.recyclerview.selection.SelectionTracker
-import androidx.recyclerview.selection.StorageStrategy
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -60,7 +57,6 @@ class MyContactsFragment : Fragment(R.layout.fragment_my_contacts),
             onButtonClickListener = this
         )
     }
-
 
 
     override fun onAttach(context: Context) {
@@ -129,8 +125,16 @@ class MyContactsFragment : Fragment(R.layout.fragment_my_contacts),
         refreshRecyclerView()
     }
 
+    override fun onContactUnselected() {
+        if (viewModel.areAllContactsUnselected()) {
+            viewModel.unselectAllContacts()
+            viewModel.selectedEvent.value = false
+            refreshRecyclerView()
+        }
+    }
+
     override fun onGoUpClicked() {
-        binding.recyclerView.apply {
+        binding.recyclerViewMyContacts.apply {
             smoothScrollToPosition(0)
         }
     }
@@ -162,11 +166,9 @@ class MyContactsFragment : Fragment(R.layout.fragment_my_contacts),
     }
 
     private fun refreshRecyclerView() {
-        binding.recyclerView.apply {
-            adapter = null
-            layoutManager = null
+        binding.recyclerViewMyContacts.apply {
             adapter = contactsListAdapter
-            layoutManager =  LinearLayoutManager(
+            layoutManager = LinearLayoutManager(
                 requireContext(),
                 LinearLayoutManager.VERTICAL,
                 false
@@ -198,7 +200,7 @@ class MyContactsFragment : Fragment(R.layout.fragment_my_contacts),
                 }
             }
 
-        binding.recyclerView.apply {
+        binding.recyclerViewMyContacts.apply {
             layoutManager = LinearLayoutManager(
                 requireContext(),
                 LinearLayoutManager.VERTICAL,
@@ -210,7 +212,6 @@ class MyContactsFragment : Fragment(R.layout.fragment_my_contacts),
             ItemTouchHelper(itemTouchHelperCallBack).attachToRecyclerView(this)
         }
     }
-
 
 
     private fun sharedElementTransitionWithSelectedContact(
@@ -290,13 +291,34 @@ class MyContactsFragment : Fragment(R.layout.fragment_my_contacts),
     }
 
     private fun setListeners() {
-        binding.textViewAddContacts.setOnClickListener {
-            if (abs(SystemClock.uptimeMillis() - previousClickTimestamp) > BUTTON_CLICK_DELAY) {
-                dialog = ContactDialogFragment()
-                dialog.show(childFragmentManager, CONTACT_DIALOG_TAG)
+        binding.apply {
+            textViewAddContacts.setOnClickListener {
+                if (abs(SystemClock.uptimeMillis() - previousClickTimestamp) > BUTTON_CLICK_DELAY) {
+                    dialog = ContactDialogFragment()
+                    dialog.show(childFragmentManager, CONTACT_DIALOG_TAG)
 
-                previousClickTimestamp = SystemClock.uptimeMillis()
+                    previousClickTimestamp = SystemClock.uptimeMillis()
+                }
             }
+            buttonGoUp.setOnClickListener {
+                if (abs(SystemClock.uptimeMillis() - previousClickTimestamp) > BUTTON_CLICK_DELAY) {
+                    recyclerViewMyContacts.smoothScrollToPosition(0)
+                    previousClickTimestamp = SystemClock.uptimeMillis()
+                }
+            }
+
+            recyclerViewMyContacts.addOnScrollListener(object : RecyclerView.OnScrollListener() {
+                override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+                    super.onScrolled(recyclerView, dx, dy)
+                    if (dy < 0 && buttonGoUp.visibility == View.VISIBLE) {
+                        buttonGoUp.visibility = View.GONE
+                    } else if (dy > 0 && buttonGoUp.visibility != View.VISIBLE) {
+                        buttonGoUp.visibility = View.VISIBLE
+                    }
+                }
+            })
+
+//            recyclerViewMyContacts
         }
     }
 }

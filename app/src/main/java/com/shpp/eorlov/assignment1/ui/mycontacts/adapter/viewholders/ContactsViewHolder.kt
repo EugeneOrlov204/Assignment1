@@ -53,14 +53,15 @@ class ContactsViewHolder(
             }
 
             constraintLayoutContactListItem.setOnClickListener {
-                if (kotlin.math.abs(SystemClock.uptimeMillis() - previousClickTimestamp) > Constants.BUTTON_CLICK_DELAY) {
-                    if (!contact.onMultiSelect) {
+                if (!contact.onMultiSelect) {
+                    if (kotlin.math.abs(SystemClock.uptimeMillis() - previousClickTimestamp) > Constants.BUTTON_CLICK_DELAY) {
                         onContactClickListener.onContactSelected(contact)
                         previousClickTimestamp = SystemClock.uptimeMillis()
-                    } else {
-                        checkBoxSelectedState.isChecked = !checkBoxSelectedState.isChecked
-                        contact.selected = !contact.selected
                     }
+                } else {
+                    checkBoxSelectedState.isChecked = !checkBoxSelectedState.isChecked
+                    contact.selected = !contact.selected
+                    onContactClickListener.onContactUnselected()
                 }
             }
 

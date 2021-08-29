@@ -72,10 +72,23 @@
 
     <androidx.recyclerview.widget.RecyclerView
         android:layout_marginBottom="@dimen/margin_normal_16dp"
-        android:id="@+id/recycler_view"
+        android:id="@+id/recyclerViewMyContacts"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/buttonGoUp"
         app:layout_constraintTop_toBottomOf="@id/constraintLayoutHeader" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/buttonGoUp"
+        android:visibility="gone"
+        android:layout_width="@dimen/circle_button_radius_60dp"
+        android:layout_height="@dimen/circle_button_radius_60dp"
+        android:background="@drawable/ic_go_up_button"
+        android:layout_marginEnd="@dimen/margin_normal_16dp"
+        android:layout_marginVertical="@dimen/circle_button_margin_vertical_36dp"
+        app:layout_constraintEnd_toEndOf="@+id/recyclerViewMyContacts"
+        app:layout_constraintBottom_toBottomOf="parent"
+        />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

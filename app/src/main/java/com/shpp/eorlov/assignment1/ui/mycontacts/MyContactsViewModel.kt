@@ -70,7 +70,26 @@ class MyContactsViewModel @Inject constructor() : ViewModel() {
                 item.onMultiSelect = true
             }
         }
+    }
 
-        userListLiveData.value = userListLiveData.value
+    fun unselectAllContacts() {
+        userListLiveData.apply {
+            val list = value ?: emptyList()
+            for(item in list) {
+                item.onMultiSelect = false
+            }
+        }
+    }
+
+    fun areAllContactsUnselected(): Boolean {
+        userListLiveData.apply {
+            val list = value ?: return false
+            for(item in list) {
+                if (item.selected) {
+                    return false
+                }
+            }
+        }
+        return true
     }
 }

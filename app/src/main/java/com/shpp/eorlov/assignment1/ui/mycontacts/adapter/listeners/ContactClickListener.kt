@@ -6,4 +6,5 @@ interface ContactClickListener {
     fun onContactRemove(position: Int)
     fun onContactSelected(contact: UserModel)
     fun onContactsSelected()
+    fun onContactUnselected()
 }

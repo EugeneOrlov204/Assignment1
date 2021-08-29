@@ -73,8 +73,8 @@
         android:id="@+id/constraintLayoutContactSelectedListItem"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:visibility="invisible"
-        android:background="@drawable/round_view_holder_selected">
+        android:background="@drawable/round_view_holder_selected"
+        android:visibility="invisible">
 
         <androidx.appcompat.widget.AppCompatCheckBox
             android:id="@+id/checkBoxSelectedState"
@@ -83,6 +83,7 @@
             android:layout_marginStart="8dp"
             android:layout_marginEnd="12dp"
             android:button="@drawable/image_button_contact_to_remove"
+            android:enabled="false"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
@@ -128,7 +129,6 @@
             app:layout_constraintBottom_toBottomOf="@+id/draweeViewPersonImageSelected"
             app:layout_constraintStart_toStartOf="@id/textViewPersonNameSelected"
             tools:text="Photograph" />
-
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>
