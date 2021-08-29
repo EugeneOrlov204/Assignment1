@@ -7,4 +7,5 @@ import javax.inject.Inject
 
 class SharedViewModel @Inject constructor() : ViewModel() {
     val newUser = MutableLiveData<UserModel?>(null)
+    val updatedUser = MutableLiveData<UserModel?>(null)
 }

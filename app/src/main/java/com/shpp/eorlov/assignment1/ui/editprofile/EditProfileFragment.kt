@@ -20,8 +20,10 @@ import com.google.android.material.textfield.TextInputLayout
 import com.shpp.eorlov.assignment1.base.BaseFragment
 import com.shpp.eorlov.assignment1.databinding.FragmentEditProfileBinding
 import com.shpp.eorlov.assignment1.di.SharedPrefStorage
+import com.shpp.eorlov.assignment1.model.UserModel
 import com.shpp.eorlov.assignment1.storage.Storage
 import com.shpp.eorlov.assignment1.ui.MainActivity
+import com.shpp.eorlov.assignment1.ui.SharedViewModel
 import com.shpp.eorlov.assignment1.utils.Constants
 import com.shpp.eorlov.assignment1.utils.Results
 import com.shpp.eorlov.assignment1.utils.ValidateOperation
@@ -43,6 +45,7 @@ class EditProfileFragment : BaseFragment() {
     @field:SharedPrefStorage
     lateinit var storage: Storage
 
+    private lateinit var sharedViewModel: SharedViewModel
     private lateinit var viewModel: EditProfileViewModel
     private lateinit var binding: FragmentEditProfileBinding
 
@@ -64,6 +67,8 @@ class EditProfileFragment : BaseFragment() {
 
         viewModel =
             ViewModelProvider(this, viewModelFactory)[EditProfileViewModel::class.java]
+
+        sharedViewModel = ViewModelProvider(requireActivity()).get(SharedViewModel::class.java)
     }
 
 
@@ -85,7 +90,9 @@ class EditProfileFragment : BaseFragment() {
 
     private fun setObservers() {
         viewModel.apply {
-
+            userLiveData.observe(viewLifecycleOwner) { list ->
+                sharedViewModel.updatedUser.value = list
+            }
             loadEvent.apply {
                 observe(viewLifecycleOwner) { event ->
                     when (event) {
@@ -112,7 +119,6 @@ class EditProfileFragment : BaseFragment() {
             }
         }
     }
-
 
 
     private fun initializeData() {
@@ -150,6 +156,8 @@ class EditProfileFragment : BaseFragment() {
             buttonSave.setOnClickListener {
                 if (abs(SystemClock.uptimeMillis() - previousClickTimestamp) > Constants.BUTTON_CLICK_DELAY) {
                     if (canAddNewContact()) {
+
+                        viewModel.userLiveData.value = getProfileData()
                         activity?.onBackPressed()
                         previousClickTimestamp = SystemClock.uptimeMillis()
                     }
@@ -202,6 +210,16 @@ class EditProfileFragment : BaseFragment() {
             )
         }
     }
+
+    private fun getProfileData() = UserModel(
+        binding.textInputEditTextUsername.text.toString(),
+        binding.textInputEditTextCareer.text.toString(),
+        pathToLoadedImageFromGallery,
+        binding.textInputEditTextAddress.text.toString(),
+        binding.textInputEditTextBirthdate.text.toString(),
+        binding.textInputEditTextPhone.text.toString(),
+        binding.textInputEditTextEmail.text.toString(),
+    )
 
 
     /**
@@ -262,16 +280,11 @@ class EditProfileFragment : BaseFragment() {
         text: String,
         validateOperation: ValidateOperation
     ): String {
-        val error = viewModel.isValidField(
+
+        return viewModel.isValidField(
             text,
             validateOperation
         )
-
-        if(error.isNullOrEmpty()) {
-//            viewModel.saveUserProfileData()
-        }
-
-        return error
     }
 
     /**
@@ -307,8 +320,6 @@ class EditProfileFragment : BaseFragment() {
                     )
                 }
         }
-
-        viewModel.userLiveData.value = viewModel.userLiveData.value
     }
 
 }

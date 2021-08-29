@@ -32,6 +32,11 @@ class MyProfileViewModel @Inject constructor() : ViewModel() {
         }
     }
 
+    fun saveData() {
+
+        contactsDatabase.saveUserModelToStorage(userLiveData.value)
+
+    }
 
 
     /**
@@ -40,14 +45,18 @@ class MyProfileViewModel @Inject constructor() : ViewModel() {
      * otherwise false
      */
     fun isProfileFilledOut(): Boolean {
-       val userModel = userLiveData.value ?: return false
-           return userModel.birthDate.isNotEmpty() &&
-                   userModel.email.isNotEmpty() &&
-                   userModel.name.isNotEmpty() &&
-                   userModel.phoneNumber.isNotEmpty() &&
-                   userModel.photo.isNotEmpty() &&
-                   userModel.profession.isNotEmpty() &&
-                   userModel.residenceAddress.isNotEmpty()
+        val userModel = userLiveData.value ?: return false
+        return userModel.birthDate.isNotEmpty() &&
+                userModel.email.isNotEmpty() &&
+                userModel.name.isNotEmpty() &&
+                userModel.phoneNumber.isNotEmpty() &&
+                userModel.photo.isNotEmpty() &&
+                userModel.profession.isNotEmpty() &&
+                userModel.residenceAddress.isNotEmpty()
 
+    }
+
+    fun updateProfile(list: UserModel) {
+        userLiveData.value = list
     }
 }

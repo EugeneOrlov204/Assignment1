@@ -64,6 +64,10 @@ class ContactsDatabase @Inject constructor() : LocalDB {
         return result
     }
 
+    fun saveUserModelToStorage(userModel: UserModel) {
+        TODO("Not yet implemented")
+    }
+
     //todo move to JSON
     /**
      * Returns list of careers

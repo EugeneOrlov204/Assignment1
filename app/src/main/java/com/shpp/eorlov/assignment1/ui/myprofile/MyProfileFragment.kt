@@ -18,6 +18,7 @@ import com.shpp.eorlov.assignment1.di.SharedPrefStorage
 import com.shpp.eorlov.assignment1.model.UserModel
 import com.shpp.eorlov.assignment1.storage.Storage
 import com.shpp.eorlov.assignment1.ui.MainActivity
+import com.shpp.eorlov.assignment1.ui.SharedViewModel
 import com.shpp.eorlov.assignment1.ui.viewpager.CollectionContactFragmentDirections
 import com.shpp.eorlov.assignment1.utils.Constants
 import com.shpp.eorlov.assignment1.utils.Results
@@ -29,9 +30,9 @@ class MyProfileFragment : BaseFragment() {
     @Inject
     lateinit var viewModelFactory: ViewModelProvider.Factory
 
+    private lateinit var sharedViewModel: SharedViewModel
     private lateinit var viewModel: MyProfileViewModel
     private lateinit var binding: FragmentMyProfileBinding
-
     private lateinit var userModel: UserModel
 
 
@@ -40,6 +41,7 @@ class MyProfileFragment : BaseFragment() {
 
         (activity as MainActivity).contactComponent.inject(this)
         viewModel = ViewModelProvider(this, viewModelFactory)[MyProfileViewModel::class.java]
+        sharedViewModel = ViewModelProvider(requireActivity()).get(SharedViewModel::class.java)
     }
 
     override fun onCreateView(
@@ -60,6 +62,10 @@ class MyProfileFragment : BaseFragment() {
 
     private fun setObservers() {
         viewModel.apply {
+
+            userLiveData.observe(viewLifecycleOwner) {
+                updateProfile()
+            }
 
             loadEvent.apply {
                 observe(viewLifecycleOwner) { event ->
@@ -85,11 +91,23 @@ class MyProfileFragment : BaseFragment() {
                 }
             }
         }
+
+        sharedViewModel.apply {
+            updatedUser.observe(viewLifecycleOwner) { list ->
+                list?.let {
+                    viewModel.updateProfile(list)
+                }
+            }
+        }
     }
 
     private fun initializeProfile() {
         viewModel.initializeData()
 
+        updateProfile()
+    }
+
+    private fun updateProfile() {
         userModel = viewModel.userLiveData.value ?: return
 
 
