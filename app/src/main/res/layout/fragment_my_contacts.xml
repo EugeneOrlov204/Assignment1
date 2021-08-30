@@ -52,7 +52,7 @@
             android:layout_marginStart="@dimen/margin_normal_16dp"
             android:layout_marginBottom="@dimen/add_contacts_margin_bottom_26dp"
             android:text="@string/add_contacts"
-            android:textSize="@dimen/main_activity_text_size_small_14sp"
+            android:textSize="@dimen/text_size_small_14sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent" />
 

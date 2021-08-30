@@ -18,7 +18,7 @@ import com.shpp.eorlov.assignment1.validator.Validator
 
 class AuthActivity : AppCompatActivity() {
     //todo implement login design, block create existing account and save existing login data
-    //fixme design register
+    //fixme autologin
 
     private lateinit var binding: ActivityAuthBinding
     private lateinit var settings: SharedPreferences

@@ -12,6 +12,7 @@
     <dimen name="margin_end_socials_48dp">48dp</dimen>
     <dimen name="margin_top_socials_62dp">62dp</dimen>
     <dimen name="circle_button_radius_60dp">60dp</dimen>
+    <dimen name="text_size_small_14sp">14sp</dimen>
 
 
     <!--Main Activity-->
@@ -19,6 +20,10 @@
 
     <!--Auth Activity-->
     <dimen name="margin_top_password_24dp">24dp</dimen>
+    <dimen name="remember_me_margin_top_18dp">18dp</dimen>
+    <dimen name="remember_me_check_box_size_18dp">18dp</dimen>
+    <dimen name="register_button_margin_bottom_12dp">12dp</dimen>
+
 
     <!--Round View Holder-->
     <dimen name="view_holder_radius_6dp">6dp</dimen>
@@ -40,7 +45,6 @@
     <dimen name="select_margin_end_17dp">17dp</dimen>
     <dimen name="select_margin_top_32dp">32dp</dimen>
     <dimen name="select_margin_bottom_26dp">26dp</dimen>
-    <dimen name="main_activity_text_size_small_14sp">14sp</dimen>
 
     <!--Add Contact Dialog-->
     <dimen name="header_height_244dp">244dp</dimen>
@@ -58,5 +62,10 @@
     <!--Social network button-->
     <dimen name="border_radius_socials_3dp">3dp</dimen>
     <dimen name="circle_button_margin_vertical_36dp">36dp</dimen>
+    <dimen name="already_have_account_margin_bottom_18dp">18dp</dimen>
+    <dimen name="sign_in_margin_start_12dp">12dp</dimen>
+    <dimen name="copyright_margin_bottom_12dp">12dp</dimen>
+    <dimen name="login_button_margin_bottom_23dp">23dp</dimen>
+
 
 </resources>

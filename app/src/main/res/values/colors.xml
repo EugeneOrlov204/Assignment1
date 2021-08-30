@@ -13,5 +13,6 @@
     <color name="mercury">#e5e5e5</color>
     <color name="black_russian">#18181F</color>
     <color name="gray">#828282</color>
+    <color name="light_gray">#B2B2B3</color>
     <color name="optional_field_color">#E0E0E0</color>
 </resources>

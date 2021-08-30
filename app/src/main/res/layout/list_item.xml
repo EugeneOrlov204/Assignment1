@@ -82,7 +82,7 @@
             android:layout_height="20dp"
             android:layout_marginStart="8dp"
             android:layout_marginEnd="12dp"
-            android:button="@drawable/image_button_contact_to_remove"
+            android:button="@drawable/remove_contact_check_box"
             android:enabled="false"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
