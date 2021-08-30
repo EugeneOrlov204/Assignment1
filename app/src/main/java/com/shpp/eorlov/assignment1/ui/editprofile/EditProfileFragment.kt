@@ -49,6 +49,7 @@ class EditProfileFragment : BaseFragment() {
     private lateinit var viewModel: EditProfileViewModel
     private lateinit var binding: FragmentEditProfileBinding
 
+    private var previousClickTimestamp = SystemClock.uptimeMillis()
     private var pathToLoadedImageFromGallery: String = ""
     private var imageLoaderLauncher =
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
@@ -98,23 +99,22 @@ class EditProfileFragment : BaseFragment() {
                     when (event) {
                         Results.OK -> {
                             unlockUI()
-                            binding.contentLoadingProgressBarRecyclerView.isVisible = false
+                            binding.contentLoadingProgressBar.isVisible = false
                         }
 
                         Results.LOADING -> {
                             lockUI()
-                            binding.contentLoadingProgressBarRecyclerView.isVisible = true
+                            binding.contentLoadingProgressBar.isVisible = true
                         }
 
                         Results.INITIALIZE_DATA_ERROR -> {
                             unlockUI()
-                            binding.contentLoadingProgressBarRecyclerView.isVisible = false
+                            binding.contentLoadingProgressBar.isVisible = false
                             Toast.makeText(requireContext(), event.name, Toast.LENGTH_LONG).show()
                         }
                         else -> {
                         }
                     }
-
                 }
             }
         }
@@ -149,7 +149,7 @@ class EditProfileFragment : BaseFragment() {
     }
 
 
-    private var previousClickTimestamp = SystemClock.uptimeMillis()
+
 
     private fun setListeners() {
         binding.apply {

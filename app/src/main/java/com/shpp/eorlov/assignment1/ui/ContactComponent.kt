@@ -17,9 +17,11 @@ package com.shpp.eorlov.assignment1.ui
 
 
 import com.shpp.eorlov.assignment1.di.ContactScope
+import com.shpp.eorlov.assignment1.ui.auth.AuthFragment
 import com.shpp.eorlov.assignment1.ui.details.DetailViewFragment
 import com.shpp.eorlov.assignment1.ui.dialogfragment.ContactDialogFragment
 import com.shpp.eorlov.assignment1.ui.editprofile.EditProfileFragment
+import com.shpp.eorlov.assignment1.ui.login.SignInFragment
 import com.shpp.eorlov.assignment1.ui.mycontacts.MyContactsFragment
 import com.shpp.eorlov.assignment1.ui.myprofile.MyProfileFragment
 import dagger.Subcomponent
@@ -44,4 +46,6 @@ interface ContactComponent {
     fun inject(activity: MainActivity)
     fun inject(fragment: MyProfileFragment)
     fun inject(fragment: EditProfileFragment)
+    fun inject(fragment: AuthFragment)
+    fun inject(fragment: SignInFragment)
 }

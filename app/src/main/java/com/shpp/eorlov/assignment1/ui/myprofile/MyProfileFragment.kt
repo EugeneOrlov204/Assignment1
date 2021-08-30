@@ -73,17 +73,17 @@ class MyProfileFragment : BaseFragment() {
                     when (event) {
                         Results.OK -> {
                             unlockUI()
-                            binding.contentLoadingProgressBarRecyclerView.isVisible = false
+                            binding.contentLoadingProgressBar.isVisible = false
                         }
 
                         Results.LOADING -> {
                             lockUI()
-                            binding.contentLoadingProgressBarRecyclerView.isVisible = true
+                            binding.contentLoadingProgressBar.isVisible = true
                         }
 
                         Results.INITIALIZE_DATA_ERROR -> {
                             unlockUI()
-                            binding.contentLoadingProgressBarRecyclerView.isVisible = false
+                            binding.contentLoadingProgressBar.isVisible = false
                             Toast.makeText(requireContext(), event.name, Toast.LENGTH_LONG).show()
                         }
                         else -> {
