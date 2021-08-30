@@ -27,7 +27,6 @@ class EditProfileViewModel @Inject constructor() : ViewModel() {
     @field:SharedPrefStorage
     lateinit var storage: Storage
 
-    //todo fix this
     @Inject
     lateinit var contactsDatabase: ContactsDatabase
 

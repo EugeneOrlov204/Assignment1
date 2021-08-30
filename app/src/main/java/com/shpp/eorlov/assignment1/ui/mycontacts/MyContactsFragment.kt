@@ -6,11 +6,9 @@ import android.os.SystemClock
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.view.WindowManager
 import android.widget.Toast
 import androidx.core.view.doOnPreDraw
 import androidx.core.view.isVisible
-import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.ItemTouchHelper
@@ -42,7 +40,7 @@ class MyContactsFragment : BaseFragment(),
     ButtonClickListener {
 
     private var previousClickTimestamp = SystemClock.uptimeMillis()
-
+    private var swipeFlags = ItemTouchHelper.END
 
     @Inject
     lateinit var viewModelFactory: ViewModelProvider.Factory
@@ -118,15 +116,17 @@ class MyContactsFragment : BaseFragment(),
         sharedElementTransitionWithSelectedContact(contact)
     }
 
-    //todo hide "add contacts"
     override fun onContactsSelected() {
         viewModel.selectAllContacts()
         binding.frameLayoutButtonsContainer.visibility = View.VISIBLE
         binding.buttonRemoveSelectedContacts.visibility = View.VISIBLE
+        binding.textViewAddContacts.visibility = View.GONE
         viewModel.selectedEvent.value = true
-
+        disableContactSwipe()
         refreshRecyclerView()
     }
+
+
 
     override fun onContactUnselected() {
         if (viewModel.areAllContactsUnselected()) {
@@ -134,9 +134,12 @@ class MyContactsFragment : BaseFragment(),
             binding.frameLayoutButtonsContainer.visibility = View.GONE
             binding.buttonRemoveSelectedContacts.visibility = View.GONE
             viewModel.selectedEvent.value = false
+            binding.textViewAddContacts.visibility = View.VISIBLE
+            enableContactSwipe()
             refreshRecyclerView()
         }
     }
+
 
     override fun onGoUpClicked() {
         binding.recyclerViewMyContacts.apply {
@@ -168,6 +171,14 @@ class MyContactsFragment : BaseFragment(),
         ).setAction("Cancel") {
             viewModel.addItem(position, removedItem)
         }.show()
+    }
+
+    private fun disableContactSwipe() {
+        swipeFlags = 0
+    }
+
+    private fun enableContactSwipe() {
+        swipeFlags = ItemTouchHelper.END
     }
 
 
@@ -203,14 +214,22 @@ class MyContactsFragment : BaseFragment(),
         val itemTouchHelperCallBack: ItemTouchHelper.SimpleCallback =
             object : ItemTouchHelper.SimpleCallback(
                 0,
-                ItemTouchHelper.RIGHT
+                ItemTouchHelper.END
             ) {
                 override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
-                    //fixme disable onSwipe in multi select
                     removeItemFromRecyclerView(
                         viewHolder.bindingAdapterPosition
                     )
                 }
+
+                override fun getMovementFlags(
+                    recyclerView: RecyclerView,
+                    viewHolder: RecyclerView.ViewHolder
+                ): Int {
+
+                    return makeMovementFlags(0, swipeFlags)
+                }
+
 
                 override fun onMove(
                     recyclerView: RecyclerView,
@@ -233,6 +252,7 @@ class MyContactsFragment : BaseFragment(),
             ItemTouchHelper(itemTouchHelperCallBack).attachToRecyclerView(this)
         }
     }
+
 
 
     private fun sharedElementTransitionWithSelectedContact(
