@@ -12,6 +12,7 @@ import androidx.core.view.isVisible
 import androidx.core.widget.addTextChangedListener
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
+import com.shpp.eorlov.assignment1.R
 import com.shpp.eorlov.assignment1.base.BaseFragment
 import com.shpp.eorlov.assignment1.databinding.FragmentAuthBinding
 import com.shpp.eorlov.assignment1.ui.MainActivity
@@ -25,8 +26,6 @@ import kotlin.math.abs
 
 
 class AuthFragment : BaseFragment() {
-    //todo block create existing account and save existing login data
-    //fixme autologin
 
     @Inject
     lateinit var viewModelFactory: ViewModelProvider.Factory
@@ -35,8 +34,6 @@ class AuthFragment : BaseFragment() {
     lateinit var validator: Validator
 
     private lateinit var binding: FragmentAuthBinding
-
-    //todo save login data
 
     private lateinit var viewModel: AuthViewModel
 
@@ -62,15 +59,14 @@ class AuthFragment : BaseFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        restoreLoginData()
+        viewModel.initializeData()
         setListeners()
         setObservers()
     }
 
+
     private fun setObservers() {
         viewModel.apply {
-            userLiveData.observe(viewLifecycleOwner) {
-            }
             loadEvent.apply {
                 observe(viewLifecycleOwner) { event ->
                     when (event) {
@@ -89,6 +85,15 @@ class AuthFragment : BaseFragment() {
                             binding.contentLoadingProgressBar.isVisible = false
                             Toast.makeText(requireContext(), event.name, Toast.LENGTH_LONG).show()
                         }
+
+                        Results.EXISTED_ACCOUNT_ERROR -> {
+                            Toast.makeText(
+                                requireContext(),
+                                getString(R.string.existed_account_error_text),
+                                Toast.LENGTH_LONG
+                            ).show()
+                        }
+
                         else -> {
                         }
                     }
@@ -99,6 +104,14 @@ class AuthFragment : BaseFragment() {
     }
 
     private fun setListeners() {
+
+        binding.textViewSignIn.setOnClickListener {
+            if (abs(SystemClock.uptimeMillis() - previousClickTimestamp) > Constants.BUTTON_CLICK_DELAY) {
+                goToSignInProfile()
+                previousClickTimestamp = SystemClock.uptimeMillis()
+            }
+        }
+
         binding.buttonRegister.setOnClickListener {
             if (abs(SystemClock.uptimeMillis() - previousClickTimestamp) > Constants.BUTTON_CLICK_DELAY) {
                 goToMyProfile()
@@ -135,12 +148,10 @@ class AuthFragment : BaseFragment() {
         }
     }
 
-
-    private fun restoreLoginData() {
-        val login = viewModel.getLogin()
-        val password = viewModel.getPassword()
-        binding.textInputEditTextLogin.setText(login)
-        binding.textInputEditTextPassword.setText(password)
+    private fun goToSignInProfile() {
+        val action =
+            AuthFragmentDirections.actionAuthFragmentToSignInFragment()
+        findNavController().navigate(action)
     }
 
 
@@ -148,22 +159,24 @@ class AuthFragment : BaseFragment() {
      * Change current activity to MainActivity
      */
     private fun goToMyProfile() {
-
-        if (isFieldsInvalid()) {
+        val email = binding.textInputEditTextLogin.text.toString()
+        if (isFieldsInvalid() ||
+            viewModel.isExistingAccount(email)
+        ) {
             return
         }
 
         binding.apply {
             if (checkBoxRememberMe.isChecked) {
                 viewModel.saveLoginData(
-                    textInputEditTextLogin.text.toString(), //Login
+                    email, //Login
                     textInputEditTextPassword.text.toString() //Password
                 )
             }
         }
 
         val action =
-            AuthFragmentDirections.actionAuthFragmentToCollectionContactFragment()
+            AuthFragmentDirections.actionAuthFragmentToCollectionContactFragment(email)
         findNavController().navigate(action)
     }
 

@@ -36,7 +36,7 @@
     <string name="profile">Profile</string>
     <string name="invalid_birthdate">Invalid birthdate, ex: 01/01/2021</string>
     <string name="empty_field">This field should not be empty</string>
-    <string name="invalid_phone_number">Invalid phone number, ex: (264)-654-3762</string>
+    <string name="invalid_phone_number">Invalid phone number, ex: (264)–654–3762</string>
     <string name="invalid_email">Invalid Email address, ex: abc@example.com</string>
     <string name="loading_data_error_message">Can\'t load data</string>
     <string name="removed_contact_message">Contact has been removed</string>
@@ -51,4 +51,8 @@
     <string name="don_t_have_account">Don’t have account?</string>
     <string name="sign_up">Sign up</string>
     <string name="login">Login</string>
+    <string name="existed_account_error_text">This account already exist! Please go to sign in</string>
+    <string name="not_existed_account_error_text">This account is not exist! Please go to sign up</string>
+    <string name="wrong_password">You entered wrong password!</string>
+
 </resources>

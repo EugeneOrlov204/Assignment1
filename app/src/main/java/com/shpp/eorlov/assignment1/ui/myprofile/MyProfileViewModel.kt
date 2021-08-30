@@ -19,21 +19,21 @@ class MyProfileViewModel @Inject constructor() : ViewModel() {
     @Inject
     lateinit var contactsDatabase: ContactsDatabase
 
-    fun initializeData() {
+    fun initializeData(login: String) {
         if (userLiveData.value == null) {
             loadEvent.value = Results.INITIALIZE_DATA_ERROR
         } else {
             loadEvent.value = Results.LOADING
 
-            val data = contactsDatabase.getUserModelFromStorage()
+            val data = contactsDatabase.getUserModelFromStorage(login)
             userLiveData.value = data
 
             loadEvent.value = Results.OK
         }
     }
 
-    fun saveData() {
-        contactsDatabase.saveUserModelToStorage(userLiveData.value ?: return)
+    fun saveData(login: String) {
+        contactsDatabase.saveUserModelToStorage(userLiveData.value ?: return, login)
     }
 
 

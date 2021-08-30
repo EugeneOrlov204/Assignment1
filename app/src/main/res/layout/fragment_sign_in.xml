@@ -6,7 +6,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/steel_gray"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    tools:context=".ui.signin.SignInFragment">
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideLineHello"
@@ -119,7 +120,7 @@
         android:fontFamily="@font/open_sans"
         android:text="@string/forgot_your_password"
         android:textColor="@android:color/white"
-        android:textSize="@dimen/text_size_normal_18sp"
+        android:textSize="@dimen/text_size_small_14sp"
         app:layout_constraintBottom_toBottomOf="@id/checkBoxRememberMe"
         app:layout_constraintEnd_toEndOf="@id/textInputLayoutPassword"
         app:layout_constraintTop_toTopOf="@id/checkBoxRememberMe" />
@@ -163,6 +164,17 @@
         app:layout_constraintEnd_toEndOf="@+id/buttonLogin"
         app:layout_constraintStart_toEndOf="@id/textViewDontHaveAccount"
         app:layout_constraintTop_toTopOf="@+id/textViewDontHaveAccount" />
+
+    <androidx.core.widget.ContentLoadingProgressBar
+        android:id="@+id/contentLoadingProgressBar"
+        style="?android:attr/progressBarStyleLarge"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

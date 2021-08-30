@@ -27,25 +27,25 @@ class ContactsDatabase @Inject constructor() : LocalDB {
             ""
         )
 
-    override fun getUserModelFromStorage(): UserModel =
+    override fun getUserModelFromStorage(login: String): UserModel =
         UserModel(
-            name = storage.getString(Constants.MY_PROFILE_NAME_KEY) ?: "",
-            profession = storage.getString(Constants.MY_PROFILE_PROFESSION_KEY) ?: "",
-            photo = storage.getString(Constants.MY_PROFILE_PHOTO_KEY) ?: "",
-            residenceAddress = storage.getString(Constants.MY_PROFILE_RESIDENCE_KEY) ?: "",
-            birthDate = storage.getString(Constants.MY_PROFILE_BIRTHDATE_KEY) ?: "",
-            phoneNumber = storage.getString(Constants.MY_PROFILE_PHONE_KEY) ?: "",
-            email = storage.getString(Constants.MY_PROFILE_EMAIL_KEY) ?: ""
+            name = storage.getString("${Constants.MY_PROFILE_NAME_KEY} $login") ?: "Name",
+            profession = storage.getString("${Constants.MY_PROFILE_PROFESSION_KEY} $login") ?: "Career",
+            photo = storage.getString("${Constants.MY_PROFILE_PHOTO_KEY} $login") ?: "",
+            residenceAddress = storage.getString("${Constants.MY_PROFILE_RESIDENCE_KEY} $login") ?: "Home address",
+            birthDate = storage.getString("${Constants.MY_PROFILE_BIRTHDATE_KEY} $login") ?: "",
+            phoneNumber = storage.getString("${Constants.MY_PROFILE_PHONE_KEY} $login") ?: "",
+            email = storage.getString("${Constants.MY_PROFILE_EMAIL_KEY} $login") ?: ""
         )
 
-    override fun saveUserModelToStorage(userModel: UserModel) {
-        storage.save(Constants.MY_PROFILE_NAME_KEY, userModel.name)
-        storage.save(Constants.MY_PROFILE_PROFESSION_KEY, userModel.profession)
-        storage.save(Constants.MY_PROFILE_PHOTO_KEY, userModel.photo)
-        storage.save(Constants.MY_PROFILE_RESIDENCE_KEY, userModel.residenceAddress)
-        storage.save(Constants.MY_PROFILE_BIRTHDATE_KEY, userModel.birthDate)
-        storage.save(Constants.MY_PROFILE_PHONE_KEY, userModel.phoneNumber)
-        storage.save(Constants.MY_PROFILE_EMAIL_KEY, userModel.email)
+    override fun saveUserModelToStorage(userModel: UserModel, login: String) {
+        storage.save("${Constants.MY_PROFILE_NAME_KEY} $login", userModel.name)
+        storage.save("${Constants.MY_PROFILE_PROFESSION_KEY} $login", userModel.profession)
+        storage.save("${Constants.MY_PROFILE_PHOTO_KEY} $login", userModel.photo)
+        storage.save("${Constants.MY_PROFILE_RESIDENCE_KEY} $login", userModel.residenceAddress)
+        storage.save("${Constants.MY_PROFILE_BIRTHDATE_KEY} $login", userModel.birthDate)
+        storage.save("${Constants.MY_PROFILE_PHONE_KEY} $login", userModel.phoneNumber)
+        storage.save("${Constants.MY_PROFILE_EMAIL_KEY} $login", userModel.email)
     }
 
 
@@ -74,7 +74,6 @@ class ContactsDatabase @Inject constructor() : LocalDB {
         return result
     }
 
-    //todo move to JSON
     /**
      * Returns list of careers
      * Temporary hardcoded

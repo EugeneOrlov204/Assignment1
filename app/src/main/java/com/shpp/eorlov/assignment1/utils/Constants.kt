@@ -1,6 +1,8 @@
 package com.shpp.eorlov.assignment1.utils
 
 object Constants {
+    const val LAST_SAVED_LOGIN: String = "Last saved login"
+    const val LAST_SAVED_PASSWORD: String = "Last saved password"
     const val MIN_SIZE_OF_PASSWORD: Int = 8
     const val MY_PROFILE_NAME_KEY: String = "My profile name"
     const val MY_PROFILE_PROFESSION_KEY: String = "My profile profession"

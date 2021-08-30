@@ -15,6 +15,7 @@ import androidx.appcompat.widget.AppCompatImageView
 import androidx.core.view.isVisible
 import androidx.core.widget.addTextChangedListener
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.navArgs
 import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
 import com.shpp.eorlov.assignment1.base.BaseFragment
@@ -35,6 +36,8 @@ import kotlin.math.abs
 
 class EditProfileFragment : BaseFragment() {
 
+    private val args: EditProfileFragmentArgs by navArgs()
+
     @Inject
     lateinit var viewModelFactory: ViewModelProvider.Factory
 
@@ -44,11 +47,9 @@ class EditProfileFragment : BaseFragment() {
     @Inject
     @field:SharedPrefStorage
     lateinit var storage: Storage
-
     private lateinit var sharedViewModel: SharedViewModel
     private lateinit var viewModel: EditProfileViewModel
     private lateinit var binding: FragmentEditProfileBinding
-
     private var previousClickTimestamp = SystemClock.uptimeMillis()
     private var pathToLoadedImageFromGallery: String = ""
     private var imageLoaderLauncher =
@@ -123,7 +124,7 @@ class EditProfileFragment : BaseFragment() {
 
     private fun initializeData() {
 
-        viewModel.initializeData()
+        viewModel.initializeData(args.login)
 
         viewModel.userLiveData.value?.apply {
             pathToLoadedImageFromGallery = photo

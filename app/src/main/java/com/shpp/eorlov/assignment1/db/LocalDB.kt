@@ -4,7 +4,7 @@ import com.shpp.eorlov.assignment1.model.UserModel
 
 interface LocalDB {
     fun getDefaultUserModel(): UserModel
-    fun getUserModelFromStorage(): UserModel
+    fun getUserModelFromStorage(login: String): UserModel
     fun loadPersonData(): MutableList<UserModel>
-    fun saveUserModelToStorage(userModel: UserModel)
+    fun saveUserModelToStorage(userModel: UserModel, login: String)
 }

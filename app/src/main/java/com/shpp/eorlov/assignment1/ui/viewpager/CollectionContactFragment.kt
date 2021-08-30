@@ -5,16 +5,22 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.navArgs
 import androidx.viewpager2.widget.ViewPager2
 import com.shpp.eorlov.assignment1.databinding.FragmentViewPagerBinding
+import com.shpp.eorlov.assignment1.ui.details.DetailViewFragmentArgs
 import com.shpp.eorlov.assignment1.ui.mycontacts.MyContactsFragment
 import com.shpp.eorlov.assignment1.ui.myprofile.MyProfileFragment
+import com.shpp.eorlov.assignment1.utils.Constants
 
 class CollectionContactFragment : Fragment() {
+
+    private val args: CollectionContactFragmentArgs by navArgs()
 
     private lateinit var binding: FragmentViewPagerBinding
     private lateinit var contactCollectionAdapter: ContactCollectionAdapter
     private lateinit var viewPager: ViewPager2
+
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -28,7 +34,11 @@ class CollectionContactFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         viewPager = binding.pager
         contactCollectionAdapter = ContactCollectionAdapter(this)
-        val fragsList = listOf(MyProfileFragment(), MyContactsFragment())
+        val myProfileFragment = MyProfileFragment()
+        val arguments = Bundle()
+        arguments.putString(Constants.PROFILE_LOGIN, args.email)
+        myProfileFragment.arguments = arguments
+        val fragsList = listOf(myProfileFragment, MyContactsFragment())
         contactCollectionAdapter.fragsListHere.addAll(fragsList)
         viewPager.adapter = contactCollectionAdapter
         viewPager.currentItem = 0

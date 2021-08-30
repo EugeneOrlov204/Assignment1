@@ -6,7 +6,7 @@ import com.shpp.eorlov.assignment1.ui.SharedViewModel
 import com.shpp.eorlov.assignment1.ui.auth.AuthViewModel
 import com.shpp.eorlov.assignment1.ui.dialogfragment.ContactDialogViewModel
 import com.shpp.eorlov.assignment1.ui.editprofile.EditProfileViewModel
-import com.shpp.eorlov.assignment1.ui.login.SignInViewModel
+import com.shpp.eorlov.assignment1.ui.signin.SignInViewModel
 import com.shpp.eorlov.assignment1.ui.mycontacts.MyContactsViewModel
 import com.shpp.eorlov.assignment1.ui.myprofile.MyProfileViewModel
 import dagger.Binds

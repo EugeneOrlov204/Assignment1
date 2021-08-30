@@ -1,24 +1,21 @@
 package com.shpp.eorlov.assignment1.ui.myprofile
 
 import android.content.Context
-import android.net.Uri
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.core.view.isVisible
-import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
-import com.shpp.eorlov.assignment1.R
+import androidx.navigation.fragment.navArgs
 import com.shpp.eorlov.assignment1.base.BaseFragment
 import com.shpp.eorlov.assignment1.databinding.FragmentMyProfileBinding
-import com.shpp.eorlov.assignment1.di.SharedPrefStorage
 import com.shpp.eorlov.assignment1.model.UserModel
-import com.shpp.eorlov.assignment1.storage.Storage
 import com.shpp.eorlov.assignment1.ui.MainActivity
 import com.shpp.eorlov.assignment1.ui.SharedViewModel
+import com.shpp.eorlov.assignment1.ui.viewpager.CollectionContactFragmentArgs
 import com.shpp.eorlov.assignment1.ui.viewpager.CollectionContactFragmentDirections
 import com.shpp.eorlov.assignment1.utils.Constants
 import com.shpp.eorlov.assignment1.utils.Results
@@ -34,7 +31,7 @@ class MyProfileFragment : BaseFragment() {
     private lateinit var viewModel: MyProfileViewModel
     private lateinit var binding: FragmentMyProfileBinding
     private lateinit var userModel: UserModel
-
+    private lateinit var login: String
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
@@ -55,6 +52,7 @@ class MyProfileFragment : BaseFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        login = arguments?.getString(Constants.PROFILE_LOGIN) ?: ""
         initializeProfile()
         setListeners()
         setObservers()
@@ -65,7 +63,7 @@ class MyProfileFragment : BaseFragment() {
 
             userLiveData.observe(viewLifecycleOwner) {
                 updateProfile()
-                viewModel.saveData()
+                viewModel.saveData(login)
             }
 
             loadEvent.apply {
@@ -103,7 +101,7 @@ class MyProfileFragment : BaseFragment() {
     }
 
     private fun initializeProfile() {
-        viewModel.initializeData()
+        viewModel.initializeData(login)
 
         updateProfile()
     }
@@ -125,7 +123,7 @@ class MyProfileFragment : BaseFragment() {
         binding.buttonEditProfile.setOnClickListener {
             val action =
                 CollectionContactFragmentDirections.actionCollectionContactFragmentToEditProfileFragment(
-                    userModel
+                    login
                 )
             findNavController().navigate(action)
         }

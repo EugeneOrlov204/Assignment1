@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph.xml"
-    app:startDestination="@id/authFragment">
+    app:startDestination="@id/signInFragment">
 
     <fragment
         android:id="@+id/detailViewFragment"
@@ -25,6 +25,9 @@
         <action
             android:id="@+id/action_collectionContactFragment_to_editProfileFragment"
             app:destination="@id/editProfileFragment" />
+        <argument
+            android:name="email"
+            app:argType="string" />
     </fragment>
     <fragment
         android:id="@+id/editProfileFragment"
@@ -32,8 +35,8 @@
         android:label="fragment_edit_profile"
         tools:layout="@layout/fragment_edit_profile" >
         <argument
-            android:name="UserData"
-            app:argType="com.shpp.eorlov.assignment1.model.UserModel" />
+            android:name="login"
+            app:argType="string" />
     </fragment>
     <fragment
         android:id="@+id/authFragment"
@@ -42,6 +45,21 @@
         tools:layout="@layout/fragment_auth" >
         <action
             android:id="@+id/action_authFragment_to_collectionContactFragment"
+            app:destination="@id/collectionContactFragment" />
+        <action
+            android:id="@+id/action_authFragment_to_signInFragment"
+            app:destination="@id/signInFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/signInFragment"
+        android:name="com.shpp.eorlov.assignment1.ui.signin.SignInFragment"
+        android:label="fragment_log_in"
+        tools:layout="@layout/fragment_sign_in" >
+        <action
+            android:id="@+id/action_signInFragment_to_authFragment"
+            app:destination="@id/authFragment" />
+        <action
+            android:id="@+id/action_signInFragment_to_collectionContactFragment"
             app:destination="@id/collectionContactFragment" />
     </fragment>
 </navigation>

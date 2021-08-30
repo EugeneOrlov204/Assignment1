@@ -1,4 +1,4 @@
-package com.shpp.eorlov.assignment1.ui.auth
+package com.shpp.eorlov.assignment1.ui.signin
 
 
 import androidx.lifecycle.MutableLiveData
@@ -13,7 +13,7 @@ import com.shpp.eorlov.assignment1.validator.Validator
 import javax.inject.Inject
 
 
-class AuthViewModel @Inject constructor() : ViewModel() {
+class SignInViewModel @Inject constructor() : ViewModel() {
 
 
     val loadEvent = MutableLiveData<Results>()
@@ -32,6 +32,7 @@ class AuthViewModel @Inject constructor() : ViewModel() {
         loadEvent.value = Results.OK
     }
 
+
     fun saveLoginData(login: String, password: String) {
         storage.save("${Constants.PROFILE_LOGIN} $login", login)
         storage.save("${Constants.PROFILE_PASSWORD} $password", password)
@@ -39,11 +40,27 @@ class AuthViewModel @Inject constructor() : ViewModel() {
         storage.save(Constants.LAST_SAVED_PASSWORD, password)
     }
 
-    fun isExistingAccount(login: String): Boolean {
+    fun isNotExistingAccount(login: String): Boolean {
         if (!storage.getString("${Constants.PROFILE_LOGIN} $login").isNullOrEmpty()) {
-            loadEvent.value = Results.EXISTED_ACCOUNT_ERROR
-            return true
+            return false
         }
-        return false
+        loadEvent.value = Results.NOT_EXISTED_ACCOUNT_ERROR
+        return true
+    }
+
+    fun isWrongPassword(password: String): Boolean {
+        if (!storage.getString("${Constants.PROFILE_PASSWORD} $password").isNullOrEmpty()) {
+            return false
+        }
+        loadEvent.value = Results.INVALID_PASSWORD
+        return true
+    }
+
+    fun getLogin(): String? {
+        return storage.getString(Constants.LAST_SAVED_LOGIN)
+    }
+
+    fun getPassword(): String? {
+        return storage.getString(Constants.LAST_SAVED_PASSWORD)
     }
 }
