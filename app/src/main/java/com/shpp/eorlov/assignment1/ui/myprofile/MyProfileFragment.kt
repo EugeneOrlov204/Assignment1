@@ -65,6 +65,7 @@ class MyProfileFragment : BaseFragment() {
 
             userLiveData.observe(viewLifecycleOwner) {
                 updateProfile()
+                viewModel.saveData()
             }
 
             loadEvent.apply {
@@ -109,7 +110,6 @@ class MyProfileFragment : BaseFragment() {
 
     private fun updateProfile() {
         userModel = viewModel.userLiveData.value ?: return
-
 
         binding.apply {
             textViewUserNameMyProfile.text = userModel.name

@@ -38,6 +38,16 @@ class ContactsDatabase @Inject constructor() : LocalDB {
             email = storage.getString(Constants.MY_PROFILE_EMAIL_KEY) ?: ""
         )
 
+    override fun saveUserModelToStorage(userModel: UserModel) {
+        storage.save(Constants.MY_PROFILE_NAME_KEY, userModel.name)
+        storage.save(Constants.MY_PROFILE_PROFESSION_KEY, userModel.profession)
+        storage.save(Constants.MY_PROFILE_PHOTO_KEY, userModel.photo)
+        storage.save(Constants.MY_PROFILE_RESIDENCE_KEY, userModel.residenceAddress)
+        storage.save(Constants.MY_PROFILE_BIRTHDATE_KEY, userModel.birthDate)
+        storage.save(Constants.MY_PROFILE_PHONE_KEY, userModel.phoneNumber)
+        storage.save(Constants.MY_PROFILE_EMAIL_KEY, userModel.email)
+    }
+
 
     override fun loadPersonData(): MutableList<UserModel> {
         val listOfNames: List<String> = getNames()
@@ -62,10 +72,6 @@ class ContactsDatabase @Inject constructor() : LocalDB {
 
 
         return result
-    }
-
-    fun saveUserModelToStorage(userModel: UserModel) {
-        TODO("Not yet implemented")
     }
 
     //todo move to JSON

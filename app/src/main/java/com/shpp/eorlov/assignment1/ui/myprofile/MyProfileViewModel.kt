@@ -33,9 +33,7 @@ class MyProfileViewModel @Inject constructor() : ViewModel() {
     }
 
     fun saveData() {
-
-        contactsDatabase.saveUserModelToStorage(userLiveData.value)
-
+        contactsDatabase.saveUserModelToStorage(userLiveData.value ?: return)
     }
 
 

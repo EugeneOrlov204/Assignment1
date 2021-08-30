@@ -27,8 +27,6 @@ class EditProfileViewModel @Inject constructor() : ViewModel() {
     @field:SharedPrefStorage
     lateinit var storage: Storage
 
-    //fixme bug with getting usermodel from edit profile
-    //todo save new user model
     //todo fix this
     @Inject
     lateinit var contactsDatabase: ContactsDatabase
