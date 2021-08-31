@@ -1,6 +1,8 @@
 package com.shpp.eorlov.assignment1.ui.editprofile
 
 import android.app.Activity
+import android.app.DatePickerDialog
+import android.app.DatePickerDialog.OnDateSetListener
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
@@ -26,17 +28,19 @@ import com.shpp.eorlov.assignment1.storage.Storage
 import com.shpp.eorlov.assignment1.ui.MainActivity
 import com.shpp.eorlov.assignment1.ui.SharedViewModel
 import com.shpp.eorlov.assignment1.utils.Constants
+import com.shpp.eorlov.assignment1.utils.Constants.DATE_FORMAT
 import com.shpp.eorlov.assignment1.utils.Results
 import com.shpp.eorlov.assignment1.utils.ValidateOperation
 import com.shpp.eorlov.assignment1.utils.evaluateErrorMessage
 import com.shpp.eorlov.assignment1.utils.ext.loadImage
 import com.shpp.eorlov.assignment1.validator.Validator
+import java.text.SimpleDateFormat
+import java.util.*
 import javax.inject.Inject
 import kotlin.math.abs
 
-class EditProfileFragment : BaseFragment() {
 
-    private val args: EditProfileFragmentArgs by navArgs()
+class EditProfileFragment : BaseFragment() {
 
     @Inject
     lateinit var viewModelFactory: ViewModelProvider.Factory
@@ -47,9 +51,13 @@ class EditProfileFragment : BaseFragment() {
     @Inject
     @field:SharedPrefStorage
     lateinit var storage: Storage
+
+    private val args: EditProfileFragmentArgs by navArgs()
+
     private lateinit var sharedViewModel: SharedViewModel
     private lateinit var viewModel: EditProfileViewModel
     private lateinit var binding: FragmentEditProfileBinding
+
     private var previousClickTimestamp = SystemClock.uptimeMillis()
     private var pathToLoadedImageFromGallery: String = ""
     private var imageLoaderLauncher =
@@ -123,8 +131,8 @@ class EditProfileFragment : BaseFragment() {
 
 
     private fun initializeData() {
-
-        viewModel.initializeData(args.login)
+        val email = args.login
+        viewModel.initializeData(email)
 
         viewModel.userLiveData.value?.apply {
             pathToLoadedImageFromGallery = photo
@@ -141,6 +149,7 @@ class EditProfileFragment : BaseFragment() {
         }
     }
 
+    private lateinit var myCalendar: Calendar
     private fun loadImageFromGallery() {
         val gallery = Intent(
             Intent.ACTION_PICK,
@@ -148,9 +157,6 @@ class EditProfileFragment : BaseFragment() {
         )
         imageLoaderLauncher.launch(gallery)
     }
-
-
-
 
     private fun setListeners() {
         binding.apply {
@@ -178,27 +184,36 @@ class EditProfileFragment : BaseFragment() {
                 }
             }
 
+            myCalendar = Calendar.getInstance()
+
+            val date =
+                OnDateSetListener { view, year, monthOfYear, dayOfMonth ->
+                    myCalendar.set(Calendar.YEAR, year)
+                    myCalendar.set(Calendar.MONTH, monthOfYear)
+                    myCalendar.set(Calendar.DAY_OF_MONTH, dayOfMonth)
+                    updateLabel()
+                }
+
+            textInputEditTextBirthdate.setOnClickListener {
+                DatePickerDialog(
+                    requireActivity(), date, myCalendar
+                        .get(Calendar.YEAR), myCalendar.get(Calendar.MONTH),
+                    myCalendar.get(Calendar.DAY_OF_MONTH)
+                ).show()
+            }
 
             addListenerToEditText(
                 textInputEditTextAddress,
                 textInputLayoutAddress,
                 ValidateOperation.EMPTY
             )
-            addListenerToEditText(
-                textInputEditTextBirthdate,
-                textInputLayoutBirthdate,
-                ValidateOperation.BIRTHDAY
-            )
+
             addListenerToEditText(
                 textInputEditTextCareer,
                 textInputLayoutCareer,
                 ValidateOperation.EMPTY
             )
-            addListenerToEditText(
-                textInputEditTextEmail,
-                textInputLayoutEmail,
-                ValidateOperation.EMAIL
-            )
+
             addListenerToEditText(
                 textInputEditTextUsername,
                 textInputLayoutUsername,
@@ -210,6 +225,11 @@ class EditProfileFragment : BaseFragment() {
                 ValidateOperation.PHONE_NUMBER
             )
         }
+    }
+
+    private fun updateLabel() {
+        val sdf = SimpleDateFormat(DATE_FORMAT, Locale.US)
+        binding.textInputEditTextBirthdate.setText(sdf.format(myCalendar.time))
     }
 
     private fun getProfileData() = UserModel(
@@ -250,18 +270,11 @@ class EditProfileFragment : BaseFragment() {
                 ValidateOperation.EMPTY
             )
 
-            textInputLayoutBirthdate.error = processErrorOfEnteredValue(
-                textInputEditTextBirthdate.text.toString(),
-                ValidateOperation.BIRTHDAY
-            )
             textInputLayoutCareer.error = processErrorOfEnteredValue(
                 textInputEditTextCareer.text.toString(),
                 ValidateOperation.EMPTY
             )
-            textInputLayoutEmail.error = processErrorOfEnteredValue(
-                textInputEditTextEmail.text.toString(),
-                ValidateOperation.EMAIL
-            )
+
             textInputLayoutUsername.error = processErrorOfEnteredValue(
                 textInputEditTextUsername.text.toString(),
                 ValidateOperation.EMPTY

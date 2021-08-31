@@ -96,8 +96,10 @@
         android:layout_marginTop="@dimen/remember_me_margin_top_18dp"
         android:button="@drawable/remember_me_check_box"
         android:checked="true"
+        app:layout_constraintBottom_toTopOf="@id/buttonLogin"
         app:layout_constraintStart_toStartOf="@+id/textInputLayoutPassword"
-        app:layout_constraintTop_toBottomOf="@+id/textInputLayoutPassword" />
+        app:layout_constraintTop_toBottomOf="@+id/textInputLayoutPassword"
+        app:layout_constraintVertical_chainStyle="spread_inside" />
 
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/textViewRememberMe"
@@ -134,7 +136,8 @@
         android:text="@string/login"
         app:layout_constraintBottom_toTopOf="@+id/textViewDontHaveAccount"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/checkBoxRememberMe" />
 
 
     <androidx.appcompat.widget.AppCompatTextView
@@ -146,6 +149,7 @@
         android:textAlignment="center"
         android:textColor="@color/light_gray"
         android:textSize="@dimen/text_size_small_12sp"
+
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/textViewSignUp"
         app:layout_constraintHorizontal_chainStyle="packed"

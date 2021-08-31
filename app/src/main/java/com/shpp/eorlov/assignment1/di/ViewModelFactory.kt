@@ -4,6 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.shpp.eorlov.assignment1.ui.SharedViewModel
 import com.shpp.eorlov.assignment1.ui.auth.AuthViewModel
+import com.shpp.eorlov.assignment1.ui.details.DetailViewViewModel
 import com.shpp.eorlov.assignment1.ui.dialogfragment.ContactDialogViewModel
 import com.shpp.eorlov.assignment1.ui.editprofile.EditProfileViewModel
 import com.shpp.eorlov.assignment1.ui.signin.SignInViewModel
@@ -79,4 +80,9 @@ abstract class ViewModelModule {
     @IntoMap
     @ViewModelKey(SignInViewModel::class)
     internal abstract fun signInViewModel(viewModel: SignInViewModel): ViewModel
+
+    @Binds
+    @IntoMap
+    @ViewModelKey(DetailViewViewModel::class)
+    internal abstract fun detailViewViewModel(viewModel: DetailViewViewModel): ViewModel
 }
