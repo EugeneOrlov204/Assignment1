@@ -16,9 +16,10 @@ class CollectionContactFragment : BaseFragment() {
 
     private val args: CollectionContactFragmentArgs by navArgs()
 
+    lateinit var viewPager: ViewPager2
+
     private lateinit var binding: FragmentViewPagerBinding
     private lateinit var contactCollectionAdapter: ContactCollectionAdapter
-    private lateinit var viewPager: ViewPager2
 
 
     override fun onCreateView(
@@ -32,14 +33,18 @@ class CollectionContactFragment : BaseFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         viewPager = binding.pager
+
         val myProfileFragment = MyProfileFragment()
         val arguments = Bundle()
         arguments.putString(Constants.PROFILE_LOGIN, args.email)
         myProfileFragment.arguments = arguments
+
         val fragsList = listOf(myProfileFragment, MyContactsFragment())
+
         contactCollectionAdapter = ContactCollectionAdapter(this, fragsList)
+
         viewPager.adapter = contactCollectionAdapter
-        viewPager.currentItem = 0
+        viewPager.currentItem = ContactCollectionAdapter.ViewPagerItems.PROFILE.position
     }
 
     override fun onResume() {

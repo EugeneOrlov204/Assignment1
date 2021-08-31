@@ -2,6 +2,7 @@ package com.shpp.eorlov.assignment1.ui.myprofile
 
 import android.content.Context
 import android.os.Bundle
+import android.os.SystemClock
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -9,18 +10,19 @@ import android.widget.Toast
 import androidx.core.view.isVisible
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
-import androidx.navigation.fragment.navArgs
 import com.shpp.eorlov.assignment1.base.BaseFragment
 import com.shpp.eorlov.assignment1.databinding.FragmentMyProfileBinding
 import com.shpp.eorlov.assignment1.model.UserModel
 import com.shpp.eorlov.assignment1.ui.MainActivity
 import com.shpp.eorlov.assignment1.ui.SharedViewModel
-import com.shpp.eorlov.assignment1.ui.viewpager.CollectionContactFragmentArgs
+import com.shpp.eorlov.assignment1.ui.viewpager.CollectionContactFragment
 import com.shpp.eorlov.assignment1.ui.viewpager.CollectionContactFragmentDirections
+import com.shpp.eorlov.assignment1.ui.viewpager.ContactCollectionAdapter
 import com.shpp.eorlov.assignment1.utils.Constants
 import com.shpp.eorlov.assignment1.utils.Results
 import com.shpp.eorlov.assignment1.utils.ext.loadImage
 import javax.inject.Inject
+import kotlin.math.abs
 
 class MyProfileFragment : BaseFragment() {
 
@@ -32,6 +34,8 @@ class MyProfileFragment : BaseFragment() {
     private lateinit var binding: FragmentMyProfileBinding
     private lateinit var userModel: UserModel
     private lateinit var login: String
+
+    private var previousClickTimestamp = SystemClock.uptimeMillis()
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
@@ -131,6 +135,16 @@ class MyProfileFragment : BaseFragment() {
                     login
                 )
             findNavController().navigate(action)
+        }
+
+        binding.buttonViewMyContacts.setOnClickListener {
+            if (abs(SystemClock.uptimeMillis() - previousClickTimestamp) > Constants.BUTTON_CLICK_DELAY) {
+
+                (parentFragment as CollectionContactFragment).viewPager.currentItem =
+                    ContactCollectionAdapter.ViewPagerItems.LIST.position
+
+                previousClickTimestamp = SystemClock.uptimeMillis()
+            }
         }
     }
 }
