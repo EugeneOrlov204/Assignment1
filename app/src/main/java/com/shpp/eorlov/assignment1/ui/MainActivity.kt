@@ -5,7 +5,7 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.shpp.eorlov.assignment1.R
 import com.shpp.eorlov.assignment1.App
-import javax.inject.Inject
+import com.shpp.eorlov.assignment1.di.ContactComponent
 
 class MainActivity : AppCompatActivity(R.layout.activity_main) {
 

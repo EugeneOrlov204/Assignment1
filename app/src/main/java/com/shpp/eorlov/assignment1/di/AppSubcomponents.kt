@@ -16,7 +16,6 @@
 
 package com.shpp.eorlov.assignment1.di
 
-import com.shpp.eorlov.assignment1.ui.ContactComponent
 import dagger.Module
 
 // This module tells a Component which are its subcomponents

@@ -13,10 +13,10 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.shpp.eorlov.assignment1.ui
+package com.shpp.eorlov.assignment1.di
 
 
-import com.shpp.eorlov.assignment1.di.ContactScope
+import com.shpp.eorlov.assignment1.ui.MainActivity
 import com.shpp.eorlov.assignment1.ui.auth.AuthFragment
 import com.shpp.eorlov.assignment1.ui.details.DetailViewFragment
 import com.shpp.eorlov.assignment1.ui.dialogfragment.ContactDialogFragment

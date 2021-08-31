@@ -154,9 +154,10 @@ class AuthFragment : BaseFragment() {
     }
 
     private fun goToSignInProfile() {
-        val action =
-            AuthFragmentDirections.actionAuthFragmentToSignInFragment()
-        findNavController().navigate(action)
+        if (abs(SystemClock.uptimeMillis() - previousClickTimestamp) > Constants.BUTTON_CLICK_DELAY) {
+            activity?.onBackPressed()
+            previousClickTimestamp = SystemClock.uptimeMillis()
+        }
     }
 
 
