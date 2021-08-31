@@ -56,7 +56,6 @@ class MyContactsFragment : BaseFragment(),
         )
     }
 
-
     override fun onAttach(context: Context) {
         super.onAttach(context)
 
@@ -150,13 +149,6 @@ class MyContactsFragment : BaseFragment(),
         binding.recyclerViewMyContacts.apply {
             smoothScrollToPosition(0)
         }
-    }
-
-    override fun onRemoveSelectedContactsClicked() {
-
-        println("Remove button work!")
-
-//        viewModel.removeItem(contact)
     }
 
     /**

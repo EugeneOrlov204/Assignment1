@@ -15,6 +15,8 @@ class ContactsViewHolder(
 ) :
     RecyclerView.ViewHolder(binding.root) {
 
+    //fixme bug with checkbox
+
     private lateinit var contact: UserModel
 
     fun bindTo(contact: UserModel) {
@@ -64,6 +66,8 @@ class ContactsViewHolder(
                     onContactClickListener.onContactUnselected()
                 }
             }
+
+
 
             constraintLayoutContactListItem.setOnLongClickListener {
                 onContactClickListener.onContactsSelected()
