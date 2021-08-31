@@ -18,7 +18,7 @@ import com.shpp.eorlov.assignment1.databinding.FragmentSignInBinding
 import com.shpp.eorlov.assignment1.ui.MainActivity
 import com.shpp.eorlov.assignment1.utils.Constants
 import com.shpp.eorlov.assignment1.utils.Results
-import com.shpp.eorlov.assignment1.utils.evaluateErrorMessage
+import com.shpp.eorlov.assignment1.validator.evaluateErrorMessage
 import com.shpp.eorlov.assignment1.utils.ext.hideKeyboard
 import com.shpp.eorlov.assignment1.validator.Validator
 import javax.inject.Inject

@@ -1,4 +1,4 @@
-package com.shpp.eorlov.assignment1.utils
+package com.shpp.eorlov.assignment1.validator
 
 sealed class ValidationError
 data class InvalidBirthdate(val message: String) : ValidationError()

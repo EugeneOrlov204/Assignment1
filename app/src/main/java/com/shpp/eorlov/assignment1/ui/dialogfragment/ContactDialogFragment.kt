@@ -23,8 +23,8 @@ import com.shpp.eorlov.assignment1.model.UserModel
 import com.shpp.eorlov.assignment1.ui.MainActivity
 import com.shpp.eorlov.assignment1.ui.SharedViewModel
 import com.shpp.eorlov.assignment1.utils.Constants
-import com.shpp.eorlov.assignment1.utils.ValidateOperation
-import com.shpp.eorlov.assignment1.utils.evaluateErrorMessage
+import com.shpp.eorlov.assignment1.validator.ValidateOperation
+import com.shpp.eorlov.assignment1.validator.evaluateErrorMessage
 import com.shpp.eorlov.assignment1.utils.ext.loadImage
 import com.shpp.eorlov.assignment1.validator.Validator
 import javax.inject.Inject

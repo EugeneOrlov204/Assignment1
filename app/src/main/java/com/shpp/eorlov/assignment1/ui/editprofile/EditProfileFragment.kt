@@ -30,8 +30,8 @@ import com.shpp.eorlov.assignment1.ui.SharedViewModel
 import com.shpp.eorlov.assignment1.utils.Constants
 import com.shpp.eorlov.assignment1.utils.Constants.DATE_FORMAT
 import com.shpp.eorlov.assignment1.utils.Results
-import com.shpp.eorlov.assignment1.utils.ValidateOperation
-import com.shpp.eorlov.assignment1.utils.evaluateErrorMessage
+import com.shpp.eorlov.assignment1.validator.ValidateOperation
+import com.shpp.eorlov.assignment1.validator.evaluateErrorMessage
 import com.shpp.eorlov.assignment1.utils.ext.loadImage
 import com.shpp.eorlov.assignment1.validator.Validator
 import java.text.SimpleDateFormat
@@ -192,7 +192,7 @@ class EditProfileFragment : BaseFragment() {
             myCalendar = Calendar.getInstance()
 
             val date =
-                OnDateSetListener { view, year, monthOfYear, dayOfMonth ->
+                OnDateSetListener { _, year, monthOfYear, dayOfMonth ->
                     myCalendar.set(Calendar.YEAR, year)
                     myCalendar.set(Calendar.MONTH, monthOfYear)
                     myCalendar.set(Calendar.DAY_OF_MONTH, dayOfMonth)
