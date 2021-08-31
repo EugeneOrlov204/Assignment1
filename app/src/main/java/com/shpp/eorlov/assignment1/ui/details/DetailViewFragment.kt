@@ -68,6 +68,7 @@ class DetailViewFragment : BaseFragment() {
     @SuppressLint("SourceLockedOrientationActivity")
     override fun onResume() {
         super.onResume()
+        printLog("On resume")
         activity?.requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
     }
 

@@ -65,6 +65,11 @@ class AuthFragment : BaseFragment() {
     }
 
 
+    override fun onResume() {
+        super.onResume()
+        printLog("On resume")
+    }
+
     private fun setObservers() {
         viewModel.apply {
             loadEvent.apply {

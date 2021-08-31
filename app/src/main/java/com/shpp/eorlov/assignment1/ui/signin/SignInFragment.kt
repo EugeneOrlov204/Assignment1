@@ -64,6 +64,11 @@ class SignInFragment : BaseFragment() {
         setObservers()
     }
 
+    override fun onResume() {
+        super.onResume()
+        printLog("On resume")
+    }
+
     private fun initializeData() {
         viewModel.initializeData()
         if (!viewModel.getLogin().isNullOrEmpty()

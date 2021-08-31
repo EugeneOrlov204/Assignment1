@@ -108,6 +108,11 @@ class MyContactsFragment : BaseFragment(),
         }
     }
 
+    override fun onResume() {
+        super.onResume()
+        printLog("On resume")
+    }
+
     override fun onContactRemove(position: Int) {
         removeItemFromRecyclerView(position)
     }
