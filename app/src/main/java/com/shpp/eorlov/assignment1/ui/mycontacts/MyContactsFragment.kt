@@ -25,7 +25,9 @@ import com.shpp.eorlov.assignment1.ui.dialogfragment.ContactDialogFragment
 import com.shpp.eorlov.assignment1.ui.mycontacts.adapter.ContactsRecyclerAdapter
 import com.shpp.eorlov.assignment1.ui.mycontacts.adapter.listeners.ButtonClickListener
 import com.shpp.eorlov.assignment1.ui.mycontacts.adapter.listeners.ContactClickListener
+import com.shpp.eorlov.assignment1.ui.viewpager.CollectionContactFragment
 import com.shpp.eorlov.assignment1.ui.viewpager.CollectionContactFragmentDirections
+import com.shpp.eorlov.assignment1.ui.viewpager.ContactCollectionAdapter
 import com.shpp.eorlov.assignment1.utils.Constants.BUTTON_CLICK_DELAY
 import com.shpp.eorlov.assignment1.utils.Constants.CONTACT_DIALOG_TAG
 import com.shpp.eorlov.assignment1.utils.Constants.LIST_OF_CONTACTS_KEY
@@ -38,6 +40,7 @@ import kotlin.math.abs
 class MyContactsFragment : BaseFragment(),
     ContactClickListener,
     ButtonClickListener {
+
 
     private var previousClickTimestamp = SystemClock.uptimeMillis()
     private var swipeFlags = ItemTouchHelper.END
@@ -337,6 +340,14 @@ class MyContactsFragment : BaseFragment(),
             buttonRemoveSelectedContacts.setOnClickListener {
                 if (abs(SystemClock.uptimeMillis() - previousClickTimestamp) > BUTTON_CLICK_DELAY) {
                     removeSelectedItemsFromRecyclerView()
+                    previousClickTimestamp = SystemClock.uptimeMillis()
+                }
+            }
+
+            imageButtonExit.setOnClickListener {
+                if (abs(SystemClock.uptimeMillis() - previousClickTimestamp) > BUTTON_CLICK_DELAY) {
+                    (parentFragment as CollectionContactFragment).viewPager.currentItem =
+                        ContactCollectionAdapter.ViewPagerItems.PROFILE.position
                     previousClickTimestamp = SystemClock.uptimeMillis()
                 }
             }

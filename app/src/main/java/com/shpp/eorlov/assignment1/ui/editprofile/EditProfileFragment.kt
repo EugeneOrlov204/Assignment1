@@ -53,6 +53,7 @@ class EditProfileFragment : BaseFragment() {
     lateinit var storage: Storage
 
     private val args: EditProfileFragmentArgs by navArgs()
+    private val myCalendar: Calendar = Calendar.getInstance()
 
     private lateinit var sharedViewModel: SharedViewModel
     private lateinit var viewModel: EditProfileViewModel
@@ -154,7 +155,7 @@ class EditProfileFragment : BaseFragment() {
         }
     }
 
-    private lateinit var myCalendar: Calendar
+
     private fun loadImageFromGallery() {
         val gallery = Intent(
             Intent.ACTION_PICK,
@@ -189,7 +190,6 @@ class EditProfileFragment : BaseFragment() {
                 }
             }
 
-            myCalendar = Calendar.getInstance()
 
             val date =
                 OnDateSetListener { _, year, monthOfYear, dayOfMonth ->

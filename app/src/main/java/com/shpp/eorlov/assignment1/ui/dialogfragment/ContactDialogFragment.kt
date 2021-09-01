@@ -1,6 +1,7 @@
 package com.shpp.eorlov.assignment1.ui.dialogfragment
 
 import android.app.Activity.RESULT_OK
+import android.app.DatePickerDialog
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
@@ -27,11 +28,15 @@ import com.shpp.eorlov.assignment1.validator.ValidateOperation
 import com.shpp.eorlov.assignment1.validator.evaluateErrorMessage
 import com.shpp.eorlov.assignment1.utils.ext.loadImage
 import com.shpp.eorlov.assignment1.validator.Validator
+import java.text.SimpleDateFormat
+import java.util.*
 import javax.inject.Inject
 import kotlin.math.abs
 
 
 class ContactDialogFragment : DialogFragment() {
+
+    private val myCalendar: Calendar = Calendar.getInstance()
 
     @Inject
     lateinit var viewModelFactory: ViewModelProvider.Factory
@@ -160,10 +165,6 @@ class ContactDialogFragment : DialogFragment() {
                 textInputEditTextAddress.text.toString(),
                 ValidateOperation.EMPTY
             )
-            textInputLayoutBirthdate.error = viewModel.isValidField(
-                textInputEditTextBirthdate.text.toString(),
-                ValidateOperation.BIRTHDAY
-            )
             textInputLayoutCareer.error = viewModel.isValidField(
                 textInputEditTextCareer.text.toString(),
                 ValidateOperation.EMPTY
@@ -194,11 +195,7 @@ class ContactDialogFragment : DialogFragment() {
                 textInputLayoutAddress,
                 ValidateOperation.EMPTY
             )
-            addListenerToEditText(
-                textInputEditTextBirthdate,
-                textInputLayoutBirthdate,
-                ValidateOperation.BIRTHDAY
-            )
+
             addListenerToEditText(
                 textInputEditTextCareer,
                 textInputLayoutCareer,
@@ -243,7 +240,28 @@ class ContactDialogFragment : DialogFragment() {
                     previousClickTimestamp = SystemClock.uptimeMillis()
                 }
             }
+
+            val date =
+                DatePickerDialog.OnDateSetListener { _, year, monthOfYear, dayOfMonth ->
+                    myCalendar.set(Calendar.YEAR, year)
+                    myCalendar.set(Calendar.MONTH, monthOfYear)
+                    myCalendar.set(Calendar.DAY_OF_MONTH, dayOfMonth)
+                    updateLabel()
+                }
+
+            textInputEditTextBirthdate.setOnClickListener {
+                DatePickerDialog(
+                    requireActivity(), date, myCalendar
+                        .get(Calendar.YEAR), myCalendar.get(Calendar.MONTH),
+                    myCalendar.get(Calendar.DAY_OF_MONTH)
+                ).show()
+            }
         }
+    }
+
+    private fun updateLabel() {
+        val sdf = SimpleDateFormat(Constants.DATE_FORMAT, Locale.US)
+        dialogBinding.textInputEditTextBirthdate.setText(sdf.format(myCalendar.time))
     }
 
     private fun loadImageFromGallery() {
