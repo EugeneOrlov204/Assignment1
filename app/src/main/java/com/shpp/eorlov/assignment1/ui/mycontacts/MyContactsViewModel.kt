@@ -67,34 +67,4 @@ class MyContactsViewModel @Inject constructor() : ViewModel() {
         userListLiveData.value?.add(addedItem)
         userListLiveData.value = userListLiveData.value
     }
-
-    fun selectAllContacts() {
-        userListLiveData.apply {
-            val list = value ?: emptyList()
-            for(item in list) {
-                item.onMultiSelect = true
-            }
-        }
-    }
-
-    fun unselectAllContacts() {
-        userListLiveData.apply {
-            val list = value ?: emptyList()
-            for(item in list) {
-                item.onMultiSelect = false
-            }
-        }
-    }
-
-    fun areAllContactsUnselected(): Boolean {
-        userListLiveData.apply {
-            val list = value ?: return false
-            for(item in list) {
-                if (item.selected) {
-                    return false
-                }
-            }
-        }
-        return true
-    }
 }

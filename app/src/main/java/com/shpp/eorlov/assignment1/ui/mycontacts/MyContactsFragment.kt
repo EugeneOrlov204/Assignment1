@@ -116,12 +116,16 @@ class MyContactsFragment : BaseFragment(),
         removeItemFromRecyclerView(position)
     }
 
+    override fun onContactRemove(userModel: UserModel) {
+        viewModel.removeItem(userModel)
+    }
+
     override fun onContactSelected(contact: UserModel) {
         sharedElementTransitionWithSelectedContact(contact)
     }
 
     override fun onMultiselectActivated() {
-        viewModel.selectAllContacts()
+        contactsListAdapter.selectAllContacts()
         binding.frameLayoutButtonsContainer.visibility = View.VISIBLE
         binding.buttonRemoveSelectedContacts.visibility = View.VISIBLE
         binding.textViewAddContacts.visibility = View.GONE
@@ -131,9 +135,8 @@ class MyContactsFragment : BaseFragment(),
     }
 
 
-    override fun onContactUnselected() {
-        if (viewModel.areAllContactsUnselected()) {
-            viewModel.unselectAllContacts()
+    override fun onContactSelectedStateChanged() {
+        if(contactsListAdapter.areAllItemsUnselected()) {
             binding.frameLayoutButtonsContainer.visibility = View.GONE
             binding.buttonRemoveSelectedContacts.visibility = View.GONE
             viewModel.selectedEvent.value = false
@@ -180,12 +183,7 @@ class MyContactsFragment : BaseFragment(),
 
     private fun removeSelectedItemsFromRecyclerView() {
         viewModel.loadEvent.value = Results.LOADING
-        for (item in contactsListAdapter.currentList) {
-            //fixme
-//            if (item.selected) {
-//                viewModel.removeItem(item)
-//            }
-        }
+        contactsListAdapter.removeSelectedItems()
         refreshRecyclerView()
         if(viewModel.userListLiveData.value?.isEmpty() == true) {
             binding.frameLayoutButtonsContainer.visibility = View.GONE
@@ -348,16 +346,15 @@ class MyContactsFragment : BaseFragment(),
                     super.onScrolled(recyclerView, dx, dy)
                     val userList = contactsListAdapter.currentList
                     if (userList.isEmpty()) return
-                    //fixme
-//                    if (!userList[0].onMultiSelect) {
-//                        if (dy > 0 && buttonGoUp.visibility == View.VISIBLE) {
-//                            buttonGoUp.visibility = View.GONE
-//                            frameLayoutButtonsContainer.visibility = View.GONE
-//                        } else if (dy < 0 && buttonGoUp.visibility != View.VISIBLE) {
-//                            frameLayoutButtonsContainer.visibility = View.VISIBLE
-//                            buttonGoUp.visibility = View.VISIBLE
-//                        }
-//                    }
+                    if (!contactsListAdapter.isMultiSelect()) {
+                        if (dy > 0 && buttonGoUp.visibility == View.VISIBLE) {
+                            buttonGoUp.visibility = View.GONE
+                            frameLayoutButtonsContainer.visibility = View.GONE
+                        } else if (dy < 0 && buttonGoUp.visibility != View.VISIBLE) {
+                            frameLayoutButtonsContainer.visibility = View.VISIBLE
+                            buttonGoUp.visibility = View.VISIBLE
+                        }
+                    }
                 }
             })
         }

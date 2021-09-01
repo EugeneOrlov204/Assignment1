@@ -1,6 +1,7 @@
 package com.shpp.eorlov.assignment1.ui.mycontacts.adapter
 
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.ListAdapter
 import com.shpp.eorlov.assignment1.databinding.ListItemBinding
@@ -15,7 +16,6 @@ class ContactsRecyclerAdapter(
     private val onContactClickListener: ContactClickListener,
     private var multiSelect: Boolean = false
 ) : ListAdapter<UserModel, ContactsViewHolder>(UserItemDiffCallback()) {
-
 
 
     // Keeps track of all the selected images
@@ -49,4 +49,26 @@ class ContactsRecyclerAdapter(
 
 
     override fun getItemId(position: Int): Long = position.toLong()
+
+    fun isMultiSelect(): Boolean = multiSelect
+
+    fun areAllItemsUnselected(): Boolean {
+        if (selectedItems.isEmpty()) {
+            multiSelect = false
+            return true
+        }
+        return false
+    }
+
+    fun selectAllContacts() {
+        multiSelect = true
+    }
+
+    fun removeSelectedItems() {
+        for(item in selectedItems) {
+            onContactClickListener.onContactRemove(item)
+        }
+        selectedItems.clear()
+        multiSelect = false
+    }
 }
