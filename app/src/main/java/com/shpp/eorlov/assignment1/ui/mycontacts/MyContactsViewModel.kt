@@ -22,7 +22,7 @@ class MyContactsViewModel @Inject constructor() : ViewModel() {
             loadEvent.value = Results.INITIALIZE_DATA_ERROR
         } else {
             loadEvent.value = Results.LOADING
-            val data = contactsDatabase.listOfContacts
+            val data = contactsDatabase.listOfContacts.toMutableList()
             if (data.isNotEmpty()) {
                 loadEvent.value = Results.OK
                 userListLiveData.value = data

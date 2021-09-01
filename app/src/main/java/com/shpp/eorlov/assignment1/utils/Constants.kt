@@ -11,7 +11,7 @@ object Constants {
     const val MY_PROFILE_BIRTHDATE_KEY: String = "My profile birthdate"
     const val MY_PROFILE_PHONE_KEY: String = "My profile phone"
     const val MY_PROFILE_EMAIL_KEY: String = "My profile email"
-    val SNACKBAR_DURATION: Int = 5000
+    const val SNACKBAR_DURATION: Int = 5000
     const val PREFS_FILE = "Common preference file"
     const val DATE_FORMAT = "dd/MM/yyyy"
     const val DATE_REGEX_PATTERN = "^(1[0-9]|0[1-9]|3[0-1]|2[1-9])/(0[1-9]|1[0-2])/[0-9]{4}$"
