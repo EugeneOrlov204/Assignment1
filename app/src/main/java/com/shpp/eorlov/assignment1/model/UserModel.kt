@@ -11,7 +11,5 @@ data class UserModel(
     val residenceAddress: String,
     val birthDate: String,
     val phoneNumber: String,
-    val email: String,
-    var onMultiSelect: Boolean = false,
-    var selected: Boolean = false
+    val email: String
 ) : Parcelable

@@ -6,13 +6,22 @@
     android:layout_width="match_parent"
     android:layout_height="@dimen/list_item_height_66dp"
     android:layout_marginHorizontal="@dimen/margin_normal_16dp"
-    android:layout_marginTop="@dimen/margin_normal_16dp">
+    android:layout_marginTop="@dimen/margin_normal_16dp"
+    android:background="@drawable/round_view_holder">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/constraintLayoutContactUnselectedListItem"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@drawable/round_view_holder">
+
+        <androidx.appcompat.widget.AppCompatCheckBox
+            android:id="@+id/checkBoxSelectedState"
+            android:layout_width="@dimen/check_box_contact_selected_size_20dp"
+            android:layout_height="@dimen/check_box_contact_selected_size_20dp"
+            android:layout_marginStart="@dimen/margin_small_8dp"
+            android:layout_marginEnd="@dimen/check_box_contact_selected_margin_end_12dp"
+            android:button="@drawable/remove_contact_check_box"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:visibility="gone"
+            />
 
         <com.facebook.drawee.view.SimpleDraweeView
             android:id="@+id/draweeViewPersonImageUnselected"
@@ -21,7 +30,7 @@
             android:layout_marginStart="@dimen/margin_normal_16dp"
             android:transitionName="contactPhoto"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintStart_toEndOf="@id/checkBoxSelectedState"
             app:layout_constraintTop_toTopOf="parent"
             app:placeholderImageScaleType="fitXY"
             app:roundAsCircle="true"
@@ -64,73 +73,6 @@
             app:layout_constraintBottom_toBottomOf="@+id/textViewPersonProfessionUnselected"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="@+id/textViewPersonNameUnselected" />
-
-
-    </androidx.constraintlayout.widget.ConstraintLayout>
-
-
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/constraintLayoutContactSelectedListItem"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@drawable/round_view_holder_selected"
-        android:visibility="invisible">
-
-        <androidx.appcompat.widget.AppCompatCheckBox
-            android:id="@+id/checkBoxSelectedState"
-            android:layout_width="@dimen/check_box_contact_selected_size_20dp"
-            android:layout_height="@dimen/check_box_contact_selected_size_20dp"
-            android:layout_marginStart="@dimen/margin_small_8dp"
-            android:layout_marginEnd="@dimen/check_box_contact_selected_margin_end_12dp"
-            android:button="@drawable/remove_contact_check_box"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-
-            />
-
-        <com.facebook.drawee.view.SimpleDraweeView
-            android:id="@+id/draweeViewPersonImageSelected"
-            android:layout_width="@dimen/person_image_size_50dp"
-            android:layout_height="@dimen/person_image_size_50dp"
-            android:layout_marginStart="@dimen/margin_normal_16dp"
-            android:transitionName="contactPhoto"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/checkBoxSelectedState"
-            app:layout_constraintTop_toTopOf="parent"
-            app:placeholderImageScaleType="fitXY"
-            app:roundAsCircle="true"
-            fresco:placeholderImage="@drawable/ic_default_user_image" />
-
-
-        <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/textViewPersonNameSelected"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/margin_normal_16dp"
-            android:fontFamily="@font/open_sans"
-            android:textColor="@color/black_russian"
-            android:textSize="@dimen/text_size_normal_18sp"
-            android:transitionName="contactName"
-            app:layout_constraintBottom_toTopOf="@+id/textViewPersonProfessionSelected"
-            app:layout_constraintStart_toEndOf="@id/draweeViewPersonImageSelected"
-            app:layout_constraintTop_toTopOf="@id/draweeViewPersonImageSelected"
-            tools:text="Ava Smith" />
-
-        <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/textViewPersonProfessionSelected"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:fontFamily="@font/open_sans"
-            android:textColor="@color/gray"
-            android:textSize="@dimen/text_size_small_12sp"
-            android:transitionName="contactProfession"
-            app:layout_constraintBottom_toBottomOf="@+id/draweeViewPersonImageSelected"
-            app:layout_constraintStart_toStartOf="@id/textViewPersonNameSelected"
-            tools:text="Photograph" />
-
-
-    </androidx.constraintlayout.widget.ConstraintLayout>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

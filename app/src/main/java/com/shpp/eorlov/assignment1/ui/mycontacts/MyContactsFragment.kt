@@ -120,7 +120,7 @@ class MyContactsFragment : BaseFragment(),
         sharedElementTransitionWithSelectedContact(contact)
     }
 
-    override fun onContactsSelected() {
+    override fun onMultiselectActivated() {
         viewModel.selectAllContacts()
         binding.frameLayoutButtonsContainer.visibility = View.VISIBLE
         binding.buttonRemoveSelectedContacts.visibility = View.VISIBLE
@@ -129,7 +129,6 @@ class MyContactsFragment : BaseFragment(),
         disableContactSwipe()
         refreshRecyclerView()
     }
-
 
 
     override fun onContactUnselected() {
@@ -182,9 +181,10 @@ class MyContactsFragment : BaseFragment(),
     private fun removeSelectedItemsFromRecyclerView() {
         viewModel.loadEvent.value = Results.LOADING
         for (item in contactsListAdapter.currentList) {
-            if (item.selected) {
-                viewModel.removeItem(item)
-            }
+            //fixme
+//            if (item.selected) {
+//                viewModel.removeItem(item)
+//            }
         }
         refreshRecyclerView()
         if(viewModel.userListLiveData.value?.isEmpty() == true) {
@@ -348,15 +348,16 @@ class MyContactsFragment : BaseFragment(),
                     super.onScrolled(recyclerView, dx, dy)
                     val userList = contactsListAdapter.currentList
                     if (userList.isEmpty()) return
-                    if (!userList[0].onMultiSelect) {
-                        if (dy > 0 && buttonGoUp.visibility == View.VISIBLE) {
-                            buttonGoUp.visibility = View.GONE
-                            frameLayoutButtonsContainer.visibility = View.GONE
-                        } else if (dy < 0 && buttonGoUp.visibility != View.VISIBLE) {
-                            frameLayoutButtonsContainer.visibility = View.VISIBLE
-                            buttonGoUp.visibility = View.VISIBLE
-                        }
-                    }
+                    //fixme
+//                    if (!userList[0].onMultiSelect) {
+//                        if (dy > 0 && buttonGoUp.visibility == View.VISIBLE) {
+//                            buttonGoUp.visibility = View.GONE
+//                            frameLayoutButtonsContainer.visibility = View.GONE
+//                        } else if (dy < 0 && buttonGoUp.visibility != View.VISIBLE) {
+//                            frameLayoutButtonsContainer.visibility = View.VISIBLE
+//                            buttonGoUp.visibility = View.VISIBLE
+//                        }
+//                    }
                 }
             })
         }

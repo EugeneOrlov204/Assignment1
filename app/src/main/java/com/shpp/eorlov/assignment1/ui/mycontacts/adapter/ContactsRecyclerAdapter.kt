@@ -12,9 +12,14 @@ import com.shpp.eorlov.assignment1.utils.UserItemDiffCallback
 
 
 class ContactsRecyclerAdapter(
-    private val onContactClickListener: ContactClickListener
+    private val onContactClickListener: ContactClickListener,
+    private var multiSelect: Boolean = false
 ) : ListAdapter<UserModel, ContactsViewHolder>(UserItemDiffCallback()) {
 
+
+
+    // Keeps track of all the selected images
+    private val selectedItems = arrayListOf<UserModel>()
 
     /**
      * Create new views (invoked by the layout manager)
@@ -24,8 +29,11 @@ class ContactsRecyclerAdapter(
             ListItemBinding.inflate(
                 LayoutInflater.from(parent.context), parent, false
             ),
-            onContactClickListener
+            onContactClickListener,
+            multiSelect,
+            selectedItems
         )
+
     }
 
 
