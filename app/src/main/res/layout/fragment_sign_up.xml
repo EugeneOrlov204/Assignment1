@@ -40,23 +40,23 @@
 
 
     <androidx.appcompat.widget.AppCompatTextView
-        android:id="@+id/textViewUserName"
+        android:id="@+id/textViewEmail"
         style="@style/input_field_title_text"
         android:text="@string/email"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textViewFillOutTheProfile" />
 
     <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/textInputLayoutUserName"
+        android:id="@+id/textInputLayoutEmail"
         style="@style/text_input_layout"
         android:layout_marginHorizontal="@dimen/margin_normal_16dp"
         app:boxStrokeColor="@color/selector_stroke_color"
         app:errorEnabled="true"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textViewUserName">
+        app:layout_constraintTop_toBottomOf="@+id/textViewEmail">
 
         <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/textInputEditTextUserName"
+            android:id="@+id/textInputEditTextEmail"
             style="@style/input_field_text_style"
             android:inputType="textEmailAddress"
             android:textColor="@color/alabaster" />
@@ -66,24 +66,24 @@
 
 
     <androidx.appcompat.widget.AppCompatTextView
-        android:id="@+id/textViewMobilePhone"
+        android:id="@+id/textViewPassword"
         style="@style/input_field_title_text"
         android:text="@string/password"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textInputLayoutUserName" />
+        app:layout_constraintTop_toBottomOf="@+id/textInputLayoutEmail" />
 
 
     <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/textInputLayoutMobilePhone"
+        android:id="@+id/textInputLayoutPassword"
         style="@style/text_input_layout"
         android:layout_marginHorizontal="@dimen/margin_normal_16dp"
         app:boxStrokeColor="@color/selector_stroke_color"
         app:errorEnabled="true"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textViewMobilePhone">
+        app:layout_constraintTop_toBottomOf="@+id/textViewPassword">
 
         <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/textInputEditTextMobilePhone"
+            android:id="@+id/textInputEditTextPassword"
             style="@style/input_field_text_style"
             android:inputType="textPassword"
             android:textColor="@color/alabaster" />
@@ -96,8 +96,8 @@
         android:layout_marginTop="@dimen/remember_me_margin_top_18dp"
         android:button="@drawable/remember_me_check_box"
         android:checked="true"
-        app:layout_constraintStart_toStartOf="@+id/textInputLayoutMobilePhone"
-        app:layout_constraintTop_toBottomOf="@+id/textInputLayoutMobilePhone" />
+        app:layout_constraintStart_toStartOf="@+id/textInputLayoutPassword"
+        app:layout_constraintTop_toBottomOf="@+id/textInputLayoutPassword" />
 
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/textViewRememberMe"

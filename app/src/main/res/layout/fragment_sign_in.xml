@@ -66,7 +66,7 @@
 
 
     <androidx.appcompat.widget.AppCompatTextView
-        android:id="@+id/textViewMobilePhone"
+        android:id="@+id/textViewPassword"
         style="@style/input_field_title_text"
         android:text="@string/password"
         app:layout_constraintStart_toStartOf="parent"
@@ -74,16 +74,16 @@
 
 
     <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/textInputLayoutMobilePhone"
+        android:id="@+id/textInputLayoutPassword"
         style="@style/text_input_layout"
         android:layout_marginHorizontal="@dimen/margin_normal_16dp"
         app:boxStrokeColor="@color/selector_stroke_color"
         app:errorEnabled="true"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textViewMobilePhone">
+        app:layout_constraintTop_toBottomOf="@+id/textViewPassword">
 
         <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/textInputEditTextMobilePhone"
+            android:id="@+id/textInputEditTextPassword"
             style="@style/input_field_text_style"
             android:inputType="textPassword"
             android:textColor="@color/alabaster" />
@@ -97,8 +97,8 @@
         android:button="@drawable/remember_me_check_box"
         android:checked="true"
         app:layout_constraintBottom_toTopOf="@id/buttonLogin"
-        app:layout_constraintStart_toStartOf="@+id/textInputLayoutMobilePhone"
-        app:layout_constraintTop_toBottomOf="@+id/textInputLayoutMobilePhone"
+        app:layout_constraintStart_toStartOf="@+id/textInputLayoutPassword"
+        app:layout_constraintTop_toBottomOf="@+id/textInputLayoutPassword"
         app:layout_constraintVertical_chainStyle="spread_inside" />
 
     <androidx.appcompat.widget.AppCompatTextView
@@ -124,7 +124,7 @@
         android:textColor="@android:color/white"
         android:textSize="@dimen/text_size_small_14sp"
         app:layout_constraintBottom_toBottomOf="@id/checkBoxRememberMe"
-        app:layout_constraintEnd_toEndOf="@id/textInputLayoutMobilePhone"
+        app:layout_constraintEnd_toEndOf="@id/textInputLayoutPassword"
         app:layout_constraintTop_toTopOf="@id/checkBoxRememberMe" />
 
     <androidx.appcompat.widget.AppCompatButton

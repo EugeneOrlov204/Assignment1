@@ -140,9 +140,9 @@ class SignUpFragment : BaseFragment() {
         }
 
         binding.apply {
-            textInputEditTextLogin.addTextChangedListener {
-                textInputLayoutLogin.error = evaluateErrorMessage(
-                    validator.validateEmail(binding.textInputEditTextLogin.text.toString())
+            textInputEditTextEmail.addTextChangedListener {
+                textInputLayoutEmail.error = evaluateErrorMessage(
+                    validator.validateEmail(binding.textInputEditTextEmail.text.toString())
                 )
             }
             textInputEditTextPassword.addTextChangedListener {
@@ -165,7 +165,7 @@ class SignUpFragment : BaseFragment() {
      * Change current activity to MainActivity
      */
     private fun goToMyProfile() {
-        val email = binding.textInputEditTextLogin.text.toString()
+        val email = binding.textInputEditTextEmail.text.toString()
         if (isFieldsInvalid() ||
             viewModel.isExistingAccount(email)
         ) {
@@ -189,8 +189,8 @@ class SignUpFragment : BaseFragment() {
     private fun isFieldsInvalid() =
         !binding.textInputLayoutPassword.error.isNullOrEmpty() ||
                 binding.textInputEditTextPassword.text.toString().isEmpty() ||
-                !binding.textInputLayoutLogin.error.isNullOrEmpty() ||
-                binding.textInputEditTextLogin.text.toString().isEmpty()
+                !binding.textInputLayoutEmail.error.isNullOrEmpty() ||
+                binding.textInputEditTextEmail.text.toString().isEmpty()
 }
 
 
