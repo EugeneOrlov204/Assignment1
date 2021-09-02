@@ -17,7 +17,7 @@ package com.shpp.eorlov.assignment1.di
 
 
 import com.shpp.eorlov.assignment1.ui.MainActivity
-import com.shpp.eorlov.assignment1.ui.auth.AuthFragment
+import com.shpp.eorlov.assignment1.ui.signup.SignUpFragment
 import com.shpp.eorlov.assignment1.ui.details.DetailViewFragment
 import com.shpp.eorlov.assignment1.ui.dialogfragment.ContactDialogFragment
 import com.shpp.eorlov.assignment1.ui.editprofile.EditProfileFragment
@@ -46,6 +46,6 @@ interface ContactComponent {
     fun inject(activity: MainActivity)
     fun inject(fragment: MyProfileFragment)
     fun inject(fragment: EditProfileFragment)
-    fun inject(fragment: AuthFragment)
+    fun inject(fragment: SignUpFragment)
     fun inject(fragment: SignInFragment)
 }

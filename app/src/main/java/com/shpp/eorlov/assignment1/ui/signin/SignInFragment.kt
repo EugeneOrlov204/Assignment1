@@ -175,7 +175,7 @@ class SignInFragment : BaseFragment() {
 
     private fun goToSignUpProfile() {
         val action =
-            SignInFragmentDirections.actionSignInFragmentToAuthFragment()
+            SignInFragmentDirections.actionSignInFragmentToSignUpFragment()
         findNavController().navigate(action)
     }
 

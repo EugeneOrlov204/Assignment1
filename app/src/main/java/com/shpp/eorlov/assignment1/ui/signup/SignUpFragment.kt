@@ -1,4 +1,4 @@
-package com.shpp.eorlov.assignment1.ui.auth
+package com.shpp.eorlov.assignment1.ui.signup
 
 import android.content.Context
 import android.os.Bundle
@@ -14,18 +14,18 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import com.shpp.eorlov.assignment1.R
 import com.shpp.eorlov.assignment1.base.BaseFragment
-import com.shpp.eorlov.assignment1.databinding.FragmentAuthBinding
+import com.shpp.eorlov.assignment1.databinding.FragmentSignUpBinding
 import com.shpp.eorlov.assignment1.ui.MainActivity
 import com.shpp.eorlov.assignment1.utils.Constants
 import com.shpp.eorlov.assignment1.utils.Results
-import com.shpp.eorlov.assignment1.validator.evaluateErrorMessage
 import com.shpp.eorlov.assignment1.utils.ext.hideKeyboard
 import com.shpp.eorlov.assignment1.validator.Validator
+import com.shpp.eorlov.assignment1.validator.evaluateErrorMessage
 import javax.inject.Inject
 import kotlin.math.abs
 
 
-class AuthFragment : BaseFragment() {
+class SignUpFragment : BaseFragment() {
 
     @Inject
     lateinit var viewModelFactory: ViewModelProvider.Factory
@@ -33,9 +33,9 @@ class AuthFragment : BaseFragment() {
     @Inject
     lateinit var validator: Validator
 
-    private lateinit var binding: FragmentAuthBinding
+    private lateinit var binding: FragmentSignUpBinding
 
-    private lateinit var viewModel: AuthViewModel
+    private lateinit var viewModel: SignUpViewModel
 
     private var previousClickTimestamp = SystemClock.uptimeMillis()
 
@@ -45,7 +45,7 @@ class AuthFragment : BaseFragment() {
         (activity as MainActivity).contactComponent.inject(this)
 
         viewModel =
-            ViewModelProvider(this, viewModelFactory)[AuthViewModel::class.java]
+            ViewModelProvider(this, viewModelFactory)[SignUpViewModel::class.java]
     }
 
     override fun onCreateView(
@@ -53,7 +53,7 @@ class AuthFragment : BaseFragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        binding = FragmentAuthBinding.inflate(inflater, container, false)
+        binding = FragmentSignUpBinding.inflate(inflater, container, false)
         return binding.root
     }
 
@@ -182,7 +182,7 @@ class AuthFragment : BaseFragment() {
         }
 
         val action =
-            AuthFragmentDirections.actionAuthFragmentToCollectionContactFragment(email)
+            SignUpFragmentDirections.actionSignUpFragmentToCollectionContactFragment(email)
         findNavController().navigate(action)
     }
 

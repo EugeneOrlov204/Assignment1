@@ -2,61 +2,61 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/constraintLayoutLogInContainter"
+    android:id="@+id/constraintLayoutAuthContainer"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/steel_gray"
     android:orientation="vertical"
-    tools:context=".ui.signin.SignInFragment">
+    tools:context=".ui.signup.SignUpFragment">
 
     <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/guideLineHello"
+        android:id="@+id/guideLineLetsGetAcquainted"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         app:layout_constraintGuide_percent="0.2" />
 
     <com.google.android.material.textview.MaterialTextView
-        android:id="@+id/textViewHello"
+        android:id="@+id/textViewLetsGetAcquainted"
         style="@style/regular_text"
-        android:text="@string/hello"
+        android:text="@string/lets_get_acquainted"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@id/guideLineHello" />
+        app:layout_constraintTop_toTopOf="@id/guideLineLetsGetAcquainted" />
 
 
     <com.google.android.material.textview.MaterialTextView
-        android:id="@+id/textEnterYourPassword"
+        android:id="@+id/textViewFillOutTheProfile"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/margin_small_8dp"
         android:fontFamily="@font/open_sans"
-        android:text="@string/enter_your_email_and_password_below"
+        android:text="@string/fill_out_the_profile"
         android:textColor="@color/alabaster"
         android:textSize="@dimen/text_size_small_12sp"
-        app:layout_constraintEnd_toEndOf="@+id/textViewHello"
-        app:layout_constraintStart_toStartOf="@+id/textViewHello"
-        app:layout_constraintTop_toBottomOf="@+id/textViewHello" />
+        app:layout_constraintEnd_toEndOf="@+id/textViewLetsGetAcquainted"
+        app:layout_constraintStart_toStartOf="@+id/textViewLetsGetAcquainted"
+        app:layout_constraintTop_toBottomOf="@+id/textViewLetsGetAcquainted" />
 
 
     <androidx.appcompat.widget.AppCompatTextView
-        android:id="@+id/textViewEmail"
+        android:id="@+id/textViewUserName"
         style="@style/input_field_title_text"
         android:text="@string/email"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textEnterYourPassword" />
+        app:layout_constraintTop_toBottomOf="@+id/textViewFillOutTheProfile" />
 
     <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/textInputLayoutEmail"
+        android:id="@+id/textInputLayoutUserName"
         style="@style/text_input_layout"
         android:layout_marginHorizontal="@dimen/margin_normal_16dp"
         app:boxStrokeColor="@color/selector_stroke_color"
         app:errorEnabled="true"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textViewEmail">
+        app:layout_constraintTop_toBottomOf="@+id/textViewUserName">
 
         <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/textInputEditTextEmail"
+            android:id="@+id/textInputEditTextUserName"
             style="@style/input_field_text_style"
             android:inputType="textEmailAddress"
             android:textColor="@color/alabaster" />
@@ -70,7 +70,7 @@
         style="@style/input_field_title_text"
         android:text="@string/password"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textInputLayoutEmail" />
+        app:layout_constraintTop_toBottomOf="@+id/textInputLayoutUserName" />
 
 
     <com.google.android.material.textfield.TextInputLayout
@@ -96,10 +96,8 @@
         android:layout_marginTop="@dimen/remember_me_margin_top_18dp"
         android:button="@drawable/remember_me_check_box"
         android:checked="true"
-        app:layout_constraintBottom_toTopOf="@id/buttonLogin"
         app:layout_constraintStart_toStartOf="@+id/textInputLayoutMobilePhone"
-        app:layout_constraintTop_toBottomOf="@+id/textInputLayoutMobilePhone"
-        app:layout_constraintVertical_chainStyle="spread_inside" />
+        app:layout_constraintTop_toBottomOf="@+id/textInputLayoutMobilePhone" />
 
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/textViewRememberMe"
@@ -109,65 +107,63 @@
         android:fontFamily="@font/open_sans"
         android:text="@string/remember_me"
         android:textColor="@color/light_gray"
-        android:textSize="@dimen/text_size_small_14sp"
+        android:textSize="@dimen/text_size_normal_18sp"
         app:layout_constraintBottom_toBottomOf="@id/checkBoxRememberMe"
         app:layout_constraintStart_toEndOf="@id/checkBoxRememberMe"
         app:layout_constraintTop_toTopOf="@id/checkBoxRememberMe" />
 
-    <androidx.appcompat.widget.AppCompatTextView
-        android:id="@+id/textViewForgotPassword"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/margin_small_8dp"
-        android:fontFamily="@font/open_sans"
-        android:text="@string/forgot_your_password"
-        android:textColor="@android:color/white"
-        android:textSize="@dimen/text_size_small_14sp"
-        app:layout_constraintBottom_toBottomOf="@id/checkBoxRememberMe"
-        app:layout_constraintEnd_toEndOf="@id/textInputLayoutMobilePhone"
-        app:layout_constraintTop_toTopOf="@id/checkBoxRememberMe" />
-
     <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/buttonLogin"
+        android:id="@+id/buttonRegister"
         style="@style/profile_button"
         android:layout_marginHorizontal="@dimen/margin_normal_16dp"
-        android:layout_marginBottom="@dimen/login_button_margin_bottom_23dp"
+        android:layout_marginBottom="@dimen/register_button_margin_bottom_12dp"
         android:background="@drawable/register_button"
-        android:text="@string/login"
-        app:layout_constraintBottom_toTopOf="@+id/textViewDontHaveAccount"
+        android:text="@string/register"
+        app:layout_constraintBottom_toTopOf="@+id/textViewCopyright"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/checkBoxRememberMe" />
-
+        app:layout_constraintStart_toStartOf="parent" />
 
     <androidx.appcompat.widget.AppCompatTextView
-        android:id="@+id/textViewDontHaveAccount"
+        android:id="@+id/textViewCopyright"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="@dimen/margin_normal_16dp"
+        android:layout_marginBottom="@dimen/copyright_margin_bottom_12dp"
+        android:text="@string/copyright"
+        android:textAlignment="center"
+        android:textColor="@color/silver"
+        android:textSize="@dimen/text_size_small_12sp"
+        app:layout_constraintBottom_toTopOf="@+id/textViewAlreadyHaveAccount"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/textViewAlreadyHaveAccount"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="@dimen/already_have_account_margin_bottom_18dp"
-        android:text="@string/don_t_have_account"
+        android:text="@string/already_have_an_account"
         android:textAlignment="center"
         android:textColor="@color/light_gray"
         android:textSize="@dimen/text_size_small_12sp"
-
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/textViewSignUp"
+        app:layout_constraintEnd_toStartOf="@+id/textViewSignIn"
         app:layout_constraintHorizontal_chainStyle="packed"
-        app:layout_constraintStart_toStartOf="@+id/buttonLogin" />
+        app:layout_constraintStart_toStartOf="@+id/textViewCopyright" />
 
     <androidx.appcompat.widget.AppCompatTextView
-        android:id="@+id/textViewSignUp"
+        android:id="@+id/textViewSignIn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/sign_in_margin_start_12dp"
-        android:text="@string/sign_up"
+        android:text="@string/sign_in"
         android:textAlignment="center"
         android:textColor="@android:color/white"
         android:textSize="@dimen/text_size_small_12sp"
-        app:layout_constraintBottom_toBottomOf="@+id/textViewDontHaveAccount"
-        app:layout_constraintEnd_toEndOf="@+id/buttonLogin"
-        app:layout_constraintStart_toEndOf="@id/textViewDontHaveAccount"
-        app:layout_constraintTop_toTopOf="@+id/textViewDontHaveAccount" />
+        app:layout_constraintBottom_toBottomOf="@+id/textViewAlreadyHaveAccount"
+        app:layout_constraintEnd_toEndOf="@+id/textViewCopyright"
+        app:layout_constraintStart_toEndOf="@id/textViewAlreadyHaveAccount"
+        app:layout_constraintTop_toTopOf="@+id/textViewAlreadyHaveAccount" />
 
     <androidx.core.widget.ContentLoadingProgressBar
         android:id="@+id/contentLoadingProgressBar"
@@ -179,6 +175,5 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
-
 
 </androidx.constraintlayout.widget.ConstraintLayout>

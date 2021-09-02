@@ -3,7 +3,7 @@ package com.shpp.eorlov.assignment1.di
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.shpp.eorlov.assignment1.ui.SharedViewModel
-import com.shpp.eorlov.assignment1.ui.auth.AuthViewModel
+import com.shpp.eorlov.assignment1.ui.signup.SignUpViewModel
 import com.shpp.eorlov.assignment1.ui.details.DetailViewViewModel
 import com.shpp.eorlov.assignment1.ui.dialogfragment.ContactDialogViewModel
 import com.shpp.eorlov.assignment1.ui.editprofile.EditProfileViewModel
@@ -73,8 +73,8 @@ abstract class ViewModelModule {
 
     @Binds
     @IntoMap
-    @ViewModelKey(AuthViewModel::class)
-    internal abstract fun authViewModel(viewModel: AuthViewModel): ViewModel
+    @ViewModelKey(SignUpViewModel::class)
+    internal abstract fun authViewModel(viewModel: SignUpViewModel): ViewModel
 
     @Binds
     @IntoMap

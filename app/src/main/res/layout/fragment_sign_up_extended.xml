@@ -7,7 +7,7 @@
     android:layout_height="match_parent"
     android:background="@color/steel_gray"
     android:orientation="vertical"
-    tools:context=".ui.auth.AuthFragment">
+    tools:context=".ui.signup.SignUpFragment">
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideLineLetsGetAcquainted"
@@ -40,23 +40,23 @@
 
 
     <androidx.appcompat.widget.AppCompatTextView
-        android:id="@+id/textViewLogin"
+        android:id="@+id/textViewUserName"
         style="@style/input_field_title_text"
         android:text="@string/email"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textViewFillOutTheProfile" />
 
     <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/textInputLayoutLogin"
+        android:id="@+id/textInputLayoutUserName"
         style="@style/text_input_layout"
         android:layout_marginHorizontal="@dimen/margin_normal_16dp"
         app:boxStrokeColor="@color/selector_stroke_color"
         app:errorEnabled="true"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textViewLogin">
+        app:layout_constraintTop_toBottomOf="@+id/textViewUserName">
 
         <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/textInputEditTextLogin"
+            android:id="@+id/textInputEditTextUserName"
             style="@style/input_field_text_style"
             android:inputType="textEmailAddress"
             android:textColor="@color/alabaster" />
@@ -66,51 +66,59 @@
 
 
     <androidx.appcompat.widget.AppCompatTextView
-        android:id="@+id/textViewPassword"
+        android:id="@+id/textViewMobilePhone"
         style="@style/input_field_title_text"
         android:text="@string/password"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textInputLayoutLogin" />
+        app:layout_constraintTop_toBottomOf="@+id/textInputLayoutUserName" />
 
 
     <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/textInputLayoutPassword"
+        android:id="@+id/textInputLayoutMobilePhone"
         style="@style/text_input_layout"
         android:layout_marginHorizontal="@dimen/margin_normal_16dp"
         app:boxStrokeColor="@color/selector_stroke_color"
         app:errorEnabled="true"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textViewPassword">
+        app:layout_constraintTop_toBottomOf="@+id/textViewMobilePhone">
 
         <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/textInputEditTextPassword"
+            android:id="@+id/textInputEditTextMobilePhone"
             style="@style/input_field_text_style"
             android:inputType="textPassword"
             android:textColor="@color/alabaster" />
     </com.google.android.material.textfield.TextInputLayout>
 
-    <androidx.appcompat.widget.AppCompatCheckBox
-        android:id="@+id/checkBoxRememberMe"
-        android:layout_width="@dimen/remember_me_check_box_size_18dp"
-        android:layout_height="@dimen/remember_me_check_box_size_18dp"
-        android:layout_marginTop="@dimen/remember_me_margin_top_18dp"
-        android:button="@drawable/remember_me_check_box"
-        android:checked="true"
-        app:layout_constraintStart_toStartOf="@+id/textInputLayoutPassword"
-        app:layout_constraintTop_toBottomOf="@+id/textInputLayoutPassword" />
+    <androidx.appcompat.widget.AppCompatButton
+        style="@style/profile_button"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/google_button_height_40dp"
+        android:layout_marginHorizontal="@dimen/margin_normal_16dp"
+        android:layout_marginBottom="@dimen/register_button_margin_bottom_12dp"
+        android:background="@drawable/google_button"
+        android:text="@string/google"
+        android:textColor="@color/black_russian"
+        android:drawableStart="@drawable/ic_google_icon"
+        android:drawableEnd="@drawable/ic_google_icon"
+        app:layout_constraintTop_toBottomOf="@+id/textInputLayoutMobilePhone"
+        app:layout_constraintBottom_toTopOf="@+id/textViewOr"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        />
 
     <androidx.appcompat.widget.AppCompatTextView
-        android:id="@+id/textViewRememberMe"
+        android:id="@+id/textViewOr"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/margin_small_8dp"
-        android:fontFamily="@font/open_sans"
-        android:text="@string/remember_me"
-        android:textColor="@color/light_gray"
+        android:layout_margin="@dimen/margin_small_8dp"
+        android:textAlignment="center"
+        android:text="@string/or"
+        android:textColor="@color/alabaster"
         android:textSize="@dimen/text_size_normal_18sp"
-        app:layout_constraintBottom_toBottomOf="@id/checkBoxRememberMe"
-        app:layout_constraintStart_toEndOf="@id/checkBoxRememberMe"
-        app:layout_constraintTop_toTopOf="@id/checkBoxRememberMe" />
+        app:layout_constraintBottom_toTopOf="@+id/buttonRegister"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        />
 
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/buttonRegister"
@@ -145,7 +153,7 @@
         android:text="@string/already_have_an_account"
         android:textAlignment="center"
         android:textColor="@color/light_gray"
-        android:textSize="@dimen/text_size_small_12sp"
+        android:textSize="@dimen/text_size_small_14sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/textViewSignIn"
         app:layout_constraintHorizontal_chainStyle="packed"
@@ -159,7 +167,7 @@
         android:text="@string/sign_in"
         android:textAlignment="center"
         android:textColor="@android:color/white"
-        android:textSize="@dimen/text_size_small_12sp"
+        android:textSize="@dimen/text_size_small_14sp"
         app:layout_constraintBottom_toBottomOf="@+id/textViewAlreadyHaveAccount"
         app:layout_constraintEnd_toEndOf="@+id/textViewCopyright"
         app:layout_constraintStart_toEndOf="@id/textViewAlreadyHaveAccount"

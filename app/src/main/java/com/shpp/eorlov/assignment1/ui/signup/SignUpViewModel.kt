@@ -1,11 +1,10 @@
-package com.shpp.eorlov.assignment1.ui.auth
+package com.shpp.eorlov.assignment1.ui.signup
 
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.shpp.eorlov.assignment1.db.ContactsDatabase
 import com.shpp.eorlov.assignment1.di.SharedPrefStorage
-import com.shpp.eorlov.assignment1.model.UserModel
 import com.shpp.eorlov.assignment1.storage.Storage
 import com.shpp.eorlov.assignment1.utils.Constants
 import com.shpp.eorlov.assignment1.utils.Results
@@ -13,7 +12,7 @@ import com.shpp.eorlov.assignment1.validator.Validator
 import javax.inject.Inject
 
 
-class AuthViewModel @Inject constructor() : ViewModel() {
+class SignUpViewModel @Inject constructor() : ViewModel() {
 
 
     val loadEvent = MutableLiveData<Results>()

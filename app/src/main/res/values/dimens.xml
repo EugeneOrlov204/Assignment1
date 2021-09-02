@@ -68,6 +68,7 @@
     <dimen name="login_button_margin_bottom_23dp">23dp</dimen>
     <dimen name="check_box_contact_selected_size_20dp">20dp</dimen>
     <dimen name="check_box_contact_selected_margin_end_12dp">12dp</dimen>
+    <dimen name="google_button_height_40dp">40dp</dimen>
 
 
 </resources>
