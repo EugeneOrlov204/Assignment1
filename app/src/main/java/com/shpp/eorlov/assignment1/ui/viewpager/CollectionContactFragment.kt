@@ -32,23 +32,20 @@ class CollectionContactFragment : BaseFragment() {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        viewPager = binding.pager
-
-        val myProfileFragment = MyProfileFragment()
-        val arguments = Bundle()
-        arguments.putString(Constants.PROFILE_LOGIN, args.email)
-        myProfileFragment.arguments = arguments
-
-        val fragsList = listOf(myProfileFragment, MyContactsFragment())
-
-        contactCollectionAdapter = ContactCollectionAdapter(this, fragsList)
-
-        viewPager.adapter = contactCollectionAdapter
-        viewPager.currentItem = ContactCollectionAdapter.ViewPagerItems.PROFILE.position
+        initAdapter()
     }
 
     override fun onResume() {
         super.onResume()
         printLog("On resume")
+    }
+
+    private fun initAdapter() {
+        viewPager = binding.pager
+
+        contactCollectionAdapter = ContactCollectionAdapter(this, args.email)
+
+        viewPager.adapter = contactCollectionAdapter
+        viewPager.currentItem = ContactCollectionAdapter.ViewPagerItems.PROFILE.position
     }
 }

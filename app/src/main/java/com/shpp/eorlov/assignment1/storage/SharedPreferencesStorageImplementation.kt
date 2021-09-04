@@ -16,7 +16,7 @@
 
 package com.shpp.eorlov.assignment1.storage
 
-interface Storage {
+interface SharedPreferencesStorageImplementation {
     fun save(_key: String, _value: String)
     fun save(_key: String, _value: Int)
     fun save(_key: String, _value: Boolean)

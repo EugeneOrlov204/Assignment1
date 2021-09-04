@@ -100,11 +100,9 @@ class MyProfileFragment : BaseFragment() {
             }
         }
 
-        sharedViewModel.apply {
-            updatedUser.observe(viewLifecycleOwner) { list ->
-                list?.let {
-                    viewModel.updateProfile(list)
-                }
+        sharedViewModel.updatedUser.observe(viewLifecycleOwner) { list ->
+            list?.let {
+                viewModel.updateProfile(list)
             }
         }
     }

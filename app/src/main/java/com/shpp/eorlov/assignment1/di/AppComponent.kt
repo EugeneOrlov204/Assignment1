@@ -17,6 +17,7 @@
 package com.shpp.eorlov.assignment1.di
 
 import android.content.Context
+import com.shpp.eorlov.assignment1.ui.ViewModelModule
 import dagger.BindsInstance
 import dagger.Component
 import javax.inject.Singleton

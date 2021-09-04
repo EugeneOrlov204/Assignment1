@@ -3,27 +3,25 @@ package com.shpp.eorlov.assignment1.ui.editprofile
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.shpp.eorlov.assignment1.db.ContactsDatabase
-import com.shpp.eorlov.assignment1.di.SharedPrefStorage
 import com.shpp.eorlov.assignment1.model.UserModel
-import com.shpp.eorlov.assignment1.storage.Storage
+import com.shpp.eorlov.assignment1.storage.SharedPreferencesStorageImplementation
 import com.shpp.eorlov.assignment1.utils.Results
 import com.shpp.eorlov.assignment1.validator.ValidateOperation
-import com.shpp.eorlov.assignment1.validator.evaluateErrorMessage
 import com.shpp.eorlov.assignment1.validator.Validator
+import com.shpp.eorlov.assignment1.validator.evaluateErrorMessage
 import javax.inject.Inject
 
 
 class EditProfileViewModel @Inject constructor() : ViewModel() {
 
-    val userLiveData: MutableLiveData<UserModel> by lazy {
+    val userLiveData: MutableLiveData<UserModel> by lazy(LazyThreadSafetyMode.NONE)  {
         MutableLiveData(contactsDatabase.getDefaultUserModel())
     }
 
     val loadEvent = MutableLiveData<Results>()
 
     @Inject
-    @field:SharedPrefStorage
-    lateinit var storage: Storage
+    lateinit var storage: SharedPreferencesStorageImplementation
 
     @Inject
     lateinit var contactsDatabase: ContactsDatabase

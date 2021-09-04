@@ -5,7 +5,7 @@ import com.shpp.eorlov.assignment1.utils.Constants.PREFS_FILE
 import javax.inject.Inject
 
 
-class SharedPreferencesStorage @Inject constructor(private val context: Context) : Storage {
+class SharedPreferencesStorage @Inject constructor(private val context: Context) : SharedPreferencesStorageImplementation {
 
 
     override fun save(_key: String, _value: String) {

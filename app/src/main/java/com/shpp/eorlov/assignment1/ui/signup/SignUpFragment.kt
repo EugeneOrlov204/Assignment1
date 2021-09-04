@@ -71,40 +71,39 @@ class SignUpFragment : BaseFragment() {
     }
 
     private fun setObservers() {
-        viewModel.apply {
-            loadEvent.apply {
-                observe(viewLifecycleOwner) { event ->
-                    when (event) {
-                        Results.OK -> {
-                            unlockUI()
-                            binding.contentLoadingProgressBar.isVisible = false
-                        }
-
-                        Results.LOADING -> {
-                            lockUI()
-                            binding.contentLoadingProgressBar.isVisible = true
-                        }
-
-                        Results.INITIALIZE_DATA_ERROR -> {
-                            unlockUI()
-                            binding.contentLoadingProgressBar.isVisible = false
-                            Toast.makeText(requireContext(), event.name, Toast.LENGTH_LONG).show()
-                        }
-
-                        Results.EXISTED_ACCOUNT_ERROR -> {
-                            Toast.makeText(
-                                requireContext(),
-                                getString(R.string.existed_account_error_text),
-                                Toast.LENGTH_LONG
-                            ).show()
-                        }
-
-                        else -> {
-                        }
+        viewModel.loadEvent.apply {
+            observe(viewLifecycleOwner) { event ->
+                when (event) {
+                    Results.OK -> {
+                        unlockUI()
+                        binding.contentLoadingProgressBar.isVisible = false
                     }
 
+                    Results.LOADING -> {
+                        lockUI()
+                        binding.contentLoadingProgressBar.isVisible = true
+                    }
+
+                    Results.INITIALIZE_DATA_ERROR -> {
+                        unlockUI()
+                        binding.contentLoadingProgressBar.isVisible = false
+                        Toast.makeText(requireContext(), event.name, Toast.LENGTH_LONG).show()
+                    }
+
+                    Results.EXISTED_ACCOUNT_ERROR -> {
+                        Toast.makeText(
+                            requireContext(),
+                            getString(R.string.existed_account_error_text),
+                            Toast.LENGTH_LONG
+                        ).show()
+                    }
+
+                    else -> {
+                    }
                 }
+
             }
+            
         }
     }
 

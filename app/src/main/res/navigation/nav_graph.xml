@@ -54,9 +54,16 @@
         tools:layout="@layout/fragment_sign_in" >
         <action
             android:id="@+id/action_signInFragment_to_signUpFragment"
-            app:destination="@id/signUpFragment" />
+            app:destination="@id/signUpFragment"
+            app:enterAnim="@anim/enter_activity"
+            app:exitAnim="@anim/exit_activity"
+            app:popEnterAnim="@anim/enter_activity" />
         <action
             android:id="@+id/action_signInFragment_to_collectionContactFragment"
-            app:destination="@id/collectionContactFragment" />
+            app:destination="@id/collectionContactFragment"
+            app:enterAnim="@anim/enter_activity"
+            app:exitAnim="@anim/exit_activity"
+            app:popEnterAnim="@anim/enter_activity"
+            app:popExitAnim="@anim/exit_activity" />
     </fragment>
 </navigation>

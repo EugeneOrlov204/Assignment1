@@ -53,7 +53,7 @@ class MyContactsFragment : BaseFragment(),
     private lateinit var binding: FragmentMyContactsBinding
     private lateinit var dialog: ContactDialogFragment
 
-    private val contactsListAdapter: ContactsRecyclerAdapter by lazy {
+    private val contactsListAdapter: ContactsRecyclerAdapter by lazy(LazyThreadSafetyMode.NONE) {
         ContactsRecyclerAdapter(
             onContactClickListener = this
         )
@@ -81,6 +81,7 @@ class MyContactsFragment : BaseFragment(),
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        viewModel.initializeData()
         initRecycler()
         setObservers()
         setListeners()
@@ -139,7 +140,7 @@ class MyContactsFragment : BaseFragment(),
 
 
     override fun onContactSelectedStateChanged() {
-        if(contactsListAdapter.areAllItemsUnselected()) {
+        if (contactsListAdapter.areAllItemsUnselected()) {
             binding.frameLayoutButtonsContainer.visibility = View.GONE
             binding.buttonRemoveSelectedContacts.visibility = View.GONE
             viewModel.selectedEvent.value = false
@@ -151,9 +152,7 @@ class MyContactsFragment : BaseFragment(),
 
 
     override fun onGoUpClicked() {
-        binding.recyclerViewMyContacts.apply {
-            smoothScrollToPosition(0)
-        }
+        binding.recyclerViewMyContacts.smoothScrollToPosition(0)
     }
 
     /**
@@ -188,7 +187,7 @@ class MyContactsFragment : BaseFragment(),
         viewModel.loadEvent.value = Results.LOADING
         contactsListAdapter.removeSelectedItems()
         refreshRecyclerView()
-        if(viewModel.userListLiveData.value?.isEmpty() == true) {
+        if (viewModel.userListLiveData.value?.isEmpty() == true) {
             binding.frameLayoutButtonsContainer.visibility = View.GONE
             binding.buttonRemoveSelectedContacts.visibility = View.GONE
         }
@@ -207,7 +206,6 @@ class MyContactsFragment : BaseFragment(),
     }
 
     private fun initRecycler() {
-        viewModel.initializeData()
         /* Variable that implements swipe-to-delete */
         val itemTouchHelperCallBack: ItemTouchHelper.SimpleCallback =
             object : ItemTouchHelper.SimpleCallback(
@@ -250,7 +248,6 @@ class MyContactsFragment : BaseFragment(),
             ItemTouchHelper(itemTouchHelperCallBack).attachToRecyclerView(this)
         }
     }
-
 
 
     private fun sharedElementTransitionWithSelectedContact(

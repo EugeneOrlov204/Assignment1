@@ -9,7 +9,7 @@ import javax.inject.Inject
 
 class MyProfileViewModel @Inject constructor() : ViewModel() {
 
-    val userLiveData: MutableLiveData<UserModel> by lazy {
+    val userLiveData: MutableLiveData<UserModel> by lazy(LazyThreadSafetyMode.NONE)  {
         MutableLiveData(contactsDatabase.getDefaultUserModel())
     }
 

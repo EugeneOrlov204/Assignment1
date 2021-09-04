@@ -1,20 +1,18 @@
 package com.shpp.eorlov.assignment1.db
 
-import com.shpp.eorlov.assignment1.di.SharedPrefStorage
 import com.shpp.eorlov.assignment1.model.UserModel
-import com.shpp.eorlov.assignment1.storage.Storage
+import com.shpp.eorlov.assignment1.storage.SharedPreferencesStorageImplementation
 import com.shpp.eorlov.assignment1.utils.Constants
 import com.shpp.eorlov.assignment1.utils.Constants.DEFAULT_PATH_TO_IMAGE
 import javax.inject.Inject
 
 
-class ContactsDatabase @Inject constructor() : LocalDB {
+class ContactsDatabase @Inject constructor() : ContactsDatabaseImplementation {
 
     @Inject
-    @field:SharedPrefStorage
-    lateinit var storage: Storage
+    lateinit var storage: SharedPreferencesStorageImplementation
 
-    val listOfContacts: MutableList<UserModel> by lazy { loadPersonData() }
+    val listOfContacts: MutableList<UserModel> by lazy(LazyThreadSafetyMode.NONE)  { loadPersonData() }
 
     override fun getDefaultUserModel(): UserModel =
         UserModel(

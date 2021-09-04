@@ -1,8 +1,7 @@
-package com.shpp.eorlov.assignment1.di
+package com.shpp.eorlov.assignment1.ui
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import com.shpp.eorlov.assignment1.ui.SharedViewModel
 import com.shpp.eorlov.assignment1.ui.signup.SignUpViewModel
 import com.shpp.eorlov.assignment1.ui.details.DetailViewViewModel
 import com.shpp.eorlov.assignment1.ui.dialogfragment.ContactDialogViewModel

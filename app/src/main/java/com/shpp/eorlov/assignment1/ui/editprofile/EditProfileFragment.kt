@@ -22,18 +22,17 @@ import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
 import com.shpp.eorlov.assignment1.base.BaseFragment
 import com.shpp.eorlov.assignment1.databinding.FragmentEditProfileBinding
-import com.shpp.eorlov.assignment1.di.SharedPrefStorage
 import com.shpp.eorlov.assignment1.model.UserModel
-import com.shpp.eorlov.assignment1.storage.Storage
+import com.shpp.eorlov.assignment1.storage.SharedPreferencesStorageImplementation
 import com.shpp.eorlov.assignment1.ui.MainActivity
 import com.shpp.eorlov.assignment1.ui.SharedViewModel
 import com.shpp.eorlov.assignment1.utils.Constants
 import com.shpp.eorlov.assignment1.utils.Constants.DATE_FORMAT
 import com.shpp.eorlov.assignment1.utils.Results
-import com.shpp.eorlov.assignment1.validator.ValidateOperation
-import com.shpp.eorlov.assignment1.validator.evaluateErrorMessage
 import com.shpp.eorlov.assignment1.utils.ext.loadImage
+import com.shpp.eorlov.assignment1.validator.ValidateOperation
 import com.shpp.eorlov.assignment1.validator.Validator
+import com.shpp.eorlov.assignment1.validator.evaluateErrorMessage
 import java.text.SimpleDateFormat
 import java.util.*
 import javax.inject.Inject
@@ -49,8 +48,7 @@ class EditProfileFragment : BaseFragment() {
     lateinit var validator: Validator
 
     @Inject
-    @field:SharedPrefStorage
-    lateinit var storage: Storage
+    lateinit var storage: SharedPreferencesStorageImplementation
 
     private val args: EditProfileFragmentArgs by navArgs()
     private val myCalendar: Calendar = Calendar.getInstance()

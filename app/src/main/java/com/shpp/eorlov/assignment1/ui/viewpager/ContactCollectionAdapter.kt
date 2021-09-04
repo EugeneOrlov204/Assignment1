@@ -1,15 +1,33 @@
 package com.shpp.eorlov.assignment1.ui.viewpager
 
+import android.os.Bundle
 import androidx.fragment.app.Fragment
 import androidx.viewpager2.adapter.FragmentStateAdapter
+import com.shpp.eorlov.assignment1.ui.mycontacts.MyContactsFragment
+import com.shpp.eorlov.assignment1.ui.myprofile.MyProfileFragment
+import com.shpp.eorlov.assignment1.utils.Constants
+import com.shpp.eorlov.assignment1.utils.Constants.AMOUNT_OF_VIEWPAGER_ITEMS
 
-class ContactCollectionAdapter(fragment: Fragment, private val fragsListHere: List<Fragment>) :
+class ContactCollectionAdapter(fragment: Fragment, private val email: String) :
     FragmentStateAdapter(fragment) {
 
-    override fun getItemCount(): Int = fragsListHere.size
+    override fun getItemCount(): Int = AMOUNT_OF_VIEWPAGER_ITEMS
 
     override fun createFragment(position: Int): Fragment {
-        return fragsListHere[position]
+        return when(position) {
+
+            ViewPagerItems.PROFILE.position -> {
+                val myProfileFragment = MyProfileFragment()
+                val arguments = Bundle()
+                arguments.putString(Constants.PROFILE_LOGIN, email)
+                myProfileFragment.arguments = arguments
+                myProfileFragment
+            }
+
+            else -> {
+                MyContactsFragment()
+            }
+        }
     }
 
     enum class ViewPagerItems {
