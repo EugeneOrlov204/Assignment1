@@ -148,7 +148,7 @@ class SignUpFragmentExtended : BaseFragment() {
             }
             textInputEditTextUserName.addTextChangedListener {
                 textInputLayoutUserName.error = evaluateErrorMessage(
-                    validator.checkIfFieldIsNotEmpty(textInputEditTextUserName.text.toString())
+                    validator.validateUserName(textInputEditTextUserName.text.toString())
                 )
             }
         }

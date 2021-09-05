@@ -1,6 +1,9 @@
 package com.shpp.eorlov.assignment1.utils
 
 object Constants {
+    const val MIN_SIZE_OF_USERNAME = 3
+    const val MIN_SIZE_OF_PHONE_NUMBER = 10
+
     //General
     const val LAST_SAVED_LOGIN: String = "Last saved login"
     const val LAST_SAVED_PASSWORD: String = "Last saved password"

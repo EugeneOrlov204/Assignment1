@@ -21,7 +21,6 @@ import com.shpp.eorlov.assignment1.di.AppComponent
 import com.shpp.eorlov.assignment1.di.DaggerAppComponent
 
 open class App : Application() {
-
     override fun onCreate() {
         super.onCreate()
 
@@ -33,6 +32,7 @@ open class App : Application() {
         // Creates an instance of AppComponent using its Factory constructor
         // We pass the applicationContext that will be used as Context in the graph
         DaggerAppComponent.factory().create(applicationContext)
+
     }
 }
 

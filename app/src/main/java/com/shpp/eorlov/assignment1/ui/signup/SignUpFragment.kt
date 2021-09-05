@@ -16,12 +16,17 @@ import com.shpp.eorlov.assignment1.R
 import com.shpp.eorlov.assignment1.base.BaseFragment
 import com.shpp.eorlov.assignment1.databinding.FragmentSignUpBinding
 import com.shpp.eorlov.assignment1.model.UserModel
+import com.shpp.eorlov.assignment1.retrofit.MainRepository
+import com.shpp.eorlov.assignment1.retrofit.RegistrationBody
+import com.shpp.eorlov.assignment1.retrofit.RegistrationResponse
+import com.shpp.eorlov.assignment1.retrofit.RetrofitService
 import com.shpp.eorlov.assignment1.ui.MainActivity
 import com.shpp.eorlov.assignment1.utils.Constants
 import com.shpp.eorlov.assignment1.utils.Results
 import com.shpp.eorlov.assignment1.utils.ext.hideKeyboard
 import com.shpp.eorlov.assignment1.validator.Validator
 import com.shpp.eorlov.assignment1.validator.evaluateErrorMessage
+import retrofit2.Retrofit
 import javax.inject.Inject
 import kotlin.math.abs
 
@@ -35,9 +40,9 @@ class SignUpFragment : BaseFragment() {
     lateinit var validator: Validator
 
     private lateinit var binding: FragmentSignUpBinding
-
     private lateinit var viewModel: SignUpViewModel
-
+    private lateinit var retrofitService: RetrofitService
+    private lateinit var mainRepository: MainRepository
     private var previousClickTimestamp = SystemClock.uptimeMillis()
 
     override fun onAttach(context: Context) {
@@ -61,6 +66,8 @@ class SignUpFragment : BaseFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         viewModel.initializeData()
+        retrofitService = RetrofitService.getInstance()
+        mainRepository = MainRepository(retrofitService)
         setListeners()
         setObservers()
     }
@@ -72,39 +79,36 @@ class SignUpFragment : BaseFragment() {
     }
 
     private fun setObservers() {
-        viewModel.loadEvent.apply {
-            observe(viewLifecycleOwner) { event ->
-                when (event) {
-                    Results.OK -> {
-                        unlockUI()
-                        binding.contentLoadingProgressBar.isVisible = false
-                    }
 
-                    Results.LOADING -> {
-                        lockUI()
-                        binding.contentLoadingProgressBar.isVisible = true
-                    }
-
-                    Results.INITIALIZE_DATA_ERROR -> {
-                        unlockUI()
-                        binding.contentLoadingProgressBar.isVisible = false
-                        Toast.makeText(requireContext(), event.name, Toast.LENGTH_LONG).show()
-                    }
-
-                    Results.EXISTED_ACCOUNT_ERROR -> {
-                        Toast.makeText(
-                            requireContext(),
-                            getString(R.string.existed_account_error_text),
-                            Toast.LENGTH_LONG
-                        ).show()
-                    }
-
-                    else -> {
-                    }
+        viewModel.loadEvent.observe(viewLifecycleOwner) { event ->
+            when (event) {
+                Results.OK -> {
+                    unlockUI()
+                    binding.contentLoadingProgressBar.isVisible = false
                 }
 
-            }
+                Results.LOADING -> {
+                    lockUI()
+                    binding.contentLoadingProgressBar.isVisible = true
+                }
 
+                Results.INITIALIZE_DATA_ERROR -> {
+                    unlockUI()
+                    binding.contentLoadingProgressBar.isVisible = false
+                    Toast.makeText(requireContext(), event.name, Toast.LENGTH_LONG).show()
+                }
+
+                Results.EXISTED_ACCOUNT_ERROR -> {
+                    Toast.makeText(
+                        requireContext(),
+                        getString(R.string.existed_account_error_text),
+                        Toast.LENGTH_LONG
+                    ).show()
+                }
+
+                else -> {
+                }
+            }
         }
     }
 
@@ -170,6 +174,9 @@ class SignUpFragment : BaseFragment() {
             }
 
 
+            registerUser()
+
+
             val userModel = UserModel(
                 email = email,
                 name = "",
@@ -189,6 +196,20 @@ class SignUpFragment : BaseFragment() {
             findNavController().navigate(action)
         }
     }
+
+    private fun registerUser() {
+        val retrofit = Retrofit.Builder()
+            .baseUrl("https://myserver1.com")
+            .build()
+
+        val retrofitService: RetrofitService = retrofit.create(RetrofitService::class.java)
+
+        val registrationBody = RegistrationBody(email = "", password = "")
+
+//        val call: RegistrationResponse = retrofitService.registerUser(registrationBody)
+
+    }
+
 
     private fun isFieldsInvalid() =
         !binding.textInputLayoutPassword.error.isNullOrEmpty() ||

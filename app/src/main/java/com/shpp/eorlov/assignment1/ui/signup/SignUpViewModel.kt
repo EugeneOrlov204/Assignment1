@@ -4,18 +4,25 @@ package com.shpp.eorlov.assignment1.ui.signup
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.shpp.eorlov.assignment1.db.ContactsDatabase
-import com.shpp.eorlov.assignment1.model.UserModel
+import com.shpp.eorlov.assignment1.retrofit.MainRepository
+import com.shpp.eorlov.assignment1.retrofit.RegistrationBody
+import com.shpp.eorlov.assignment1.retrofit.RegistrationResponse
 import com.shpp.eorlov.assignment1.storage.SharedPreferencesStorageImplementation
 import com.shpp.eorlov.assignment1.utils.Constants
 import com.shpp.eorlov.assignment1.utils.Results
 import com.shpp.eorlov.assignment1.validator.Validator
+import kotlinx.coroutines.*
 import javax.inject.Inject
 
 
-class SignUpViewModel @Inject constructor() : ViewModel() {
-
+class SignUpViewModel @Inject constructor() :
+    ViewModel() {
 
     val loadEvent = MutableLiveData<Results>()
+
+    private val exceptionHandler = CoroutineExceptionHandler { _, _ ->
+        Results.REGISTER_ERROR.onError()
+    }
 
     @Inject
     lateinit var storage: SharedPreferencesStorageImplementation
@@ -26,15 +33,16 @@ class SignUpViewModel @Inject constructor() : ViewModel() {
     @Inject
     lateinit var validator: Validator
 
-    fun initializeData() {
-        loadEvent.value = Results.OK
+    var job: Job? = null
+
+
+    override fun onCleared() {
+        super.onCleared()
+        job?.cancel()
     }
 
-    fun saveLoginData(login: String, password: String) {
-        storage.save("${Constants.PROFILE_LOGIN} $login", login)
-        storage.save("${Constants.PROFILE_PASSWORD} $password", password)
-        storage.save(Constants.LAST_SAVED_LOGIN, login)
-        storage.save(Constants.LAST_SAVED_PASSWORD, password)
+    fun initializeData() {
+        loadEvent.value = Results.OK
     }
 
     fun isExistingAccount(login: String): Boolean {
@@ -45,7 +53,22 @@ class SignUpViewModel @Inject constructor() : ViewModel() {
         return false
     }
 
-    fun getDefaultUserModel(): UserModel {
-        return contactsDatabase.getDefaultUserModel()
+    fun registerUser(registrationBody: RegistrationBody): RegistrationResponse? {
+        var registrationResponse: RegistrationResponse? = null
+        job = CoroutineScope(Dispatchers.IO + exceptionHandler).launch {
+//            val response = mainRepository.registerUser(registrationBody)
+//            withContext(Dispatchers.Main) {
+//                if (response.isSuccessful) {
+//                    registrationResponse = response.body()
+//                } else {
+//                    Results.REGISTER_ERROR.onError()
+//                }
+//            }
+        }
+        return registrationResponse
+    }
+
+    private fun Results.onError() {
+        loadEvent.value = this
     }
 }

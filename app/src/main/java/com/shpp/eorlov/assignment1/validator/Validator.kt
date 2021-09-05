@@ -29,6 +29,20 @@ class Validator @Inject constructor(private val context: Context?) {
         }
     }
 
+
+    fun validateUserName(_value: String) :ValidationError{
+        return if (_value.trim { it <= ' ' }.isEmpty()) {
+            EmptyFieldError(context?.getString(R.string.empty_field) ?: "")
+        } else {
+            val isValid = _value.length >= Constants.MIN_SIZE_OF_USERNAME
+            if (!isValid) {
+                InvalidEmail(context?.getString(R.string.invalid_username) ?: "")
+            } else {
+                NotAnError
+            }
+        }
+    }
+
     fun checkIfFieldIsNotEmpty(
         _value: String
     ): ValidationError {
@@ -49,6 +63,8 @@ class Validator @Inject constructor(private val context: Context?) {
             val isValid = Patterns.PHONE.matcher(_value).matches()
             if (!isValid) {
                 InvalidPhoneNumber(context?.getString(R.string.invalid_phone_number) ?: "")
+            } else if (_value.length < Constants.MIN_SIZE_OF_PHONE_NUMBER) {
+                InvalidPhoneNumber(context?.getString(R.string.short_phone_number_error) ?: "")
             } else {
                 NotAnError
             }

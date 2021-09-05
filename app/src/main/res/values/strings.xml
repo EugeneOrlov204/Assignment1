@@ -37,6 +37,7 @@
     <string name="invalid_birthdate">Invalid birthdate, ex: 01/01/2021</string>
     <string name="empty_field">This field should not be empty</string>
     <string name="invalid_phone_number">Invalid phone number, ex: (264)–654–3762</string>
+    <string name="short_phone_number_error">Phone must be at least 10 digits long</string>
     <string name="invalid_email">Invalid Email address, ex: abc@example.com</string>
     <string name="loading_data_error_message">Can\'t load data</string>
     <string name="removed_contact_message">Contact has been removed</string>
@@ -58,5 +59,6 @@
     <string name="google">google</string>
     <string name="mobile_phone">Mobile phone</string>
     <string name="user_name">User name</string>
+    <string name="invalid_username">User name must contain at least 3 letters</string>
 
 </resources>
