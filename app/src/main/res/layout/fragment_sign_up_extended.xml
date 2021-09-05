@@ -7,7 +7,7 @@
     android:layout_height="match_parent"
     android:background="@color/steel_gray"
     android:orientation="vertical"
-    tools:context=".ui.signup.SignUpFragment">
+    tools:context=".ui.signupextended.SignUpFragmentExtended">
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideLineLetsGetAcquainted"
@@ -42,7 +42,7 @@
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/textViewUserName"
         style="@style/input_field_title_text"
-        android:text="@string/email"
+        android:text="@string/user_name"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textViewFillOutTheProfile" />
 
@@ -58,7 +58,7 @@
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/textInputEditTextUserName"
             style="@style/input_field_text_style"
-            android:inputType="textEmailAddress"
+            android:inputType="textPersonName"
             android:textColor="@color/alabaster" />
 
 
@@ -68,7 +68,7 @@
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/textViewMobilePhone"
         style="@style/input_field_title_text"
-        android:text="@string/password"
+        android:text="@string/mobile_phone"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textInputLayoutUserName" />
 
@@ -85,7 +85,7 @@
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/textInputEditTextMobilePhone"
             style="@style/input_field_text_style"
-            android:inputType="textPassword"
+            android:inputType="phone"
             android:textColor="@color/alabaster" />
     </com.google.android.material.textfield.TextInputLayout>
 
@@ -97,8 +97,7 @@
         android:background="@drawable/google_button"
         app:layout_constraintBottom_toTopOf="@+id/textViewOr"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textInputLayoutMobilePhone">
+        app:layout_constraintStart_toStartOf="parent">
 
         <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/imageViewGoogle"

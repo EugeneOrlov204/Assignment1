@@ -15,6 +15,7 @@ import androidx.navigation.fragment.findNavController
 import com.shpp.eorlov.assignment1.R
 import com.shpp.eorlov.assignment1.base.BaseFragment
 import com.shpp.eorlov.assignment1.databinding.FragmentSignInBinding
+import com.shpp.eorlov.assignment1.model.UserModel
 import com.shpp.eorlov.assignment1.ui.MainActivity
 import com.shpp.eorlov.assignment1.utils.Constants
 import com.shpp.eorlov.assignment1.utils.Results
@@ -76,7 +77,9 @@ class SignInFragment : BaseFragment() {
         ) {
             val action =
                 SignInFragmentDirections.actionSignInFragmentToCollectionContactFragment(
-                    viewModel.getLogin() ?: return
+                    if (viewModel.getLogin().isNullOrEmpty()) {
+                        viewModel.getUserModelFromStorage()
+                    } else return
                 )
             findNavController().navigate(action)
         }
@@ -202,7 +205,9 @@ class SignInFragment : BaseFragment() {
         }
 
         val action =
-            SignInFragmentDirections.actionSignInFragmentToCollectionContactFragment(email)
+            SignInFragmentDirections.actionSignInFragmentToCollectionContactFragment(
+                viewModel.getUserModelFromStorage()
+            )
         findNavController().navigate(action)
     }
 

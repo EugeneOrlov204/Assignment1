@@ -12,7 +12,7 @@ class ContactsDatabase @Inject constructor() : ContactsDatabaseImplementation {
     @Inject
     lateinit var storage: SharedPreferencesStorageImplementation
 
-    val listOfContacts: MutableList<UserModel> by lazy(LazyThreadSafetyMode.NONE)  { loadPersonData() }
+    val listOfContacts: MutableList<UserModel> by lazy(LazyThreadSafetyMode.NONE) { loadPersonData() }
 
     override fun getDefaultUserModel(): UserModel =
         UserModel(
@@ -25,16 +25,23 @@ class ContactsDatabase @Inject constructor() : ContactsDatabaseImplementation {
             ""
         )
 
-    override fun getUserModelFromStorage(login: String): UserModel =
-        UserModel(
-            name = storage.getString("${Constants.MY_PROFILE_NAME_KEY} $login") ?: "Name",
-            profession = storage.getString("${Constants.MY_PROFILE_PROFESSION_KEY} $login") ?: "Career",
-            photo = storage.getString("${Constants.MY_PROFILE_PHOTO_KEY} $login") ?: "",
-            residenceAddress = storage.getString("${Constants.MY_PROFILE_RESIDENCE_KEY} $login") ?: "Home address",
-            birthDate = storage.getString("${Constants.MY_PROFILE_BIRTHDATE_KEY} $login") ?: "",
-            phoneNumber = storage.getString("${Constants.MY_PROFILE_PHONE_KEY} $login") ?: "",
-            email = storage.getString("${Constants.MY_PROFILE_EMAIL_KEY} $login") ?: ""
+    override fun getUserModelFromStorage(receivedUserModel: UserModel): UserModel {
+        val login = receivedUserModel.email
+        return UserModel(
+            name = storage.getString("${Constants.MY_PROFILE_NAME_KEY} $login", null)
+                ?: receivedUserModel.name,
+            profession = storage.getString("${Constants.MY_PROFILE_PROFESSION_KEY} $login", null)
+                ?: "Career",
+            photo = storage.getString("${Constants.MY_PROFILE_PHOTO_KEY} $login", null) ?: "",
+            residenceAddress = storage.getString("${Constants.MY_PROFILE_RESIDENCE_KEY} $login", null)
+                ?: "Home address",
+            birthDate = storage.getString("${Constants.MY_PROFILE_BIRTHDATE_KEY} $login", null) ?: "",
+            phoneNumber = storage.getString("${Constants.MY_PROFILE_PHONE_KEY} $login", null)
+                ?: receivedUserModel.phoneNumber,
+            email = storage.getString("${Constants.MY_PROFILE_EMAIL_KEY} $login", null)
+                ?: receivedUserModel.email
         )
+    }
 
     override fun saveUserModelToStorage(userModel: UserModel, login: String) {
         storage.save("${Constants.MY_PROFILE_NAME_KEY} $login", userModel.name)

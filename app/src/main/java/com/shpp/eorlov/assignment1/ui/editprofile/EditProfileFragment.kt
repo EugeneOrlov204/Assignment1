@@ -135,19 +135,19 @@ class EditProfileFragment : BaseFragment() {
 
 
     private fun initializeData() {
-        val email = args.login
-        viewModel.initializeData(email)
+        val receivedUserModel = args.userModel
+        viewModel.initializeData(receivedUserModel)
 
         viewModel.userLiveData.value?.apply {
             pathToLoadedImageFromGallery = photo
 
             binding.apply {
-                textInputEditTextUsername.setText(name)
+                textInputEditTextUsername.setText(receivedUserModel.name)
                 textInputEditTextCareer.setText(profession)
                 textInputEditTextAddress.setText(residenceAddress)
                 textInputEditTextBirthdate.setText(birthDate)
-                textInputEditTextPhone.setText(phoneNumber)
-                textInputEditTextEmail.setText(email)
+                textInputEditTextPhone.setText(receivedUserModel.phoneNumber)
+                textInputEditTextEmail.setText(receivedUserModel.email)
                 imageViewPersonPhoto.loadImage(pathToLoadedImageFromGallery)
             }
         }

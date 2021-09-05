@@ -1,4 +1,4 @@
-package com.shpp.eorlov.assignment1.ui.signup
+package com.shpp.eorlov.assignment1.ui.signupextended
 
 import android.content.Context
 import android.os.Bundle
@@ -12,9 +12,10 @@ import androidx.core.view.isVisible
 import androidx.core.widget.addTextChangedListener
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.fragment.navArgs
 import com.shpp.eorlov.assignment1.R
 import com.shpp.eorlov.assignment1.base.BaseFragment
-import com.shpp.eorlov.assignment1.databinding.FragmentSignUpBinding
+import com.shpp.eorlov.assignment1.databinding.FragmentSignUpExtendedBinding
 import com.shpp.eorlov.assignment1.model.UserModel
 import com.shpp.eorlov.assignment1.ui.MainActivity
 import com.shpp.eorlov.assignment1.utils.Constants
@@ -26,7 +27,9 @@ import javax.inject.Inject
 import kotlin.math.abs
 
 
-class SignUpFragment : BaseFragment() {
+class SignUpFragmentExtended : BaseFragment() {
+
+    private val args: SignUpFragmentExtendedArgs by navArgs()
 
     @Inject
     lateinit var viewModelFactory: ViewModelProvider.Factory
@@ -34,9 +37,8 @@ class SignUpFragment : BaseFragment() {
     @Inject
     lateinit var validator: Validator
 
-    private lateinit var binding: FragmentSignUpBinding
-
-    private lateinit var viewModel: SignUpViewModel
+    private lateinit var binding: FragmentSignUpExtendedBinding
+    private lateinit var viewModel: SignUpExtendedViewModel
 
     private var previousClickTimestamp = SystemClock.uptimeMillis()
 
@@ -46,7 +48,7 @@ class SignUpFragment : BaseFragment() {
         (activity as MainActivity).contactComponent.inject(this)
 
         viewModel =
-            ViewModelProvider(this, viewModelFactory)[SignUpViewModel::class.java]
+            ViewModelProvider(this, viewModelFactory)[SignUpExtendedViewModel::class.java]
     }
 
     override fun onCreateView(
@@ -54,7 +56,7 @@ class SignUpFragment : BaseFragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        binding = FragmentSignUpBinding.inflate(inflater, container, false)
+        binding = FragmentSignUpExtendedBinding.inflate(inflater, container, false)
         return binding.root
     }
 
@@ -119,7 +121,7 @@ class SignUpFragment : BaseFragment() {
 
         binding.buttonRegister.setOnClickListener {
             if (abs(SystemClock.uptimeMillis() - previousClickTimestamp) > Constants.BUTTON_CLICK_DELAY) {
-                goToSignUpExtended()
+                goToMyProfile()
                 previousClickTimestamp = SystemClock.uptimeMillis()
             }
         }
@@ -128,10 +130,10 @@ class SignUpFragment : BaseFragment() {
             it.hideKeyboard()
         }
 
-        binding.textInputEditTextPassword.setOnEditorActionListener { _, actionId, _ ->
+        binding.textInputEditTextMobilePhone.setOnEditorActionListener { _, actionId, _ ->
             if (actionId == EditorInfo.IME_ACTION_DONE) {
                 if (abs(SystemClock.uptimeMillis() - previousClickTimestamp) > Constants.BUTTON_CLICK_DELAY) {
-                    goToSignUpExtended()
+                    goToMyProfile()
                     previousClickTimestamp = SystemClock.uptimeMillis()
                 }
             }
@@ -139,14 +141,14 @@ class SignUpFragment : BaseFragment() {
         }
 
         binding.apply {
-            textInputEditTextEmail.addTextChangedListener {
-                textInputLayoutEmail.error = evaluateErrorMessage(
-                    validator.validateEmail(textInputEditTextEmail.text.toString())
+            textInputEditTextMobilePhone.addTextChangedListener {
+                textInputLayoutMobilePhone.error = evaluateErrorMessage(
+                    validator.validatePhoneNumber(textInputEditTextMobilePhone.text.toString())
                 )
             }
-            textInputEditTextPassword.addTextChangedListener {
-                textInputLayoutPassword.error = evaluateErrorMessage(
-                    validator.validatePassword(textInputEditTextPassword.text.toString())
+            textInputEditTextUserName.addTextChangedListener {
+                textInputLayoutUserName.error = evaluateErrorMessage(
+                    validator.checkIfFieldIsNotEmpty(textInputEditTextUserName.text.toString())
                 )
             }
         }
@@ -160,41 +162,45 @@ class SignUpFragment : BaseFragment() {
     }
 
 
-    private fun goToSignUpExtended() {
-        binding.apply {
-            val email = textInputEditTextEmail.text.toString()
-            if (isFieldsInvalid() ||
-                viewModel.isExistingAccount(email)
-            ) {
-                return
-            }
+    private fun goToMyProfile() {
 
-
-            val userModel = UserModel(
-                email = email,
-                name = "",
-                profession = "",
-                photo = "",
-                phoneNumber = "",
-                residenceAddress = "",
-                birthDate = ""
-            )
-
-            val action =
-                SignUpFragmentDirections.actionSignUpFragmentToSignUpFragmentExtended(
-                    userModel,
-                    checkBoxRememberMe.isChecked,
-                    textInputEditTextPassword.text.toString()
-                )
-            findNavController().navigate(action)
+        if (isFieldsInvalid() ||
+            viewModel.isExistingAccount(args.userModel.email)
+        ) {
+            return
         }
+
+
+
+        val userModel = UserModel(
+            email = args.userModel.email,
+            name = binding.textInputEditTextUserName.text.toString(),
+            profession = "",
+            photo = "",
+            phoneNumber = binding.textInputEditTextMobilePhone.text.toString(),
+            residenceAddress = "",
+            birthDate = ""
+        )
+
+        if (args.rememberMe) {
+            viewModel.saveLoginData(
+                userModel.email,
+                args.password
+            )
+        }
+
+        val action =
+            SignUpFragmentExtendedDirections.actionSignUpFragmentExtendedToCollectionContactFragment(
+                userModel
+            )
+        findNavController().navigate(action)
     }
 
     private fun isFieldsInvalid() =
-        !binding.textInputLayoutPassword.error.isNullOrEmpty() ||
-                binding.textInputEditTextPassword.text.toString().isEmpty() ||
-                !binding.textInputLayoutEmail.error.isNullOrEmpty() ||
-                binding.textInputEditTextEmail.text.toString().isEmpty()
+        !binding.textInputLayoutMobilePhone.error.isNullOrEmpty() ||
+                binding.textInputEditTextMobilePhone.text.toString().isEmpty() ||
+                !binding.textInputLayoutUserName.error.isNullOrEmpty() ||
+                binding.textInputEditTextUserName.text.toString().isEmpty()
 }
 
 

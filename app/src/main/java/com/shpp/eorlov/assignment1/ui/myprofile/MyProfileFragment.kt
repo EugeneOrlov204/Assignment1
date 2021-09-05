@@ -33,7 +33,7 @@ class MyProfileFragment : BaseFragment() {
     private lateinit var viewModel: MyProfileViewModel
     private lateinit var binding: FragmentMyProfileBinding
     private lateinit var userModel: UserModel
-    private lateinit var login: String
+    private lateinit var receivedUserModel: UserModel
 
     private var previousClickTimestamp = SystemClock.uptimeMillis()
 
@@ -56,7 +56,8 @@ class MyProfileFragment : BaseFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        login = arguments?.getString(Constants.PROFILE_LOGIN) ?: ""
+        receivedUserModel = arguments?.getParcelable(Constants.REGISTERED_USER_MODEL_KEY)
+            ?: throw Exception("Received user model is null!")
         initializeProfile()
         setListeners()
         setObservers()
@@ -72,7 +73,7 @@ class MyProfileFragment : BaseFragment() {
 
             userLiveData.observe(viewLifecycleOwner) {
                 updateProfile()
-                viewModel.saveData(login)
+                viewModel.saveData(receivedUserModel.email)
             }
 
             loadEvent.apply {
@@ -108,7 +109,7 @@ class MyProfileFragment : BaseFragment() {
     }
 
     private fun initializeProfile() {
-        viewModel.initializeData(login)
+        viewModel.initializeData(receivedUserModel)
 
         updateProfile()
     }
@@ -130,7 +131,7 @@ class MyProfileFragment : BaseFragment() {
         binding.buttonEditProfile.setOnClickListener {
             val action =
                 CollectionContactFragmentDirections.actionCollectionContactFragmentToEditProfileFragment(
-                    login
+                    userModel
                 )
             findNavController().navigate(action)
         }

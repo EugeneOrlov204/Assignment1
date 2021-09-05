@@ -23,7 +23,7 @@ interface SharedPreferencesStorageImplementation {
     fun save(_key: String, _value: Long)
     fun save(_key: String, _value: Double)
     fun save(_key: String, _value: Float)
-    fun getString(_key: String, default: String = ""): String?
+    fun getString(_key: String, default: String? = ""): String?
     fun getFloat(_key: String): Float
     fun getBoolean(_key: String): Boolean
     fun getBoolean(_key: String, _def: Boolean): Boolean

@@ -3,12 +3,13 @@ package com.shpp.eorlov.assignment1.ui.viewpager
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import androidx.viewpager2.adapter.FragmentStateAdapter
+import com.shpp.eorlov.assignment1.model.UserModel
 import com.shpp.eorlov.assignment1.ui.mycontacts.MyContactsFragment
 import com.shpp.eorlov.assignment1.ui.myprofile.MyProfileFragment
 import com.shpp.eorlov.assignment1.utils.Constants
 import com.shpp.eorlov.assignment1.utils.Constants.AMOUNT_OF_VIEWPAGER_ITEMS
 
-class ContactCollectionAdapter(fragment: Fragment, private val email: String) :
+class ContactCollectionAdapter(fragment: Fragment, private val userModel: UserModel) :
     FragmentStateAdapter(fragment) {
 
     override fun getItemCount(): Int = AMOUNT_OF_VIEWPAGER_ITEMS
@@ -19,7 +20,7 @@ class ContactCollectionAdapter(fragment: Fragment, private val email: String) :
             ViewPagerItems.PROFILE.position -> {
                 val myProfileFragment = MyProfileFragment()
                 val arguments = Bundle()
-                arguments.putString(Constants.PROFILE_LOGIN, email)
+                arguments.putParcelable(Constants.REGISTERED_USER_MODEL_KEY, userModel)
                 myProfileFragment.arguments = arguments
                 myProfileFragment
             }

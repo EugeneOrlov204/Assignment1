@@ -17,13 +17,14 @@ package com.shpp.eorlov.assignment1.di
 
 
 import com.shpp.eorlov.assignment1.ui.MainActivity
-import com.shpp.eorlov.assignment1.ui.signup.SignUpFragment
 import com.shpp.eorlov.assignment1.ui.details.DetailViewFragment
 import com.shpp.eorlov.assignment1.ui.dialogfragment.ContactDialogFragment
 import com.shpp.eorlov.assignment1.ui.editprofile.EditProfileFragment
-import com.shpp.eorlov.assignment1.ui.signin.SignInFragment
 import com.shpp.eorlov.assignment1.ui.mycontacts.MyContactsFragment
 import com.shpp.eorlov.assignment1.ui.myprofile.MyProfileFragment
+import com.shpp.eorlov.assignment1.ui.signin.SignInFragment
+import com.shpp.eorlov.assignment1.ui.signup.SignUpFragment
+import com.shpp.eorlov.assignment1.ui.signupextended.SignUpFragmentExtended
 import dagger.Subcomponent
 
 // Scope annotation that the ContactComponent uses
@@ -47,5 +48,6 @@ interface ContactComponent {
     fun inject(fragment: MyProfileFragment)
     fun inject(fragment: EditProfileFragment)
     fun inject(fragment: SignUpFragment)
+    fun inject(fragment: SignUpFragmentExtended)
     fun inject(fragment: SignInFragment)
 }

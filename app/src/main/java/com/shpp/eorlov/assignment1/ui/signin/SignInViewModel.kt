@@ -4,6 +4,7 @@ package com.shpp.eorlov.assignment1.ui.signin
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.shpp.eorlov.assignment1.db.ContactsDatabase
+import com.shpp.eorlov.assignment1.model.UserModel
 import com.shpp.eorlov.assignment1.storage.SharedPreferencesStorageImplementation
 import com.shpp.eorlov.assignment1.utils.Constants
 import com.shpp.eorlov.assignment1.utils.Results
@@ -59,5 +60,19 @@ class SignInViewModel @Inject constructor() : ViewModel() {
 
     fun getPassword(): String? {
         return storage.getString(Constants.LAST_SAVED_PASSWORD)
+    }
+
+    fun getUserModelFromStorage(): UserModel {
+        return contactsDatabase.getUserModelFromStorage(
+            UserModel(
+                name = "",
+                profession = "",
+                phoneNumber = "",
+                photo = "",
+                birthDate = "",
+                residenceAddress = "",
+                email = ""
+            )
+        )
     }
 }

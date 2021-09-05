@@ -36,4 +36,5 @@ object Constants {
 
     //ContactCollectionAdapter
     const val AMOUNT_OF_VIEWPAGER_ITEMS = 2
+    const val REGISTERED_USER_MODEL_KEY = "Registered user"
 }

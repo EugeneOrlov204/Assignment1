@@ -25,9 +25,8 @@
         <action
             android:id="@+id/action_collectionContactFragment_to_editProfileFragment"
             app:destination="@id/editProfileFragment" />
-        <argument
-            android:name="email"
-            app:argType="string" />
+        <argument android:name="userModel"
+            app:argType="com.shpp.eorlov.assignment1.model.UserModel" />
     </fragment>
     <fragment
         android:id="@+id/editProfileFragment"
@@ -35,8 +34,8 @@
         android:label="fragment_edit_profile"
         tools:layout="@layout/fragment_edit_profile" >
         <argument
-            android:name="login"
-            app:argType="string" />
+            android:name="userModel"
+            app:argType="com.shpp.eorlov.assignment1.model.UserModel" />
     </fragment>
     <fragment
         android:id="@+id/signUpFragment"
@@ -44,8 +43,8 @@
         android:label="fragment_sign_up"
         tools:layout="@layout/fragment_sign_up">
         <action
-            android:id="@+id/action_signUpFragment_to_collectionContactFragment"
-            app:destination="@id/collectionContactFragment" />
+            android:id="@+id/action_signUpFragment_to_signUpFragmentExtended"
+            app:destination="@id/signUpFragmentExtended" />
     </fragment>
     <fragment
         android:id="@+id/signInFragment"
@@ -53,17 +52,36 @@
         android:label="fragment_log_in"
         tools:layout="@layout/fragment_sign_in" >
         <action
-            android:id="@+id/action_signInFragment_to_signUpFragment"
-            app:destination="@id/signUpFragment"
-            app:enterAnim="@anim/enter_activity"
-            app:exitAnim="@anim/exit_activity"
-            app:popEnterAnim="@anim/enter_activity" />
-        <action
             android:id="@+id/action_signInFragment_to_collectionContactFragment"
             app:destination="@id/collectionContactFragment"
             app:enterAnim="@anim/enter_activity"
             app:exitAnim="@anim/exit_activity"
             app:popEnterAnim="@anim/enter_activity"
             app:popExitAnim="@anim/exit_activity" />
+        <action
+            android:id="@+id/action_signInFragment_to_signUpFragment"
+            app:destination="@id/signUpFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/signUpFragmentExtended"
+        android:name="com.shpp.eorlov.assignment1.ui.signupextended.SignUpFragmentExtended"
+        android:label="fragment_sign_up_extended"
+        tools:layout="@layout/fragment_sign_up_extended" >
+        <action
+            android:id="@+id/action_signUpFragmentExtended_to_collectionContactFragment"
+            app:destination="@id/collectionContactFragment"
+            app:enterAnim="@anim/enter_activity"
+            app:exitAnim="@anim/exit_activity"
+            app:popEnterAnim="@anim/enter_activity"
+            app:popExitAnim="@anim/exit_activity" />
+        <argument
+            android:name="userModel"
+            app:argType="com.shpp.eorlov.assignment1.model.UserModel" />
+        <argument
+            android:name="rememberMe"
+            app:argType="boolean" />
+        <argument
+            android:name="password"
+            app:argType="string" />
     </fragment>
 </navigation>

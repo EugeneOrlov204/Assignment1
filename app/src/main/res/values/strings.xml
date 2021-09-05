@@ -56,5 +56,7 @@
     <string name="wrong_password">You entered wrong password!</string>
     <string name="or">or</string>
     <string name="google">google</string>
+    <string name="mobile_phone">Mobile phone</string>
+    <string name="user_name">User name</string>
 
 </resources>

@@ -67,7 +67,7 @@ class SharedPreferencesStorage @Inject constructor(private val context: Context)
     }
 
 
-    override fun getString(_key: String, default: String): String? {
+    override fun getString(_key: String, default: String?): String? {
         val prefs = context.getSharedPreferences(PREFS_FILE, Context.MODE_PRIVATE)
         return prefs.getString(_key, default)
     }

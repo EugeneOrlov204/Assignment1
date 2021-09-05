@@ -29,13 +29,13 @@ class EditProfileViewModel @Inject constructor() : ViewModel() {
     @Inject
     lateinit var validator: Validator
 
-    fun initializeData(login: String) {
+    fun initializeData(userModel: UserModel) {
         if (userLiveData.value == null) {
             loadEvent.value = Results.INITIALIZE_DATA_ERROR
         } else {
             loadEvent.value = Results.LOADING
 
-            val data = contactsDatabase.getUserModelFromStorage(login)
+            val data = contactsDatabase.getUserModelFromStorage(userModel)
             userLiveData.value = data
 
             loadEvent.value = Results.OK

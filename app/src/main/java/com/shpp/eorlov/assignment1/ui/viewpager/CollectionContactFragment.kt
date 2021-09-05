@@ -43,7 +43,7 @@ class CollectionContactFragment : BaseFragment() {
     private fun initAdapter() {
         viewPager = binding.pager
 
-        contactCollectionAdapter = ContactCollectionAdapter(this, args.email)
+        contactCollectionAdapter = ContactCollectionAdapter(this, args.userModel)
 
         viewPager.adapter = contactCollectionAdapter
         viewPager.currentItem = ContactCollectionAdapter.ViewPagerItems.PROFILE.position
