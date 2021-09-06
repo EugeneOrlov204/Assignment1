@@ -1,6 +1,5 @@
 package com.shpp.eorlov.assignment1.ui.signup
 
-import android.content.Context
 import android.os.Bundle
 import android.os.SystemClock
 import android.view.LayoutInflater
@@ -11,17 +10,13 @@ import android.widget.Toast
 import androidx.core.view.isVisible
 import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import com.shpp.eorlov.assignment1.R
+import com.shpp.eorlov.assignment1.api.MainService
 import com.shpp.eorlov.assignment1.base.BaseFragment
 import com.shpp.eorlov.assignment1.databinding.FragmentSignUpBinding
 import com.shpp.eorlov.assignment1.model.UserModel
-import com.shpp.eorlov.assignment1.retrofit.MainRepository
-import com.shpp.eorlov.assignment1.retrofit.RegistrationBody
-import com.shpp.eorlov.assignment1.retrofit.RegistrationResponse
-import com.shpp.eorlov.assignment1.retrofit.RetrofitService
-import com.shpp.eorlov.assignment1.ui.MainActivity
+import com.shpp.eorlov.assignment1.repository.MainRepository
 import com.shpp.eorlov.assignment1.utils.Constants
 import com.shpp.eorlov.assignment1.utils.Results
 import com.shpp.eorlov.assignment1.utils.ext.hideKeyboard
@@ -42,8 +37,6 @@ class SignUpFragment : BaseFragment() {
     private val viewModel: SignUpViewModel by viewModels()
 
     private lateinit var binding: FragmentSignUpBinding
-    private lateinit var retrofitService: RetrofitService
-    private lateinit var mainRepository: MainRepository
     private var previousClickTimestamp = SystemClock.uptimeMillis()
 
 
@@ -59,8 +52,6 @@ class SignUpFragment : BaseFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         viewModel.initializeData()
-        retrofitService = RetrofitService.getInstance()
-        mainRepository = MainRepository(retrofitService)
         setListeners()
         setObservers()
     }
@@ -166,10 +157,6 @@ class SignUpFragment : BaseFragment() {
                 return
             }
 
-
-            registerUser()
-
-
             val userModel = UserModel(
                 email = email,
                 name = "",
@@ -188,19 +175,6 @@ class SignUpFragment : BaseFragment() {
                 )
             findNavController().navigate(action)
         }
-    }
-
-    private fun registerUser() {
-        val retrofit = Retrofit.Builder()
-            .baseUrl("https://myserver1.com")
-            .build()
-
-        val retrofitService: RetrofitService = retrofit.create(RetrofitService::class.java)
-
-        val registrationBody = RegistrationBody(email = "", password = "")
-
-//        val call: RegistrationResponse = retrofitService.registerUser(registrationBody)
-
     }
 
 

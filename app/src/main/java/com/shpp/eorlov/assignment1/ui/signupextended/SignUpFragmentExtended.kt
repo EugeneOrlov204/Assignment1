@@ -11,6 +11,7 @@ import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.core.view.isVisible
 import androidx.core.widget.addTextChangedListener
+import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
@@ -20,26 +21,34 @@ import com.shpp.eorlov.assignment1.base.BaseFragment
 import com.shpp.eorlov.assignment1.databinding.FragmentSignUpExtendedBinding
 import com.shpp.eorlov.assignment1.model.UserModel
 import com.shpp.eorlov.assignment1.ui.MainActivity
+import com.shpp.eorlov.assignment1.ui.SharedViewModel
 import com.shpp.eorlov.assignment1.utils.Constants
 import com.shpp.eorlov.assignment1.utils.Results
 import com.shpp.eorlov.assignment1.utils.ext.hideKeyboard
 import com.shpp.eorlov.assignment1.validator.Validator
 import com.shpp.eorlov.assignment1.validator.evaluateErrorMessage
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.launch
 import javax.inject.Inject
+import kotlin.coroutines.CoroutineContext
 import kotlin.math.abs
 
 @AndroidEntryPoint
-class SignUpFragmentExtended : BaseFragment() {
+class SignUpFragmentExtended : BaseFragment(), CoroutineScope {
 
     private val args: SignUpFragmentExtendedArgs by navArgs()
     private val viewModel: SignUpExtendedViewModel by viewModels()
+    private val sharedViewModel: SharedViewModel by activityViewModels()
 
     @Inject
     lateinit var validator: Validator
     private lateinit var binding: FragmentSignUpExtendedBinding
 
     private var previousClickTimestamp = SystemClock.uptimeMillis()
+    private var job: Job = Job()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -62,6 +71,15 @@ class SignUpFragmentExtended : BaseFragment() {
         super.onResume()
         printLog("On resume")
     }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        job.cancel()
+    }
+
+    override val coroutineContext: CoroutineContext
+        get() = Dispatchers.IO + job
+
 
     private fun setObservers() {
         viewModel.loadEvent.apply {
@@ -111,7 +129,10 @@ class SignUpFragmentExtended : BaseFragment() {
 
         binding.buttonRegister.setOnClickListener {
             if (abs(SystemClock.uptimeMillis() - previousClickTimestamp) > Constants.BUTTON_CLICK_DELAY) {
-                goToMyProfile()
+
+                launch {
+                    goToMyProfile()
+                }
                 previousClickTimestamp = SystemClock.uptimeMillis()
             }
         }
@@ -123,7 +144,9 @@ class SignUpFragmentExtended : BaseFragment() {
         binding.textInputEditTextMobilePhone.setOnEditorActionListener { _, actionId, _ ->
             if (actionId == EditorInfo.IME_ACTION_DONE) {
                 if (abs(SystemClock.uptimeMillis() - previousClickTimestamp) > Constants.BUTTON_CLICK_DELAY) {
-                    goToMyProfile()
+                    launch {
+                        goToMyProfile()
+                    }
                     previousClickTimestamp = SystemClock.uptimeMillis()
                 }
             }
@@ -152,14 +175,13 @@ class SignUpFragmentExtended : BaseFragment() {
     }
 
 
-    private fun goToMyProfile() {
+    private suspend fun goToMyProfile() {
 
         if (isFieldsInvalid() ||
             viewModel.isExistingAccount(args.userModel.email)
         ) {
             return
         }
-
 
 
         val userModel = UserModel(
@@ -179,6 +201,8 @@ class SignUpFragmentExtended : BaseFragment() {
             )
         }
 
+        sharedViewModel.registerUser(userModel.email, args.password)
+
         val action =
             SignUpFragmentExtendedDirections.actionSignUpFragmentExtendedToCollectionContactFragment(
                 userModel
@@ -191,6 +215,8 @@ class SignUpFragmentExtended : BaseFragment() {
                 binding.textInputEditTextMobilePhone.text.toString().isEmpty() ||
                 !binding.textInputLayoutUserName.error.isNullOrEmpty() ||
                 binding.textInputEditTextUserName.text.toString().isEmpty()
+
+
 }
 
 

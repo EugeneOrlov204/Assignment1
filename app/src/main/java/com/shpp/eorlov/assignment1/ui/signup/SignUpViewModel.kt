@@ -4,9 +4,6 @@ package com.shpp.eorlov.assignment1.ui.signup
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.shpp.eorlov.assignment1.db.ContactsDatabase
-import com.shpp.eorlov.assignment1.retrofit.MainRepository
-import com.shpp.eorlov.assignment1.retrofit.RegistrationBody
-import com.shpp.eorlov.assignment1.retrofit.RegistrationResponse
 import com.shpp.eorlov.assignment1.storage.SharedPreferencesStorageImplementation
 import com.shpp.eorlov.assignment1.utils.Constants
 import com.shpp.eorlov.assignment1.utils.Results
@@ -54,20 +51,6 @@ class SignUpViewModel @Inject constructor() :
         return false
     }
 
-    fun registerUser(registrationBody: RegistrationBody): RegistrationResponse? {
-        var registrationResponse: RegistrationResponse? = null
-        job = CoroutineScope(Dispatchers.IO + exceptionHandler).launch {
-//            val response = mainRepository.registerUser(registrationBody)
-//            withContext(Dispatchers.Main) {
-//                if (response.isSuccessful) {
-//                    registrationResponse = response.body()
-//                } else {
-//                    Results.REGISTER_ERROR.onError()
-//                }
-//            }
-        }
-        return registrationResponse
-    }
 
     private fun Results.onError() {
         loadEvent.value = this
