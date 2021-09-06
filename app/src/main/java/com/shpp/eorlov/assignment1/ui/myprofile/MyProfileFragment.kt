@@ -1,6 +1,5 @@
 package com.shpp.eorlov.assignment1.ui.myprofile
 
-import android.content.Context
 import android.os.Bundle
 import android.os.SystemClock
 import android.view.LayoutInflater
@@ -8,12 +7,12 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.core.view.isVisible
-import androidx.lifecycle.ViewModelProvider
+import androidx.fragment.app.activityViewModels
+import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.shpp.eorlov.assignment1.base.BaseFragment
 import com.shpp.eorlov.assignment1.databinding.FragmentMyProfileBinding
 import com.shpp.eorlov.assignment1.model.UserModel
-import com.shpp.eorlov.assignment1.ui.MainActivity
 import com.shpp.eorlov.assignment1.ui.SharedViewModel
 import com.shpp.eorlov.assignment1.ui.viewpager.CollectionContactFragment
 import com.shpp.eorlov.assignment1.ui.viewpager.CollectionContactFragmentDirections
@@ -21,29 +20,21 @@ import com.shpp.eorlov.assignment1.ui.viewpager.ContactCollectionAdapter
 import com.shpp.eorlov.assignment1.utils.Constants
 import com.shpp.eorlov.assignment1.utils.Results
 import com.shpp.eorlov.assignment1.utils.ext.loadImage
-import javax.inject.Inject
+import dagger.hilt.android.AndroidEntryPoint
 import kotlin.math.abs
 
+@AndroidEntryPoint
 class MyProfileFragment : BaseFragment() {
 
-    @Inject
-    lateinit var viewModelFactory: ViewModelProvider.Factory
 
-    private lateinit var sharedViewModel: SharedViewModel
-    private lateinit var viewModel: MyProfileViewModel
+    private val sharedViewModel: SharedViewModel by activityViewModels()
+    private val viewModel: MyProfileViewModel by viewModels()
+
     private lateinit var binding: FragmentMyProfileBinding
     private lateinit var userModel: UserModel
     private lateinit var receivedUserModel: UserModel
 
     private var previousClickTimestamp = SystemClock.uptimeMillis()
-
-    override fun onAttach(context: Context) {
-        super.onAttach(context)
-
-        (activity as MainActivity).contactComponent.inject(this)
-        viewModel = ViewModelProvider(this, viewModelFactory)[MyProfileViewModel::class.java]
-        sharedViewModel = ViewModelProvider(requireActivity()).get(SharedViewModel::class.java)
-    }
 
     override fun onCreateView(
         inflater: LayoutInflater,

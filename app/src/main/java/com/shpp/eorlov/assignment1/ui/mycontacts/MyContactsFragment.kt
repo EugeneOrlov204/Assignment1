@@ -9,6 +9,8 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.core.view.doOnPreDraw
 import androidx.core.view.isVisible
+import androidx.fragment.app.activityViewModels
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.ItemTouchHelper
@@ -33,23 +35,22 @@ import com.shpp.eorlov.assignment1.utils.Constants.CONTACT_DIALOG_TAG
 import com.shpp.eorlov.assignment1.utils.Constants.LIST_OF_CONTACTS_KEY
 import com.shpp.eorlov.assignment1.utils.Constants.SNACKBAR_DURATION
 import com.shpp.eorlov.assignment1.utils.Results
+import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 import kotlin.math.abs
 
-
+@AndroidEntryPoint
 class MyContactsFragment : BaseFragment(),
     ContactClickListener,
     ButtonClickListener {
 
 
+    private val sharedViewModel: SharedViewModel by activityViewModels()
+    private val viewModel: MyContactsViewModel by viewModels()
+
     private var previousClickTimestamp = SystemClock.uptimeMillis()
     private var swipeFlags = ItemTouchHelper.END
 
-    @Inject
-    lateinit var viewModelFactory: ViewModelProvider.Factory
-
-    private lateinit var sharedViewModel: SharedViewModel
-    private lateinit var viewModel: MyContactsViewModel
     private lateinit var binding: FragmentMyContactsBinding
     private lateinit var dialog: ContactDialogFragment
 
@@ -59,16 +60,6 @@ class MyContactsFragment : BaseFragment(),
         )
     }
 
-    override fun onAttach(context: Context) {
-        super.onAttach(context)
-
-        (activity as MainActivity).contactComponent.inject(this)
-
-        viewModel =
-            ViewModelProvider(this, viewModelFactory)[MyContactsViewModel::class.java]
-
-        sharedViewModel = ViewModelProvider(requireActivity()).get(SharedViewModel::class.java)
-    }
 
     override fun onCreateView(
         inflater: LayoutInflater,

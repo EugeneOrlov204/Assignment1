@@ -2,10 +2,11 @@ package com.shpp.eorlov.assignment1.storage
 
 import android.content.Context
 import com.shpp.eorlov.assignment1.utils.Constants.PREFS_FILE
+import dagger.hilt.android.qualifiers.ApplicationContext
 import javax.inject.Inject
 
 
-class SharedPreferencesStorage @Inject constructor(private val context: Context) : SharedPreferencesStorageImplementation {
+class SharedPreferencesStorage @Inject constructor(@ApplicationContext private val context: Context) : SharedPreferencesStorageImplementation {
 
 
     override fun save(_key: String, _value: String) {

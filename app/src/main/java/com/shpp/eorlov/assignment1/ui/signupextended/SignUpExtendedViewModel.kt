@@ -8,9 +8,10 @@ import com.shpp.eorlov.assignment1.storage.SharedPreferencesStorageImplementatio
 import com.shpp.eorlov.assignment1.utils.Constants
 import com.shpp.eorlov.assignment1.utils.Results
 import com.shpp.eorlov.assignment1.validator.Validator
+import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
-
+@HiltViewModel
 class SignUpExtendedViewModel @Inject constructor() : ViewModel() {
 
 

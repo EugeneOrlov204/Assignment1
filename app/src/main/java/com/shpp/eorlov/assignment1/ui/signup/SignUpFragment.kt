@@ -10,6 +10,7 @@ import android.view.inputmethod.EditorInfo
 import android.widget.Toast
 import androidx.core.view.isVisible
 import androidx.core.widget.addTextChangedListener
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import com.shpp.eorlov.assignment1.R
@@ -26,33 +27,25 @@ import com.shpp.eorlov.assignment1.utils.Results
 import com.shpp.eorlov.assignment1.utils.ext.hideKeyboard
 import com.shpp.eorlov.assignment1.validator.Validator
 import com.shpp.eorlov.assignment1.validator.evaluateErrorMessage
+import dagger.hilt.android.AndroidEntryPoint
 import retrofit2.Retrofit
 import javax.inject.Inject
 import kotlin.math.abs
 
-
+@AndroidEntryPoint
 class SignUpFragment : BaseFragment() {
 
-    @Inject
-    lateinit var viewModelFactory: ViewModelProvider.Factory
 
     @Inject
     lateinit var validator: Validator
 
+    private val viewModel: SignUpViewModel by viewModels()
+
     private lateinit var binding: FragmentSignUpBinding
-    private lateinit var viewModel: SignUpViewModel
     private lateinit var retrofitService: RetrofitService
     private lateinit var mainRepository: MainRepository
     private var previousClickTimestamp = SystemClock.uptimeMillis()
 
-    override fun onAttach(context: Context) {
-        super.onAttach(context)
-
-        (activity as MainActivity).contactComponent.inject(this)
-
-        viewModel =
-            ViewModelProvider(this, viewModelFactory)[SignUpViewModel::class.java]
-    }
 
     override fun onCreateView(
         inflater: LayoutInflater,

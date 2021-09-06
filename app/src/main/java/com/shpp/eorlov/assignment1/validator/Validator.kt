@@ -6,12 +6,13 @@ import com.shpp.eorlov.assignment1.R
 import com.shpp.eorlov.assignment1.utils.*
 import com.shpp.eorlov.assignment1.utils.Constants.DATE_FORMAT
 import com.shpp.eorlov.assignment1.utils.Constants.DATE_REGEX_PATTERN
+import dagger.hilt.android.qualifiers.ApplicationContext
 import java.text.ParseException
 import java.text.SimpleDateFormat
 import java.util.*
 import javax.inject.Inject
 
-class Validator @Inject constructor(private val context: Context?) {
+class Validator @Inject constructor(@ApplicationContext private val context: Context?) {
 
 
     fun validateEmail(

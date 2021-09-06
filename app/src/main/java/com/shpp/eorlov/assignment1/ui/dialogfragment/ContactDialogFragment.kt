@@ -15,6 +15,8 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.widget.AppCompatImageView
 import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.DialogFragment
+import androidx.fragment.app.activityViewModels
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
 import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
@@ -28,24 +30,22 @@ import com.shpp.eorlov.assignment1.validator.ValidateOperation
 import com.shpp.eorlov.assignment1.validator.evaluateErrorMessage
 import com.shpp.eorlov.assignment1.utils.ext.loadImage
 import com.shpp.eorlov.assignment1.validator.Validator
+import dagger.hilt.android.AndroidEntryPoint
 import java.text.SimpleDateFormat
 import java.util.*
 import javax.inject.Inject
 import kotlin.math.abs
 
-
+@AndroidEntryPoint
 class ContactDialogFragment : DialogFragment() {
 
     private val myCalendar: Calendar = Calendar.getInstance()
 
     @Inject
-    lateinit var viewModelFactory: ViewModelProvider.Factory
-
-    @Inject
     lateinit var validator: Validator
 
-    private lateinit var viewModel: ContactDialogViewModel
-    private lateinit var sharedViewModel: SharedViewModel
+    private val viewModel: ContactDialogViewModel by viewModels()
+    private val sharedViewModel: SharedViewModel by activityViewModels()
     private lateinit var dialogBinding: AddContactDialogBinding
 
     private var pathToLoadedImageFromGallery: String = ""
@@ -60,15 +60,6 @@ class ContactDialogFragment : DialogFragment() {
         }
 
 
-    override fun onAttach(context: Context) {
-        super.onAttach(context)
-
-        (activity as MainActivity).contactComponent.inject(this)
-        viewModel =
-            ViewModelProvider(this, viewModelFactory)[ContactDialogViewModel::class.java]
-
-        sharedViewModel = ViewModelProvider(requireActivity()).get(SharedViewModel::class.java)
-    }
 
     override fun onCreateView(
         inflater: LayoutInflater,

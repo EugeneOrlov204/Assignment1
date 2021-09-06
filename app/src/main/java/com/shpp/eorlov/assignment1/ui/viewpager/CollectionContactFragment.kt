@@ -11,7 +11,9 @@ import com.shpp.eorlov.assignment1.databinding.FragmentViewPagerBinding
 import com.shpp.eorlov.assignment1.ui.mycontacts.MyContactsFragment
 import com.shpp.eorlov.assignment1.ui.myprofile.MyProfileFragment
 import com.shpp.eorlov.assignment1.utils.Constants
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class CollectionContactFragment : BaseFragment() {
 
     private val args: CollectionContactFragmentArgs by navArgs()

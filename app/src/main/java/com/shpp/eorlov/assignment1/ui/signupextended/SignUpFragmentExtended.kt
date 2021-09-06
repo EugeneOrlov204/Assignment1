@@ -8,8 +8,10 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.EditorInfo
 import android.widget.Toast
+import androidx.activity.viewModels
 import androidx.core.view.isVisible
 import androidx.core.widget.addTextChangedListener
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
@@ -23,33 +25,21 @@ import com.shpp.eorlov.assignment1.utils.Results
 import com.shpp.eorlov.assignment1.utils.ext.hideKeyboard
 import com.shpp.eorlov.assignment1.validator.Validator
 import com.shpp.eorlov.assignment1.validator.evaluateErrorMessage
+import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 import kotlin.math.abs
 
-
+@AndroidEntryPoint
 class SignUpFragmentExtended : BaseFragment() {
 
     private val args: SignUpFragmentExtendedArgs by navArgs()
-
-    @Inject
-    lateinit var viewModelFactory: ViewModelProvider.Factory
+    private val viewModel: SignUpExtendedViewModel by viewModels()
 
     @Inject
     lateinit var validator: Validator
-
     private lateinit var binding: FragmentSignUpExtendedBinding
-    private lateinit var viewModel: SignUpExtendedViewModel
 
     private var previousClickTimestamp = SystemClock.uptimeMillis()
-
-    override fun onAttach(context: Context) {
-        super.onAttach(context)
-
-        (activity as MainActivity).contactComponent.inject(this)
-
-        viewModel =
-            ViewModelProvider(this, viewModelFactory)[SignUpExtendedViewModel::class.java]
-    }
 
     override fun onCreateView(
         inflater: LayoutInflater,

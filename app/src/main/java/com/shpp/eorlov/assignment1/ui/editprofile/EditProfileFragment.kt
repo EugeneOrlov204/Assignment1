@@ -16,6 +16,8 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.widget.AppCompatImageView
 import androidx.core.view.isVisible
 import androidx.core.widget.addTextChangedListener
+import androidx.fragment.app.activityViewModels
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.navArgs
 import com.google.android.material.textfield.TextInputEditText
@@ -33,16 +35,15 @@ import com.shpp.eorlov.assignment1.utils.ext.loadImage
 import com.shpp.eorlov.assignment1.validator.ValidateOperation
 import com.shpp.eorlov.assignment1.validator.Validator
 import com.shpp.eorlov.assignment1.validator.evaluateErrorMessage
+import dagger.hilt.android.AndroidEntryPoint
 import java.text.SimpleDateFormat
 import java.util.*
 import javax.inject.Inject
 import kotlin.math.abs
 
-
+@AndroidEntryPoint
 class EditProfileFragment : BaseFragment() {
 
-    @Inject
-    lateinit var viewModelFactory: ViewModelProvider.Factory
 
     @Inject
     lateinit var validator: Validator
@@ -52,9 +53,9 @@ class EditProfileFragment : BaseFragment() {
 
     private val args: EditProfileFragmentArgs by navArgs()
     private val myCalendar: Calendar = Calendar.getInstance()
+    private val sharedViewModel: SharedViewModel by activityViewModels()
+    private val viewModel: EditProfileViewModel by viewModels()
 
-    private lateinit var sharedViewModel: SharedViewModel
-    private lateinit var viewModel: EditProfileViewModel
     private lateinit var binding: FragmentEditProfileBinding
 
     private var previousClickTimestamp = SystemClock.uptimeMillis()
@@ -68,17 +69,6 @@ class EditProfileFragment : BaseFragment() {
                 imageView.loadImage(imageData)
             }
         }
-
-    override fun onAttach(context: Context) {
-        super.onAttach(context)
-
-        (activity as MainActivity).contactComponent.inject(this)
-
-        viewModel =
-            ViewModelProvider(this, viewModelFactory)[EditProfileViewModel::class.java]
-
-        sharedViewModel = ViewModelProvider(requireActivity()).get(SharedViewModel::class.java)
-    }
 
 
     override fun onCreateView(

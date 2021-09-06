@@ -21,20 +21,19 @@ import com.shpp.eorlov.assignment1.db.ContactsDatabase
 import com.shpp.eorlov.assignment1.db.ContactsDatabaseImplementation
 import com.shpp.eorlov.assignment1.storage.SharedPreferencesStorage
 import com.shpp.eorlov.assignment1.storage.SharedPreferencesStorageImplementation
+import dagger.Binds
 import dagger.Module
 import dagger.Provides
+import dagger.hilt.InstallIn
+import dagger.hilt.components.SingletonComponent
 
-
+@InstallIn(SingletonComponent::class)
 @Module
-class StorageModule {
+abstract class StorageModule {
 
-    @Provides
-    fun provideStorage(context: Context): SharedPreferencesStorageImplementation {
-        return SharedPreferencesStorage(context)
-    }
+    @Binds
+    abstract fun provideStorage(storage: SharedPreferencesStorage): SharedPreferencesStorageImplementation
 
-    @Provides
-    fun provideDatabase(context: Context): ContactsDatabaseImplementation {
-        return ContactsDatabase()
-    }
+    @Binds
+    abstract fun provideDatabase(database: ContactsDatabase): ContactsDatabaseImplementation
 }

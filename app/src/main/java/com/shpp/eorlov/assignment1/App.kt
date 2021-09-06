@@ -17,22 +17,14 @@ package com.shpp.eorlov.assignment1
 
 import android.app.Application
 import com.facebook.drawee.backends.pipeline.Fresco
-import com.shpp.eorlov.assignment1.di.AppComponent
-import com.shpp.eorlov.assignment1.di.DaggerAppComponent
+import dagger.hilt.android.HiltAndroidApp
 
+@HiltAndroidApp
 open class App : Application() {
     override fun onCreate() {
         super.onCreate()
 
         Fresco.initialize(applicationContext)
-    }
-
-    // Instance of the AppComponent that will be used by all the Activities in the project
-    val appComponent: AppComponent by lazy(LazyThreadSafetyMode.NONE)  {
-        // Creates an instance of AppComponent using its Factory constructor
-        // We pass the applicationContext that will be used as Context in the graph
-        DaggerAppComponent.factory().create(applicationContext)
-
     }
 }
 
