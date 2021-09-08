@@ -10,6 +10,7 @@ class MainRepository @Inject constructor(
     private val remoteData: MainRemoteData
 ) {
 
-    suspend fun registerUser(postRequest: MainService.PostRequest) =
-        remoteData.registerUser(postRequest)
+    suspend fun registerUser(registerModel: MainService.RegisterModel): String {
+        return remoteData.registerUser(registerModel)
+    }
 }

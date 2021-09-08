@@ -7,18 +7,31 @@ import retrofit2.http.POST
 
 interface MainService {
 
-    data class PostRequest(
+    data class RegisterModel(
         val email: String,
         val password: String
     )
-    data class PostResponse(
-        val data: PostRequest,
-        val json: PostRequest,
-        val headers: Map<String, String>,
-        val url: String,
+
+    data class ResponseWrapper<T>(
+        val code: Int,
+        val message: String?,
+        val status: String
     )
+
+    enum class Status(val value: String) {
+        SUCCESS("success"),
+        ERROR("error")
+    }
+
+    enum class Code(val value: Int) {
+        SUCCESS(200),
+        BAD_REQUEST(400),
+        UNAUTHORIZED(401),
+        FORBIDDEN(403),
+        NOT_FOUND(404)
+    }
 
     @Headers("Content-Type: application/json")
     @POST("/api/user/register")
-    suspend fun registerUser(@Body request: PostRequest): Response<PostResponse>
+    suspend fun registerUser(@Body request: RegisterModel): Response<Any>
 }

@@ -9,6 +9,7 @@ import android.view.inputmethod.EditorInfo
 import android.widget.Toast
 import androidx.core.view.isVisible
 import androidx.core.widget.addTextChangedListener
+import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.shpp.eorlov.assignment1.R
@@ -17,6 +18,7 @@ import com.shpp.eorlov.assignment1.base.BaseFragment
 import com.shpp.eorlov.assignment1.databinding.FragmentSignUpBinding
 import com.shpp.eorlov.assignment1.model.UserModel
 import com.shpp.eorlov.assignment1.repository.MainRepository
+import com.shpp.eorlov.assignment1.ui.SharedViewModel
 import com.shpp.eorlov.assignment1.utils.Constants
 import com.shpp.eorlov.assignment1.utils.Results
 import com.shpp.eorlov.assignment1.utils.ext.hideKeyboard
@@ -35,6 +37,7 @@ class SignUpFragment : BaseFragment() {
     lateinit var validator: Validator
 
     private val viewModel: SignUpViewModel by viewModels()
+    private val sharedViewModel: SharedViewModel by activityViewModels()
 
     private lateinit var binding: FragmentSignUpBinding
     private var previousClickTimestamp = SystemClock.uptimeMillis()
@@ -63,6 +66,9 @@ class SignUpFragment : BaseFragment() {
     }
 
     private fun setObservers() {
+        sharedViewModel.testMessageViewModel.observe(viewLifecycleOwner) {
+            Toast.makeText(requireContext(), it, Toast.LENGTH_SHORT).show()
+        }
 
         viewModel.loadEvent.observe(viewLifecycleOwner) { event ->
             when (event) {
@@ -106,10 +112,7 @@ class SignUpFragment : BaseFragment() {
         }
 
         binding.buttonRegister.setOnClickListener {
-            if (abs(SystemClock.uptimeMillis() - previousClickTimestamp) > Constants.BUTTON_CLICK_DELAY) {
-                goToSignUpExtended()
-                previousClickTimestamp = SystemClock.uptimeMillis()
-            }
+            sharedViewModel.registerUser(binding.textInputEditTextEmail.text.toString(), binding.textInputEditTextPassword.text.toString())
         }
 
         binding.root.setOnClickListener {

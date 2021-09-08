@@ -1,6 +1,5 @@
 package com.shpp.eorlov.assignment1.ui.signin
 
-import android.content.Context
 import android.os.Bundle
 import android.os.SystemClock
 import android.view.LayoutInflater
@@ -10,19 +9,18 @@ import android.view.inputmethod.EditorInfo
 import android.widget.Toast
 import androidx.core.view.isVisible
 import androidx.core.widget.addTextChangedListener
+import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import com.shpp.eorlov.assignment1.R
 import com.shpp.eorlov.assignment1.base.BaseFragment
 import com.shpp.eorlov.assignment1.databinding.FragmentSignInBinding
-import com.shpp.eorlov.assignment1.model.UserModel
-import com.shpp.eorlov.assignment1.ui.MainActivity
+import com.shpp.eorlov.assignment1.ui.SharedViewModel
 import com.shpp.eorlov.assignment1.utils.Constants
 import com.shpp.eorlov.assignment1.utils.Results
-import com.shpp.eorlov.assignment1.validator.evaluateErrorMessage
 import com.shpp.eorlov.assignment1.utils.ext.hideKeyboard
 import com.shpp.eorlov.assignment1.validator.Validator
+import com.shpp.eorlov.assignment1.validator.evaluateErrorMessage
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 import kotlin.math.abs
@@ -39,7 +37,6 @@ class SignInFragment : BaseFragment() {
     private lateinit var binding: FragmentSignInBinding
 
     private var previousClickTimestamp = SystemClock.uptimeMillis()
-
 
 
     override fun onCreateView(
@@ -81,45 +78,42 @@ class SignInFragment : BaseFragment() {
     private fun setObservers() {
         viewModel.apply {
 
-            loadEvent.apply {
-                observe(viewLifecycleOwner) { event ->
-                    when (event) {
-                        Results.OK -> {
-                            unlockUI()
-                            binding.contentLoadingProgressBar.isVisible = false
-                        }
-
-                        Results.LOADING -> {
-                            lockUI()
-                            binding.contentLoadingProgressBar.isVisible = true
-                        }
-
-                        Results.INITIALIZE_DATA_ERROR -> {
-                            unlockUI()
-                            binding.contentLoadingProgressBar.isVisible = false
-                            Toast.makeText(requireContext(), event.name, Toast.LENGTH_LONG).show()
-                        }
-
-                        Results.NOT_EXISTED_ACCOUNT_ERROR -> {
-                            Toast.makeText(
-                                requireContext(),
-                                getString(R.string.not_existed_account_error_text),
-                                Toast.LENGTH_LONG
-                            ).show()
-                        }
-
-                        Results.INVALID_PASSWORD -> {
-                            Toast.makeText(
-                                requireContext(),
-                                getString(R.string.wrong_password),
-                                Toast.LENGTH_LONG
-                            ).show()
-                        }
-
-                        else -> {
-                        }
+            loadEvent.observe(viewLifecycleOwner) { event ->
+                when (event) {
+                    Results.OK -> {
+                        unlockUI()
+                        binding.contentLoadingProgressBar.isVisible = false
                     }
 
+                    Results.LOADING -> {
+                        lockUI()
+                        binding.contentLoadingProgressBar.isVisible = true
+                    }
+
+                    Results.INITIALIZE_DATA_ERROR -> {
+                        unlockUI()
+                        binding.contentLoadingProgressBar.isVisible = false
+                        Toast.makeText(requireContext(), event.name, Toast.LENGTH_LONG).show()
+                    }
+
+                    Results.NOT_EXISTED_ACCOUNT_ERROR -> {
+                        Toast.makeText(
+                            requireContext(),
+                            getString(R.string.not_existed_account_error_text),
+                            Toast.LENGTH_LONG
+                        ).show()
+                    }
+
+                    Results.INVALID_PASSWORD -> {
+                        Toast.makeText(
+                            requireContext(),
+                            getString(R.string.wrong_password),
+                            Toast.LENGTH_LONG
+                        ).show()
+                    }
+
+                    else -> {
+                    }
                 }
             }
         }
@@ -170,9 +164,7 @@ class SignInFragment : BaseFragment() {
     }
 
     private fun goToSignUpProfile() {
-        val action =
-            SignInFragmentDirections.actionSignInFragmentToSignUpFragment()
-        findNavController().navigate(action)
+        findNavController().navigate(SignInFragmentDirections.actionSignInFragmentToSignUpFragment())
     }
 
 

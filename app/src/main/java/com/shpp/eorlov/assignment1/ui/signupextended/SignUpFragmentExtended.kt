@@ -82,6 +82,10 @@ class SignUpFragmentExtended : BaseFragment(), CoroutineScope {
 
 
     private fun setObservers() {
+        sharedViewModel.testMessageViewModel.observe(viewLifecycleOwner) {
+            Toast.makeText(requireContext(), it, Toast.LENGTH_SHORT).show()
+        }
+
         viewModel.loadEvent.apply {
             observe(viewLifecycleOwner) { event ->
                 when (event) {

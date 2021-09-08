@@ -16,6 +16,7 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.snackbar.BaseTransientBottomBar
 import com.google.android.material.snackbar.Snackbar
 import com.shpp.eorlov.assignment1.R
 import com.shpp.eorlov.assignment1.base.BaseFragment
@@ -159,7 +160,7 @@ class MyContactsFragment : BaseFragment(),
         Snackbar.make(
             binding.root,
             getString(R.string.removed_contact_message),
-            SNACKBAR_DURATION
+            BaseTransientBottomBar.LENGTH_LONG
         ).setAction("Cancel") {
             viewModel.addItem(position, removedItem)
         }.show()
