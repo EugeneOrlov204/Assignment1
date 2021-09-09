@@ -9,6 +9,7 @@ import android.view.inputmethod.EditorInfo
 import android.widget.Toast
 import androidx.core.view.isVisible
 import androidx.core.widget.addTextChangedListener
+import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.shpp.eorlov.assignment1.R
@@ -17,6 +18,7 @@ import com.shpp.eorlov.assignment1.base.BaseFragment
 import com.shpp.eorlov.assignment1.databinding.FragmentSignUpBinding
 import com.shpp.eorlov.assignment1.model.UserModel
 import com.shpp.eorlov.assignment1.repository.MainRepository
+import com.shpp.eorlov.assignment1.ui.SharedViewModel
 import com.shpp.eorlov.assignment1.utils.Constants
 import com.shpp.eorlov.assignment1.utils.Results
 import com.shpp.eorlov.assignment1.utils.ext.hideKeyboard
@@ -35,7 +37,7 @@ class SignUpFragment : BaseFragment() {
     lateinit var validator: Validator
 
     private val viewModel: SignUpViewModel by viewModels()
-
+    private val sharedViewModel: SharedViewModel by activityViewModels()
     private lateinit var binding: FragmentSignUpBinding
     private var previousClickTimestamp = SystemClock.uptimeMillis()
 
@@ -93,6 +95,9 @@ class SignUpFragment : BaseFragment() {
                 else -> {
                 }
             }
+        }
+        sharedViewModel.registerUser.observe(viewLifecycleOwner) {
+            //todo do smth
         }
     }
 
@@ -167,11 +172,11 @@ class SignUpFragment : BaseFragment() {
                 birthDate = ""
             )
 
+            sharedViewModel.registerUser(email, textInputEditTextPassword.text.toString())
+
             val action =
-                SignUpFragmentDirections.actionSignUpFragmentToSignUpFragmentExtended(
-                    userModel,
-                    checkBoxRememberMe.isChecked,
-                    textInputEditTextPassword.text.toString()
+                SignUpFragmentDirections.actionSignUpFragmentToCollectionContactFragment(
+                    userModel
                 )
             findNavController().navigate(action)
         }

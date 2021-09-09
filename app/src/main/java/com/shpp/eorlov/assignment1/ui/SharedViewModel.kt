@@ -17,15 +17,18 @@ class SharedViewModel @Inject constructor(val repository: MainRepository) : View
     val registerUser = MutableLiveData<String>()
 
     fun registerUser(email: String, password: String) {
+        var message = ""
         viewModelScope.launch {
-            registerUser.postValue(
-                repository.registerUser(
-                    MainService.RegisterModel(
-                        email,
-                        password
-                    )
+            message = repository.registerUser(
+                MainService.RegisterModel(
+                    email,
+                    password
                 )
             )
+            registerUser.postValue(
+                message
+            )
         }
+        println("OUTPUT $message")
     }
 }
