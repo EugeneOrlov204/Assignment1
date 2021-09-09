@@ -1,8 +1,8 @@
 package com.shpp.eorlov.assignment1.ui
 
-import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.shpp.eorlov.assignment1.api.MainService
 import com.shpp.eorlov.assignment1.model.UserModel
 import com.shpp.eorlov.assignment1.repository.MainRepository
@@ -14,23 +14,18 @@ import javax.inject.Inject
 class SharedViewModel @Inject constructor(val repository: MainRepository) : ViewModel() {
     val newUser = MutableLiveData<UserModel?>(null)
     val updatedUser = MutableLiveData<UserModel?>(null)
-    var job: Job? = null
-    private val tag = SharedViewModel::class.java.name
+    val registerUser = MutableLiveData<String>()
 
-    suspend fun registerUser(email: String, password: String): Pair<String, String> = withContext(Dispatchers.IO) {
-        Log.d(tag, "Thread is ${Thread.currentThread().name}")
-        val request = MainService.PostRequest(email, password)
-        val response = repository.registerUser(request)
-        if (response.isSuccessful) {
-            val body = response.body()!!
-            return@withContext Pair(body.json.email, body.json.password)
-        } else {
-            throw Exception(response.errorBody()?.charStream()?.readText())
+    fun registerUser(email: String, password: String) {
+        viewModelScope.launch {
+            registerUser.postValue(
+                repository.registerUser(
+                    MainService.RegisterModel(
+                        email,
+                        password
+                    )
+                )
+            )
         }
-    }
-
-    override fun onCleared() {
-        super.onCleared()
-        job?.cancel()
     }
 }

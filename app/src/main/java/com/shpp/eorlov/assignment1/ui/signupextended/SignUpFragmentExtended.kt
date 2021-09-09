@@ -1,6 +1,5 @@
 package com.shpp.eorlov.assignment1.ui.signupextended
 
-import android.content.Context
 import android.os.Bundle
 import android.os.SystemClock
 import android.view.LayoutInflater
@@ -8,19 +7,16 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.EditorInfo
 import android.widget.Toast
-import androidx.activity.viewModels
 import androidx.core.view.isVisible
 import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.shpp.eorlov.assignment1.R
 import com.shpp.eorlov.assignment1.base.BaseFragment
 import com.shpp.eorlov.assignment1.databinding.FragmentSignUpExtendedBinding
 import com.shpp.eorlov.assignment1.model.UserModel
-import com.shpp.eorlov.assignment1.ui.MainActivity
 import com.shpp.eorlov.assignment1.ui.SharedViewModel
 import com.shpp.eorlov.assignment1.utils.Constants
 import com.shpp.eorlov.assignment1.utils.Results
@@ -114,7 +110,10 @@ class SignUpFragmentExtended : BaseFragment(), CoroutineScope {
                 }
 
             }
+        }
 
+        sharedViewModel.registerUser.observe(viewLifecycleOwner) {
+            //todo do smth
         }
     }
 
@@ -200,6 +199,8 @@ class SignUpFragmentExtended : BaseFragment(), CoroutineScope {
                 args.password
             )
         }
+
+        //todo Password max length is 12
 
         sharedViewModel.registerUser(userModel.email, args.password)
 

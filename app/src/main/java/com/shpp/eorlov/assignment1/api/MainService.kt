@@ -7,18 +7,12 @@ import retrofit2.http.POST
 
 interface MainService {
 
-    data class PostRequest(
+    data class RegisterModel(
         val email: String,
         val password: String
-    )
-    data class PostResponse(
-        val data: PostRequest,
-        val json: PostRequest,
-        val headers: Map<String, String>,
-        val url: String,
     )
 
     @Headers("Content-Type: application/json")
     @POST("/api/user/register")
-    suspend fun registerUser(@Body request: PostRequest): Response<PostResponse>
+    suspend fun registerUser(@Body request: RegisterModel): Response<Any>
 }
