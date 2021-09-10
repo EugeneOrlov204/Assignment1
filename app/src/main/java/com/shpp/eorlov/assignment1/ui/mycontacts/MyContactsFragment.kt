@@ -1,6 +1,5 @@
 package com.shpp.eorlov.assignment1.ui.mycontacts
 
-import android.content.Context
 import android.os.Bundle
 import android.os.SystemClock
 import android.view.LayoutInflater
@@ -11,7 +10,6 @@ import androidx.core.view.doOnPreDraw
 import androidx.core.view.isVisible
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -20,8 +18,7 @@ import com.google.android.material.snackbar.Snackbar
 import com.shpp.eorlov.assignment1.R
 import com.shpp.eorlov.assignment1.base.BaseFragment
 import com.shpp.eorlov.assignment1.databinding.FragmentMyContactsBinding
-import com.shpp.eorlov.assignment1.model.UserModel
-import com.shpp.eorlov.assignment1.ui.MainActivity
+import com.shpp.eorlov.assignment1.models.UserModel
 import com.shpp.eorlov.assignment1.ui.SharedViewModel
 import com.shpp.eorlov.assignment1.ui.dialogfragment.ContactDialogFragment
 import com.shpp.eorlov.assignment1.ui.mycontacts.adapter.ContactsRecyclerAdapter
@@ -36,7 +33,6 @@ import com.shpp.eorlov.assignment1.utils.Constants.LIST_OF_CONTACTS_KEY
 import com.shpp.eorlov.assignment1.utils.Constants.SNACKBAR_DURATION
 import com.shpp.eorlov.assignment1.utils.Results
 import dagger.hilt.android.AndroidEntryPoint
-import javax.inject.Inject
 import kotlin.math.abs
 
 @AndroidEntryPoint

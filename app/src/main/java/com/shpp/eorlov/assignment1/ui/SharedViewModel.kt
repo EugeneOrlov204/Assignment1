@@ -4,7 +4,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.shpp.eorlov.assignment1.api.MainService
-import com.shpp.eorlov.assignment1.model.UserModel
+import com.shpp.eorlov.assignment1.models.UserModel
 import com.shpp.eorlov.assignment1.repository.MainRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.*
@@ -17,18 +17,28 @@ class SharedViewModel @Inject constructor(val repository: MainRepository) : View
     val registerUser = MutableLiveData<String>()
 
     fun registerUser(email: String, password: String) {
-        var message = ""
         viewModelScope.launch {
-            message = repository.registerUser(
-                MainService.RegisterModel(
-                    email,
-                    password
-                )
-            )
-            registerUser.postValue(
-                message
+             registerUser.postValue(
+                 repository.registerUser(
+                     MainService.RegisterModel(
+                         email,
+                         password
+                     )
+                 )
             )
         }
-        println("OUTPUT $message")
+    }
+
+    fun authorizeUser(email: String, password: String) {
+        viewModelScope.launch {
+            registerUser.postValue(
+                repository.authorizeUser(
+                    MainService.RegisterModel(
+                        email,
+                        password
+                    )
+                ) as String?
+            )
+        }
     }
 }

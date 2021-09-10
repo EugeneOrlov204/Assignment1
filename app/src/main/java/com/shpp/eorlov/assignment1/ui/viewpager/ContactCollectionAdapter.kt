@@ -3,7 +3,7 @@ package com.shpp.eorlov.assignment1.ui.viewpager
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import androidx.viewpager2.adapter.FragmentStateAdapter
-import com.shpp.eorlov.assignment1.model.UserModel
+import com.shpp.eorlov.assignment1.models.UserModel
 import com.shpp.eorlov.assignment1.ui.mycontacts.MyContactsFragment
 import com.shpp.eorlov.assignment1.ui.myprofile.MyProfileFragment
 import com.shpp.eorlov.assignment1.utils.Constants

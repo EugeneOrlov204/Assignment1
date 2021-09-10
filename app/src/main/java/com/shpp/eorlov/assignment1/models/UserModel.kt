@@ -1,4 +1,4 @@
-package com.shpp.eorlov.assignment1.model
+package com.shpp.eorlov.assignment1.models
 
 import android.os.Parcelable
 import kotlinx.parcelize.Parcelize

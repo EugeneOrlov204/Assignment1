@@ -1,6 +1,5 @@
 package com.shpp.eorlov.assignment1.ui.signin
 
-import android.content.Context
 import android.os.Bundle
 import android.os.SystemClock
 import android.view.LayoutInflater
@@ -10,14 +9,13 @@ import android.view.inputmethod.EditorInfo
 import android.widget.Toast
 import androidx.core.view.isVisible
 import androidx.core.widget.addTextChangedListener
+import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import com.shpp.eorlov.assignment1.R
 import com.shpp.eorlov.assignment1.base.BaseFragment
 import com.shpp.eorlov.assignment1.databinding.FragmentSignInBinding
-import com.shpp.eorlov.assignment1.model.UserModel
-import com.shpp.eorlov.assignment1.ui.MainActivity
+import com.shpp.eorlov.assignment1.ui.SharedViewModel
 import com.shpp.eorlov.assignment1.utils.Constants
 import com.shpp.eorlov.assignment1.utils.Results
 import com.shpp.eorlov.assignment1.validator.evaluateErrorMessage
@@ -35,6 +33,7 @@ class SignInFragment : BaseFragment() {
     lateinit var validator: Validator
 
     private val viewModel: SignInViewModel by viewModels()
+    private val sharedViewModel: SharedViewModel by activityViewModels()
 
     private lateinit var binding: FragmentSignInBinding
 
@@ -181,9 +180,10 @@ class SignInFragment : BaseFragment() {
      */
     private fun goToMyProfile() {
         val email = binding.textInputEditTextEmail.text.toString()
+        val password = binding.textInputEditTextPassword.text.toString()
         if (isFieldsInvalid() ||
             viewModel.isNotExistingAccount(email) ||
-            viewModel.isWrongPassword(binding.textInputEditTextPassword.text.toString())
+            viewModel.isWrongPassword(password)
         ) {
             return
         }
@@ -196,6 +196,8 @@ class SignInFragment : BaseFragment() {
                 )
             }
         }
+
+        sharedViewModel.authorizeUser(email, password)
 
         val action =
             SignInFragmentDirections.actionSignInFragmentToCollectionContactFragment(

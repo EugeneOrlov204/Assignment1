@@ -1,6 +1,6 @@
 package com.shpp.eorlov.assignment1.db
 
-import com.shpp.eorlov.assignment1.model.UserModel
+import com.shpp.eorlov.assignment1.models.UserModel
 
 interface ContactsDatabaseImplementation {
     fun getDefaultUserModel(): UserModel

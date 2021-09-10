@@ -12,4 +12,9 @@ class MainRepository @Inject constructor(
 
     suspend fun registerUser(registerModel: MainService.RegisterModel) =
         remoteData.registerUser(registerModel)
+
+    suspend fun authorizeUser(registerModel: MainService.RegisterModel) =
+        remoteData.authorizeUser(registerModel)
+
+
 }

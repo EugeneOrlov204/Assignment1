@@ -2,7 +2,7 @@ package com.shpp.eorlov.assignment1.ui.dialogfragment
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.shpp.eorlov.assignment1.model.UserModel
+import com.shpp.eorlov.assignment1.models.UserModel
 import com.shpp.eorlov.assignment1.validator.ValidateOperation
 import com.shpp.eorlov.assignment1.validator.evaluateErrorMessage
 import com.shpp.eorlov.assignment1.validator.Validator

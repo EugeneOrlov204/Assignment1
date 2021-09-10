@@ -3,7 +3,6 @@ package com.shpp.eorlov.assignment1.ui.editprofile
 import android.app.Activity
 import android.app.DatePickerDialog
 import android.app.DatePickerDialog.OnDateSetListener
-import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.os.SystemClock
@@ -18,15 +17,13 @@ import androidx.core.view.isVisible
 import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.navArgs
 import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
 import com.shpp.eorlov.assignment1.base.BaseFragment
 import com.shpp.eorlov.assignment1.databinding.FragmentEditProfileBinding
-import com.shpp.eorlov.assignment1.model.UserModel
+import com.shpp.eorlov.assignment1.models.UserModel
 import com.shpp.eorlov.assignment1.storage.SharedPreferencesStorageImplementation
-import com.shpp.eorlov.assignment1.ui.MainActivity
 import com.shpp.eorlov.assignment1.ui.SharedViewModel
 import com.shpp.eorlov.assignment1.utils.Constants
 import com.shpp.eorlov.assignment1.utils.Constants.DATE_FORMAT

@@ -5,7 +5,7 @@ import android.view.View
 import androidx.recyclerview.widget.RecyclerView
 import com.shpp.eorlov.assignment1.R
 import com.shpp.eorlov.assignment1.databinding.ListItemBinding
-import com.shpp.eorlov.assignment1.model.UserModel
+import com.shpp.eorlov.assignment1.models.UserModel
 import com.shpp.eorlov.assignment1.ui.mycontacts.adapter.listeners.ContactClickListener
 import com.shpp.eorlov.assignment1.utils.Constants
 

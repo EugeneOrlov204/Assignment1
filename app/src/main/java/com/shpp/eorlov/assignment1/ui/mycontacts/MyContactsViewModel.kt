@@ -3,7 +3,7 @@ package com.shpp.eorlov.assignment1.ui.mycontacts
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.shpp.eorlov.assignment1.db.ContactsDatabase
-import com.shpp.eorlov.assignment1.model.UserModel
+import com.shpp.eorlov.assignment1.models.UserModel
 import com.shpp.eorlov.assignment1.utils.Results
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
