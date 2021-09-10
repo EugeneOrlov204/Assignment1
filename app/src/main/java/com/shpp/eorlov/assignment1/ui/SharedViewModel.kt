@@ -3,41 +3,41 @@ package com.shpp.eorlov.assignment1.ui
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.shpp.eorlov.assignment1.api.MainService
-import com.shpp.eorlov.assignment1.models.UserModel
+import com.shpp.eorlov.assignment1.models.*
 import com.shpp.eorlov.assignment1.repository.MainRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.*
 import javax.inject.Inject
 
 @HiltViewModel
-class SharedViewModel @Inject constructor(val repository: MainRepository) : ViewModel() {
+class SharedViewModel @Inject constructor(private val repository: MainRepository) : ViewModel() {
     val newUser = MutableLiveData<UserModel?>(null)
     val updatedUser = MutableLiveData<UserModel?>(null)
-    val registerUser = MutableLiveData<String>()
+    val registerUser = MutableLiveData<RegistrationResponseModel>()
+    val authorizeUser = MutableLiveData<AuthorizationResponseModel>()
 
     fun registerUser(email: String, password: String) {
         viewModelScope.launch {
-             registerUser.postValue(
-                 repository.registerUser(
-                     MainService.RegisterModel(
-                         email,
-                         password
-                     )
-                 )
+            registerUser.postValue(
+                repository.registerUser(
+                    RegisterModel(
+                        email,
+                        password
+                    )
+                )
             )
         }
     }
 
     fun authorizeUser(email: String, password: String) {
         viewModelScope.launch {
-            registerUser.postValue(
+            authorizeUser.postValue(
                 repository.authorizeUser(
-                    MainService.RegisterModel(
+                    AuthorizeModel(
                         email,
                         password
                     )
-                ) as String?
+                )
             )
         }
     }

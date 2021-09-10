@@ -96,6 +96,10 @@ class SignUpFragment : BaseFragment() {
         sharedViewModel.registerUser.observe(viewLifecycleOwner) {
             //todo do smth
         }
+
+        sharedViewModel.authorizeUser.observe(viewLifecycleOwner) {
+            //todo do smth
+        }
     }
 
     private fun setListeners() {

@@ -1,40 +1,23 @@
 package com.shpp.eorlov.assignment1.api
 
-import com.google.gson.Gson
+import com.shpp.eorlov.assignment1.models.AuthorizationResponseModel
+import com.shpp.eorlov.assignment1.models.AuthorizeModel
+import com.shpp.eorlov.assignment1.models.RegisterModel
 import com.shpp.eorlov.assignment1.models.RegistrationResponseModel
 import javax.inject.Inject
 
 class MainRemoteData @Inject constructor(private val mainService: MainService) {
 
-    suspend fun registerUser(registerModel: MainService.RegisterModel): String {
-        with (mainService.registerUser(registerModel)) {
-            return if (isSuccessful) {
-
-
-                println("Response ${body()?.code}")
-                println("Response ${body()?.data?.accessToken}")
-                println("Response ${body()?.data?.user}")
-                println("Response ${body()?.message}")
-                println("Response ${body()?.status}")
-
-                this.body()
-                ""
-            } else {
-                "New user registration error!"
-            }
+    suspend fun registerUser(registerModel: RegisterModel): RegistrationResponseModel? {
+        with(mainService.registerUser(registerModel)) {
+            return body()
         }
     }
 
 
-
-    suspend fun authorizeUser(registerModel: MainService.RegisterModel): String {
-        with (mainService.authorizeUser(registerModel)) {
-            return if (isSuccessful) {
-                this.body()
-                ""
-            } else {
-                "User authorization error!"
-            }
+    suspend fun authorizeUser(authorizeModel: AuthorizeModel): AuthorizationResponseModel? {
+        with(mainService.authorizeUser(authorizeModel)) {
+            return body()
         }
     }
 }
