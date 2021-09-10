@@ -11,6 +11,7 @@ object Constants {
     const val BUTTON_CLICK_DELAY: Long = 2000
     const val PROFILE_LOGIN = "Login"
     const val PROFILE_PASSWORD = "Password"
+    const val SUCCESS_RESPONSE_CODE = 200
 
     //Validator
     const val MIN_SIZE_OF_PASSWORD: Int = 8
@@ -33,6 +34,7 @@ object Constants {
 
     //SharedPreferencesStorage
     const val PREFS_FILE = "Storage"
+    const val USER_TOKEN = "user_token"
 
     //ContactRecyclerAdapter
     const val CONTACT_VIEW_HOLDER_TYPE_CODE = 0

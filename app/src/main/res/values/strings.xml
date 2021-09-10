@@ -60,5 +60,6 @@
     <string name="mobile_phone">Mobile phone</string>
     <string name="user_name">User name</string>
     <string name="invalid_username">User name must contain at least 3 letters</string>
+    <string name="registration_user_error">Can\'t register current user!</string>
 
 </resources>

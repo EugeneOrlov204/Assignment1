@@ -2,7 +2,7 @@ package com.shpp.eorlov.assignment1.ui.mycontacts
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.shpp.eorlov.assignment1.db.ContactsDatabase
+import com.shpp.eorlov.assignment1.db.ContactsDatabaseImplementation
 import com.shpp.eorlov.assignment1.models.UserModel
 import com.shpp.eorlov.assignment1.utils.Results
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -16,7 +16,7 @@ class MyContactsViewModel @Inject constructor() : ViewModel() {
     val selectedEvent = MutableLiveData(false)
 
     @Inject
-    lateinit var contactsDatabase: ContactsDatabase
+    lateinit var contactsDatabase: ContactsDatabaseImplementation
 
     fun initializeData() {
         if (userListLiveData.value == null) {

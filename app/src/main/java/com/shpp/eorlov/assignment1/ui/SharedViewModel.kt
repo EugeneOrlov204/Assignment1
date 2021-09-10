@@ -5,16 +5,22 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.shpp.eorlov.assignment1.models.*
 import com.shpp.eorlov.assignment1.repository.MainRepository
+import com.shpp.eorlov.assignment1.storage.SharedPreferencesStorage
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.*
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
 class SharedViewModel @Inject constructor(private val repository: MainRepository) : ViewModel() {
+
     val newUser = MutableLiveData<UserModel?>(null)
     val updatedUser = MutableLiveData<UserModel?>(null)
     val registerUser = MutableLiveData<RegistrationResponseModel>()
     val authorizeUser = MutableLiveData<AuthorizationResponseModel>()
+    val getUser = MutableLiveData<GetUserResponseModel>()
+
+    @Inject
+    lateinit var storage: SharedPreferencesStorage
 
     fun registerUser(email: String, password: String) {
         viewModelScope.launch {
@@ -38,6 +44,14 @@ class SharedViewModel @Inject constructor(private val repository: MainRepository
                         password
                     )
                 )
+            )
+        }
+    }
+
+    fun getUser(accessToken: String) {
+        viewModelScope.launch {
+            getUser.postValue(
+                repository.getUser(accessToken = "Bearer $accessToken")
             )
         }
     }

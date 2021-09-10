@@ -23,7 +23,7 @@ import com.google.android.material.textfield.TextInputLayout
 import com.shpp.eorlov.assignment1.base.BaseFragment
 import com.shpp.eorlov.assignment1.databinding.FragmentEditProfileBinding
 import com.shpp.eorlov.assignment1.models.UserModel
-import com.shpp.eorlov.assignment1.storage.SharedPreferencesStorageImplementation
+import com.shpp.eorlov.assignment1.storage.SharedPreferencesStorage
 import com.shpp.eorlov.assignment1.ui.SharedViewModel
 import com.shpp.eorlov.assignment1.utils.Constants
 import com.shpp.eorlov.assignment1.utils.Constants.DATE_FORMAT
@@ -46,7 +46,7 @@ class EditProfileFragment : BaseFragment() {
     lateinit var validator: Validator
 
     @Inject
-    lateinit var storage: SharedPreferencesStorageImplementation
+    lateinit var storage: SharedPreferencesStorage
 
     private val args: EditProfileFragmentArgs by navArgs()
     private val myCalendar: Calendar = Calendar.getInstance()

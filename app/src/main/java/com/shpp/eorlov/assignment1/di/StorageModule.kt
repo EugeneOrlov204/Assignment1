@@ -16,14 +16,12 @@
 
 package com.shpp.eorlov.assignment1.di
 
-import android.content.Context
-import com.shpp.eorlov.assignment1.db.ContactsDatabase
 import com.shpp.eorlov.assignment1.db.ContactsDatabaseImplementation
-import com.shpp.eorlov.assignment1.storage.SharedPreferencesStorage
+import com.shpp.eorlov.assignment1.db.ContactsDatabase
 import com.shpp.eorlov.assignment1.storage.SharedPreferencesStorageImplementation
+import com.shpp.eorlov.assignment1.storage.SharedPreferencesStorage
 import dagger.Binds
 import dagger.Module
-import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 
@@ -32,8 +30,8 @@ import dagger.hilt.components.SingletonComponent
 abstract class StorageModule {
 
     @Binds
-    abstract fun provideStorage(storage: SharedPreferencesStorage): SharedPreferencesStorageImplementation
+    abstract fun provideStorage(storage: SharedPreferencesStorageImplementation): SharedPreferencesStorage
 
     @Binds
-    abstract fun provideDatabase(database: ContactsDatabase): ContactsDatabaseImplementation
+    abstract fun provideDatabase(database: ContactsDatabaseImplementation): ContactsDatabase
 }

@@ -18,5 +18,6 @@ class MainRepository @Inject constructor(
     suspend fun authorizeUser(authorizeModel: AuthorizeModel) =
         remoteData.authorizeUser(authorizeModel)
 
-
+    suspend fun getUser(accessToken: String) =
+        remoteData.getUser(accessToken)
 }

@@ -18,6 +18,7 @@ import com.shpp.eorlov.assignment1.databinding.FragmentSignUpBinding
 import com.shpp.eorlov.assignment1.models.UserModel
 import com.shpp.eorlov.assignment1.ui.SharedViewModel
 import com.shpp.eorlov.assignment1.utils.Constants
+import com.shpp.eorlov.assignment1.utils.Constants.SUCCESS_RESPONSE_CODE
 import com.shpp.eorlov.assignment1.utils.Results
 import com.shpp.eorlov.assignment1.utils.ext.hideKeyboard
 import com.shpp.eorlov.assignment1.validator.Validator
@@ -28,7 +29,6 @@ import kotlin.math.abs
 
 @AndroidEntryPoint
 class SignUpFragment : BaseFragment() {
-
 
     @Inject
     lateinit var validator: Validator
@@ -89,15 +89,29 @@ class SignUpFragment : BaseFragment() {
                     ).show()
                 }
 
+                Results.REGISTRATION_USER_ERROR -> {
+                    Toast.makeText(
+                        requireContext(),
+                        getString(R.string.registration_user_error),
+                        Toast.LENGTH_LONG
+                    ).show()
+                }
+
                 else -> {
                 }
             }
         }
         sharedViewModel.registerUser.observe(viewLifecycleOwner) {
-            //todo do smth
+            if (it.code != SUCCESS_RESPONSE_CODE) {
+                viewModel.saveToken(it.data.user.email, it.data.accessToken)
+
+                //todo postValue vs value
+            } else {
+                viewModel.loadEvent.value = Results.REGISTRATION_USER_ERROR
+            }
         }
 
-        sharedViewModel.authorizeUser.observe(viewLifecycleOwner) {
+        sharedViewModel.getUser.observe(viewLifecycleOwner) {
             //todo do smth
         }
     }
@@ -157,8 +171,7 @@ class SignUpFragment : BaseFragment() {
     private fun goToSignUpExtended() {
         binding.apply {
             val email = textInputEditTextEmail.text.toString()
-            if (isFieldsInvalid() ||
-                viewModel.isExistingAccount(email)
+            if (isFieldsInvalid() || isExistingAccount(email)
             ) {
                 return
             }
@@ -184,11 +197,19 @@ class SignUpFragment : BaseFragment() {
     }
 
 
-    private fun isFieldsInvalid() =
-        !binding.textInputLayoutPassword.error.isNullOrEmpty() ||
+    private fun isFieldsInvalid(): Boolean {
+        return !binding.textInputLayoutPassword.error.isNullOrEmpty() ||
                 binding.textInputEditTextPassword.text.toString().isEmpty() ||
                 !binding.textInputLayoutEmail.error.isNullOrEmpty() ||
                 binding.textInputEditTextEmail.text.toString().isEmpty()
+    }
+
+
+    private fun isExistingAccount(email: String) : Boolean {
+        val accessToken = viewModel.fetchToken(email)
+        sharedViewModel.getUser(accessToken ?: return false)
+        return sharedViewModel.getUser.value?.code == SUCCESS_RESPONSE_CODE
+    }
 }
 
 
