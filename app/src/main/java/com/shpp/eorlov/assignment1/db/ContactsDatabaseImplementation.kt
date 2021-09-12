@@ -25,34 +25,6 @@ class ContactsDatabaseImplementation @Inject constructor() : ContactsDatabase {
             ""
         )
 
-    override fun getUserModelFromStorage(receivedUserModel: UserModel): UserModel {
-        val login = receivedUserModel.email
-        return UserModel(
-            name = storage.getString("${Constants.MY_PROFILE_NAME_KEY} $login", null)
-                ?: receivedUserModel.name,
-            profession = storage.getString("${Constants.MY_PROFILE_PROFESSION_KEY} $login", null)
-                ?: "Career",
-            photo = storage.getString("${Constants.MY_PROFILE_PHOTO_KEY} $login", null) ?: "",
-            residenceAddress = storage.getString("${Constants.MY_PROFILE_RESIDENCE_KEY} $login", null)
-                ?: "Home address",
-            birthDate = storage.getString("${Constants.MY_PROFILE_BIRTHDATE_KEY} $login", null) ?: "",
-            phoneNumber = storage.getString("${Constants.MY_PROFILE_PHONE_KEY} $login", null)
-                ?: receivedUserModel.phoneNumber,
-            email = storage.getString("${Constants.MY_PROFILE_EMAIL_KEY} $login", null)
-                ?: receivedUserModel.email
-        )
-    }
-
-    override fun saveUserModelToStorage(userModel: UserModel, login: String) {
-        storage.save("${Constants.MY_PROFILE_NAME_KEY} $login", userModel.name)
-        storage.save("${Constants.MY_PROFILE_PROFESSION_KEY} $login", userModel.profession)
-        storage.save("${Constants.MY_PROFILE_PHOTO_KEY} $login", userModel.photo)
-        storage.save("${Constants.MY_PROFILE_RESIDENCE_KEY} $login", userModel.residenceAddress)
-        storage.save("${Constants.MY_PROFILE_BIRTHDATE_KEY} $login", userModel.birthDate)
-        storage.save("${Constants.MY_PROFILE_PHONE_KEY} $login", userModel.phoneNumber)
-        storage.save("${Constants.MY_PROFILE_EMAIL_KEY} $login", userModel.email)
-    }
-
 
     override fun loadPersonData(): MutableList<UserModel> {
         val listOfNames: List<String> = getNames()

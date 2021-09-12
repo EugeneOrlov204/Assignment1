@@ -103,10 +103,9 @@ class SignUpFragment : BaseFragment() {
         }
         sharedViewModel.registerUser.observe(viewLifecycleOwner) {
             if (it?.code == SUCCESS_RESPONSE_CODE && it.data != null) {
-                println("CODE is " + it.code)
-                println("Message is " + it.message)
                 viewModel.saveToken(it.data.user.email, it.data.accessToken)
 
+                //todo set default values
                 val userModel = UserModel(
                     email = "",
                     name = "",
@@ -128,10 +127,6 @@ class SignUpFragment : BaseFragment() {
             } else {
                 viewModel.loadEvent.value = Results.EXISTED_ACCOUNT_ERROR
             }
-        }
-
-        sharedViewModel.getUser.observe(viewLifecycleOwner) {
-            //todo do smth
         }
     }
 

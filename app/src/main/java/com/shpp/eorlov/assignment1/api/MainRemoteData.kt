@@ -8,24 +8,26 @@ class MainRemoteData @Inject constructor(private val mainService: MainService) {
     suspend fun registerUser(registerModel: RegisterModel): RegistrationResponseModel {
         with(mainService.registerUser(registerModel)) {
 
-            val body = body()
-            if (body != null) {
-                return body
-            } else {
-                return RegistrationResponseModel(
+            return body()
+                ?: RegistrationResponseModel(
                     this.message(),
                     this.code(),
                     this.message(),
                     null
                 )
-            }
         }
     }
 
 
-    suspend fun authorizeUser(authorizeModel: AuthorizeModel): AuthorizationResponseModel? {
+    suspend fun authorizeUser(authorizeModel: AuthorizeModel): AuthorizationResponseModel {
         with(mainService.authorizeUser(authorizeModel)) {
             return body()
+                ?: AuthorizationResponseModel(
+                    this.message(),
+                    this.code(),
+                    this.message(),
+                    null
+                )
         }
     }
 

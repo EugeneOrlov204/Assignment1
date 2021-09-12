@@ -15,7 +15,9 @@ import androidx.navigation.fragment.findNavController
 import com.shpp.eorlov.assignment1.R
 import com.shpp.eorlov.assignment1.base.BaseFragment
 import com.shpp.eorlov.assignment1.databinding.FragmentSignInBinding
+import com.shpp.eorlov.assignment1.models.UserModel
 import com.shpp.eorlov.assignment1.ui.SharedViewModel
+import com.shpp.eorlov.assignment1.ui.signup.SignUpFragmentDirections
 import com.shpp.eorlov.assignment1.utils.Constants
 import com.shpp.eorlov.assignment1.utils.Results
 import com.shpp.eorlov.assignment1.validator.evaluateErrorMessage
@@ -64,17 +66,18 @@ class SignInFragment : BaseFragment() {
 
     private fun initializeData() {
         viewModel.initializeData()
-        if (!viewModel.getLogin().isNullOrEmpty()
-            && !viewModel.getPassword().isNullOrEmpty()
-        ) {
-            val action =
-                SignInFragmentDirections.actionSignInFragmentToCollectionContactFragment(
-                    if (viewModel.getLogin().isNullOrEmpty()) {
-                        viewModel.getUserModelFromStorage()
-                    } else return
-                )
-            findNavController().navigate(action)
-        }
+        //todo implement autologin
+//        if (!viewModel.getLogin().isNullOrEmpty()
+//            && !viewModel.getPassword().isNullOrEmpty()
+//        ) {
+//            val action =
+//                SignInFragmentDirections.actionSignInFragmentToCollectionContactFragment(
+//                    if (viewModel.getLogin().isNullOrEmpty()) {
+//                        viewModel.getUserModelFromStorage()
+//                    } else return
+//                )
+//            findNavController().navigate(action)
+//        }
     }
 
     private fun setObservers() {
@@ -120,6 +123,32 @@ class SignInFragment : BaseFragment() {
                     }
 
                 }
+            }
+        }
+
+        sharedViewModel.authorizeUser.observe(viewLifecycleOwner) {
+            if (it?.code == Constants.SUCCESS_RESPONSE_CODE && it.data != null) {
+
+                val userModel = UserModel(
+                    email = "",
+                    name = "",
+                    profession = "",
+                    photo = "",
+                    phoneNumber = "",
+                    residenceAddress = "",
+                    birthDate = ""
+                )
+
+
+                val action =
+                    SignInFragmentDirections.actionSignInFragmentToCollectionContactFragment(
+                        userModel
+                    )
+                findNavController().navigate(action)
+            } else if (it == null) {
+                viewModel.loadEvent.value = Results.REGISTRATION_USER_ERROR
+            } else {
+                viewModel.loadEvent.value = Results.EXISTED_ACCOUNT_ERROR
             }
         }
     }
@@ -181,29 +210,21 @@ class SignInFragment : BaseFragment() {
     private fun goToMyProfile() {
         val email = binding.textInputEditTextEmail.text.toString()
         val password = binding.textInputEditTextPassword.text.toString()
-        if (isFieldsInvalid() ||
-            viewModel.isNotExistingAccount(email) ||
-            viewModel.isWrongPassword(password)
-        ) {
+        if (isFieldsInvalid()) {
             return
         }
 
+        //todo implement autologin
         binding.apply {
-            if (checkBoxRememberMe.isChecked) {
-                viewModel.saveLoginData(
-                    email, //Login
-                    textInputEditTextPassword.text.toString() //Password
-                )
-            }
+//            if (checkBoxRememberMe.isChecked) {
+//                viewModel.saveLoginData(
+//                    email, //Login
+//                    textInputEditTextPassword.text.toString() //Password
+//                )
+//            }
         }
 
         sharedViewModel.authorizeUser(email, password)
-
-        val action =
-            SignInFragmentDirections.actionSignInFragmentToCollectionContactFragment(
-                viewModel.getUserModelFromStorage()
-            )
-        findNavController().navigate(action)
     }
 
     private fun isFieldsInvalid() =
