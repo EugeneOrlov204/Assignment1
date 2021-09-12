@@ -126,7 +126,7 @@ class EditProfileFragment : BaseFragment() {
         viewModel.initializeData(receivedUserModel)
 
         viewModel.userLiveData.value?.apply {
-            pathToLoadedImageFromGallery = photo
+            pathToLoadedImageFromGallery = photo ?: ""
 
             binding.apply {
                 textInputEditTextUsername.setText(receivedUserModel.name)

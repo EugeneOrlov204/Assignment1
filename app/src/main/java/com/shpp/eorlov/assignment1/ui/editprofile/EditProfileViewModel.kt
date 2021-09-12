@@ -36,8 +36,7 @@ class EditProfileViewModel @Inject constructor() : ViewModel() {
         } else {
             loadEvent.value = Results.LOADING
 
-            val data = contactsDatabase.getUserModelFromStorage(userModel)
-            userLiveData.value = data
+            userLiveData.value = userModel
 
             loadEvent.value = Results.OK
         }

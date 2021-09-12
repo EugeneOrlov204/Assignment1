@@ -11,7 +11,7 @@ import javax.inject.Inject
 @HiltViewModel
 class MyProfileViewModel @Inject constructor() : ViewModel() {
 
-    val userLiveData: MutableLiveData<UserModel> by lazy(LazyThreadSafetyMode.NONE)  {
+    val userLiveData: MutableLiveData<UserModel> by lazy(LazyThreadSafetyMode.NONE) {
         MutableLiveData(contactsDatabase.getDefaultUserModel())
     }
 
@@ -27,15 +27,15 @@ class MyProfileViewModel @Inject constructor() : ViewModel() {
         } else {
             loadEvent.value = Results.LOADING
 
-            val data = contactsDatabase.getUserModelFromStorage(userModel)
-            userLiveData.value = data
+            userLiveData.value = userModel
 
             loadEvent.value = Results.OK
         }
     }
 
+    //fixme remove hardcoded data
     fun saveData(login: String) {
-        contactsDatabase.saveUserModelToStorage(userLiveData.value ?: return, login)
+//        contactsDatabase.saveUserModelToStorage(userLiveData.value ?: return, login)
     }
 
 
@@ -46,13 +46,13 @@ class MyProfileViewModel @Inject constructor() : ViewModel() {
      */
     fun isProfileFilledOut(): Boolean {
         val userModel = userLiveData.value ?: return false
-        return userModel.birthDate.isNotEmpty() &&
-                userModel.email.isNotEmpty() &&
-                userModel.name.isNotEmpty() &&
-                userModel.phoneNumber.isNotEmpty() &&
-                userModel.photo.isNotEmpty() &&
-                userModel.profession.isNotEmpty() &&
-                userModel.residenceAddress.isNotEmpty()
+        return userModel.birthDate?.isNotEmpty() ?: false &&
+                userModel.email?.isNotEmpty() ?: false &&
+                userModel.name?.isNotEmpty() ?: false &&
+                userModel.phoneNumber?.isNotEmpty() ?: false &&
+                userModel.photo?.isNotEmpty() ?: false &&
+                userModel.profession?.isNotEmpty() ?: false &&
+                userModel.residenceAddress?.isNotEmpty() ?: false
 
     }
 

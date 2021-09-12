@@ -64,7 +64,7 @@ class MyProfileFragment : BaseFragment() {
 
             userLiveData.observe(viewLifecycleOwner) {
                 updateProfile()
-                viewModel.saveData(receivedUserModel.email)
+                viewModel.saveData(receivedUserModel.email ?: "")
             }
 
             loadEvent.apply {
@@ -112,7 +112,7 @@ class MyProfileFragment : BaseFragment() {
             textViewUserNameMyProfile.text = userModel.name
             textViewUserProfessionMyProfile.text = userModel.profession
             textViewPersonResidence.text = userModel.residenceAddress
-            imageViewUserImageMyProfile.loadImage(userModel.photo)
+            imageViewUserImageMyProfile.loadImage(userModel.photo ?: "")
             textViewGoToSettingsAndFillOutTheProfile.isVisible = !viewModel.isProfileFilledOut()
         }
     }

@@ -89,10 +89,10 @@ class SignUpFragment : BaseFragment() {
                     ).show()
                 }
 
-                Results.REGISTRATION_USER_ERROR -> {
+                Results.INTERNET_ERROR -> {
                     Toast.makeText(
                         requireContext(),
-                        getString(R.string.registration_user_error),
+                        getString(R.string.internet_error),
                         Toast.LENGTH_LONG
                     ).show()
                 }
@@ -103,7 +103,7 @@ class SignUpFragment : BaseFragment() {
         }
         sharedViewModel.registerUser.observe(viewLifecycleOwner) {
             if (it?.code == SUCCESS_RESPONSE_CODE && it.data != null) {
-                viewModel.saveToken(it.data.user.email, it.data.accessToken)
+                viewModel.saveToken(it.data.user.email ?: "" , it.data.accessToken)
 
                 //todo set default values
                 val userModel = UserModel(
@@ -123,7 +123,7 @@ class SignUpFragment : BaseFragment() {
                     )
                 findNavController().navigate(action)
             } else if (it == null) {
-                viewModel.loadEvent.value = Results.REGISTRATION_USER_ERROR
+                viewModel.loadEvent.value = Results.INTERNET_ERROR
             } else {
                 viewModel.loadEvent.value = Results.EXISTED_ACCOUNT_ERROR
             }

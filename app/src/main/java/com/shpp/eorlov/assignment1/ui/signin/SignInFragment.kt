@@ -15,14 +15,14 @@ import androidx.navigation.fragment.findNavController
 import com.shpp.eorlov.assignment1.R
 import com.shpp.eorlov.assignment1.base.BaseFragment
 import com.shpp.eorlov.assignment1.databinding.FragmentSignInBinding
+import com.shpp.eorlov.assignment1.models.AuthorizationResponseModel
 import com.shpp.eorlov.assignment1.models.UserModel
 import com.shpp.eorlov.assignment1.ui.SharedViewModel
-import com.shpp.eorlov.assignment1.ui.signup.SignUpFragmentDirections
 import com.shpp.eorlov.assignment1.utils.Constants
 import com.shpp.eorlov.assignment1.utils.Results
-import com.shpp.eorlov.assignment1.validator.evaluateErrorMessage
 import com.shpp.eorlov.assignment1.utils.ext.hideKeyboard
 import com.shpp.eorlov.assignment1.validator.Validator
+import com.shpp.eorlov.assignment1.validator.evaluateErrorMessage
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 import kotlin.math.abs
@@ -40,7 +40,6 @@ class SignInFragment : BaseFragment() {
     private lateinit var binding: FragmentSignInBinding
 
     private var previousClickTimestamp = SystemClock.uptimeMillis()
-
 
 
     override fun onCreateView(
@@ -118,6 +117,14 @@ class SignInFragment : BaseFragment() {
                             ).show()
                         }
 
+                        Results.INTERNET_ERROR -> {
+                            Toast.makeText(
+                                requireContext(),
+                                getString(R.string.internet_error),
+                                Toast.LENGTH_LONG
+                            ).show()
+                        }
+
                         else -> {
                         }
                     }
@@ -126,29 +133,33 @@ class SignInFragment : BaseFragment() {
             }
         }
 
-        sharedViewModel.authorizeUser.observe(viewLifecycleOwner) {
-            if (it?.code == Constants.SUCCESS_RESPONSE_CODE && it.data != null) {
+        sharedViewModel.authorizeUser.apply {
+            observe(viewLifecycleOwner) {
+                if (it?.code == Constants.SUCCESS_RESPONSE_CODE && it.data != null) {
 
-                val userModel = UserModel(
-                    email = "",
-                    name = "",
-                    profession = "",
-                    photo = "",
-                    phoneNumber = "",
-                    residenceAddress = "",
-                    birthDate = ""
-                )
-
-
-                val action =
-                    SignInFragmentDirections.actionSignInFragmentToCollectionContactFragment(
-                        userModel
+                    val userModel = (value as AuthorizationResponseModel).data?.user ?: UserModel(
+                        email = "",
+                        name = "",
+                        profession = "",
+                        photo = "",
+                        phoneNumber = "",
+                        residenceAddress = "",
+                        birthDate = ""
                     )
-                findNavController().navigate(action)
-            } else if (it == null) {
-                viewModel.loadEvent.value = Results.REGISTRATION_USER_ERROR
-            } else {
-                viewModel.loadEvent.value = Results.EXISTED_ACCOUNT_ERROR
+
+                    println("UserModel is $userModel")
+
+
+                    val action =
+                        SignInFragmentDirections.actionSignInFragmentToCollectionContactFragment(
+                            userModel
+                        )
+                    findNavController().navigate(action)
+                } else if (it == null) {
+                    viewModel.loadEvent.value = Results.INTERNET_ERROR
+                } else {
+                    viewModel.loadEvent.value = Results.NOT_EXISTED_ACCOUNT_ERROR
+                }
             }
         }
     }
