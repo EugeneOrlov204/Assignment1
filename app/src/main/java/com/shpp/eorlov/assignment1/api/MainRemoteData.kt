@@ -5,9 +5,20 @@ import javax.inject.Inject
 
 class MainRemoteData @Inject constructor(private val mainService: MainService) {
 
-    suspend fun registerUser(registerModel: RegisterModel): RegistrationResponseModel? {
+    suspend fun registerUser(registerModel: RegisterModel): RegistrationResponseModel {
         with(mainService.registerUser(registerModel)) {
-            return body()
+
+            val body = body()
+            if (body != null) {
+                return body
+            } else {
+                return RegistrationResponseModel(
+                    this.message(),
+                    this.code(),
+                    this.message(),
+                    null
+                )
+            }
         }
     }
 

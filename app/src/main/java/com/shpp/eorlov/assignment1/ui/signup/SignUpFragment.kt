@@ -102,12 +102,31 @@ class SignUpFragment : BaseFragment() {
             }
         }
         sharedViewModel.registerUser.observe(viewLifecycleOwner) {
-            if (it.code != SUCCESS_RESPONSE_CODE) {
+            if (it?.code == SUCCESS_RESPONSE_CODE && it.data != null) {
+                println("CODE is " + it.code)
+                println("Message is " + it.message)
                 viewModel.saveToken(it.data.user.email, it.data.accessToken)
 
-                //todo postValue vs value
-            } else {
+                val userModel = UserModel(
+                    email = "",
+                    name = "",
+                    profession = "",
+                    photo = "",
+                    phoneNumber = "",
+                    residenceAddress = "",
+                    birthDate = ""
+                )
+
+
+                val action =
+                    SignUpFragmentDirections.actionSignUpFragmentToCollectionContactFragment(
+                        userModel
+                    )
+                findNavController().navigate(action)
+            } else if (it == null) {
                 viewModel.loadEvent.value = Results.REGISTRATION_USER_ERROR
+            } else {
+                viewModel.loadEvent.value = Results.EXISTED_ACCOUNT_ERROR
             }
         }
 
@@ -170,29 +189,14 @@ class SignUpFragment : BaseFragment() {
 
     private fun goToSignUpExtended() {
         binding.apply {
-            val email = textInputEditTextEmail.text.toString()
-            if (isFieldsInvalid() || isExistingAccount(email)
-            ) {
+            if (isFieldsInvalid()) {
                 return
             }
 
-            val userModel = UserModel(
-                email = email,
-                name = "",
-                profession = "",
-                photo = "",
-                phoneNumber = "",
-                residenceAddress = "",
-                birthDate = ""
+            sharedViewModel.registerUser(
+                email = textInputEditTextEmail.text.toString(),
+                password = textInputEditTextPassword.text.toString()
             )
-
-            sharedViewModel.registerUser(email, textInputEditTextPassword.text.toString())
-
-            val action =
-                SignUpFragmentDirections.actionSignUpFragmentToCollectionContactFragment(
-                    userModel
-                )
-            findNavController().navigate(action)
         }
     }
 
@@ -202,13 +206,6 @@ class SignUpFragment : BaseFragment() {
                 binding.textInputEditTextPassword.text.toString().isEmpty() ||
                 !binding.textInputLayoutEmail.error.isNullOrEmpty() ||
                 binding.textInputEditTextEmail.text.toString().isEmpty()
-    }
-
-
-    private fun isExistingAccount(email: String) : Boolean {
-        val accessToken = viewModel.fetchToken(email)
-        sharedViewModel.getUser(accessToken ?: return false)
-        return sharedViewModel.getUser.value?.code == SUCCESS_RESPONSE_CODE
     }
 }
 
