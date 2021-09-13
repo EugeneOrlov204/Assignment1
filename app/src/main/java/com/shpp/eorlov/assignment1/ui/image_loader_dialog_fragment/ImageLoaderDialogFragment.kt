@@ -1,4 +1,4 @@
-package com.shpp.eorlov.assignment1.ui
+package com.shpp.eorlov.assignment1.ui.image_loader_dialog_fragment
 
 import android.content.Intent
 import android.os.Bundle
@@ -6,15 +6,17 @@ import android.provider.MediaStore
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
+import androidx.core.view.doOnPreDraw
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.shpp.eorlov.assignment1.databinding.DialogFragmentLoadImageBinding
-import com.shpp.eorlov.assignment1.ui.dialogfragment.adapter.ImageLoaderRecyclerAdapter
-import com.shpp.eorlov.assignment1.ui.mycontacts.MyContactsViewModel
+import com.shpp.eorlov.assignment1.ui.SharedViewModel
+import com.shpp.eorlov.assignment1.ui.image_loader_dialog_fragment.adapter.ImageLoaderRecyclerAdapter
+import com.shpp.eorlov.assignment1.utils.Results
 import com.shpp.eorlov.assignment1.validator.Validator
-import java.util.*
 import javax.inject.Inject
 
 class ImageLoaderDialogFragment : DialogFragment() {
@@ -22,8 +24,7 @@ class ImageLoaderDialogFragment : DialogFragment() {
     @Inject
     lateinit var validator: Validator
 
-    private val sharedViewModel: SharedViewModel by activityViewModels()
-    private val viewModel: MyContactsViewModel by viewModels()
+    private val viewModel: ImageLoaderViewModel by viewModels()
     private val imageLoaderRecyclerAdapter: ImageLoaderRecyclerAdapter by lazy(LazyThreadSafetyMode.NONE) {
         ImageLoaderRecyclerAdapter()
     }
@@ -62,6 +63,44 @@ class ImageLoaderDialogFragment : DialogFragment() {
 
     private fun setObservers() {
 
+        postponeEnterTransition()
+
+        viewModel.apply {
+            imagesListLiveData.observe(viewLifecycleOwner) { list ->
+                imageLoaderRecyclerAdapter.submitList(list.toMutableList())
+
+                // Start the transition once all views have been
+                // measured and laid out
+                (view?.parent as? ViewGroup)?.doOnPreDraw {
+                    startPostponedEnterTransition()
+                }
+            }
+
+//            loadEvent.apply {
+//                observe(viewLifecycleOwner) { event ->
+//                    when (event) {
+//                        Results.OK -> {
+//                            unlockUI()
+//                            binding.contentLoadingProgressBar.isVisible = false
+//                        }
+//
+//                        Results.LOADING -> {
+//                            lockUI()
+//                            binding.contentLoadingProgressBar.isVisible = true
+//                        }
+//
+//                        Results.INITIALIZE_DATA_ERROR -> {
+//                            unlockUI()
+//                            binding.contentLoadingProgressBar.isVisible = false
+//                            Toast.makeText(requireContext(), event.name, Toast.LENGTH_LONG).show()
+//                        }
+//                        else -> {
+//                        }
+//                    }
+//
+//                }
+//            }
+        }
     }
 
     private fun setListeners() {

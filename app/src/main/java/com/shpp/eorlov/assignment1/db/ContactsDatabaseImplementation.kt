@@ -2,7 +2,6 @@ package com.shpp.eorlov.assignment1.db
 
 import com.shpp.eorlov.assignment1.models.UserModel
 import com.shpp.eorlov.assignment1.storage.SharedPreferencesStorage
-import com.shpp.eorlov.assignment1.utils.Constants
 import com.shpp.eorlov.assignment1.utils.Constants.DEFAULT_PATH_TO_IMAGE
 import javax.inject.Inject
 
@@ -13,6 +12,20 @@ class ContactsDatabaseImplementation @Inject constructor() : ContactsDatabase {
     lateinit var storage: SharedPreferencesStorage
 
     val listOfContacts: MutableList<UserModel> by lazy(LazyThreadSafetyMode.NONE) { loadPersonData() }
+
+    val listOfImages: MutableList<String> by lazy(LazyThreadSafetyMode.NONE) { loadImages() }
+
+    override fun loadImages(): MutableList<String> {
+        val urlOfPhoto = DEFAULT_PATH_TO_IMAGE
+        val result = mutableListOf<String>()
+
+        //todo remove hardcoded data
+        for (i in 0..9) {
+            result.add(urlOfPhoto + i)
+        }
+
+        return result
+    }
 
     override fun getDefaultUserModel(): UserModel =
         UserModel(

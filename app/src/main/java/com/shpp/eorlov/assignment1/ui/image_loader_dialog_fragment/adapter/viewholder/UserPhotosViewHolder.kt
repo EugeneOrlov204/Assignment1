@@ -1,4 +1,4 @@
-package com.shpp.eorlov.assignment1.ui.dialogfragment.adapter.viewholder
+package com.shpp.eorlov.assignment1.ui.image_loader_dialog_fragment.adapter.viewholder
 
 import androidx.core.net.toUri
 import androidx.recyclerview.widget.RecyclerView

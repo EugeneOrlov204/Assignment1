@@ -1,10 +1,10 @@
-package com.shpp.eorlov.assignment1.ui.dialogfragment.adapter
+package com.shpp.eorlov.assignment1.ui.image_loader_dialog_fragment.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.ListAdapter
 import com.shpp.eorlov.assignment1.databinding.PhotoListItemBinding
-import com.shpp.eorlov.assignment1.ui.dialogfragment.adapter.viewholder.UserPhotosViewHolder
+import com.shpp.eorlov.assignment1.ui.image_loader_dialog_fragment.adapter.viewholder.UserPhotosViewHolder
 import com.shpp.eorlov.assignment1.utils.Constants
 import com.shpp.eorlov.assignment1.utils.UserPhotoItemDiffCallback
 

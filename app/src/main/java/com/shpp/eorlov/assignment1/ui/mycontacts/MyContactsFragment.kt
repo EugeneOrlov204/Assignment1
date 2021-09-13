@@ -20,7 +20,7 @@ import com.shpp.eorlov.assignment1.base.BaseFragment
 import com.shpp.eorlov.assignment1.databinding.FragmentMyContactsBinding
 import com.shpp.eorlov.assignment1.models.UserModel
 import com.shpp.eorlov.assignment1.ui.SharedViewModel
-import com.shpp.eorlov.assignment1.ui.dialogfragment.ContactDialogFragment
+import com.shpp.eorlov.assignment1.ui.contact_dialog_fragment.ContactDialogFragment
 import com.shpp.eorlov.assignment1.ui.mycontacts.adapter.ContactsRecyclerAdapter
 import com.shpp.eorlov.assignment1.ui.mycontacts.adapter.listeners.ButtonClickListener
 import com.shpp.eorlov.assignment1.ui.mycontacts.adapter.listeners.ContactClickListener
