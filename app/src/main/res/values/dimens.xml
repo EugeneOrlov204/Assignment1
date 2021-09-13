@@ -15,10 +15,12 @@
     <dimen name="text_size_small_14sp">14sp</dimen>
 
 
-    <!--Main Activity-->
+    <!--My profile-->
     <dimen name="size_of_picture_108dp">108dp</dimen>
+    <dimen name="height_edit_profile_button_40dp">40dp</dimen>
+    <dimen name="margin_bottom_edit_profile_button_12dp">12dp</dimen>
 
-    <!--Auth Activity-->
+    <!--Sign up-->
     <dimen name="margin_top_password_24dp">24dp</dimen>
     <dimen name="remember_me_margin_top_18dp">18dp</dimen>
     <dimen name="remember_me_check_box_size_18dp">18dp</dimen>
@@ -70,5 +72,12 @@
     <dimen name="check_box_contact_selected_margin_end_12dp">12dp</dimen>
     <dimen name="google_button_height_40dp">40dp</dimen>
 
+    <!--Sign up extended-->
+    <dimen name="margin_start_user_image_112dp">112dp</dimen>
+    <dimen name="margin_top_user_image_71dp">71dp</dimen>
+    <dimen name="margin_start_image_loader_22dp">22dp</dimen>
+    <dimen name="margin_top_user_name_50dp">50dp</dimen>
+    <dimen name="margin_top_user_profile_data_24dp">24dp</dimen>
+    <dimen name="height_cancel_button_40dp">40dp</dimen>
 
 </resources>

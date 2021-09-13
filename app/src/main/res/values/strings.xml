@@ -61,5 +61,8 @@
     <string name="user_name">User name</string>
     <string name="invalid_username">User name must contain at least 3 letters</string>
     <string name="internet_error">Internet error! Check your Internet connection!</string>
+    <string name="your_profile_data">Your profile data</string>
+    <string name="cancel">Cancel</string>
+    <string name="forward">forward</string>
 
 </resources>

@@ -8,20 +8,38 @@
     android:background="@color/steel_gray"
     android:orientation="vertical">
 
-    <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/guideLineLetsGetAcquainted"
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/imageViewUserImage"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.2" />
+        android:layout_marginStart="@dimen/margin_start_user_image_112dp"
+        android:layout_marginTop="@dimen/margin_top_user_image_71dp"
+        android:background="@drawable/ic_user_mockup_background"
+        android:foreground="@drawable/ic_user_mockup"
+        android:foregroundGravity="center"
+        app:layout_constraintEnd_toStartOf="@id/imageViewImageLoader"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/imageViewImageLoader"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/margin_start_image_loader_22dp"
+        android:background="@drawable/ic_load_image"
+        app:layout_constraintBottom_toBottomOf="@id/imageViewUserImage"
+        app:layout_constraintStart_toEndOf="@id/imageViewUserImage"
+        app:layout_constraintTop_toTopOf="@id/imageViewUserImage" />
+
 
     <com.google.android.material.textview.MaterialTextView
-        android:id="@+id/textViewLetsGetAcquainted"
+        android:id="@+id/yourProfileData"
         style="@style/regular_text"
-        android:text="@string/lets_get_acquainted"
+        android:layout_marginTop="@dimen/margin_top_user_profile_data_24dp"
+        android:text="@string/your_profile_data"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@id/guideLineLetsGetAcquainted" />
+        app:layout_constraintTop_toBottomOf="@id/imageViewUserImage" />
 
 
     <com.google.android.material.textview.MaterialTextView
@@ -33,14 +51,15 @@
         android:text="@string/fill_out_the_profile"
         android:textColor="@color/alabaster"
         android:textSize="@dimen/text_size_small_12sp"
-        app:layout_constraintEnd_toEndOf="@+id/textViewLetsGetAcquainted"
-        app:layout_constraintStart_toStartOf="@+id/textViewLetsGetAcquainted"
-        app:layout_constraintTop_toBottomOf="@+id/textViewLetsGetAcquainted" />
+        app:layout_constraintEnd_toEndOf="@+id/yourProfileData"
+        app:layout_constraintStart_toStartOf="@+id/yourProfileData"
+        app:layout_constraintTop_toBottomOf="@+id/yourProfileData" />
 
 
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/textViewUserName"
         style="@style/input_field_title_text"
+        android:layout_marginTop="@dimen/margin_top_user_name_50dp"
         android:text="@string/user_name"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textViewFillOutTheProfile" />
@@ -88,109 +107,33 @@
             android:textColor="@color/alabaster" />
     </com.google.android.material.textfield.TextInputLayout>
 
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/google_button_height_40dp"
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/buttonCancel"
+        android:layout_width="0dp"
+        android:layout_height="@dimen/height_cancel_button_40dp"
         android:layout_marginHorizontal="@dimen/margin_normal_16dp"
-        android:layout_marginBottom="@dimen/register_button_margin_bottom_12dp"
-        android:background="@drawable/google_button"
-        app:layout_constraintBottom_toTopOf="@+id/textViewOr"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent">
-
-        <androidx.appcompat.widget.AppCompatImageView
-            android:id="@+id/imageViewGoogle"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:src="@drawable/ic_google_icon"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@id/textViewGoogle"
-            app:layout_constraintHorizontal_chainStyle="packed"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/textViewGoogle"
-            style="@style/profile_button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/margin_normal_16dp"
-            android:text="@string/google"
-            android:textAllCaps="true"
-            android:textColor="@color/black_russian"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@id/imageViewGoogle"
-            app:layout_constraintTop_toTopOf="parent" />
-
-    </androidx.constraintlayout.widget.ConstraintLayout>
-
-    <androidx.appcompat.widget.AppCompatTextView
-        android:id="@+id/textViewOr"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="@dimen/margin_small_8dp"
-        android:text="@string/or"
-        android:textAlignment="center"
+        android:layout_marginBottom="@dimen/margin_normal_16dp"
+        android:background="@drawable/cancel_button"
+        android:fontFamily="@font/open_sans"
+        android:text="@string/cancel"
         android:textColor="@color/alabaster"
-        android:textSize="@dimen/text_size_normal_18sp"
-        app:layout_constraintBottom_toTopOf="@+id/buttonRegister"
+        android:textSize="@dimen/text_size_small_14sp"
+        android:textAllCaps="false"
+        app:layout_constraintBottom_toTopOf="@id/buttonForward"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        android:stateListAnimator="@null"/>
+
 
     <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/buttonRegister"
+        android:id="@+id/buttonForward"
         style="@style/profile_button"
-        android:layout_marginHorizontal="@dimen/margin_normal_16dp"
-        android:layout_marginBottom="@dimen/register_button_margin_bottom_12dp"
-        android:background="@drawable/register_button"
-        android:text="@string/register"
-        app:layout_constraintBottom_toTopOf="@+id/textViewCopyright"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
-
-    <androidx.appcompat.widget.AppCompatTextView
-        android:id="@+id/textViewCopyright"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginHorizontal="@dimen/margin_normal_16dp"
-        android:layout_marginBottom="@dimen/copyright_margin_bottom_12dp"
-        android:text="@string/copyright"
-        android:textAlignment="center"
-        android:textColor="@color/silver"
-        android:textSize="@dimen/text_size_small_12sp"
-        app:layout_constraintBottom_toTopOf="@+id/textViewAlreadyHaveAccount"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
-
-    <androidx.appcompat.widget.AppCompatTextView
-        android:id="@+id/textViewAlreadyHaveAccount"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="@dimen/already_have_account_margin_bottom_18dp"
-        android:text="@string/already_have_an_account"
-        android:textAlignment="center"
-        android:textColor="@color/light_gray"
-        android:textSize="@dimen/text_size_small_14sp"
+        android:layout_margin="@dimen/margin_normal_16dp"
+        android:background="@drawable/round_corner_7dp"
+        android:text="@string/forward"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/textViewSignIn"
-        app:layout_constraintHorizontal_chainStyle="packed"
-        app:layout_constraintStart_toStartOf="@+id/textViewCopyright" />
-
-    <androidx.appcompat.widget.AppCompatTextView
-        android:id="@+id/textViewSignIn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/sign_in_margin_start_12dp"
-        android:text="@string/sign_in"
-        android:textAlignment="center"
-        android:textColor="@android:color/white"
-        android:textSize="@dimen/text_size_small_14sp"
-        app:layout_constraintBottom_toBottomOf="@+id/textViewAlreadyHaveAccount"
-        app:layout_constraintEnd_toEndOf="@+id/textViewCopyright"
-        app:layout_constraintStart_toEndOf="@id/textViewAlreadyHaveAccount"
-        app:layout_constraintTop_toTopOf="@+id/textViewAlreadyHaveAccount" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 
     <androidx.core.widget.ContentLoadingProgressBar
         android:id="@+id/contentLoadingProgressBar"
