@@ -79,5 +79,7 @@
     <dimen name="margin_top_user_name_50dp">50dp</dimen>
     <dimen name="margin_top_user_profile_data_24dp">24dp</dimen>
     <dimen name="height_cancel_button_40dp">40dp</dimen>
+    <dimen name="height_image_loader_container_219dp">219dp</dimen>
+    <dimen name="size_photo_list_item_85dp">85dp</dimen>
 
 </resources>

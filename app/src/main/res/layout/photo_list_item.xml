@@ -1,0 +1,6 @@
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/constraintLayoutPhotoListItem"
+    android:layout_width="@dimen/size_photo_list_item_85dp"
+    android:layout_height="@dimen/size_photo_list_item_85dp"
+    android:layout_margin="@dimen/margin_small_8dp"
+    android:background="@drawable/ic_photo_list_item_background"/>
