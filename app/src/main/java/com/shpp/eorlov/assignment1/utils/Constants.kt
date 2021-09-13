@@ -5,12 +5,9 @@ object Constants {
     const val MIN_SIZE_OF_PHONE_NUMBER = 10
 
     //General
-    const val LAST_SAVED_LOGIN: String = "Last saved login"
-    const val LAST_SAVED_PASSWORD: String = "Last saved password"
     const val DATE_FORMAT = "dd/MM/yyyy"
     const val BUTTON_CLICK_DELAY: Long = 2000
-    const val PROFILE_LOGIN = "Login"
-    const val PROFILE_PASSWORD = "Password"
+    const val INVALID_CREDENTIALS_CODE = 403
     const val SUCCESS_RESPONSE_CODE = 200
 
     //Validator
@@ -18,13 +15,6 @@ object Constants {
     const val DATE_REGEX_PATTERN = "^(1[0-9]|0[1-9]|3[0-1]|2[1-9])/(0[1-9]|1[0-2])/[0-9]{4}$"
 
     //ContactsDatabase
-    const val MY_PROFILE_NAME_KEY: String = "My profile name"
-    const val MY_PROFILE_PROFESSION_KEY: String = "My profile profession"
-    const val MY_PROFILE_PHOTO_KEY: String = "My profile photo"
-    const val MY_PROFILE_RESIDENCE_KEY: String = "My profile residence"
-    const val MY_PROFILE_BIRTHDATE_KEY: String = "My profile birthdate"
-    const val MY_PROFILE_PHONE_KEY: String = "My profile phone"
-    const val MY_PROFILE_EMAIL_KEY: String = "My profile email"
     const val DEFAULT_PATH_TO_IMAGE = "https://i.pravatar.cc/50"
 
     //MyContactsFragment

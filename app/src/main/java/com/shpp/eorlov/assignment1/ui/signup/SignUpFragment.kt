@@ -18,6 +18,7 @@ import com.shpp.eorlov.assignment1.databinding.FragmentSignUpBinding
 import com.shpp.eorlov.assignment1.models.UserModel
 import com.shpp.eorlov.assignment1.ui.SharedViewModel
 import com.shpp.eorlov.assignment1.utils.Constants
+import com.shpp.eorlov.assignment1.utils.Constants.INVALID_CREDENTIALS_CODE
 import com.shpp.eorlov.assignment1.utils.Constants.SUCCESS_RESPONSE_CODE
 import com.shpp.eorlov.assignment1.utils.Results
 import com.shpp.eorlov.assignment1.utils.ext.hideKeyboard
@@ -81,18 +82,18 @@ class SignUpFragment : BaseFragment() {
                     Toast.makeText(requireContext(), event.name, Toast.LENGTH_LONG).show()
                 }
 
-                Results.EXISTED_ACCOUNT_ERROR -> {
-                    Toast.makeText(
-                        requireContext(),
-                        getString(R.string.existed_account_error_text),
-                        Toast.LENGTH_LONG
-                    ).show()
-                }
-
                 Results.INTERNET_ERROR -> {
                     Toast.makeText(
                         requireContext(),
                         getString(R.string.internet_error),
+                        Toast.LENGTH_LONG
+                    ).show()
+                }
+
+                Results.EXISTED_ACCOUNT_ERROR -> {
+                    Toast.makeText(
+                        requireContext(),
+                        getString(R.string.existed_account_error_text),
                         Toast.LENGTH_LONG
                     ).show()
                 }
@@ -103,7 +104,7 @@ class SignUpFragment : BaseFragment() {
         }
         sharedViewModel.registerUser.observe(viewLifecycleOwner) {
             if (it?.code == SUCCESS_RESPONSE_CODE && it.data != null) {
-                viewModel.saveToken(it.data.user.email ?: "" , it.data.accessToken)
+                viewModel.saveToken(it.data.user.email ?: "", it.data.accessToken)
 
                 //todo set default values
                 val userModel = UserModel(

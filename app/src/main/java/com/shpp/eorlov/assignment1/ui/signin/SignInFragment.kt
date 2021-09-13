@@ -19,6 +19,7 @@ import com.shpp.eorlov.assignment1.models.AuthorizationResponseModel
 import com.shpp.eorlov.assignment1.models.UserModel
 import com.shpp.eorlov.assignment1.ui.SharedViewModel
 import com.shpp.eorlov.assignment1.utils.Constants
+import com.shpp.eorlov.assignment1.utils.Constants.INVALID_CREDENTIALS_CODE
 import com.shpp.eorlov.assignment1.utils.Results
 import com.shpp.eorlov.assignment1.utils.ext.hideKeyboard
 import com.shpp.eorlov.assignment1.validator.Validator
@@ -101,26 +102,28 @@ class SignInFragment : BaseFragment() {
                             Toast.makeText(requireContext(), event.name, Toast.LENGTH_LONG).show()
                         }
 
-                        Results.NOT_EXISTED_ACCOUNT_ERROR -> {
+
+                        Results.INVALID_CREDENTIALS -> {
                             Toast.makeText(
                                 requireContext(),
-                                getString(R.string.not_existed_account_error_text),
+                                getString(R.string.invalid_credentials),
                                 Toast.LENGTH_LONG
                             ).show()
                         }
 
-                        Results.INVALID_PASSWORD -> {
-                            Toast.makeText(
-                                requireContext(),
-                                getString(R.string.wrong_password),
-                                Toast.LENGTH_LONG
-                            ).show()
-                        }
 
                         Results.INTERNET_ERROR -> {
                             Toast.makeText(
                                 requireContext(),
                                 getString(R.string.internet_error),
+                                Toast.LENGTH_LONG
+                            ).show()
+                        }
+
+                        Results.NOT_EXISTED_ACCOUNT_ERROR -> {
+                            Toast.makeText(
+                                requireContext(),
+                                getString(R.string.not_existed_account_error_text),
                                 Toast.LENGTH_LONG
                             ).show()
                         }
@@ -157,6 +160,8 @@ class SignInFragment : BaseFragment() {
                     findNavController().navigate(action)
                 } else if (it == null) {
                     viewModel.loadEvent.value = Results.INTERNET_ERROR
+                } else if (it.code == INVALID_CREDENTIALS_CODE) {
+                    viewModel.loadEvent.value = Results.INVALID_CREDENTIALS
                 } else {
                     viewModel.loadEvent.value = Results.NOT_EXISTED_ACCOUNT_ERROR
                 }
