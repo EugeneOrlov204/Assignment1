@@ -43,8 +43,8 @@
         android:label="fragment_sign_up"
         tools:layout="@layout/fragment_sign_up">
         <action
-            android:id="@+id/action_signUpFragment_to_collectionContactFragment"
-            app:destination="@id/collectionContactFragment" />
+            android:id="@+id/action_signUpFragment_to_imageLoaderDialogFragment"
+            app:destination="@id/imageLoaderDialogFragment" />
     </fragment>
     <fragment
         android:id="@+id/signInFragment"
@@ -61,5 +61,17 @@
         <action
             android:id="@+id/action_signInFragment_to_signUpFragment"
             app:destination="@id/signUpFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/imageLoaderDialogFragment"
+        android:name="com.shpp.eorlov.assignment1.ui.image_loader_dialog_fragment.ImageLoaderDialogFragment"
+        android:label="fragment_sign_up_extended"
+        tools:layout="@layout/fragment_sign_up_extended" >
+        <action
+            android:id="@+id/action_imageLoaderDialogFragment_to_collectionContactFragment"
+            app:destination="@id/collectionContactFragment" />
+        <argument
+            android:name="userModel"
+            app:argType="com.shpp.eorlov.assignment1.models.UserModel" />
     </fragment>
 </navigation>

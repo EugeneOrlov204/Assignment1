@@ -102,13 +102,13 @@ class SignUpFragment : BaseFragment() {
                 }
             }
         }
-        sharedViewModel.registerUser.observe(viewLifecycleOwner) {
-            if (it?.code == SUCCESS_RESPONSE_CODE && it.data != null) {
+        sharedViewModel.getUser.observe(viewLifecycleOwner) {
+            if (it?.code != SUCCESS_RESPONSE_CODE) {
                 viewModel.saveToken(it.data.user.email ?: "", it.data.accessToken)
 
                 //todo set default values
                 val userModel = UserModel(
-                    email = "",
+                    email = it.data.user.email,
                     name = "",
                     profession = "",
                     photo = "",
@@ -119,12 +119,10 @@ class SignUpFragment : BaseFragment() {
 
 
                 val action =
-                    SignUpFragmentDirections.actionSignUpFragmentToCollectionContactFragment(
+                    SignUpFragmentDirections.actionSignUpFragmentToImageLoaderDialogFragment(
                         userModel
                     )
                 findNavController().navigate(action)
-            } else if (it == null) {
-                viewModel.loadEvent.value = Results.INTERNET_ERROR
             } else {
                 viewModel.loadEvent.value = Results.EXISTED_ACCOUNT_ERROR
             }

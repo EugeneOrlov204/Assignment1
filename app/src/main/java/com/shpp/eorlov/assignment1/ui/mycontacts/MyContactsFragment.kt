@@ -40,7 +40,6 @@ class MyContactsFragment : BaseFragment(),
     ContactClickListener,
     ButtonClickListener {
 
-
     private val sharedViewModel: SharedViewModel by activityViewModels()
     private val viewModel: MyContactsViewModel by viewModels()
 
@@ -55,7 +54,6 @@ class MyContactsFragment : BaseFragment(),
             onContactClickListener = this
         )
     }
-
 
     override fun onCreateView(
         inflater: LayoutInflater,

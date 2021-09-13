@@ -6,7 +6,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/steel_gray"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    tools:context=".ui.image_loader_dialog_fragment.ImageLoaderDialogFragment">
 
     <androidx.appcompat.widget.AppCompatImageView
         android:id="@+id/imageViewUserImage"
@@ -115,14 +116,14 @@
         android:layout_marginBottom="@dimen/margin_normal_16dp"
         android:background="@drawable/cancel_button"
         android:fontFamily="@font/open_sans"
+        android:stateListAnimator="@null"
         android:text="@string/cancel"
+        android:textAllCaps="false"
         android:textColor="@color/alabaster"
         android:textSize="@dimen/text_size_small_14sp"
-        android:textAllCaps="false"
         app:layout_constraintBottom_toTopOf="@id/buttonForward"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        android:stateListAnimator="@null"/>
+        app:layout_constraintStart_toStartOf="parent" />
 
 
     <androidx.appcompat.widget.AppCompatButton
