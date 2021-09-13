@@ -1,6 +1,13 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/constraintLayoutPhotoListItem"
     android:layout_width="@dimen/size_photo_list_item_85dp"
     android:layout_height="@dimen/size_photo_list_item_85dp"
     android:layout_margin="@dimen/margin_small_8dp"
-    android:background="@drawable/ic_photo_list_item_background"/>
+    android:background="@drawable/ic_photo_list_item_background">
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/imageViewUserImage"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:src="@drawable/ic_default_user_image"/>
+</androidx.constraintlayout.widget.ConstraintLayout>

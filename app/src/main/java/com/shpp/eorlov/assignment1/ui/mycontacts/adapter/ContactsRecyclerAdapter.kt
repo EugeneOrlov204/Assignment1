@@ -3,18 +3,18 @@ package com.shpp.eorlov.assignment1.ui.mycontacts.adapter
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.ListAdapter
-import com.shpp.eorlov.assignment1.databinding.ListItemBinding
+import com.shpp.eorlov.assignment1.databinding.ContactListItemBinding
 import com.shpp.eorlov.assignment1.models.UserModel
 import com.shpp.eorlov.assignment1.ui.mycontacts.adapter.listeners.ContactClickListener
 import com.shpp.eorlov.assignment1.ui.mycontacts.adapter.viewholders.ContactsViewHolder
 import com.shpp.eorlov.assignment1.utils.Constants
-import com.shpp.eorlov.assignment1.utils.UserItemDiffCallback
+import com.shpp.eorlov.assignment1.utils.ContactItemDiffCallback
 
 
 class ContactsRecyclerAdapter(
     private val onContactClickListener: ContactClickListener,
     private var multiSelect: Boolean = false
-) : ListAdapter<UserModel, ContactsViewHolder>(UserItemDiffCallback()) {
+) : ListAdapter<UserModel, ContactsViewHolder>(ContactItemDiffCallback()) {
 
 
     // Keeps track of all the selected images
@@ -25,7 +25,7 @@ class ContactsRecyclerAdapter(
      */
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ContactsViewHolder {
         return ContactsViewHolder(
-            ListItemBinding.inflate(
+            ContactListItemBinding.inflate(
                 LayoutInflater.from(parent.context), parent, false
             ),
             onContactClickListener,
