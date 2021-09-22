@@ -6,16 +6,12 @@ import android.provider.MediaStore
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.core.view.doOnPreDraw
 import androidx.fragment.app.DialogFragment
-import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.shpp.eorlov.assignment1.databinding.DialogFragmentLoadImageBinding
-import com.shpp.eorlov.assignment1.ui.SharedViewModel
 import com.shpp.eorlov.assignment1.ui.image_loader_dialog_fragment.adapter.ImageLoaderRecyclerAdapter
-import com.shpp.eorlov.assignment1.utils.Results
 import com.shpp.eorlov.assignment1.validator.Validator
 import javax.inject.Inject
 
@@ -104,7 +100,7 @@ class ImageLoaderDialogFragment : DialogFragment() {
     }
 
     private fun setListeners() {
-        TODO("Not yet implemented")
+        //todo "Not yet implemented"
     }
 
 

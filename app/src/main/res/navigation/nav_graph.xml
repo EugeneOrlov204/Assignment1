@@ -71,7 +71,10 @@
             android:id="@+id/action_imageLoaderDialogFragment_to_collectionContactFragment"
             app:destination="@id/collectionContactFragment" />
         <argument
-            android:name="userModel"
-            app:argType="com.shpp.eorlov.assignment1.models.UserModel" />
+            android:name="email"
+            app:argType="string" />
+        <argument
+            android:name="password"
+            app:argType="string" />
     </fragment>
 </navigation>

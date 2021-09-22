@@ -1,4 +1,4 @@
-package com.shpp.eorlov.assignment1.ui.signup
+package com.shpp.eorlov.assignment1.ui.signup_extended
 
 import android.os.Bundle
 import android.os.SystemClock
@@ -12,13 +12,18 @@ import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.fragment.navArgs
 import com.shpp.eorlov.assignment1.R
 import com.shpp.eorlov.assignment1.base.BaseFragment
-import com.shpp.eorlov.assignment1.databinding.FragmentSignUpBinding
+import com.shpp.eorlov.assignment1.databinding.DialogFragmentLoadImageBinding
+import com.shpp.eorlov.assignment1.databinding.FragmentSignUpExtendedBinding
 import com.shpp.eorlov.assignment1.models.UserModel
 import com.shpp.eorlov.assignment1.ui.SharedViewModel
+import com.shpp.eorlov.assignment1.ui.contact_dialog_fragment.ContactDialogFragment
+import com.shpp.eorlov.assignment1.ui.image_loader_dialog_fragment.ImageLoaderDialogFragment
+import com.shpp.eorlov.assignment1.ui.image_loader_dialog_fragment.ImageLoaderDialogFragmentArgs
+import com.shpp.eorlov.assignment1.ui.image_loader_dialog_fragment.ImageLoaderDialogFragmentDirections
 import com.shpp.eorlov.assignment1.utils.Constants
-import com.shpp.eorlov.assignment1.utils.Constants.SUCCESS_RESPONSE_CODE
 import com.shpp.eorlov.assignment1.utils.Results
 import com.shpp.eorlov.assignment1.utils.ext.hideKeyboard
 import com.shpp.eorlov.assignment1.validator.Validator
@@ -28,14 +33,16 @@ import javax.inject.Inject
 import kotlin.math.abs
 
 @AndroidEntryPoint
-class SignUpFragment : BaseFragment() {
+class SignUpExtendedFragment : BaseFragment() {
 
     @Inject
     lateinit var validator: Validator
 
-    private val viewModel: SignUpViewModel by viewModels()
+    private val viewModel: SignUpExtendedViewModel by viewModels()
     private val sharedViewModel: SharedViewModel by activityViewModels()
-    private lateinit var binding: FragmentSignUpBinding
+    private val args: ImageLoaderDialogFragmentArgs by navArgs()
+    private lateinit var binding: FragmentSignUpExtendedBinding
+    private lateinit var dialog: ImageLoaderDialogFragment
     private var previousClickTimestamp = SystemClock.uptimeMillis()
 
 
@@ -44,7 +51,7 @@ class SignUpFragment : BaseFragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        binding = FragmentSignUpBinding.inflate(inflater, container, false)
+        binding = FragmentSignUpExtendedBinding.inflate(inflater, container, false)
         return binding.root
     }
 
@@ -101,15 +108,28 @@ class SignUpFragment : BaseFragment() {
                 }
             }
         }
-        sharedViewModel.authorizeUser.observe(viewLifecycleOwner) {
-            if (it?.code != SUCCESS_RESPONSE_CODE) {
+        sharedViewModel.registerUser.observe(viewLifecycleOwner) {
+            if (it?.code == Constants.SUCCESS_RESPONSE_CODE && it.data != null) {
+//                viewModel.saveToken(it.data.user.email ?: "", it.data.accessToken)
+
+                val userModel = UserModel(
+                    email = args.email,
+                    name = binding.textInputEditTextUserName.text.toString(),
+                    profession = "",
+                    photo = "", //fixme
+                    phoneNumber = binding.textInputEditTextMobilePhone.text.toString(),
+                    residenceAddress = "",
+                    birthDate = ""
+                )
+
 
                 val action =
-                    SignUpFragmentDirections.actionSignUpFragmentToImageLoaderDialogFragment(
-                        binding.textInputEditTextEmail.text.toString(),
-                        binding.textInputEditTextPassword.text.toString(),
+                    ImageLoaderDialogFragmentDirections.actionImageLoaderDialogFragmentToCollectionContactFragment(
+                        userModel//todo is it necessarily?
                     )
                 findNavController().navigate(action)
+            } else if (it == null) {
+                viewModel.loadEvent.value = Results.INTERNET_ERROR
             } else {
                 viewModel.loadEvent.value = Results.EXISTED_ACCOUNT_ERROR
             }
@@ -118,16 +138,25 @@ class SignUpFragment : BaseFragment() {
 
     private fun setListeners() {
 
-        binding.textViewSignIn.setOnClickListener {
+        binding.buttonForward.setOnClickListener {
             if (abs(SystemClock.uptimeMillis() - previousClickTimestamp) > Constants.BUTTON_CLICK_DELAY) {
-                goToSignInProfile()
+                goToMyProfile()
                 previousClickTimestamp = SystemClock.uptimeMillis()
             }
         }
 
-        binding.buttonRegister.setOnClickListener {
+        binding.buttonCancel.setOnClickListener {
             if (abs(SystemClock.uptimeMillis() - previousClickTimestamp) > Constants.BUTTON_CLICK_DELAY) {
-                goToSignUpExtended()
+                activity?.onBackPressed()
+                previousClickTimestamp = SystemClock.uptimeMillis()
+            }
+        }
+
+        binding.imageViewImageLoader.setOnClickListener {
+            if (abs(SystemClock.uptimeMillis() - previousClickTimestamp) > Constants.BUTTON_CLICK_DELAY) {
+                dialog = ImageLoaderDialogFragment()
+                dialog.show(childFragmentManager, Constants.IMAGE_LOADER_DIALOG_TAG)
+
                 previousClickTimestamp = SystemClock.uptimeMillis()
             }
         }
@@ -136,10 +165,10 @@ class SignUpFragment : BaseFragment() {
             it.hideKeyboard()
         }
 
-        binding.textInputEditTextPassword.setOnEditorActionListener { _, actionId, _ ->
+        binding.textInputEditTextMobilePhone.setOnEditorActionListener { _, actionId, _ ->
             if (actionId == EditorInfo.IME_ACTION_DONE) {
                 if (abs(SystemClock.uptimeMillis() - previousClickTimestamp) > Constants.BUTTON_CLICK_DELAY) {
-                    goToSignUpExtended()
+                    goToMyProfile()
                     previousClickTimestamp = SystemClock.uptimeMillis()
                 }
             }
@@ -147,46 +176,38 @@ class SignUpFragment : BaseFragment() {
         }
 
         binding.apply {
-            textInputEditTextEmail.addTextChangedListener {
-                textInputLayoutEmail.error = evaluateErrorMessage(
-                    validator.validateEmail(textInputEditTextEmail.text.toString())
+            textInputEditTextMobilePhone.addTextChangedListener {
+                textInputLayoutMobilePhone.error = evaluateErrorMessage(
+                    validator.validatePhoneNumber(textInputEditTextMobilePhone.text.toString())
                 )
             }
-            textInputEditTextPassword.addTextChangedListener {
-                textInputLayoutPassword.error = evaluateErrorMessage(
-                    validator.validatePassword(textInputEditTextPassword.text.toString())
+            textInputEditTextUserName.addTextChangedListener {
+                textInputLayoutUserName.error = evaluateErrorMessage(
+                    validator.validateUserName(textInputEditTextUserName.text.toString())
                 )
             }
         }
     }
 
-    private fun goToSignInProfile() {
-        if (abs(SystemClock.uptimeMillis() - previousClickTimestamp) > Constants.BUTTON_CLICK_DELAY) {
-            activity?.onBackPressed()
-            previousClickTimestamp = SystemClock.uptimeMillis()
-        }
-    }
-
-
-    private fun goToSignUpExtended() {
+    private fun goToMyProfile() {
         binding.apply {
             if (isFieldsInvalid()) {
                 return
             }
 
-            sharedViewModel.authorizeUser(
-                email = textInputEditTextEmail.text.toString(),
-                password = textInputEditTextPassword.text.toString()
+            sharedViewModel.registerUser(
+                email = args.email,
+                password = args.password
             )
         }
     }
 
 
     private fun isFieldsInvalid(): Boolean {
-        return !binding.textInputLayoutPassword.error.isNullOrEmpty() ||
-                binding.textInputEditTextPassword.text.toString().isEmpty() ||
-                !binding.textInputLayoutEmail.error.isNullOrEmpty() ||
-                binding.textInputEditTextEmail.text.toString().isEmpty()
+        return !binding.textInputLayoutUserName.error.isNullOrEmpty() ||
+                binding.textInputEditTextUserName.text.toString().isEmpty() ||
+                !binding.textInputLayoutMobilePhone.error.isNullOrEmpty() ||
+                binding.textInputEditTextMobilePhone.text.toString().isEmpty()
     }
 }
 

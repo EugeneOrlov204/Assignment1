@@ -1,7 +1,6 @@
 package com.shpp.eorlov.assignment1.ui.signin
 
 import android.os.Bundle
-import android.os.SystemClock
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -21,16 +20,15 @@ import com.shpp.eorlov.assignment1.ui.SharedViewModel
 import com.shpp.eorlov.assignment1.utils.Constants
 import com.shpp.eorlov.assignment1.utils.Constants.INVALID_CREDENTIALS_CODE
 import com.shpp.eorlov.assignment1.utils.Results
+import com.shpp.eorlov.assignment1.utils.ext.clickWithDebounce
 import com.shpp.eorlov.assignment1.utils.ext.hideKeyboard
 import com.shpp.eorlov.assignment1.validator.Validator
 import com.shpp.eorlov.assignment1.validator.evaluateErrorMessage
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
-import kotlin.math.abs
 
 @AndroidEntryPoint
 class SignInFragment : BaseFragment() {
-
 
     @Inject
     lateinit var validator: Validator
@@ -39,9 +37,6 @@ class SignInFragment : BaseFragment() {
     private val sharedViewModel: SharedViewModel by activityViewModels()
 
     private lateinit var binding: FragmentSignInBinding
-
-    private var previousClickTimestamp = SystemClock.uptimeMillis()
-
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -61,6 +56,7 @@ class SignInFragment : BaseFragment() {
 
     override fun onResume() {
         super.onResume()
+        unlockUI()
         printLog("On resume")
     }
 
@@ -171,18 +167,14 @@ class SignInFragment : BaseFragment() {
 
     private fun setListeners() {
 
-        binding.textViewSignUp.setOnClickListener {
-            if (abs(SystemClock.uptimeMillis() - previousClickTimestamp) > Constants.BUTTON_CLICK_DELAY) {
-                goToSignUpProfile()
-                previousClickTimestamp = SystemClock.uptimeMillis()
-            }
+        binding.textViewSignUp.clickWithDebounce {
+            lockUI()
+            goToSignUpProfile()
         }
 
-        binding.buttonLogin.setOnClickListener {
-            if (abs(SystemClock.uptimeMillis() - previousClickTimestamp) > Constants.BUTTON_CLICK_DELAY) {
-                goToMyProfile()
-                previousClickTimestamp = SystemClock.uptimeMillis()
-            }
+        binding.buttonLogin.clickWithDebounce {
+            lockUI()
+            goToMyProfile()
         }
 
         binding.root.setOnClickListener {
@@ -191,10 +183,8 @@ class SignInFragment : BaseFragment() {
 
         binding.textInputEditTextPassword.setOnEditorActionListener { _, actionId, _ ->
             if (actionId == EditorInfo.IME_ACTION_DONE) {
-                if (abs(SystemClock.uptimeMillis() - previousClickTimestamp) > Constants.BUTTON_CLICK_DELAY) {
-                    goToMyProfile()
-                    previousClickTimestamp = SystemClock.uptimeMillis()
-                }
+                lockUI()
+                goToMyProfile()
             }
             false
         }
@@ -227,6 +217,7 @@ class SignInFragment : BaseFragment() {
         val email = binding.textInputEditTextEmail.text.toString()
         val password = binding.textInputEditTextPassword.text.toString()
         if (isFieldsInvalid()) {
+            unlockUI()
             return
         }
 
@@ -249,5 +240,7 @@ class SignInFragment : BaseFragment() {
                 !binding.textInputLayoutEmail.error.isNullOrEmpty() ||
                 binding.textInputEditTextEmail.text.toString().isEmpty()
 }
+
+
 
 
