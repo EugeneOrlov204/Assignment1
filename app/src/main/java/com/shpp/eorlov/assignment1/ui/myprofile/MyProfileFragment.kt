@@ -6,6 +6,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.activity.OnBackPressedCallback
+import androidx.activity.addCallback
 import androidx.core.view.isVisible
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
@@ -18,11 +20,15 @@ import com.shpp.eorlov.assignment1.ui.viewpager.CollectionContactFragment
 import com.shpp.eorlov.assignment1.ui.viewpager.CollectionContactFragmentDirections
 import com.shpp.eorlov.assignment1.ui.viewpager.ContactCollectionAdapter
 import com.shpp.eorlov.assignment1.utils.Constants
+import com.shpp.eorlov.assignment1.utils.IOnBackPressed
 import com.shpp.eorlov.assignment1.utils.Results
 import com.shpp.eorlov.assignment1.utils.ext.clickWithDebounce
 import com.shpp.eorlov.assignment1.utils.ext.loadImage
 import dagger.hilt.android.AndroidEntryPoint
-import kotlin.math.abs
+
+import com.google.android.material.snackbar.Snackbar
+import com.shpp.eorlov.assignment1.R
+
 
 @AndroidEntryPoint
 class MyProfileFragment : BaseFragment() {
@@ -35,6 +41,15 @@ class MyProfileFragment : BaseFragment() {
     private lateinit var userModel: UserModel
     private lateinit var receivedUserModel: UserModel
 
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+
+        activity?.onBackPressedDispatcher?.addCallback(this, object : OnBackPressedCallback(true) {
+            override fun handleOnBackPressed() {
+                showAreYouSureDialog()
+            }
+        })
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -57,6 +72,16 @@ class MyProfileFragment : BaseFragment() {
     override fun onResume() {
         super.onResume()
         printLog("On resume")
+    }
+
+    private fun showAreYouSureDialog() {
+        Snackbar.make(
+            binding.root,
+            getString(R.string.are_you_sure),
+            Constants.SNACKBAR_DURATION
+        ).setAction("Yes") {
+            requireActivity().finish()
+        }.show()
     }
 
     private fun setObservers() {

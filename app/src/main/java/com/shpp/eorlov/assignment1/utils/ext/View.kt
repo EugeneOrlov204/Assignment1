@@ -10,7 +10,7 @@ fun View.hideKeyboard() {
     inputMethodManager.hideSoftInputFromWindow(windowToken, 0)
 }
 
-fun View.clickWithDebounce(debounceTime: Long = 5000L, action: () -> Unit) {
+fun View.clickWithDebounce(debounceTime: Long = 2000L, action: () -> Unit) {
     this.setOnClickListener(object : View.OnClickListener {
         private var lastClickTime: Long = 0
 

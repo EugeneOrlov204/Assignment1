@@ -155,7 +155,7 @@ class SignUpExtendedFragment : BaseFragment() {
             setOnEditorActionListener { _, actionId, _ ->
                 if (actionId == EditorInfo.IME_ACTION_DONE) {
                     binding.textInputLayoutMobilePhone.error = evaluateErrorMessage(
-                        validator.validatePassword(text.toString())
+                        validator.validatePhoneNumber(text.toString())
                     )
                     goToMyProfile()
                 }
@@ -187,6 +187,15 @@ class SignUpExtendedFragment : BaseFragment() {
     private fun goToMyProfile() {
         binding.apply {
             if (isFieldsInvalid()) {
+
+                textInputLayoutMobilePhone.error = evaluateErrorMessage(
+                    validator.validatePhoneNumber(textInputEditTextMobilePhone.text.toString())
+                )
+
+                textInputLayoutUserName.error = evaluateErrorMessage(
+                    validator.validateUserName(textInputEditTextUserName.text.toString())
+                )
+
                 return
             }
 

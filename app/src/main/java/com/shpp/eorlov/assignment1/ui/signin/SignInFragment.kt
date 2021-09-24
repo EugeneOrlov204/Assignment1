@@ -204,35 +204,41 @@ class SignInFragment : BaseFragment() {
         }
     }
 
-
     private fun goToSignUpProfile() {
         val action =
             SignInFragmentDirections.actionSignInFragmentToSignUpFragment()
         findNavController().navigate(action)
     }
 
-
     /**
      * Change current activity to MainActivity
      */
     private fun goToMyProfile() {
-        val email = binding.textInputEditTextEmail.text.toString()
-        val password = binding.textInputEditTextPassword.text.toString()
-        if (isFieldsInvalid()) {
-            return
-        }
-
-        //todo implement autologin
         binding.apply {
+            val email = textInputEditTextEmail.text.toString()
+            val password = textInputEditTextPassword.text.toString()
+            if (isFieldsInvalid()) {
+                textInputLayoutPassword.error = evaluateErrorMessage(
+                    validator.validatePassword(textInputEditTextPassword.text.toString())
+                )
+
+                textInputLayoutEmail.error = evaluateErrorMessage(
+                    validator.validateEmail(textInputEditTextEmail.text.toString())
+                )
+
+                return
+            }
+
+            //todo implement autologin
 //            if (checkBoxRememberMe.isChecked) {
 //                viewModel.saveLoginData(
 //                    email, //Login
 //                    textInputEditTextPassword.text.toString() //Password
 //                )
 //            }
-        }
 
-        sharedViewModel.authorizeUser(email, password)
+            sharedViewModel.authorizeUser(email, password)
+        }
     }
 
     private fun isFieldsInvalid() =

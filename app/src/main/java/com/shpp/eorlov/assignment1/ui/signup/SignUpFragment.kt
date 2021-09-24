@@ -170,6 +170,15 @@ class SignUpFragment : BaseFragment() {
     private fun goToSignUpExtended() {
         binding.apply {
             if (isFieldsInvalid()) {
+
+                textInputLayoutPassword.error = evaluateErrorMessage(
+                    validator.validatePassword(textInputEditTextPassword.text.toString())
+                )
+
+                textInputLayoutEmail.error = evaluateErrorMessage(
+                    validator.validateEmail(textInputEditTextEmail.text.toString())
+                )
+
                 return
             }
 

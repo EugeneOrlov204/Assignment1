@@ -35,7 +35,7 @@
 
     <com.google.android.material.textview.MaterialTextView
         android:id="@+id/yourProfileData"
-        style="@style/regular_text"
+        style="@style/RegularText"
         android:layout_marginTop="@dimen/margin_top_user_profile_data_24dp"
         android:text="@string/your_profile_data"
         app:layout_constraintEnd_toEndOf="parent"
@@ -59,7 +59,7 @@
 
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/textViewUserName"
-        style="@style/input_field_title_text"
+        style="@style/InputFieldTitleText"
         android:layout_marginTop="@dimen/margin_top_user_name_50dp"
         android:text="@string/user_name"
         app:layout_constraintStart_toStartOf="parent"
@@ -67,7 +67,7 @@
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/textInputLayoutUserName"
-        style="@style/text_input_layout"
+        style="@style/TextInputLayout"
         android:layout_marginHorizontal="@dimen/margin_normal_16dp"
         app:boxStrokeColor="@color/selector_stroke_color"
         app:errorEnabled="true"
@@ -76,7 +76,7 @@
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/textInputEditTextUserName"
-            style="@style/input_field_text_style"
+            style="@style/InputFieldTextStyle"
             android:inputType="textPersonName"
             android:textColor="@color/alabaster" />
 
@@ -86,7 +86,7 @@
 
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/textViewMobilePhone"
-        style="@style/input_field_title_text"
+        style="@style/InputFieldTitleText"
         android:text="@string/mobile_phone"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textInputLayoutUserName" />
@@ -94,7 +94,7 @@
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/textInputLayoutMobilePhone"
-        style="@style/text_input_layout"
+        style="@style/TextInputLayout"
         android:layout_marginHorizontal="@dimen/margin_normal_16dp"
         app:boxStrokeColor="@color/selector_stroke_color"
         app:errorEnabled="true"
@@ -103,7 +103,7 @@
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/textInputEditTextMobilePhone"
-            style="@style/input_field_text_style"
+            style="@style/InputFieldTextStyle"
             android:inputType="phone"
             android:textColor="@color/alabaster" />
     </com.google.android.material.textfield.TextInputLayout>
@@ -128,7 +128,7 @@
 
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/buttonForward"
-        style="@style/profile_button"
+        style="@style/ProfileButton"
         android:layout_margin="@dimen/margin_normal_16dp"
         android:background="@drawable/round_corner_7dp"
         android:text="@string/forward"

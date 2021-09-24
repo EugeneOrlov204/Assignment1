@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.activity.OnBackPressedCallback
 import androidx.core.view.doOnPreDraw
 import androidx.core.view.isVisible
 import androidx.fragment.app.activityViewModels
@@ -44,7 +45,7 @@ class MyContactsFragment : BaseFragment(),
     private val sharedViewModel: SharedViewModel by activityViewModels()
     private val viewModel: MyContactsViewModel by viewModels()
 
-    private var swipeFlags = ItemTouchHelper.END
+    private var swipeFlags = ItemTouchHelper.START
 
     private lateinit var binding: FragmentMyContactsBinding
     private lateinit var dialog: ContactDialogFragment
@@ -53,6 +54,17 @@ class MyContactsFragment : BaseFragment(),
         ContactsRecyclerAdapter(
             onContactClickListener = this
         )
+    }
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+
+        activity?.onBackPressedDispatcher?.addCallback(this, object : OnBackPressedCallback(true) {
+            override fun handleOnBackPressed() {
+                (parentFragment as CollectionContactFragment).viewPager.currentItem =
+                    ContactCollectionAdapter.ViewPagerItems.PROFILE.position
+            }
+        })
     }
 
     override fun onCreateView(
@@ -115,7 +127,6 @@ class MyContactsFragment : BaseFragment(),
 
     override fun onMultiselectActivated() {
         contactsListAdapter.selectAllContacts()
-        binding.frameLayoutButtonsContainer.visibility = View.VISIBLE
         binding.buttonRemoveSelectedContacts.visibility = View.VISIBLE
         binding.textViewAddContacts.visibility = View.GONE
         viewModel.selectedEvent.value = true
@@ -126,7 +137,6 @@ class MyContactsFragment : BaseFragment(),
 
     override fun onContactSelectedStateChanged() {
         if (contactsListAdapter.areAllItemsUnselected()) {
-            binding.frameLayoutButtonsContainer.visibility = View.GONE
             binding.buttonRemoveSelectedContacts.visibility = View.GONE
             viewModel.selectedEvent.value = false
             binding.textViewAddContacts.visibility = View.VISIBLE
@@ -173,7 +183,6 @@ class MyContactsFragment : BaseFragment(),
         contactsListAdapter.removeSelectedItems()
         refreshRecyclerView()
         if (viewModel.userListLiveData.value?.isEmpty() == true) {
-            binding.frameLayoutButtonsContainer.visibility = View.GONE
             binding.buttonRemoveSelectedContacts.visibility = View.GONE
         }
         viewModel.loadEvent.value = Results.OK
@@ -195,7 +204,7 @@ class MyContactsFragment : BaseFragment(),
         val itemTouchHelperCallBack: ItemTouchHelper.SimpleCallback =
             object : ItemTouchHelper.SimpleCallback(
                 0,
-                ItemTouchHelper.END
+                ItemTouchHelper.START
             ) {
                 override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
                     removeItemFromRecyclerView(
@@ -306,6 +315,7 @@ class MyContactsFragment : BaseFragment(),
 
     private fun setListeners() {
         binding.apply {
+
             textViewAddContacts.clickWithDebounce {
                 dialog = ContactDialogFragment()
                 dialog.show(childFragmentManager, CONTACT_DIALOG_TAG)
@@ -313,10 +323,12 @@ class MyContactsFragment : BaseFragment(),
 
             buttonGoUp.setOnClickListener {
                 recyclerViewMyContacts.smoothScrollToPosition(0)
+                buttonGoUp.visibility = View.GONE
             }
 
             buttonRemoveSelectedContacts.clickWithDebounce {
                 removeSelectedItemsFromRecyclerView()
+                buttonRemoveSelectedContacts.visibility = View.GONE
             }
 
             imageButtonExit.clickWithDebounce {
@@ -332,9 +344,7 @@ class MyContactsFragment : BaseFragment(),
                     if (!contactsListAdapter.isMultiSelect()) {
                         if (dy > 0 && buttonGoUp.visibility == View.VISIBLE) {
                             buttonGoUp.visibility = View.GONE
-                            frameLayoutButtonsContainer.visibility = View.GONE
                         } else if (dy < 0 && buttonGoUp.visibility != View.VISIBLE) {
-                            frameLayoutButtonsContainer.visibility = View.VISIBLE
                             buttonGoUp.visibility = View.VISIBLE
                         }
                     }

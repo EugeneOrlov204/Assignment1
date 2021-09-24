@@ -18,7 +18,7 @@
 
     <com.google.android.material.textview.MaterialTextView
         android:id="@+id/textViewLetsGetAcquainted"
-        style="@style/regular_text"
+        style="@style/RegularText"
         android:text="@string/lets_get_acquainted"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -41,14 +41,14 @@
 
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/textViewEmail"
-        style="@style/input_field_title_text"
+        style="@style/InputFieldTitleText"
         android:text="@string/email"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textViewFillOutTheProfile" />
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/textInputLayoutEmail"
-        style="@style/text_input_layout"
+        style="@style/TextInputLayout"
         android:layout_marginHorizontal="@dimen/margin_normal_16dp"
         app:boxStrokeColor="@color/selector_stroke_color"
         app:errorEnabled="true"
@@ -57,7 +57,7 @@
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/textInputEditTextEmail"
-            style="@style/input_field_text_style"
+            style="@style/InputFieldTextStyle"
             android:inputType="textEmailAddress"
             android:textColor="@color/alabaster"
             android:layout_gravity=""/>
@@ -68,7 +68,7 @@
 
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/textViewPassword"
-        style="@style/input_field_title_text"
+        style="@style/InputFieldTitleText"
         android:text="@string/password"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textInputLayoutEmail" />
@@ -76,7 +76,7 @@
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/textInputLayoutPassword"
-        style="@style/text_input_layout"
+        style="@style/TextInputLayout"
         android:layout_marginHorizontal="@dimen/margin_normal_16dp"
         app:boxStrokeColor="@color/selector_stroke_color"
         app:errorEnabled="true"
@@ -85,7 +85,7 @@
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/textInputEditTextPassword"
-            style="@style/input_field_text_style"
+            style="@style/InputFieldTextStyle"
             android:inputType="textPassword"
             android:textColor="@color/alabaster" />
     </com.google.android.material.textfield.TextInputLayout>
@@ -139,7 +139,7 @@
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/textViewGoogle"
-            style="@style/profile_button"
+            style="@style/ProfileButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/margin_normal_16dp"
@@ -169,7 +169,7 @@
 
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/buttonRegister"
-        style="@style/profile_button"
+        style="@style/ProfileButton"
         android:layout_marginHorizontal="@dimen/margin_normal_16dp"
         android:layout_marginBottom="@dimen/register_button_margin_bottom_12dp"
         android:background="@drawable/register_button"

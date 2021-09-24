@@ -64,5 +64,6 @@
     <string name="your_profile_data">Your profile data</string>
     <string name="cancel">Cancel</string>
     <string name="forward">forward</string>
+    <string name="are_you_sure">Are you sure you wanna exit?</string>
 
 </resources>
