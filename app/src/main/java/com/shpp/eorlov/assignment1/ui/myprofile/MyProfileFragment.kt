@@ -41,16 +41,6 @@ class MyProfileFragment : BaseFragment() {
     private lateinit var userModel: UserModel
     private lateinit var receivedUserModel: UserModel
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-
-        activity?.onBackPressedDispatcher?.addCallback(this, object : OnBackPressedCallback(true) {
-            override fun handleOnBackPressed() {
-                showAreYouSureDialog()
-            }
-        })
-    }
-
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -72,6 +62,12 @@ class MyProfileFragment : BaseFragment() {
     override fun onResume() {
         super.onResume()
         printLog("On resume")
+
+        activity?.onBackPressedDispatcher?.addCallback(this, object : OnBackPressedCallback(true) {
+            override fun handleOnBackPressed() {
+                showAreYouSureDialog()
+            }
+        })
     }
 
     private fun showAreYouSureDialog() {
