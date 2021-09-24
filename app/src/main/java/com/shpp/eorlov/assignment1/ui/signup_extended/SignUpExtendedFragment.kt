@@ -1,7 +1,6 @@
 package com.shpp.eorlov.assignment1.ui.signup_extended
 
 import android.os.Bundle
-import android.os.SystemClock
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -15,22 +14,20 @@ import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.shpp.eorlov.assignment1.R
 import com.shpp.eorlov.assignment1.base.BaseFragment
-import com.shpp.eorlov.assignment1.databinding.DialogFragmentLoadImageBinding
 import com.shpp.eorlov.assignment1.databinding.FragmentSignUpExtendedBinding
 import com.shpp.eorlov.assignment1.models.UserModel
 import com.shpp.eorlov.assignment1.ui.SharedViewModel
-import com.shpp.eorlov.assignment1.ui.contact_dialog_fragment.ContactDialogFragment
 import com.shpp.eorlov.assignment1.ui.image_loader_dialog_fragment.ImageLoaderDialogFragment
 import com.shpp.eorlov.assignment1.ui.image_loader_dialog_fragment.ImageLoaderDialogFragmentArgs
 import com.shpp.eorlov.assignment1.ui.image_loader_dialog_fragment.ImageLoaderDialogFragmentDirections
 import com.shpp.eorlov.assignment1.utils.Constants
 import com.shpp.eorlov.assignment1.utils.Results
+import com.shpp.eorlov.assignment1.utils.ext.clickWithDebounce
 import com.shpp.eorlov.assignment1.utils.ext.hideKeyboard
 import com.shpp.eorlov.assignment1.validator.Validator
 import com.shpp.eorlov.assignment1.validator.evaluateErrorMessage
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
-import kotlin.math.abs
 
 @AndroidEntryPoint
 class SignUpExtendedFragment : BaseFragment() {
@@ -43,7 +40,6 @@ class SignUpExtendedFragment : BaseFragment() {
     private val args: ImageLoaderDialogFragmentArgs by navArgs()
     private lateinit var binding: FragmentSignUpExtendedBinding
     private lateinit var dialog: ImageLoaderDialogFragment
-    private var previousClickTimestamp = SystemClock.uptimeMillis()
 
 
     override fun onCreateView(
@@ -138,27 +134,17 @@ class SignUpExtendedFragment : BaseFragment() {
 
     private fun setListeners() {
 
-        binding.buttonForward.setOnClickListener {
-            if (abs(SystemClock.uptimeMillis() - previousClickTimestamp) > Constants.BUTTON_CLICK_DELAY) {
-                goToMyProfile()
-                previousClickTimestamp = SystemClock.uptimeMillis()
-            }
+        binding.buttonForward.clickWithDebounce {
+            goToMyProfile()
         }
 
-        binding.buttonCancel.setOnClickListener {
-            if (abs(SystemClock.uptimeMillis() - previousClickTimestamp) > Constants.BUTTON_CLICK_DELAY) {
-                activity?.onBackPressed()
-                previousClickTimestamp = SystemClock.uptimeMillis()
-            }
+        binding.buttonCancel.clickWithDebounce {
+            activity?.onBackPressed()
         }
 
-        binding.imageViewImageLoader.setOnClickListener {
-            if (abs(SystemClock.uptimeMillis() - previousClickTimestamp) > Constants.BUTTON_CLICK_DELAY) {
-                dialog = ImageLoaderDialogFragment()
-                dialog.show(childFragmentManager, Constants.IMAGE_LOADER_DIALOG_TAG)
-
-                previousClickTimestamp = SystemClock.uptimeMillis()
-            }
+        binding.imageViewImageLoader.clickWithDebounce {
+            dialog = ImageLoaderDialogFragment()
+            dialog.show(childFragmentManager, Constants.IMAGE_LOADER_DIALOG_TAG)
         }
 
         binding.root.setOnClickListener {
@@ -167,10 +153,7 @@ class SignUpExtendedFragment : BaseFragment() {
 
         binding.textInputEditTextMobilePhone.setOnEditorActionListener { _, actionId, _ ->
             if (actionId == EditorInfo.IME_ACTION_DONE) {
-                if (abs(SystemClock.uptimeMillis() - previousClickTimestamp) > Constants.BUTTON_CLICK_DELAY) {
-                    goToMyProfile()
-                    previousClickTimestamp = SystemClock.uptimeMillis()
-                }
+                goToMyProfile()
             }
             false
         }

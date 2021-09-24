@@ -32,6 +32,7 @@ import com.shpp.eorlov.assignment1.utils.Constants.CONTACT_DIALOG_TAG
 import com.shpp.eorlov.assignment1.utils.Constants.LIST_OF_CONTACTS_KEY
 import com.shpp.eorlov.assignment1.utils.Constants.SNACKBAR_DURATION
 import com.shpp.eorlov.assignment1.utils.Results
+import com.shpp.eorlov.assignment1.utils.ext.clickWithDebounce
 import dagger.hilt.android.AndroidEntryPoint
 import kotlin.math.abs
 
@@ -43,7 +44,6 @@ class MyContactsFragment : BaseFragment(),
     private val sharedViewModel: SharedViewModel by activityViewModels()
     private val viewModel: MyContactsViewModel by viewModels()
 
-    private var previousClickTimestamp = SystemClock.uptimeMillis()
     private var swipeFlags = ItemTouchHelper.END
 
     private lateinit var binding: FragmentMyContactsBinding
@@ -306,32 +306,22 @@ class MyContactsFragment : BaseFragment(),
 
     private fun setListeners() {
         binding.apply {
-            textViewAddContacts.setOnClickListener {
-                if (abs(SystemClock.uptimeMillis() - previousClickTimestamp) > BUTTON_CLICK_DELAY) {
-                    dialog = ContactDialogFragment()
-                    dialog.show(childFragmentManager, CONTACT_DIALOG_TAG)
-
-                    previousClickTimestamp = SystemClock.uptimeMillis()
-                }
+            textViewAddContacts.clickWithDebounce {
+                dialog = ContactDialogFragment()
+                dialog.show(childFragmentManager, CONTACT_DIALOG_TAG)
             }
 
             buttonGoUp.setOnClickListener {
                 recyclerViewMyContacts.smoothScrollToPosition(0)
             }
 
-            buttonRemoveSelectedContacts.setOnClickListener {
-                if (abs(SystemClock.uptimeMillis() - previousClickTimestamp) > BUTTON_CLICK_DELAY) {
-                    removeSelectedItemsFromRecyclerView()
-                    previousClickTimestamp = SystemClock.uptimeMillis()
-                }
+            buttonRemoveSelectedContacts.clickWithDebounce {
+                removeSelectedItemsFromRecyclerView()
             }
 
-            imageButtonExit.setOnClickListener {
-                if (abs(SystemClock.uptimeMillis() - previousClickTimestamp) > BUTTON_CLICK_DELAY) {
-                    (parentFragment as CollectionContactFragment).viewPager.currentItem =
-                        ContactCollectionAdapter.ViewPagerItems.PROFILE.position
-                    previousClickTimestamp = SystemClock.uptimeMillis()
-                }
+            imageButtonExit.clickWithDebounce {
+                (parentFragment as CollectionContactFragment).viewPager.currentItem =
+                    ContactCollectionAdapter.ViewPagerItems.PROFILE.position
             }
 
             recyclerViewMyContacts.addOnScrollListener(object : RecyclerView.OnScrollListener() {

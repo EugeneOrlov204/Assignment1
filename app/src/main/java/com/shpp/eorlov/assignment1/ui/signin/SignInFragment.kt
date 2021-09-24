@@ -168,12 +168,10 @@ class SignInFragment : BaseFragment() {
     private fun setListeners() {
 
         binding.textViewSignUp.clickWithDebounce {
-            lockUI()
             goToSignUpProfile()
         }
 
         binding.buttonLogin.clickWithDebounce {
-            lockUI()
             goToMyProfile()
         }
 
@@ -240,6 +238,8 @@ class SignInFragment : BaseFragment() {
                 !binding.textInputLayoutEmail.error.isNullOrEmpty() ||
                 binding.textInputEditTextEmail.text.toString().isEmpty()
 }
+
+
 
 
 

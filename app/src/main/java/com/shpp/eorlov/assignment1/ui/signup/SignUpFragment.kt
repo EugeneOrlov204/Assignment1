@@ -20,6 +20,7 @@ import com.shpp.eorlov.assignment1.ui.SharedViewModel
 import com.shpp.eorlov.assignment1.utils.Constants
 import com.shpp.eorlov.assignment1.utils.Constants.SUCCESS_RESPONSE_CODE
 import com.shpp.eorlov.assignment1.utils.Results
+import com.shpp.eorlov.assignment1.utils.ext.clickWithDebounce
 import com.shpp.eorlov.assignment1.utils.ext.hideKeyboard
 import com.shpp.eorlov.assignment1.validator.Validator
 import com.shpp.eorlov.assignment1.validator.evaluateErrorMessage
@@ -36,8 +37,6 @@ class SignUpFragment : BaseFragment() {
     private val viewModel: SignUpViewModel by viewModels()
     private val sharedViewModel: SharedViewModel by activityViewModels()
     private lateinit var binding: FragmentSignUpBinding
-    private var previousClickTimestamp = SystemClock.uptimeMillis()
-
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -118,18 +117,12 @@ class SignUpFragment : BaseFragment() {
 
     private fun setListeners() {
 
-        binding.textViewSignIn.setOnClickListener {
-            if (abs(SystemClock.uptimeMillis() - previousClickTimestamp) > Constants.BUTTON_CLICK_DELAY) {
-                goToSignInProfile()
-                previousClickTimestamp = SystemClock.uptimeMillis()
-            }
+        binding.textViewSignIn.clickWithDebounce {
+            goToSignInProfile()
         }
 
-        binding.buttonRegister.setOnClickListener {
-            if (abs(SystemClock.uptimeMillis() - previousClickTimestamp) > Constants.BUTTON_CLICK_DELAY) {
-                goToSignUpExtended()
-                previousClickTimestamp = SystemClock.uptimeMillis()
-            }
+        binding.buttonRegister.clickWithDebounce {
+            goToSignUpExtended()
         }
 
         binding.root.setOnClickListener {
@@ -138,10 +131,7 @@ class SignUpFragment : BaseFragment() {
 
         binding.textInputEditTextPassword.setOnEditorActionListener { _, actionId, _ ->
             if (actionId == EditorInfo.IME_ACTION_DONE) {
-                if (abs(SystemClock.uptimeMillis() - previousClickTimestamp) > Constants.BUTTON_CLICK_DELAY) {
-                    goToSignUpExtended()
-                    previousClickTimestamp = SystemClock.uptimeMillis()
-                }
+                goToSignUpExtended()
             }
             false
         }
@@ -161,10 +151,7 @@ class SignUpFragment : BaseFragment() {
     }
 
     private fun goToSignInProfile() {
-        if (abs(SystemClock.uptimeMillis() - previousClickTimestamp) > Constants.BUTTON_CLICK_DELAY) {
-            activity?.onBackPressed()
-            previousClickTimestamp = SystemClock.uptimeMillis()
-        }
+        activity?.onBackPressed()
     }
 
 

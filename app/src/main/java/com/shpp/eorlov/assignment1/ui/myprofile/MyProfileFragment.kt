@@ -19,6 +19,7 @@ import com.shpp.eorlov.assignment1.ui.viewpager.CollectionContactFragmentDirecti
 import com.shpp.eorlov.assignment1.ui.viewpager.ContactCollectionAdapter
 import com.shpp.eorlov.assignment1.utils.Constants
 import com.shpp.eorlov.assignment1.utils.Results
+import com.shpp.eorlov.assignment1.utils.ext.clickWithDebounce
 import com.shpp.eorlov.assignment1.utils.ext.loadImage
 import dagger.hilt.android.AndroidEntryPoint
 import kotlin.math.abs
@@ -34,7 +35,6 @@ class MyProfileFragment : BaseFragment() {
     private lateinit var userModel: UserModel
     private lateinit var receivedUserModel: UserModel
 
-    private var previousClickTimestamp = SystemClock.uptimeMillis()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -127,14 +127,9 @@ class MyProfileFragment : BaseFragment() {
             findNavController().navigate(action)
         }
 
-        binding.buttonViewMyContacts.setOnClickListener {
-            if (abs(SystemClock.uptimeMillis() - previousClickTimestamp) > Constants.BUTTON_CLICK_DELAY) {
-
-                (parentFragment as CollectionContactFragment).viewPager.currentItem =
-                    ContactCollectionAdapter.ViewPagerItems.LIST.position
-
-                previousClickTimestamp = SystemClock.uptimeMillis()
-            }
+        binding.buttonViewMyContacts.clickWithDebounce {
+            (parentFragment as CollectionContactFragment).viewPager.currentItem =
+                ContactCollectionAdapter.ViewPagerItems.LIST.position
         }
     }
 }

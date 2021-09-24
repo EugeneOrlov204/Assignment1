@@ -1,13 +1,12 @@
 package com.shpp.eorlov.assignment1.ui.mycontacts.adapter.viewholders
 
-import android.os.SystemClock
 import android.view.View
 import androidx.recyclerview.widget.RecyclerView
 import com.shpp.eorlov.assignment1.R
 import com.shpp.eorlov.assignment1.databinding.ContactListItemBinding
 import com.shpp.eorlov.assignment1.models.UserModel
 import com.shpp.eorlov.assignment1.ui.mycontacts.adapter.listeners.ContactClickListener
-import com.shpp.eorlov.assignment1.utils.Constants
+import com.shpp.eorlov.assignment1.utils.ext.clickWithDebounce
 
 
 class ContactsViewHolder(
@@ -46,24 +45,15 @@ class ContactsViewHolder(
         setListeners()
     }
 
-
-    private var previousClickTimestamp = SystemClock.uptimeMillis()
-
     private fun setListeners() {
         binding.apply {
-            imageViewRemoveButton.setOnClickListener {
-                if (kotlin.math.abs(SystemClock.uptimeMillis() - previousClickTimestamp) > Constants.BUTTON_CLICK_DELAY) {
-                    onContactClickListener.onContactRemove(bindingAdapterPosition)
-                    previousClickTimestamp = SystemClock.uptimeMillis()
-                }
+            imageViewRemoveButton.clickWithDebounce {
+                onContactClickListener.onContactRemove(bindingAdapterPosition)
             }
 
-            constraintLayoutContactListItem.setOnClickListener {
+            constraintLayoutContactListItem.clickWithDebounce {
                 if (!multiSelect) {
-                    if (kotlin.math.abs(SystemClock.uptimeMillis() - previousClickTimestamp) > Constants.BUTTON_CLICK_DELAY) {
-                        onContactClickListener.onContactSelected(contact)
-                        previousClickTimestamp = SystemClock.uptimeMillis()
-                    }
+                    onContactClickListener.onContactSelected(contact)
                 } else {
                     checkBoxSelectedState.isChecked = !checkBoxSelectedState.isChecked
                     selectItem(contact)

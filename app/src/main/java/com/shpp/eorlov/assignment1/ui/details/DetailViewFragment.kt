@@ -1,10 +1,8 @@
 package com.shpp.eorlov.assignment1.ui.details
 
 import android.annotation.SuppressLint
-import android.content.Context
 import android.content.pm.ActivityInfo
 import android.os.Bundle
-import android.os.SystemClock
 import android.transition.TransitionInflater
 import android.view.LayoutInflater
 import android.view.View
@@ -12,16 +10,12 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.navArgs
 import com.shpp.eorlov.assignment1.base.BaseFragment
 import com.shpp.eorlov.assignment1.databinding.FragmentDetailViewBinding
-import com.shpp.eorlov.assignment1.ui.MainActivity
-import com.shpp.eorlov.assignment1.utils.Constants
 import com.shpp.eorlov.assignment1.utils.Results
+import com.shpp.eorlov.assignment1.utils.ext.clickWithDebounce
 import dagger.hilt.android.AndroidEntryPoint
-import javax.inject.Inject
-import kotlin.math.abs
 
 @AndroidEntryPoint
 class DetailViewFragment : BaseFragment() {
@@ -98,15 +92,10 @@ class DetailViewFragment : BaseFragment() {
         }
     }
 
-    private var previousClickTimestamp = SystemClock.uptimeMillis()
-
     private fun setListeners() {
 
-        binding.imageButtonContactDialogCloseButton.setOnClickListener {
-            if (abs(SystemClock.uptimeMillis() - previousClickTimestamp) > Constants.BUTTON_CLICK_DELAY) {
-                activity?.onBackPressed()
-                previousClickTimestamp = SystemClock.uptimeMillis()
-            }
+        binding.imageButtonContactDialogCloseButton.clickWithDebounce {
+            activity?.onBackPressed()
         }
     }
 

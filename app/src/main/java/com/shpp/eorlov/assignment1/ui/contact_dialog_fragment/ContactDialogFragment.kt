@@ -23,6 +23,7 @@ import com.shpp.eorlov.assignment1.databinding.AddContactDialogBinding
 import com.shpp.eorlov.assignment1.models.UserModel
 import com.shpp.eorlov.assignment1.ui.SharedViewModel
 import com.shpp.eorlov.assignment1.utils.Constants
+import com.shpp.eorlov.assignment1.utils.ext.clickWithDebounce
 import com.shpp.eorlov.assignment1.validator.ValidateOperation
 import com.shpp.eorlov.assignment1.validator.evaluateErrorMessage
 import com.shpp.eorlov.assignment1.utils.ext.loadImage
@@ -55,8 +56,6 @@ class ContactDialogFragment : DialogFragment() {
                 imageView.loadImage(imageData)
             }
         }
-
-
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -173,9 +172,6 @@ class ContactDialogFragment : DialogFragment() {
     }
 
 
-    private var previousClickTimestamp = SystemClock.uptimeMillis()
-
-
     private fun setListeners() {
         dialogBinding.apply {
             addListenerToEditText(
@@ -206,27 +202,18 @@ class ContactDialogFragment : DialogFragment() {
             )
 
 
-            imageViewImageLoader.setOnClickListener {
-                if (abs(SystemClock.uptimeMillis() - previousClickTimestamp) > Constants.BUTTON_CLICK_DELAY) {
-                    loadImageFromGallery()
-                    previousClickTimestamp = SystemClock.uptimeMillis()
-                }
+            imageViewImageLoader.clickWithDebounce {
+                loadImageFromGallery()
             }
 
 
-            imageButtonContactDialogCloseButton.setOnClickListener {
-                if (abs(SystemClock.uptimeMillis() - previousClickTimestamp) > Constants.BUTTON_CLICK_DELAY) {
-                    dismiss()
-                    previousClickTimestamp = SystemClock.uptimeMillis()
-                }
+            imageButtonContactDialogCloseButton.clickWithDebounce {
+                dismiss()
             }
 
 
-            buttonSave.setOnClickListener {
-                if (abs(SystemClock.uptimeMillis() - previousClickTimestamp) > Constants.BUTTON_CLICK_DELAY) {
-                    addContact()
-                    previousClickTimestamp = SystemClock.uptimeMillis()
-                }
+            buttonSave.clickWithDebounce {
+                addContact()
             }
 
             val date =
