@@ -23,7 +23,6 @@ class CollectionContactFragment : BaseFragment() {
     private lateinit var binding: FragmentViewPagerBinding
     private lateinit var contactCollectionAdapter: ContactCollectionAdapter
 
-
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,

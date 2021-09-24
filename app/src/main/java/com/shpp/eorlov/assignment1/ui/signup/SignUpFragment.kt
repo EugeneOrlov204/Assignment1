@@ -129,23 +129,35 @@ class SignUpFragment : BaseFragment() {
             it.hideKeyboard()
         }
 
-        binding.textInputEditTextPassword.setOnEditorActionListener { _, actionId, _ ->
-            if (actionId == EditorInfo.IME_ACTION_DONE) {
-                goToSignUpExtended()
+        binding.textInputEditTextPassword.apply {
+            setOnEditorActionListener { _, actionId, _ ->
+                if (actionId == EditorInfo.IME_ACTION_DONE) {
+                    binding.textInputLayoutPassword.error = evaluateErrorMessage(
+                        validator.validatePassword(text.toString())
+                    )
+                    goToSignUpExtended()
+                }
+                false
             }
-            false
-        }
+            setOnFocusChangeListener { _, hasFocus ->
+                if (hasFocus) {
+                    binding.textInputLayoutPassword.error = ""
+                }
+            }
 
-        binding.apply {
-            textInputEditTextEmail.addTextChangedListener {
-                textInputLayoutEmail.error = evaluateErrorMessage(
-                    validator.validateEmail(textInputEditTextEmail.text.toString())
+        }
+        binding.textInputEditTextEmail.apply {
+            setOnEditorActionListener { _, actionId, _ ->
+                binding.textInputLayoutEmail.error = evaluateErrorMessage(
+                    validator.validateEmail(text.toString())
                 )
+
+                false
             }
-            textInputEditTextPassword.addTextChangedListener {
-                textInputLayoutPassword.error = evaluateErrorMessage(
-                    validator.validatePassword(textInputEditTextPassword.text.toString())
-                )
+            setOnFocusChangeListener { _, hasFocus ->
+                if (hasFocus) {
+                    binding.textInputLayoutEmail.error = ""
+                }
             }
         }
     }

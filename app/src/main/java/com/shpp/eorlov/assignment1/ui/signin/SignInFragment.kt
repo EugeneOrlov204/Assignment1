@@ -22,6 +22,7 @@ import com.shpp.eorlov.assignment1.utils.Constants.INVALID_CREDENTIALS_CODE
 import com.shpp.eorlov.assignment1.utils.Results
 import com.shpp.eorlov.assignment1.utils.ext.clickWithDebounce
 import com.shpp.eorlov.assignment1.utils.ext.hideKeyboard
+import com.shpp.eorlov.assignment1.validator.NotAnError
 import com.shpp.eorlov.assignment1.validator.Validator
 import com.shpp.eorlov.assignment1.validator.evaluateErrorMessage
 import dagger.hilt.android.AndroidEntryPoint
@@ -56,9 +57,9 @@ class SignInFragment : BaseFragment() {
 
     override fun onResume() {
         super.onResume()
-        unlockUI()
         printLog("On resume")
     }
+
 
     private fun initializeData() {
         viewModel.initializeData()
@@ -86,19 +87,15 @@ class SignInFragment : BaseFragment() {
                             unlockUI()
                             binding.contentLoadingProgressBar.isVisible = false
                         }
-
                         Results.LOADING -> {
                             lockUI()
                             binding.contentLoadingProgressBar.isVisible = true
                         }
-
                         Results.INITIALIZE_DATA_ERROR -> {
                             unlockUI()
                             binding.contentLoadingProgressBar.isVisible = false
                             Toast.makeText(requireContext(), event.name, Toast.LENGTH_LONG).show()
                         }
-
-
                         Results.INVALID_CREDENTIALS -> {
                             Toast.makeText(
                                 requireContext(),
@@ -106,8 +103,6 @@ class SignInFragment : BaseFragment() {
                                 Toast.LENGTH_LONG
                             ).show()
                         }
-
-
                         Results.INTERNET_ERROR -> {
                             Toast.makeText(
                                 requireContext(),
@@ -115,7 +110,6 @@ class SignInFragment : BaseFragment() {
                                 Toast.LENGTH_LONG
                             ).show()
                         }
-
                         Results.NOT_EXISTED_ACCOUNT_ERROR -> {
                             Toast.makeText(
                                 requireContext(),
@@ -123,7 +117,6 @@ class SignInFragment : BaseFragment() {
                                 Toast.LENGTH_LONG
                             ).show()
                         }
-
                         else -> {
                         }
                     }
@@ -179,27 +172,38 @@ class SignInFragment : BaseFragment() {
             it.hideKeyboard()
         }
 
-        binding.textInputEditTextPassword.setOnEditorActionListener { _, actionId, _ ->
-            if (actionId == EditorInfo.IME_ACTION_DONE) {
-                lockUI()
-                goToMyProfile()
+        binding.textInputEditTextPassword.apply {
+            setOnEditorActionListener { _, actionId, _ ->
+                if (actionId == EditorInfo.IME_ACTION_DONE) {
+                    binding.textInputLayoutPassword.error = evaluateErrorMessage(
+                        validator.validatePassword(text.toString())
+                    )
+                    goToMyProfile()
+                }
+                false
             }
-            false
-        }
+            setOnFocusChangeListener { _, hasFocus ->
+                if (hasFocus) {
+                    binding.textInputLayoutPassword.error = ""
+                }
+            }
 
-        binding.apply {
-            textInputEditTextEmail.addTextChangedListener {
-                textInputLayoutEmail.error = evaluateErrorMessage(
-                    validator.validateEmail(binding.textInputEditTextEmail.text.toString())
+        }
+        binding.textInputEditTextEmail.apply {
+            setOnEditorActionListener { _, actionId, _ ->
+                binding.textInputLayoutEmail.error = evaluateErrorMessage(
+                    validator.validateEmail(text.toString())
                 )
+                false
             }
-            textInputEditTextPassword.addTextChangedListener {
-                textInputLayoutPassword.error = evaluateErrorMessage(
-                    validator.validatePassword(binding.textInputEditTextPassword.text.toString())
-                )
+            setOnFocusChangeListener { _, hasFocus ->
+                if (hasFocus) {
+                    binding.textInputLayoutEmail.error = ""
+                }
             }
         }
     }
+
 
     private fun goToSignUpProfile() {
         val action =
@@ -215,7 +219,6 @@ class SignInFragment : BaseFragment() {
         val email = binding.textInputEditTextEmail.text.toString()
         val password = binding.textInputEditTextPassword.text.toString()
         if (isFieldsInvalid()) {
-            unlockUI()
             return
         }
 

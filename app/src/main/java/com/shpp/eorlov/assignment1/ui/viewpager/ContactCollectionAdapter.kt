@@ -15,18 +15,19 @@ class ContactCollectionAdapter(fragment: Fragment, private val userModel: UserMo
     override fun getItemCount(): Int = AMOUNT_OF_VIEWPAGER_ITEMS
 
     override fun createFragment(position: Int): Fragment {
-        return when(position) {
-
+        return when (position) {
             ViewPagerItems.PROFILE.position -> {
-                val myProfileFragment = MyProfileFragment()
-                val arguments = Bundle()
-                arguments.putParcelable(Constants.REGISTERED_USER_MODEL_KEY, userModel)
-                myProfileFragment.arguments = arguments
-                myProfileFragment
+                MyProfileFragment().apply {
+                    arguments = Bundle().apply {
+                        putParcelable(Constants.REGISTERED_USER_MODEL_KEY, userModel)
+                    }
+                }
             }
-
-            else -> {
+            ViewPagerItems.LIST.position -> {
                 MyContactsFragment()
+            }
+            else -> {
+                throw Exception("Wrong position of ContactCollectionAdapter: $position")
             }
         }
     }

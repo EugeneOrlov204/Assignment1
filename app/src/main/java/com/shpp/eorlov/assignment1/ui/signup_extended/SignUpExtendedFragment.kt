@@ -151,23 +151,35 @@ class SignUpExtendedFragment : BaseFragment() {
             it.hideKeyboard()
         }
 
-        binding.textInputEditTextMobilePhone.setOnEditorActionListener { _, actionId, _ ->
-            if (actionId == EditorInfo.IME_ACTION_DONE) {
-                goToMyProfile()
+        binding.textInputEditTextMobilePhone.apply {
+            setOnEditorActionListener { _, actionId, _ ->
+                if (actionId == EditorInfo.IME_ACTION_DONE) {
+                    binding.textInputLayoutMobilePhone.error = evaluateErrorMessage(
+                        validator.validatePassword(text.toString())
+                    )
+                    goToMyProfile()
+                }
+                false
             }
-            false
-        }
+            setOnFocusChangeListener { _, hasFocus ->
+                if (hasFocus) {
+                    binding.textInputLayoutMobilePhone.error = ""
+                }
+            }
 
-        binding.apply {
-            textInputEditTextMobilePhone.addTextChangedListener {
-                textInputLayoutMobilePhone.error = evaluateErrorMessage(
-                    validator.validatePhoneNumber(textInputEditTextMobilePhone.text.toString())
+        }
+        binding.textInputEditTextUserName.apply {
+            setOnEditorActionListener { _, actionId, _ ->
+                binding.textInputLayoutUserName.error = evaluateErrorMessage(
+                    validator.validateEmail(text.toString())
                 )
+
+                false
             }
-            textInputEditTextUserName.addTextChangedListener {
-                textInputLayoutUserName.error = evaluateErrorMessage(
-                    validator.validateUserName(textInputEditTextUserName.text.toString())
-                )
+            setOnFocusChangeListener { _, hasFocus ->
+                if (hasFocus) {
+                    binding.textInputLayoutUserName.error = ""
+                }
             }
         }
     }
