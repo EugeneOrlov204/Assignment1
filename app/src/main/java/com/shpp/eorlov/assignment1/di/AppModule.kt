@@ -1,7 +1,7 @@
 package com.shpp.eorlov.assignment1.di
 
-import com.shpp.eorlov.assignment1.api.MainRemoteData
-import com.shpp.eorlov.assignment1.api.MainService
+import com.shpp.eorlov.assignment1.data.retrofit.MainRemoteData
+import com.shpp.eorlov.assignment1.data.retrofit.MainService
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn

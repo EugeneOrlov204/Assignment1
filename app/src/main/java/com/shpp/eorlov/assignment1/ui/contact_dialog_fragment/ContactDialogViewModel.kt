@@ -10,12 +10,9 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
 @HiltViewModel
-class ContactDialogViewModel @Inject constructor() : ViewModel() {
+class ContactDialogViewModel @Inject constructor(private val validator: Validator) : ViewModel() {
 
     val newUser = MutableLiveData<UserModel>()
-
-    @Inject
-    lateinit var validator: Validator
 
     /**
      * Adds item to dataset in the end of list

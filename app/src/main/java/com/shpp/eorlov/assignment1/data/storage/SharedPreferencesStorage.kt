@@ -14,10 +14,7 @@
  * limitations under the License.
  */
 
-package com.shpp.eorlov.assignment1.storage
-
-import android.content.Context
-import com.shpp.eorlov.assignment1.utils.Constants
+package com.shpp.eorlov.assignment1.data.storage
 
 interface SharedPreferencesStorage {
     fun save(_key: String, _value: String)

@@ -9,11 +9,13 @@
 
     <View
         android:id="@+id/viewTopContainerMyProfile"
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="0dp"
         android:background="@color/steel_gray"
         app:layout_constraintBottom_toTopOf="@id/viewBottomContainerMyProfile"
         app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintVertical_weight="0.5" />
 
     <androidx.appcompat.widget.AppCompatTextView
@@ -72,9 +74,11 @@
 
     <View
         android:id="@+id/viewBottomContainerMyProfile"
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="0dp"
         android:background="@color/alabaster"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toBottomOf="@id/viewTopContainerMyProfile"
         app:layout_constraintVertical_weight="0.5" />

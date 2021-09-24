@@ -5,7 +5,6 @@ import android.app.DatePickerDialog
 import android.app.DatePickerDialog.OnDateSetListener
 import android.content.Intent
 import android.os.Bundle
-import android.os.SystemClock
 import android.provider.MediaStore
 import android.view.LayoutInflater
 import android.view.View
@@ -23,9 +22,8 @@ import com.google.android.material.textfield.TextInputLayout
 import com.shpp.eorlov.assignment1.base.BaseFragment
 import com.shpp.eorlov.assignment1.databinding.FragmentEditProfileBinding
 import com.shpp.eorlov.assignment1.models.UserModel
-import com.shpp.eorlov.assignment1.storage.SharedPreferencesStorage
+import com.shpp.eorlov.assignment1.data.storage.SharedPreferencesStorage
 import com.shpp.eorlov.assignment1.ui.SharedViewModel
-import com.shpp.eorlov.assignment1.utils.Constants
 import com.shpp.eorlov.assignment1.utils.Constants.DATE_FORMAT
 import com.shpp.eorlov.assignment1.utils.Results
 import com.shpp.eorlov.assignment1.utils.ext.clickWithDebounce
@@ -37,7 +35,6 @@ import dagger.hilt.android.AndroidEntryPoint
 import java.text.SimpleDateFormat
 import java.util.*
 import javax.inject.Inject
-import kotlin.math.abs
 
 @AndroidEntryPoint
 class EditProfileFragment : BaseFragment() {

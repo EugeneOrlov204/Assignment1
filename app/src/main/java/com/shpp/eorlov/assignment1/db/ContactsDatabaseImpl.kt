@@ -1,12 +1,12 @@
 package com.shpp.eorlov.assignment1.db
 
 import com.shpp.eorlov.assignment1.models.UserModel
-import com.shpp.eorlov.assignment1.storage.SharedPreferencesStorage
+import com.shpp.eorlov.assignment1.data.storage.SharedPreferencesStorage
 import com.shpp.eorlov.assignment1.utils.Constants.DEFAULT_PATH_TO_IMAGE
 import javax.inject.Inject
 
 
-class ContactsDatabaseImplementation @Inject constructor() : ContactsDatabase {
+class ContactsDatabaseImpl @Inject constructor() : ContactsDatabase {
 
     @Inject
     lateinit var storage: SharedPreferencesStorage

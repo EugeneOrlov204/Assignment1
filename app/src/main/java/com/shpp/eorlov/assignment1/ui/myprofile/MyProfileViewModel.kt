@@ -2,24 +2,22 @@ package com.shpp.eorlov.assignment1.ui.myprofile
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.shpp.eorlov.assignment1.db.ContactsDatabaseImplementation
+import com.shpp.eorlov.assignment1.db.ContactsDatabaseImpl
 import com.shpp.eorlov.assignment1.models.UserModel
 import com.shpp.eorlov.assignment1.utils.Results
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
 @HiltViewModel
-class MyProfileViewModel @Inject constructor() : ViewModel() {
+class MyProfileViewModel @Inject constructor(
+    private val contactsDatabase: ContactsDatabaseImpl
+) : ViewModel() {
 
     val userLiveData: MutableLiveData<UserModel> by lazy(LazyThreadSafetyMode.NONE) {
         MutableLiveData(contactsDatabase.getDefaultUserModel())
     }
 
     val loadEvent = MutableLiveData<Results>()
-
-
-    @Inject
-    lateinit var contactsDatabase: ContactsDatabaseImplementation
 
     fun initializeData(userModel: UserModel) {
         if (userLiveData.value == null) {

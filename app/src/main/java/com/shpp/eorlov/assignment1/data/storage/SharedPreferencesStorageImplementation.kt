@@ -1,4 +1,4 @@
-package com.shpp.eorlov.assignment1.storage
+package com.shpp.eorlov.assignment1.data.storage
 
 import android.content.Context
 import com.shpp.eorlov.assignment1.utils.Constants.PREFS_FILE

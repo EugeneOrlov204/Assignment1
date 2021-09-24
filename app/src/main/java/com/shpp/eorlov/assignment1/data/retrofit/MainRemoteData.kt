@@ -1,4 +1,4 @@
-package com.shpp.eorlov.assignment1.api
+package com.shpp.eorlov.assignment1.data.retrofit
 
 import com.shpp.eorlov.assignment1.models.*
 import javax.inject.Inject

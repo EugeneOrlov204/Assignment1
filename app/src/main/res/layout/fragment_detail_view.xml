@@ -10,12 +10,14 @@
 
     <View
         android:id="@+id/viewTopContainer"
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="0dp"
         android:background="@color/steel_gray"
         app:layout_constraintBottom_toTopOf="@id/viewBottomContainer"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_weight="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
         tools:layout_editor_absoluteX="0dp" />
 
     <androidx.appcompat.widget.AppCompatImageButton
@@ -90,11 +92,13 @@
 
     <View
         android:id="@+id/viewBottomContainer"
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="0dp"
         android:background="@color/alabaster"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toBottomOf="@id/viewTopContainer"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintVertical_weight="0.5" />
 
     <androidx.appcompat.widget.LinearLayoutCompat

@@ -115,7 +115,7 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/constraintLayoutGoogle"
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="@dimen/google_button_height_40dp"
         android:layout_marginHorizontal="@dimen/margin_normal_16dp"
         android:layout_marginBottom="@dimen/register_button_margin_bottom_12dp"

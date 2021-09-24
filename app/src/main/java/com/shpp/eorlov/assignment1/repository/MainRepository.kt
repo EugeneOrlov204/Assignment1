@@ -1,7 +1,6 @@
 package com.shpp.eorlov.assignment1.repository
 
-import com.shpp.eorlov.assignment1.api.MainRemoteData
-import com.shpp.eorlov.assignment1.api.MainService
+import com.shpp.eorlov.assignment1.data.retrofit.MainRemoteData
 import com.shpp.eorlov.assignment1.models.AuthorizeModel
 import com.shpp.eorlov.assignment1.models.RegisterModel
 import javax.inject.Inject
