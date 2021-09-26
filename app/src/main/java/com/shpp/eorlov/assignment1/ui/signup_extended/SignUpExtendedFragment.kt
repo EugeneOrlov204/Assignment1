@@ -124,33 +124,38 @@ class SignUpExtendedFragment : BaseFragment() {
     }
 
     private fun setSharedViewModelObserver() {
-        sharedViewModel.apply {
-            registerUser.observe(viewLifecycleOwner) {
-                if (it?.code == Constants.SUCCESS_RESPONSE_CODE && it.data != null) {
+        sharedViewModel.registerUser.observe(viewLifecycleOwner) {
+            if (it?.code == Constants.SUCCESS_RESPONSE_CODE && it.data != null) {
 
-                    sharedViewModel.editUser(
-                        name = binding.textInputEditTextUserName.text.toString(),
-                        phone = binding.textInputEditTextMobilePhone.text.toString(),
-                        address = "",
-                        career = "",
-                        birthday = "",
-                        accessToken = it.data.accessToken
-                    )
+                sharedViewModel.editUser(
+                    name = binding.textInputEditTextUserName.text.toString(),
+                    phone = binding.textInputEditTextMobilePhone.text.toString(),
+                    address = "",
+                    career = "",
+                    birthday = "",
+                    accessToken = it.data.accessToken
+                )
 
-                    pathToLoadedImageFromGallery = ""
+                pathToLoadedImageFromGallery = ""
 
-                    val action =
-                        SignUpExtendedFragmentDirections.actionSignUpExtendedFragmentToCollectionContactFragment()
-                    findNavController().navigate(action)
-                } else if (it == null) {
-                    viewModel.loadEvent.value = Results.INTERNET_ERROR
-                } else {
-                    viewModel.loadEvent.value = Results.EXISTED_ACCOUNT_ERROR
-                }
+            } else if (it == null) {
+                viewModel.loadEvent.value = Results.INTERNET_ERROR
+            } else {
+                viewModel.loadEvent.value = Results.EXISTED_ACCOUNT_ERROR
             }
         }
 
-
+        sharedViewModel.editUser.observe(viewLifecycleOwner) {
+            if (it?.code == Constants.SUCCESS_RESPONSE_CODE && it.data != null) {
+                val action =
+                    SignUpExtendedFragmentDirections.actionSignUpExtendedFragmentToCollectionContactFragment()
+                findNavController().navigate(action)
+            } else if (it == null) {
+                viewModel.loadEvent.value = Results.INTERNET_ERROR
+            } else {
+                viewModel.loadEvent.value = Results.NOT_EXISTED_ACCOUNT_ERROR
+            }
+        }
     }
 
     private fun loadImageFromGallery() {

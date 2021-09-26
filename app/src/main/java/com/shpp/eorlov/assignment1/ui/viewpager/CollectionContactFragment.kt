@@ -43,9 +43,12 @@ class CollectionContactFragment : BaseFragment() {
     private fun initAdapter() {
         viewPager = binding.pager
 
-        //fixme get usermodel from internet
-//        contactCollectionAdapter = ContactCollectionAdapter(this, UserModel())
-
+        //fixme get userModel from internet
+        contactCollectionAdapter = ContactCollectionAdapter(
+            this, UserModel(
+                "", "", "", "", "", "",""
+            )
+        )
         viewPager.adapter = contactCollectionAdapter
         viewPager.currentItem = ContactCollectionAdapter.ViewPagerItems.PROFILE.position
     }
