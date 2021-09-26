@@ -9,11 +9,11 @@ import android.provider.MediaStore
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.inputmethod.EditorInfo
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.widget.AppCompatImageView
 import androidx.core.view.isVisible
-import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.navArgs
@@ -147,7 +147,13 @@ class EditProfileFragment : BaseFragment() {
     }
 
     private fun setListeners() {
+        setOnClickListeners()
+        setOnEditorActionListeners()
+    }
+
+    private fun setOnClickListeners() {
         binding.apply {
+
             buttonSave.clickWithDebounce {
                 if (canAddNewContact()) {
 
@@ -165,154 +171,158 @@ class EditProfileFragment : BaseFragment() {
                 activity?.onBackPressed()
             }
 
-        val date =
-            OnDateSetListener { _, year, monthOfYear, dayOfMonth ->
-                myCalendar.set(Calendar.YEAR, year)
-                myCalendar.set(Calendar.MONTH, monthOfYear)
-                myCalendar.set(Calendar.DAY_OF_MONTH, dayOfMonth)
-                updateLabel()
-            }
+            val date =
+                OnDateSetListener { _, year, monthOfYear, dayOfMonth ->
+                    myCalendar.set(Calendar.YEAR, year)
+                    myCalendar.set(Calendar.MONTH, monthOfYear)
+                    myCalendar.set(Calendar.DAY_OF_MONTH, dayOfMonth)
+                    updateLabel()
+                }
 
-        textInputEditTextBirthdate.setOnClickListener {
-            DatePickerDialog(
-                requireActivity(), date, myCalendar
-                    .get(Calendar.YEAR), myCalendar.get(Calendar.MONTH),
-                myCalendar.get(Calendar.DAY_OF_MONTH)
-            ).show()
+            textInputEditTextBirthdate.setOnClickListener {
+                DatePickerDialog(
+                    requireActivity(), date, myCalendar
+                        .get(Calendar.YEAR), myCalendar.get(Calendar.MONTH),
+                    myCalendar.get(Calendar.DAY_OF_MONTH)
+                ).show()
+            }
         }
-
-        addListenerToEditText(
-            textInputEditTextAddress,
-            textInputLayoutAddress,
-            ValidateOperation.EMPTY
-        )
-
-        addListenerToEditText(
-            textInputEditTextCareer,
-            textInputLayoutCareer,
-            ValidateOperation.EMPTY
-        )
-
-        addListenerToEditText(
-            textInputEditTextUsername,
-            textInputLayoutUsername,
-            ValidateOperation.EMPTY
-        )
-        addListenerToEditText(
-            textInputEditTextPhone,
-            textInputLayoutPhone,
-            ValidateOperation.PHONE_NUMBER
-        )
     }
-}
 
-private fun updateLabel() {
-    val sdf = SimpleDateFormat(DATE_FORMAT, Locale.US)
-    binding.textInputEditTextBirthdate.setText(sdf.format(myCalendar.time))
-}
+    private fun setOnEditorActionListeners() {
+        binding.apply {
+            setOnEditorActionListener(
+                textInputEditTextAddress,
+                textInputLayoutAddress,
+                ValidateOperation.EMPTY
+            )
 
-private fun getProfileData() = UserModel(
-    binding.textInputEditTextUsername.text.toString(),
-    binding.textInputEditTextCareer.text.toString(),
-    pathToLoadedImageFromGallery,
-    binding.textInputEditTextAddress.text.toString(),
-    binding.textInputEditTextBirthdate.text.toString(),
-    binding.textInputEditTextPhone.text.toString(),
-    binding.textInputEditTextEmail.text.toString(),
-)
+            setOnEditorActionListener(
+                textInputEditTextCareer,
+                textInputLayoutCareer,
+                ValidateOperation.EMPTY
+            )
 
-
-/**
- * Returns true if user entered valid data,
- * otherwise false
- */
-private fun canAddNewContact(): Boolean {
-    processEnteredValues()
-    binding.apply {
-
-        return textInputLayoutAddress.error.isNullOrEmpty() &&
-                textInputLayoutBirthdate.error.isNullOrEmpty() &&
-                textInputLayoutCareer.error.isNullOrEmpty() &&
-                textInputLayoutEmail.error.isNullOrEmpty() &&
-                textInputLayoutUsername.error.isNullOrEmpty() &&
-                textInputLayoutPhone.error.isNullOrEmpty()
+            setOnEditorActionListener(
+                textInputEditTextUsername,
+                textInputLayoutUsername,
+                ValidateOperation.EMPTY
+            )
+            setOnEditorActionListener(
+                textInputEditTextPhone,
+                textInputLayoutPhone,
+                ValidateOperation.PHONE_NUMBER
+            )
+        }
     }
-}
 
-/**
- * Processing of user-entered values
- */
-private fun processEnteredValues() {
-    binding.apply {
-        textInputLayoutAddress.error = processErrorOfEnteredValue(
-            textInputEditTextAddress.text.toString(),
-            ValidateOperation.EMPTY
-        )
-
-        textInputLayoutCareer.error = processErrorOfEnteredValue(
-            textInputEditTextCareer.text.toString(),
-            ValidateOperation.EMPTY
-        )
-
-        textInputLayoutUsername.error = processErrorOfEnteredValue(
-            textInputEditTextUsername.text.toString(),
-            ValidateOperation.EMPTY
-        )
-        textInputLayoutPhone.error = processErrorOfEnteredValue(
-            textInputEditTextPhone.text.toString(),
-            ValidateOperation.PHONE_NUMBER
-        )
+    private fun updateLabel() {
+        val sdf = SimpleDateFormat(DATE_FORMAT, Locale.US)
+        binding.textInputEditTextBirthdate.setText(sdf.format(myCalendar.time))
     }
-}
 
-/**
- * Returns error text of given field if it exist,
- * otherwise returns empty string
- */
-private fun processErrorOfEnteredValue(
-    text: String,
-    validateOperation: ValidateOperation
-): String {
-
-    return viewModel.isValidField(
-        text,
-        validateOperation
+    private fun getProfileData() = UserModel(
+        binding.textInputEditTextUsername.text.toString(),
+        binding.textInputEditTextCareer.text.toString(),
+        pathToLoadedImageFromGallery,
+        binding.textInputEditTextAddress.text.toString(),
+        binding.textInputEditTextBirthdate.text.toString(),
+        binding.textInputEditTextPhone.text.toString(),
+        binding.textInputEditTextEmail.text.toString(),
     )
-}
 
-/**
- * Set listener to given EditText
- */
-private fun addListenerToEditText(
-    editText: TextInputEditText,
-    textInput: TextInputLayout,
-    validateOperation: ValidateOperation
-) {
-    editText.addTextChangedListener {
-        textInput.error =
-            when (validateOperation) {
-                ValidateOperation.EMAIL -> evaluateErrorMessage(
-                    validator.validateEmail(
-                        editText.text.toString()
-                    )
-                )
-                ValidateOperation.PHONE_NUMBER -> evaluateErrorMessage(
-                    validator.validatePhoneNumber(
-                        editText.text.toString()
-                    )
-                )
-                ValidateOperation.BIRTHDAY -> evaluateErrorMessage(
-                    validator.validateBirthdate(
-                        editText.text.toString()
-                    )
-                )
-                ValidateOperation.EMPTY -> evaluateErrorMessage(
-                    validator.checkIfFieldIsNotEmpty(
-                        editText.text.toString()
-                    )
-                )
-            }
+
+    /**
+     * Returns true if user entered valid data,
+     * otherwise false
+     */
+    private fun canAddNewContact(): Boolean {
+        processEnteredValues()
+        binding.apply {
+
+            return textInputLayoutAddress.error.isNullOrEmpty() &&
+                    textInputLayoutBirthdate.error.isNullOrEmpty() &&
+                    textInputLayoutCareer.error.isNullOrEmpty() &&
+                    textInputLayoutEmail.error.isNullOrEmpty() &&
+                    textInputLayoutUsername.error.isNullOrEmpty() &&
+                    textInputLayoutPhone.error.isNullOrEmpty()
+        }
     }
-}
 
+    /**
+     * Processing of user-entered values
+     */
+    private fun processEnteredValues() {
+        binding.apply {
+            textInputLayoutAddress.error = processErrorOfEnteredValue(
+                textInputEditTextAddress.text.toString(),
+                ValidateOperation.EMPTY
+            )
+
+            textInputLayoutCareer.error = processErrorOfEnteredValue(
+                textInputEditTextCareer.text.toString(),
+                ValidateOperation.EMPTY
+            )
+
+            textInputLayoutUsername.error = processErrorOfEnteredValue(
+                textInputEditTextUsername.text.toString(),
+                ValidateOperation.EMPTY
+            )
+            textInputLayoutPhone.error = processErrorOfEnteredValue(
+                textInputEditTextPhone.text.toString(),
+                ValidateOperation.PHONE_NUMBER
+            )
+        }
+    }
+
+    /**
+     * Returns error text of given field if it exist,
+     * otherwise returns empty string
+     */
+    private fun processErrorOfEnteredValue(
+        text: String,
+        validateOperation: ValidateOperation
+    ): String {
+
+        return viewModel.isValidField(
+            text,
+            validateOperation
+        )
+    }
+
+
+    private fun setOnEditorActionListener(
+        editText: TextInputEditText,
+        textInput: TextInputLayout,
+        validateOperation: ValidateOperation
+    ) {
+        editText.setOnEditorActionListener { _, actionId, _ ->
+            if (actionId == EditorInfo.IME_ACTION_DONE) {
+                textInput.error =
+                    when (validateOperation) {
+                        ValidateOperation.EMAIL -> evaluateErrorMessage(
+                            validator.validateEmail(
+                                editText.text.toString()
+                            )
+                        )
+                        ValidateOperation.PHONE_NUMBER -> evaluateErrorMessage(
+                            validator.validatePhoneNumber(
+                                editText.text.toString()
+                            )
+                        )
+                        ValidateOperation.BIRTHDAY -> evaluateErrorMessage(
+                            validator.validateBirthdate(
+                                editText.text.toString()
+                            )
+                        )
+                        ValidateOperation.EMPTY -> evaluateErrorMessage(
+                            validator.checkIfFieldIsNotEmpty(
+                                editText.text.toString()
+                            )
+                        )
+                    }
+            }
+            false
+        }
+    }
 }

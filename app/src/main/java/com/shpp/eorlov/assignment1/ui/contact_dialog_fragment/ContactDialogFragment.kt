@@ -4,15 +4,14 @@ import android.app.Activity.RESULT_OK
 import android.app.DatePickerDialog
 import android.content.Intent
 import android.os.Bundle
-import android.os.SystemClock
 import android.provider.MediaStore
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.WindowManager
+import android.view.inputmethod.EditorInfo
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.widget.AppCompatImageView
-import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
@@ -24,15 +23,14 @@ import com.shpp.eorlov.assignment1.models.UserModel
 import com.shpp.eorlov.assignment1.ui.SharedViewModel
 import com.shpp.eorlov.assignment1.utils.Constants
 import com.shpp.eorlov.assignment1.utils.ext.clickWithDebounce
-import com.shpp.eorlov.assignment1.validator.ValidateOperation
-import com.shpp.eorlov.assignment1.validator.evaluateErrorMessage
 import com.shpp.eorlov.assignment1.utils.ext.loadImage
+import com.shpp.eorlov.assignment1.validator.ValidateOperation
 import com.shpp.eorlov.assignment1.validator.Validator
+import com.shpp.eorlov.assignment1.validator.evaluateErrorMessage
 import dagger.hilt.android.AndroidEntryPoint
 import java.text.SimpleDateFormat
 import java.util.*
 import javax.inject.Inject
-import kotlin.math.abs
 
 @AndroidEntryPoint
 class ContactDialogFragment : DialogFragment() {
@@ -173,34 +171,12 @@ class ContactDialogFragment : DialogFragment() {
 
 
     private fun setListeners() {
+        setOnEditorActionListeners()
+        setOnClickListeners()
+    }
+
+    private fun setOnClickListeners() {
         dialogBinding.apply {
-            addListenerToEditText(
-                textInputEditTextAddress,
-                textInputLayoutAddress,
-                ValidateOperation.EMPTY
-            )
-
-            addListenerToEditText(
-                textInputEditTextCareer,
-                textInputLayoutCareer,
-                ValidateOperation.EMPTY
-            )
-            addListenerToEditText(
-                textInputEditTextEmail,
-                textInputLayoutEmail,
-                ValidateOperation.EMAIL
-            )
-            addListenerToEditText(
-                textInputEditTextUsername,
-                textInputLayoutUsername,
-                ValidateOperation.EMPTY
-            )
-            addListenerToEditText(
-                textInputEditTextPhone,
-                textInputLayoutPhone,
-                ValidateOperation.PHONE_NUMBER
-            )
-
 
             imageViewImageLoader.clickWithDebounce {
                 loadImageFromGallery()
@@ -231,6 +207,38 @@ class ContactDialogFragment : DialogFragment() {
                     myCalendar.get(Calendar.DAY_OF_MONTH)
                 ).show()
             }
+
+        }
+    }
+
+    private fun setOnEditorActionListeners() {
+        dialogBinding.apply {
+            setOnEditorActionListener(
+                textInputEditTextAddress,
+                textInputLayoutAddress,
+                ValidateOperation.EMPTY
+            )
+
+            setOnEditorActionListener(
+                textInputEditTextCareer,
+                textInputLayoutCareer,
+                ValidateOperation.EMPTY
+            )
+            setOnEditorActionListener(
+                textInputEditTextEmail,
+                textInputLayoutEmail,
+                ValidateOperation.EMAIL
+            )
+            setOnEditorActionListener(
+                textInputEditTextUsername,
+                textInputLayoutUsername,
+                ValidateOperation.EMPTY
+            )
+            setOnEditorActionListener(
+                textInputEditTextPhone,
+                textInputLayoutPhone,
+                ValidateOperation.PHONE_NUMBER
+            )
         }
     }
 
@@ -248,34 +256,43 @@ class ContactDialogFragment : DialogFragment() {
     }
 
 
-    /**
-     * Set listener to given EditText
-     */
-    private fun addListenerToEditText(
+
+    private fun setOnEditorActionListener(
         editText: TextInputEditText,
         textInput: TextInputLayout,
         validateOperation: ValidateOperation
     ) {
-        editText.addTextChangedListener {
-            textInput.error =
-                when (validateOperation) {
-                    ValidateOperation.EMAIL -> evaluateErrorMessage(validator.validateEmail(editText.text.toString()))
-                    ValidateOperation.PHONE_NUMBER -> evaluateErrorMessage(
-                        validator.validatePhoneNumber(
-                            editText.text.toString()
+
+        editText.setOnEditorActionListener { _, actionId, _ ->
+            if (actionId == EditorInfo.IME_ACTION_DONE) {
+                textInput.error =
+                    when (validateOperation) {
+                        ValidateOperation.EMAIL -> evaluateErrorMessage(
+                            validator.validateEmail(
+                                editText.text.toString()
+                            )
                         )
-                    )
-                    ValidateOperation.BIRTHDAY -> evaluateErrorMessage(
-                        validator.validateBirthdate(
-                            editText.text.toString()
+                        ValidateOperation.PHONE_NUMBER -> evaluateErrorMessage(
+                            validator.validatePhoneNumber(
+                                editText.text.toString()
+                            )
                         )
-                    )
-                    ValidateOperation.EMPTY -> evaluateErrorMessage(
-                        validator.checkIfFieldIsNotEmpty(
-                            editText.text.toString()
+                        ValidateOperation.BIRTHDAY -> evaluateErrorMessage(
+                            validator.validateBirthdate(
+                                editText.text.toString()
+                            )
                         )
-                    )
-                }
+                        ValidateOperation.EMPTY -> evaluateErrorMessage(
+                            validator.checkIfFieldIsNotEmpty(
+                                editText.text.toString()
+                            )
+                        )
+                    }
+            }
+            false
         }
     }
 }
+
+
+

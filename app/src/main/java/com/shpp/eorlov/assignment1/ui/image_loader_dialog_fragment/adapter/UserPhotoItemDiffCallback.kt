@@ -1,4 +1,4 @@
-package com.shpp.eorlov.assignment1.utils
+package com.shpp.eorlov.assignment1.ui.image_loader_dialog_fragment.adapter
 
 import androidx.recyclerview.widget.DiffUtil
 import com.shpp.eorlov.assignment1.models.UserModel

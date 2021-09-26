@@ -1,23 +1,19 @@
 package com.shpp.eorlov.assignment1.ui.signup
 
 import android.os.Bundle
-import android.os.SystemClock
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.EditorInfo
 import android.widget.Toast
 import androidx.core.view.isVisible
-import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.shpp.eorlov.assignment1.R
 import com.shpp.eorlov.assignment1.base.BaseFragment
 import com.shpp.eorlov.assignment1.databinding.FragmentSignUpBinding
-import com.shpp.eorlov.assignment1.models.UserModel
 import com.shpp.eorlov.assignment1.ui.SharedViewModel
-import com.shpp.eorlov.assignment1.utils.Constants
 import com.shpp.eorlov.assignment1.utils.Constants.SUCCESS_RESPONSE_CODE
 import com.shpp.eorlov.assignment1.utils.Results
 import com.shpp.eorlov.assignment1.utils.ext.clickWithDebounce
@@ -26,7 +22,6 @@ import com.shpp.eorlov.assignment1.validator.Validator
 import com.shpp.eorlov.assignment1.validator.evaluateErrorMessage
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
-import kotlin.math.abs
 
 @AndroidEntryPoint
 class SignUpFragment : BaseFragment() {
@@ -61,7 +56,11 @@ class SignUpFragment : BaseFragment() {
     }
 
     private fun setObservers() {
+        setViewModelObserver()
+        setSharedViewModelObserver()
+    }
 
+    private fun setViewModelObserver() {
         viewModel.loadEvent.observe(viewLifecycleOwner) { event ->
             when (event) {
                 Results.OK -> {
@@ -100,11 +99,13 @@ class SignUpFragment : BaseFragment() {
                 }
             }
         }
+    }
+
+    private fun setSharedViewModelObserver() {
         sharedViewModel.authorizeUser.observe(viewLifecycleOwner) {
             if (it?.code != SUCCESS_RESPONSE_CODE) {
-
                 val action =
-                    SignUpFragmentDirections.actionSignUpFragmentToImageLoaderDialogFragment(
+                    SignUpFragmentDirections.actionSignUpFragmentToSignUpExtendedFragment(
                         binding.textInputEditTextEmail.text.toString(),
                         binding.textInputEditTextPassword.text.toString(),
                     )
@@ -116,19 +117,11 @@ class SignUpFragment : BaseFragment() {
     }
 
     private fun setListeners() {
+        setOnClickListeners()
+        setEditTextsListeners()
+    }
 
-        binding.textViewSignIn.clickWithDebounce {
-            goToSignInProfile()
-        }
-
-        binding.buttonRegister.clickWithDebounce {
-            goToSignUpExtended()
-        }
-
-        binding.root.setOnClickListener {
-            it.hideKeyboard()
-        }
-
+    private fun setEditTextsListeners() {
         binding.textInputEditTextPassword.apply {
             setOnEditorActionListener { _, actionId, _ ->
                 if (actionId == EditorInfo.IME_ACTION_DONE) {
@@ -162,6 +155,20 @@ class SignUpFragment : BaseFragment() {
         }
     }
 
+    private fun setOnClickListeners() {
+        binding.textViewSignIn.clickWithDebounce {
+            goToSignInProfile()
+        }
+
+        binding.buttonRegister.clickWithDebounce {
+            goToSignUpExtended()
+        }
+
+        binding.root.setOnClickListener {
+            it.hideKeyboard()
+        }
+    }
+
     private fun goToSignInProfile() {
         activity?.onBackPressed()
     }
@@ -170,15 +177,12 @@ class SignUpFragment : BaseFragment() {
     private fun goToSignUpExtended() {
         binding.apply {
             if (isFieldsInvalid()) {
-
                 textInputLayoutPassword.error = evaluateErrorMessage(
                     validator.validatePassword(textInputEditTextPassword.text.toString())
                 )
-
                 textInputLayoutEmail.error = evaluateErrorMessage(
                     validator.validateEmail(textInputEditTextEmail.text.toString())
                 )
-
                 return
             }
 

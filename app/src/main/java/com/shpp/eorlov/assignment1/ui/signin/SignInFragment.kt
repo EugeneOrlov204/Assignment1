@@ -127,32 +127,36 @@ class SignInFragment : BaseFragment() {
 
         sharedViewModel.authorizeUser.apply {
             observe(viewLifecycleOwner) {
-                if (it?.code == Constants.SUCCESS_RESPONSE_CODE && it.data != null) {
+                try {
 
-                    val userModel = (value as AuthorizationResponseModel).data?.user ?: UserModel(
-                        email = "",
-                        name = "",
-                        profession = "",
-                        photo = "",
-                        phoneNumber = "",
-                        residenceAddress = "",
-                        birthDate = ""
-                    )
+                    if (it?.code == Constants.SUCCESS_RESPONSE_CODE && it.data != null) {
 
-                    println("UserModel is $userModel")
+                        val userModel =
+                            (value as AuthorizationResponseModel).data?.user ?: UserModel(
+                                email = "",
+                                name = "",
+                                profession = "",
+                                photo = "",
+                                phoneNumber = "",
+                                residenceAddress = "",
+                                birthDate = ""
+                            )
+
+                        println("UserModel is $userModel")
 
 
-                    val action =
-                        SignInFragmentDirections.actionSignInFragmentToCollectionContactFragment(
-                            userModel
-                        )
-                    findNavController().navigate(action)
-                } else if (it == null) {
-                    viewModel.loadEvent.value = Results.INTERNET_ERROR
-                } else if (it.code == INVALID_CREDENTIALS_CODE) {
-                    viewModel.loadEvent.value = Results.INVALID_CREDENTIALS
-                } else {
-                    viewModel.loadEvent.value = Results.NOT_EXISTED_ACCOUNT_ERROR
+                        val action =
+                            SignInFragmentDirections.actionSignInFragmentToCollectionContactFragment()
+                        findNavController().navigate(action)
+                    } else if (it == null) {
+                        viewModel.loadEvent.value = Results.INTERNET_ERROR
+                    } else if (it.code == INVALID_CREDENTIALS_CODE) {
+                        viewModel.loadEvent.value = Results.INVALID_CREDENTIALS
+                    } else {
+                        viewModel.loadEvent.value = Results.NOT_EXISTED_ACCOUNT_ERROR
+                    }
+                } catch (exception: Exception) {
+                    println("Caught!")
                 }
             }
         }
@@ -171,7 +175,6 @@ class SignInFragment : BaseFragment() {
         binding.root.setOnClickListener {
             it.hideKeyboard()
         }
-
         binding.textInputEditTextPassword.apply {
             setOnEditorActionListener { _, actionId, _ ->
                 if (actionId == EditorInfo.IME_ACTION_DONE) {
@@ -236,8 +239,11 @@ class SignInFragment : BaseFragment() {
 //                    textInputEditTextPassword.text.toString() //Password
 //                )
 //            }
-
-            sharedViewModel.authorizeUser(email, password)
+            try {
+                sharedViewModel.authorizeUser(email, password)
+            } catch (exception: Exception) {
+                println("Caught!")
+            }
         }
     }
 

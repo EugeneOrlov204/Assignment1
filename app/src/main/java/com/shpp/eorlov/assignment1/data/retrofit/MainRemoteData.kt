@@ -18,6 +18,19 @@ class MainRemoteData @Inject constructor(private val mainService: MainService) {
         }
     }
 
+    suspend fun editUser(editUserModel: EditUserModel, accessToken: String): EditUserResponseModel {
+        with(mainService.editUser(editUserModel, accessToken)) {
+
+            return body()
+                ?: EditUserResponseModel(
+                    this.message(),
+                    this.code(),
+                    this.message(),
+                    null
+                )
+        }
+    }
+
 
     suspend fun authorizeUser(authorizeModel: AuthorizeModel): AuthorizationResponseModel {
         with(mainService.authorizeUser(authorizeModel)) {

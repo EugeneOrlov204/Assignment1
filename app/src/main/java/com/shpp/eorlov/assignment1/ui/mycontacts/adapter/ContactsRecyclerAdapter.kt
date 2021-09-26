@@ -8,14 +8,13 @@ import com.shpp.eorlov.assignment1.models.UserModel
 import com.shpp.eorlov.assignment1.ui.mycontacts.adapter.listeners.ContactClickListener
 import com.shpp.eorlov.assignment1.ui.mycontacts.adapter.viewholders.ContactsViewHolder
 import com.shpp.eorlov.assignment1.utils.Constants
-import com.shpp.eorlov.assignment1.utils.ContactItemDiffCallback
 
 
 class ContactsRecyclerAdapter(
-    private val onContactClickListener: ContactClickListener,
-    private var multiSelect: Boolean = false
+    private val onContactClickListener: ContactClickListener
 ) : ListAdapter<UserModel, ContactsViewHolder>(ContactItemDiffCallback()) {
 
+    private var multiSelect: Boolean = false
 
     // Keeps track of all the selected images
     private val selectedItems = arrayListOf<UserModel>()
@@ -35,7 +34,6 @@ class ContactsRecyclerAdapter(
 
     }
 
-
     /**
      * Replace the contents of a view (invoked by the layout manager)
      */
@@ -43,9 +41,7 @@ class ContactsRecyclerAdapter(
         holder.bindTo(getItem(position))
     }
 
-
     override fun getItemViewType(position: Int): Int = Constants.CONTACT_VIEW_HOLDER_TYPE_CODE
-
 
     override fun getItemId(position: Int): Long = position.toLong()
 

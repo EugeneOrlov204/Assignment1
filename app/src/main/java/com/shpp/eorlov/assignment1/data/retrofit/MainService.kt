@@ -10,6 +10,12 @@ interface MainService {
     @POST("/api/user/register")
     suspend fun registerUser(@Body request: RegisterModel): Response<RegistrationResponseModel>
 
+
+    @Headers("Content-Type: application/json")
+    @POST("/api/user/profile/edit")
+    suspend fun editUser(@Body request: EditUserModel, @Header("Authorization") accessToken: String): Response<EditUserResponseModel>
+
+
     @Headers("Content-Type: application/json")
     @POST("/api/user/login")
     suspend fun authorizeUser(@Body request: AuthorizeModel): Response<AuthorizationResponseModel>

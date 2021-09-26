@@ -1,11 +1,14 @@
 package com.shpp.eorlov.assignment1.ui.image_loader_dialog_fragment
 
+import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import android.provider.MediaStore
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.activity.result.contract.ActivityResultContracts
+import androidx.appcompat.widget.AppCompatImageView
 import androidx.core.view.doOnPreDraw
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.viewModels

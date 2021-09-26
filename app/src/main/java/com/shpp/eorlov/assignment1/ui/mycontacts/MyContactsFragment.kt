@@ -1,5 +1,6 @@
 package com.shpp.eorlov.assignment1.ui.mycontacts
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import android.os.SystemClock
 import android.view.LayoutInflater
@@ -134,7 +135,6 @@ class MyContactsFragment : BaseFragment(),
         refreshRecyclerView()
     }
 
-
     override fun onContactSelectedStateChanged() {
         if (contactsListAdapter.areAllItemsUnselected()) {
             binding.buttonRemoveSelectedContacts.visibility = View.GONE
@@ -144,7 +144,6 @@ class MyContactsFragment : BaseFragment(),
             refreshRecyclerView()
         }
     }
-
 
     override fun onGoUpClicked() {
         binding.recyclerViewMyContacts.smoothScrollToPosition(0)
@@ -174,7 +173,7 @@ class MyContactsFragment : BaseFragment(),
     }
 
     private fun enableContactSwipe() {
-        swipeFlags = ItemTouchHelper.END
+        swipeFlags = ItemTouchHelper.START
     }
 
 
@@ -188,14 +187,11 @@ class MyContactsFragment : BaseFragment(),
         viewModel.loadEvent.value = Results.OK
     }
 
+    @SuppressLint("NotifyDataSetChanged")
     private fun refreshRecyclerView() {
+//        contactsListAdapter.notifyDataSetChanged()
         binding.recyclerViewMyContacts.apply {
             adapter = contactsListAdapter
-            layoutManager = LinearLayoutManager(
-                requireContext(),
-                LinearLayoutManager.VERTICAL,
-                false
-            )
         }
     }
 
@@ -211,7 +207,6 @@ class MyContactsFragment : BaseFragment(),
                         viewHolder.bindingAdapterPosition
                     )
                 }
-
                 override fun getMovementFlags(
                     recyclerView: RecyclerView,
                     viewHolder: RecyclerView.ViewHolder
@@ -219,8 +214,6 @@ class MyContactsFragment : BaseFragment(),
 
                     return makeMovementFlags(0, swipeFlags)
                 }
-
-
                 override fun onMove(
                     recyclerView: RecyclerView,
                     viewHolder: RecyclerView.ViewHolder,
@@ -257,9 +250,21 @@ class MyContactsFragment : BaseFragment(),
 
 
     private fun setObservers() {
+        setViewModelObservers()
+        setSharedViewModelObservers()
+    }
 
+    private fun setSharedViewModelObservers() {
+        sharedViewModel.newUser.observe(viewLifecycleOwner) { newUser ->
+            newUser?.let {
+                viewModel.addItem(newUser)
+                sharedViewModel.newUser.value = null
+            }
+        }
+    }
+
+    private fun setViewModelObservers() {
         postponeEnterTransition()
-
         viewModel.apply {
             userListLiveData.observe(viewLifecycleOwner) { list ->
                 contactsListAdapter.submitList(list.toMutableList())
@@ -302,18 +307,34 @@ class MyContactsFragment : BaseFragment(),
                 }
             }
         }
-
-
-        sharedViewModel.newUser.observe(viewLifecycleOwner) { newUser ->
-            newUser?.let {
-                viewModel.addItem(newUser)
-                sharedViewModel.newUser.value = null
-            }
-        }
     }
 
 
     private fun setListeners() {
+        setOnClickListeners()
+        setOnScrollListener()
+    }
+
+    private fun setOnScrollListener() {
+        binding.apply {
+            recyclerViewMyContacts.addOnScrollListener(object : RecyclerView.OnScrollListener() {
+                override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+                    super.onScrolled(recyclerView, dx, dy)
+                    val userList = contactsListAdapter.currentList
+                    if (userList.isEmpty()) return
+                    if (!contactsListAdapter.isMultiSelect()) {
+                        if (dy > 0 && buttonGoUp.visibility == View.VISIBLE) {
+                            buttonGoUp.visibility = View.GONE
+                        } else if (dy < 0 && buttonGoUp.visibility != View.VISIBLE) {
+                            buttonGoUp.visibility = View.VISIBLE
+                        }
+                    }
+                }
+            })
+        }
+    }
+
+    private fun setOnClickListeners() {
         binding.apply {
 
             textViewAddContacts.clickWithDebounce {
@@ -335,22 +356,6 @@ class MyContactsFragment : BaseFragment(),
                 (parentFragment as CollectionContactFragment).viewPager.currentItem =
                     ContactCollectionAdapter.ViewPagerItems.PROFILE.position
             }
-
-            recyclerViewMyContacts.addOnScrollListener(object : RecyclerView.OnScrollListener() {
-                override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
-                    super.onScrolled(recyclerView, dx, dy)
-                    val userList = contactsListAdapter.currentList
-                    if (userList.isEmpty()) return
-                    if (!contactsListAdapter.isMultiSelect()) {
-                        if (dy > 0 && buttonGoUp.visibility == View.VISIBLE) {
-                            buttonGoUp.visibility = View.GONE
-                        } else if (dy < 0 && buttonGoUp.visibility != View.VISIBLE) {
-                            buttonGoUp.visibility = View.VISIBLE
-                        }
-                    }
-                }
-            })
         }
     }
-
 }

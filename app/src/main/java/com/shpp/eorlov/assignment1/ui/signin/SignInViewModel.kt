@@ -12,8 +12,6 @@ import javax.inject.Inject
 
 @HiltViewModel
 class SignInViewModel @Inject constructor() : ViewModel() {
-
-
     val loadEvent = MutableLiveData<Results>()
 
     fun initializeData() {

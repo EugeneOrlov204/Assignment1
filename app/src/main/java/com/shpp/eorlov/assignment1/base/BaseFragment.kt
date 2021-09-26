@@ -2,9 +2,7 @@ package com.shpp.eorlov.assignment1.base
 
 import android.util.Log
 import android.view.WindowManager
-import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.Fragment
-import com.shpp.eorlov.assignment1.utils.IOnBackPressed
 
 abstract class BaseFragment : Fragment() {
     protected fun lockUI() {

@@ -1,13 +1,11 @@
 package com.shpp.eorlov.assignment1.ui.myprofile
 
 import android.os.Bundle
-import android.os.SystemClock
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
-import androidx.activity.addCallback
 import androidx.core.view.isVisible
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
@@ -20,7 +18,6 @@ import com.shpp.eorlov.assignment1.ui.viewpager.CollectionContactFragment
 import com.shpp.eorlov.assignment1.ui.viewpager.CollectionContactFragmentDirections
 import com.shpp.eorlov.assignment1.ui.viewpager.ContactCollectionAdapter
 import com.shpp.eorlov.assignment1.utils.Constants
-import com.shpp.eorlov.assignment1.utils.IOnBackPressed
 import com.shpp.eorlov.assignment1.utils.Results
 import com.shpp.eorlov.assignment1.utils.ext.clickWithDebounce
 import com.shpp.eorlov.assignment1.utils.ext.loadImage
@@ -32,8 +29,6 @@ import com.shpp.eorlov.assignment1.R
 
 @AndroidEntryPoint
 class MyProfileFragment : BaseFragment() {
-
-
     private val sharedViewModel: SharedViewModel by activityViewModels()
     private val viewModel: MyProfileViewModel by viewModels()
 
@@ -81,41 +76,54 @@ class MyProfileFragment : BaseFragment() {
     }
 
     private fun setObservers() {
+        setViewModelObservers()
+        setSharedViewModelObservers()
+    }
+
+    private fun setSharedViewModelObservers() {
+        sharedViewModel.updatedUser.observe(viewLifecycleOwner) { list ->
+            list?.let {
+                viewModel.updateProfile(list)
+            }
+        }
+    }
+
+    private fun setViewModelObservers() {
+        setUserLiveDataObserver()
+        setLoadEventObserver()
+    }
+
+    private fun setLoadEventObserver() {
+        viewModel.loadEvent.apply {
+            observe(viewLifecycleOwner) { event ->
+                when (event) {
+                    Results.OK -> {
+                        unlockUI()
+                        binding.contentLoadingProgressBar.isVisible = false
+                    }
+                    Results.LOADING -> {
+                        lockUI()
+                        binding.contentLoadingProgressBar.isVisible = true
+                    }
+
+                    Results.INITIALIZE_DATA_ERROR -> {
+                        unlockUI()
+                        binding.contentLoadingProgressBar.isVisible = false
+                        Toast.makeText(requireContext(), event.name, Toast.LENGTH_LONG).show()
+                    }
+                    else -> {
+                    }
+                }
+            }
+        }
+    }
+
+    private fun setUserLiveDataObserver() {
         viewModel.apply {
 
             userLiveData.observe(viewLifecycleOwner) {
                 updateProfile()
                 viewModel.saveData(receivedUserModel.email ?: "")
-            }
-
-            loadEvent.apply {
-                observe(viewLifecycleOwner) { event ->
-                    when (event) {
-                        Results.OK -> {
-                            unlockUI()
-                            binding.contentLoadingProgressBar.isVisible = false
-                        }
-
-                        Results.LOADING -> {
-                            lockUI()
-                            binding.contentLoadingProgressBar.isVisible = true
-                        }
-
-                        Results.INITIALIZE_DATA_ERROR -> {
-                            unlockUI()
-                            binding.contentLoadingProgressBar.isVisible = false
-                            Toast.makeText(requireContext(), event.name, Toast.LENGTH_LONG).show()
-                        }
-                        else -> {
-                        }
-                    }
-                }
-            }
-        }
-
-        sharedViewModel.updatedUser.observe(viewLifecycleOwner) { list ->
-            list?.let {
-                viewModel.updateProfile(list)
             }
         }
     }

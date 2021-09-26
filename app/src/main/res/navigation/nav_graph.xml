@@ -25,8 +25,6 @@
         <action
             android:id="@+id/action_collectionContactFragment_to_editProfileFragment"
             app:destination="@id/editProfileFragment" />
-        <argument android:name="userModel"
-            app:argType="com.shpp.eorlov.assignment1.models.UserModel" />
     </fragment>
     <fragment
         android:id="@+id/editProfileFragment"
@@ -43,8 +41,8 @@
         android:label="fragment_sign_up"
         tools:layout="@layout/fragment_sign_up">
         <action
-            android:id="@+id/action_signUpFragment_to_imageLoaderDialogFragment"
-            app:destination="@id/imageLoaderDialogFragment" />
+            android:id="@+id/action_signUpFragment_to_signUpExtendedFragment"
+            app:destination="@id/signUpExtendedFragment" />
     </fragment>
     <fragment
         android:id="@+id/signInFragment"
@@ -63,18 +61,18 @@
             app:destination="@id/signUpFragment" />
     </fragment>
     <fragment
-        android:id="@+id/imageLoaderDialogFragment"
-        android:name="com.shpp.eorlov.assignment1.ui.image_loader_dialog_fragment.ImageLoaderDialogFragment"
+        android:id="@+id/signUpExtendedFragment"
+        android:name="com.shpp.eorlov.assignment1.ui.signup_extended.SignUpExtendedFragment"
         android:label="fragment_sign_up_extended"
         tools:layout="@layout/fragment_sign_up_extended" >
-        <action
-            android:id="@+id/action_imageLoaderDialogFragment_to_collectionContactFragment"
-            app:destination="@id/collectionContactFragment" />
         <argument
             android:name="email"
             app:argType="string" />
         <argument
             android:name="password"
             app:argType="string" />
+        <action
+            android:id="@+id/action_signUpExtendedFragment_to_collectionContactFragment"
+            app:destination="@id/collectionContactFragment" />
     </fragment>
 </navigation>

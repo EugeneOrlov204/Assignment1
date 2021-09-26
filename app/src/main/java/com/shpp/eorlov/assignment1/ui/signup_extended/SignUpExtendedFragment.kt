@@ -1,13 +1,17 @@
 package com.shpp.eorlov.assignment1.ui.signup_extended
 
+import android.app.Activity
+import android.content.Intent
 import android.os.Bundle
+import android.provider.MediaStore
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.EditorInfo
 import android.widget.Toast
+import androidx.activity.result.contract.ActivityResultContracts
+import androidx.appcompat.widget.AppCompatImageView
 import androidx.core.view.isVisible
-import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
@@ -18,12 +22,11 @@ import com.shpp.eorlov.assignment1.databinding.FragmentSignUpExtendedBinding
 import com.shpp.eorlov.assignment1.models.UserModel
 import com.shpp.eorlov.assignment1.ui.SharedViewModel
 import com.shpp.eorlov.assignment1.ui.image_loader_dialog_fragment.ImageLoaderDialogFragment
-import com.shpp.eorlov.assignment1.ui.image_loader_dialog_fragment.ImageLoaderDialogFragmentArgs
-import com.shpp.eorlov.assignment1.ui.image_loader_dialog_fragment.ImageLoaderDialogFragmentDirections
 import com.shpp.eorlov.assignment1.utils.Constants
 import com.shpp.eorlov.assignment1.utils.Results
 import com.shpp.eorlov.assignment1.utils.ext.clickWithDebounce
 import com.shpp.eorlov.assignment1.utils.ext.hideKeyboard
+import com.shpp.eorlov.assignment1.utils.ext.loadImage
 import com.shpp.eorlov.assignment1.validator.Validator
 import com.shpp.eorlov.assignment1.validator.evaluateErrorMessage
 import dagger.hilt.android.AndroidEntryPoint
@@ -37,9 +40,20 @@ class SignUpExtendedFragment : BaseFragment() {
 
     private val viewModel: SignUpExtendedViewModel by viewModels()
     private val sharedViewModel: SharedViewModel by activityViewModels()
-    private val args: ImageLoaderDialogFragmentArgs by navArgs()
+    private val args: SignUpExtendedFragmentArgs by navArgs()
     private lateinit var binding: FragmentSignUpExtendedBinding
     private lateinit var dialog: ImageLoaderDialogFragment
+
+    private var pathToLoadedImageFromGallery: String = ""
+    private var imageLoaderLauncher =
+        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+            val imageView: AppCompatImageView = binding.imageViewUserImage
+            if (result.resultCode == Activity.RESULT_OK && result.data?.data != null) {
+                val imageData = result.data?.data ?: return@registerForActivityResult
+                pathToLoadedImageFromGallery = imageData.toString()
+                imageView.loadImage(imageData)
+            }
+        }
 
 
     override fun onCreateView(
@@ -58,14 +72,17 @@ class SignUpExtendedFragment : BaseFragment() {
         setObservers()
     }
 
-
     override fun onResume() {
         super.onResume()
         printLog("On resume")
     }
 
     private fun setObservers() {
+        setViewModelObserver()
+        setSharedViewModelObserver()
+    }
 
+    private fun setViewModelObserver() {
         viewModel.loadEvent.observe(viewLifecycleOwner) { event ->
             when (event) {
                 Results.OK -> {
@@ -104,32 +121,44 @@ class SignUpExtendedFragment : BaseFragment() {
                 }
             }
         }
-        sharedViewModel.registerUser.observe(viewLifecycleOwner) {
-            if (it?.code == Constants.SUCCESS_RESPONSE_CODE && it.data != null) {
-//                viewModel.saveToken(it.data.user.email ?: "", it.data.accessToken)
+    }
 
-                val userModel = UserModel(
-                    email = args.email,
-                    name = binding.textInputEditTextUserName.text.toString(),
-                    profession = "",
-                    photo = "", //fixme
-                    phoneNumber = binding.textInputEditTextMobilePhone.text.toString(),
-                    residenceAddress = "",
-                    birthDate = ""
-                )
+    private fun setSharedViewModelObserver() {
+        sharedViewModel.apply {
+            registerUser.observe(viewLifecycleOwner) {
+                if (it?.code == Constants.SUCCESS_RESPONSE_CODE && it.data != null) {
 
-
-                val action =
-                    ImageLoaderDialogFragmentDirections.actionImageLoaderDialogFragmentToCollectionContactFragment(
-                        userModel//todo is it necessarily?
+                    sharedViewModel.editUser(
+                        name = binding.textInputEditTextUserName.text.toString(),
+                        phone = binding.textInputEditTextMobilePhone.text.toString(),
+                        address = "",
+                        career = "",
+                        birthday = "",
+                        accessToken = it.data.accessToken
                     )
-                findNavController().navigate(action)
-            } else if (it == null) {
-                viewModel.loadEvent.value = Results.INTERNET_ERROR
-            } else {
-                viewModel.loadEvent.value = Results.EXISTED_ACCOUNT_ERROR
+
+                    pathToLoadedImageFromGallery = ""
+
+                    val action =
+                        SignUpExtendedFragmentDirections.actionSignUpExtendedFragmentToCollectionContactFragment()
+                    findNavController().navigate(action)
+                } else if (it == null) {
+                    viewModel.loadEvent.value = Results.INTERNET_ERROR
+                } else {
+                    viewModel.loadEvent.value = Results.EXISTED_ACCOUNT_ERROR
+                }
             }
         }
+
+
+    }
+
+    private fun loadImageFromGallery() {
+        val gallery = Intent(
+            Intent.ACTION_PICK,
+            MediaStore.Images.Media.INTERNAL_CONTENT_URI
+        )
+        imageLoaderLauncher.launch(gallery)
     }
 
     private fun setListeners() {
@@ -143,8 +172,9 @@ class SignUpExtendedFragment : BaseFragment() {
         }
 
         binding.imageViewImageLoader.clickWithDebounce {
-            dialog = ImageLoaderDialogFragment()
-            dialog.show(childFragmentManager, Constants.IMAGE_LOADER_DIALOG_TAG)
+//            dialog = ImageLoaderDialogFragment()
+//            dialog.show(childFragmentManager, Constants.IMAGE_LOADER_DIALOG_TAG)
+            loadImageFromGallery()
         }
 
         binding.root.setOnClickListener {
