@@ -38,7 +38,7 @@ class ContactsViewHolder(
             }
 
             binding.textViewPersonNameUnselected.text = name
-            binding.textViewPersonProfessionUnselected.text = profession
+            binding.textViewPersonProfessionUnselected.text = career
             binding.draweeViewPersonImageUnselected.setImageURI(photo)
         }
 

@@ -1,15 +1,12 @@
 package com.shpp.eorlov.assignment1.ui.viewpager
 
-import android.os.Bundle
 import androidx.fragment.app.Fragment
 import androidx.viewpager2.adapter.FragmentStateAdapter
-import com.shpp.eorlov.assignment1.models.UserModel
 import com.shpp.eorlov.assignment1.ui.mycontacts.MyContactsFragment
 import com.shpp.eorlov.assignment1.ui.myprofile.MyProfileFragment
-import com.shpp.eorlov.assignment1.utils.Constants
 import com.shpp.eorlov.assignment1.utils.Constants.AMOUNT_OF_VIEWPAGER_ITEMS
 
-class ContactCollectionAdapter(fragment: Fragment, private val userModel: UserModel) :
+class ContactCollectionAdapter(fragment: Fragment) :
     FragmentStateAdapter(fragment) {
 
     override fun getItemCount(): Int = AMOUNT_OF_VIEWPAGER_ITEMS
@@ -17,11 +14,7 @@ class ContactCollectionAdapter(fragment: Fragment, private val userModel: UserMo
     override fun createFragment(position: Int): Fragment {
         return when (position) {
             ViewPagerItems.PROFILE.position -> {
-                MyProfileFragment().apply {
-                    arguments = Bundle().apply {
-                        putParcelable(Constants.REGISTERED_USER_MODEL_KEY, userModel)
-                    }
-                }
+                MyProfileFragment()
             }
             ViewPagerItems.LIST.position -> {
                 MyContactsFragment()

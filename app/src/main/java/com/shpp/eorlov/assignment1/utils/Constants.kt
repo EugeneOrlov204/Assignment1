@@ -9,6 +9,7 @@ object Constants {
     const val BUTTON_CLICK_DELAY: Long = 2000
     const val INVALID_CREDENTIALS_CODE = 403
     const val SUCCESS_RESPONSE_CODE = 200
+    const val CURRENT_EMAIL = "Current email"
 
     //Validator
     const val MIN_SIZE_OF_PASSWORD: Int = 8
@@ -31,7 +32,6 @@ object Constants {
 
     //ContactCollectionAdapter
     const val AMOUNT_OF_VIEWPAGER_ITEMS = 2
-    const val REGISTERED_USER_MODEL_KEY = "Registered user"
 
     //Sign up extended
     const val IMAGE_LOADER_DIALOG_TAG = "Image loader dialog"

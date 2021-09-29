@@ -103,7 +103,7 @@ class DetailViewFragment : BaseFragment() {
         viewModel.userLiveData.value?.apply {
             binding.draweeViewUserImageDetailView.setImageURI(photo)
             binding.textViewUserNameDetailView.text = name
-            binding.textViewUserProfessionDetailView.text = profession
+            binding.textViewUserProfessionDetailView.text = career
             binding.textViewUserResidenceDetailView.text = residenceAddress
         }
     }

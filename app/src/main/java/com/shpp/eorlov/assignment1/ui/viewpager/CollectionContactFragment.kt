@@ -4,14 +4,9 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.navigation.fragment.navArgs
 import androidx.viewpager2.widget.ViewPager2
 import com.shpp.eorlov.assignment1.base.BaseFragment
 import com.shpp.eorlov.assignment1.databinding.FragmentViewPagerBinding
-import com.shpp.eorlov.assignment1.models.UserModel
-import com.shpp.eorlov.assignment1.ui.mycontacts.MyContactsFragment
-import com.shpp.eorlov.assignment1.ui.myprofile.MyProfileFragment
-import com.shpp.eorlov.assignment1.utils.Constants
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -45,9 +40,7 @@ class CollectionContactFragment : BaseFragment() {
 
         //fixme get userModel from internet
         contactCollectionAdapter = ContactCollectionAdapter(
-            this, UserModel(
-                "", "", "", "", "", "",""
-            )
+            this
         )
         viewPager.adapter = contactCollectionAdapter
         viewPager.currentItem = ContactCollectionAdapter.ViewPagerItems.PROFILE.position

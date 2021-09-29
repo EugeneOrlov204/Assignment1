@@ -127,37 +127,19 @@ class SignInFragment : BaseFragment() {
 
         sharedViewModel.authorizeUser.apply {
             observe(viewLifecycleOwner) {
-                try {
-
-                    if (it?.code == Constants.SUCCESS_RESPONSE_CODE && it.data != null) {
-
-                        val userModel =
-                            (value as AuthorizationResponseModel).data?.user ?: UserModel(
-                                email = "",
-                                name = "",
-                                profession = "",
-                                photo = "",
-                                phoneNumber = "",
-                                residenceAddress = "",
-                                birthDate = ""
-                            )
-
-                        println("UserModel is $userModel")
-
-
-                        val action =
-                            SignInFragmentDirections.actionSignInFragmentToCollectionContactFragment()
-                        findNavController().navigate(action)
-                    } else if (it == null) {
-                        viewModel.loadEvent.value = Results.INTERNET_ERROR
-                    } else if (it.code == INVALID_CREDENTIALS_CODE) {
-                        viewModel.loadEvent.value = Results.INVALID_CREDENTIALS
-                    } else {
-                        viewModel.loadEvent.value = Results.NOT_EXISTED_ACCOUNT_ERROR
-                    }
-                } catch (exception: Exception) {
-                    println("Caught!")
+                if (it?.code == Constants.SUCCESS_RESPONSE_CODE && it.data != null) {
+                    viewModel.rememberCurrentEmail(binding.textInputEditTextEmail.text.toString())
+                    val action =
+                        SignInFragmentDirections.actionSignInFragmentToCollectionContactFragment()
+                    findNavController().navigate(action)
+                } else if (it == null) {
+                    viewModel.loadEvent.value = Results.INTERNET_ERROR
+                } else if (it.code == INVALID_CREDENTIALS_CODE) {
+                    viewModel.loadEvent.value = Results.INVALID_CREDENTIALS
+                } else {
+                    viewModel.loadEvent.value = Results.NOT_EXISTED_ACCOUNT_ERROR
                 }
+
             }
         }
     }

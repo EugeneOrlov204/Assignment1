@@ -127,7 +127,7 @@ class EditProfileFragment : BaseFragment() {
 
             binding.apply {
                 textInputEditTextUsername.setText(receivedUserModel.name)
-                textInputEditTextCareer.setText(profession)
+                textInputEditTextCareer.setText(career)
                 textInputEditTextAddress.setText(residenceAddress)
                 textInputEditTextBirthdate.setText(birthDate)
                 textInputEditTextPhone.setText(receivedUserModel.phoneNumber)

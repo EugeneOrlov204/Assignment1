@@ -19,12 +19,4 @@ class SignUpViewModel @Inject constructor() :
     fun initializeData() {
         loadEvent.value = Results.OK
     }
-
-//    fun saveToken(email: String, accessToken: String) {
-//        storage.saveToken(email, accessToken)
-//    }
-//
-//    fun fetchToken(email: String): String? {
-//        return storage.fetchToken(email);
-//    }
 }

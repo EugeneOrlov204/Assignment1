@@ -57,17 +57,6 @@ class MyContactsFragment : BaseFragment(),
         )
     }
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-
-        activity?.onBackPressedDispatcher?.addCallback(this, object : OnBackPressedCallback(true) {
-            override fun handleOnBackPressed() {
-                (parentFragment as CollectionContactFragment).viewPager.currentItem =
-                    ContactCollectionAdapter.ViewPagerItems.PROFILE.position
-            }
-        })
-    }
-
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -112,6 +101,12 @@ class MyContactsFragment : BaseFragment(),
     override fun onResume() {
         super.onResume()
         printLog("On resume")
+        activity?.onBackPressedDispatcher?.addCallback(this, object : OnBackPressedCallback(true) {
+            override fun handleOnBackPressed() {
+                (parentFragment as CollectionContactFragment).viewPager.currentItem =
+                    ContactCollectionAdapter.ViewPagerItems.PROFILE.position
+            }
+        })
     }
 
     override fun onContactRemove(position: Int) {
@@ -207,6 +202,7 @@ class MyContactsFragment : BaseFragment(),
                         viewHolder.bindingAdapterPosition
                     )
                 }
+
                 override fun getMovementFlags(
                     recyclerView: RecyclerView,
                     viewHolder: RecyclerView.ViewHolder
@@ -214,6 +210,7 @@ class MyContactsFragment : BaseFragment(),
 
                     return makeMovementFlags(0, swipeFlags)
                 }
+
                 override fun onMove(
                     recyclerView: RecyclerView,
                     viewHolder: RecyclerView.ViewHolder,

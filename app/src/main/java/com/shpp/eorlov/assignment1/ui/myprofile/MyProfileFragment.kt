@@ -20,11 +20,11 @@ import com.shpp.eorlov.assignment1.ui.viewpager.ContactCollectionAdapter
 import com.shpp.eorlov.assignment1.utils.Constants
 import com.shpp.eorlov.assignment1.utils.Results
 import com.shpp.eorlov.assignment1.utils.ext.clickWithDebounce
-import com.shpp.eorlov.assignment1.utils.ext.loadImage
 import dagger.hilt.android.AndroidEntryPoint
 
 import com.google.android.material.snackbar.Snackbar
 import com.shpp.eorlov.assignment1.R
+import com.shpp.eorlov.assignment1.utils.ext.loadImage
 
 
 @AndroidEntryPoint
@@ -47,9 +47,7 @@ class MyProfileFragment : BaseFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        receivedUserModel = arguments?.getParcelable(Constants.REGISTERED_USER_MODEL_KEY)
-            ?: throw Exception("Received user model is null!")
-        initializeProfile()
+        sharedViewModel.getUser(viewModel.fetchToken(viewModel.fetchCurrentEmail()))
         setListeners()
         setObservers()
     }
@@ -81,10 +79,17 @@ class MyProfileFragment : BaseFragment() {
     }
 
     private fun setSharedViewModelObservers() {
-        sharedViewModel.updatedUser.observe(viewLifecycleOwner) { list ->
-            list?.let {
-                viewModel.updateProfile(list)
+        sharedViewModel.updatedUser.observe(viewLifecycleOwner) { userModel ->
+            userModel?.let {
+                viewModel.updateProfile(userModel)
             }
+        }
+        sharedViewModel.getUser.observe(viewLifecycleOwner) { userModel ->
+            userModel?.let {
+                receivedUserModel = userModel.data.user
+                initializeProfile()
+            }
+
         }
     }
 
@@ -119,9 +124,9 @@ class MyProfileFragment : BaseFragment() {
     }
 
     private fun setUserLiveDataObserver() {
-        viewModel.apply {
-
-            userLiveData.observe(viewLifecycleOwner) {
+        viewModel.userLiveData.observe(viewLifecycleOwner) { userModel ->
+            if (userModel != null) {
+                receivedUserModel = userModel
                 updateProfile()
                 viewModel.saveData(receivedUserModel.email ?: "")
             }
@@ -139,7 +144,7 @@ class MyProfileFragment : BaseFragment() {
 
         binding.apply {
             textViewUserNameMyProfile.text = userModel.name
-            textViewUserProfessionMyProfile.text = userModel.profession
+            textViewUserProfessionMyProfile.text = userModel.career
             textViewPersonResidence.text = userModel.residenceAddress
             imageViewUserImageMyProfile.loadImage(userModel.photo ?: "")
             textViewGoToSettingsAndFillOutTheProfile.isVisible = !viewModel.isProfileFilledOut()

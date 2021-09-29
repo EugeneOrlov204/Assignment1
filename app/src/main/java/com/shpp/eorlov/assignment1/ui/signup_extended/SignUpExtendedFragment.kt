@@ -135,7 +135,8 @@ class SignUpExtendedFragment : BaseFragment() {
                     birthday = "",
                     accessToken = it.data.accessToken
                 )
-
+                viewModel.saveToken(args.email, it.data.accessToken)
+                viewModel.rememberCurrentEmail(args.email)
                 pathToLoadedImageFromGallery = ""
 
             } else if (it == null) {
@@ -206,7 +207,7 @@ class SignUpExtendedFragment : BaseFragment() {
         binding.textInputEditTextUserName.apply {
             setOnEditorActionListener { _, actionId, _ ->
                 binding.textInputLayoutUserName.error = evaluateErrorMessage(
-                    validator.validateEmail(text.toString())
+                    validator.validateUserName(text.toString())
                 )
 
                 false

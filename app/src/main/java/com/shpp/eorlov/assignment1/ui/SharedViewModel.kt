@@ -19,7 +19,7 @@ class SharedViewModel @Inject constructor(private val repository: MainRepository
     val registerUser = MutableLiveData<RegistrationResponseModel>()
     val authorizeUser = MutableLiveData<AuthorizationResponseModel>()
     val editUser = MutableLiveData<EditUserResponseModel>()
-    private val getUser = MutableLiveData<GetUserResponseModel>()
+    val getUser = MutableLiveData<GetUserResponseModel>()
 
     fun editUser(
         name: String?,
