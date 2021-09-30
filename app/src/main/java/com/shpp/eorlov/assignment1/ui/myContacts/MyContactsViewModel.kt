@@ -1,4 +1,4 @@
-package com.shpp.eorlov.assignment1.ui.mycontacts
+package com.shpp.eorlov.assignment1.ui.myContacts
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel

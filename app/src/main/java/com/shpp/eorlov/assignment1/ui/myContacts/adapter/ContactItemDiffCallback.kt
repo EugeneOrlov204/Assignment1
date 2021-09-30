@@ -1,4 +1,4 @@
-package com.shpp.eorlov.assignment1.ui.mycontacts.adapter
+package com.shpp.eorlov.assignment1.ui.myContacts.adapter
 
 import androidx.recyclerview.widget.DiffUtil
 import com.shpp.eorlov.assignment1.models.UserModel

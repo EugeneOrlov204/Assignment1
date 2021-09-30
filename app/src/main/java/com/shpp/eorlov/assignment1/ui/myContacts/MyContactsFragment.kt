@@ -1,4 +1,4 @@
-package com.shpp.eorlov.assignment1.ui.mycontacts
+package com.shpp.eorlov.assignment1.ui.myContacts
 
 import android.annotation.SuppressLint
 import android.os.Bundle
@@ -22,13 +22,12 @@ import com.shpp.eorlov.assignment1.databinding.FragmentMyContactsBinding
 import com.shpp.eorlov.assignment1.models.UserModel
 import com.shpp.eorlov.assignment1.ui.SharedViewModel
 import com.shpp.eorlov.assignment1.ui.contact_dialog_fragment.ContactDialogFragment
-import com.shpp.eorlov.assignment1.ui.mycontacts.adapter.ContactsRecyclerAdapter
-import com.shpp.eorlov.assignment1.ui.mycontacts.adapter.listeners.ButtonClickListener
-import com.shpp.eorlov.assignment1.ui.mycontacts.adapter.listeners.ContactClickListener
+import com.shpp.eorlov.assignment1.ui.myContacts.adapter.MyContactsRecyclerAdapter
+import com.shpp.eorlov.assignment1.ui.myContacts.adapter.listeners.ButtonClickListener
+import com.shpp.eorlov.assignment1.ui.myContacts.adapter.listeners.ContactClickListener
 import com.shpp.eorlov.assignment1.ui.viewpager.CollectionContactFragment
 import com.shpp.eorlov.assignment1.ui.viewpager.CollectionContactFragmentDirections
 import com.shpp.eorlov.assignment1.ui.viewpager.ContactCollectionAdapter
-import com.shpp.eorlov.assignment1.utils.Constants.CONTACT_DIALOG_TAG
 import com.shpp.eorlov.assignment1.utils.Constants.LIST_OF_CONTACTS_KEY
 import com.shpp.eorlov.assignment1.utils.Constants.SNACKBAR_DURATION
 import com.shpp.eorlov.assignment1.utils.Results
@@ -48,8 +47,8 @@ class MyContactsFragment : BaseFragment(),
     private lateinit var binding: FragmentMyContactsBinding
     private lateinit var dialog: ContactDialogFragment
 
-    private val contactsListAdapter: ContactsRecyclerAdapter by lazy(LazyThreadSafetyMode.NONE) {
-        ContactsRecyclerAdapter(
+    private val contactsListAdapter: MyContactsRecyclerAdapter by lazy(LazyThreadSafetyMode.NONE) {
+        MyContactsRecyclerAdapter(
             onContactClickListener = this
         )
     }
@@ -65,7 +64,6 @@ class MyContactsFragment : BaseFragment(),
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        sharedViewModel.getAllUsers(viewModel.fetchToken())
         initRecycler()
         setObservers()
         setListeners()
@@ -339,8 +337,10 @@ class MyContactsFragment : BaseFragment(),
         binding.apply {
 
             textViewAddContacts.clickWithDebounce {
-                dialog = ContactDialogFragment()
-                dialog.show(childFragmentManager, CONTACT_DIALOG_TAG)
+//                hideContacts()
+//                hideMyContactsUI()
+//                showAddContactsUI()
+//                sharedViewModel.getAllUsers(viewModel.fetchToken())
             }
 
             buttonGoUp.setOnClickListener {

@@ -1,11 +1,11 @@
-package com.shpp.eorlov.assignment1.ui.mycontacts.adapter.viewholders
+package com.shpp.eorlov.assignment1.ui.myContacts.adapter.viewholders
 
 import android.view.View
 import androidx.recyclerview.widget.RecyclerView
 import com.shpp.eorlov.assignment1.R
 import com.shpp.eorlov.assignment1.databinding.ContactListItemBinding
 import com.shpp.eorlov.assignment1.models.UserModel
-import com.shpp.eorlov.assignment1.ui.mycontacts.adapter.listeners.ContactClickListener
+import com.shpp.eorlov.assignment1.ui.myContacts.adapter.listeners.ContactClickListener
 import com.shpp.eorlov.assignment1.utils.ext.clickWithDebounce
 
 
@@ -37,9 +37,9 @@ class ContactsViewHolder(
                 binding.checkBoxSelectedState.isChecked = true
             }
 
-            binding.textViewPersonNameUnselected.text = name
-            binding.textViewPersonProfessionUnselected.text = career
-            binding.draweeViewPersonImageUnselected.setImageURI(photo)
+            binding.textViewPersonName.text = name
+            binding.textViewPersonProfession.text = career
+            binding.draweeViewPersonImage.setImageURI(photo)
         }
 
         setListeners()
