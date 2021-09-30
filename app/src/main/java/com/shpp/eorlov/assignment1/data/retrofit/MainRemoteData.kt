@@ -49,4 +49,10 @@ class MainRemoteData @Inject constructor(private val mainService: MainService) {
             return body()
         }
     }
+
+    suspend fun getAllUsers(accessToken: String) : GetAllUsersResponseModel? {
+        with(mainService.getAllUsers(accessToken)) {
+            return body()
+        }
+    }
 }

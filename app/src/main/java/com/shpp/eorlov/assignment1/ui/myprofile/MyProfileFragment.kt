@@ -47,7 +47,7 @@ class MyProfileFragment : BaseFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        sharedViewModel.getUser(viewModel.fetchToken(viewModel.fetchCurrentEmail()))
+        sharedViewModel.getUser(viewModel.fetchToken())
         setListeners()
         setObservers()
     }

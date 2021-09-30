@@ -23,4 +23,7 @@ interface MainService {
 
     @GET("/api/user/profile")
     suspend fun getUser(@Header("Authorization") accessToken: String): Response<GetUserResponseModel>
+
+    @GET("/api/users")
+    suspend fun getAllUsers(@Header("Authorization") accessToken: String): Response<GetAllUsersResponseModel>
 }

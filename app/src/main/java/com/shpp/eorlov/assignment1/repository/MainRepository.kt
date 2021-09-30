@@ -11,7 +11,6 @@ import javax.inject.Singleton
 class MainRepository @Inject constructor(
     private val remoteData: MainRemoteData
 ) {
-
     suspend fun registerUser(registerModel: RegisterModel) =
         remoteData.registerUser(registerModel)
 
@@ -23,4 +22,7 @@ class MainRepository @Inject constructor(
 
     suspend fun getUser(accessToken: String) =
         remoteData.getUser(accessToken)
+
+    suspend fun getAllUsers(accessToken: String) =
+        remoteData.getAllUsers(accessToken)
 }

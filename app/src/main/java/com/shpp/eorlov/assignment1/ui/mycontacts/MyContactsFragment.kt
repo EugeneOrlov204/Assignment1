@@ -2,7 +2,6 @@ package com.shpp.eorlov.assignment1.ui.mycontacts
 
 import android.annotation.SuppressLint
 import android.os.Bundle
-import android.os.SystemClock
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -29,14 +28,12 @@ import com.shpp.eorlov.assignment1.ui.mycontacts.adapter.listeners.ContactClickL
 import com.shpp.eorlov.assignment1.ui.viewpager.CollectionContactFragment
 import com.shpp.eorlov.assignment1.ui.viewpager.CollectionContactFragmentDirections
 import com.shpp.eorlov.assignment1.ui.viewpager.ContactCollectionAdapter
-import com.shpp.eorlov.assignment1.utils.Constants.BUTTON_CLICK_DELAY
 import com.shpp.eorlov.assignment1.utils.Constants.CONTACT_DIALOG_TAG
 import com.shpp.eorlov.assignment1.utils.Constants.LIST_OF_CONTACTS_KEY
 import com.shpp.eorlov.assignment1.utils.Constants.SNACKBAR_DURATION
 import com.shpp.eorlov.assignment1.utils.Results
 import com.shpp.eorlov.assignment1.utils.ext.clickWithDebounce
 import dagger.hilt.android.AndroidEntryPoint
-import kotlin.math.abs
 
 @AndroidEntryPoint
 class MyContactsFragment : BaseFragment(),
@@ -68,7 +65,7 @@ class MyContactsFragment : BaseFragment(),
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        viewModel.initializeData()
+        sharedViewModel.getAllUsers(viewModel.fetchToken())
         initRecycler()
         setObservers()
         setListeners()
@@ -258,8 +255,15 @@ class MyContactsFragment : BaseFragment(),
                 sharedViewModel.newUser.value = null
             }
         }
+
+        sharedViewModel.getAllUsers.observe(viewLifecycleOwner) { usersList ->
+            usersList?.let {
+                viewModel.initializeData(usersList.data.users)
+            }
+        }
     }
 
+    //fixme decomposition
     private fun setViewModelObservers() {
         postponeEnterTransition()
         viewModel.apply {

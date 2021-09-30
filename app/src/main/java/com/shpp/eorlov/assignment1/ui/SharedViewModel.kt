@@ -20,6 +20,7 @@ class SharedViewModel @Inject constructor(private val repository: MainRepository
     val authorizeUser = MutableLiveData<AuthorizationResponseModel>()
     val editUser = MutableLiveData<EditUserResponseModel>()
     val getUser = MutableLiveData<GetUserResponseModel>()
+    val getAllUsers = MutableLiveData<GetAllUsersResponseModel>()
 
     fun editUser(
         name: String?,
@@ -75,6 +76,14 @@ class SharedViewModel @Inject constructor(private val repository: MainRepository
         viewModelScope.launch {
             getUser.postValue(
                 repository.getUser(accessToken = "Bearer $accessToken")
+            )
+        }
+    }
+
+    fun getAllUsers(accessToken: String) {
+        viewModelScope.launch {
+            getAllUsers.postValue(
+                repository.getAllUsers(accessToken = "Bearer $accessToken")
             )
         }
     }

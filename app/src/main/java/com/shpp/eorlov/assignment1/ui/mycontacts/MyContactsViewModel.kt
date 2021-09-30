@@ -2,30 +2,30 @@ package com.shpp.eorlov.assignment1.ui.mycontacts
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.shpp.eorlov.assignment1.db.ContactsDatabaseImpl
+import com.shpp.eorlov.assignment1.data.storage.SharedPreferencesStorageImplementation
 import com.shpp.eorlov.assignment1.models.UserModel
+import com.shpp.eorlov.assignment1.utils.Constants
 import com.shpp.eorlov.assignment1.utils.Results
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
 @HiltViewModel
 class MyContactsViewModel @Inject constructor(
-    private val contactsDatabase: ContactsDatabaseImpl
+    private val storage: SharedPreferencesStorageImplementation
 ) : ViewModel() {
 
     val userListLiveData = MutableLiveData<MutableList<UserModel>>(ArrayList())
     val loadEvent = MutableLiveData<Results>()
     val selectedEvent = MutableLiveData(false)
 
-    fun initializeData() {
+    fun initializeData(users: ArrayList<UserModel>) {
         if (userListLiveData.value == null) {
             loadEvent.value = Results.INITIALIZE_DATA_ERROR
         } else {
             loadEvent.value = Results.LOADING
-            val data = contactsDatabase.listOfContacts.toMutableList()
-            if (data.isNotEmpty()) {
+            if (users.isNotEmpty()) {
                 loadEvent.value = Results.OK
-                userListLiveData.value = data
+                userListLiveData.value = users
             } else {
                 loadEvent.value = Results.INITIALIZE_DATA_ERROR
             }
@@ -66,5 +66,9 @@ class MyContactsViewModel @Inject constructor(
     fun addItem(addedItem: UserModel) {
         userListLiveData.value?.add(addedItem)
         userListLiveData.value = userListLiveData.value
+    }
+
+    fun fetchToken(): String {
+        return storage.getString(Constants.ACCESS_TOKEN) ?: ""
     }
 }

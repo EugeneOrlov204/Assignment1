@@ -129,6 +129,7 @@ class SignInFragment : BaseFragment() {
             observe(viewLifecycleOwner) {
                 if (it?.code == Constants.SUCCESS_RESPONSE_CODE && it.data != null) {
                     viewModel.rememberCurrentEmail(binding.textInputEditTextEmail.text.toString())
+                    viewModel.saveToken(it.data.accessToken)
                     val action =
                         SignInFragmentDirections.actionSignInFragmentToCollectionContactFragment()
                     findNavController().navigate(action)

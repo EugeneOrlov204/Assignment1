@@ -6,7 +6,6 @@ object Constants {
 
     //General
     const val DATE_FORMAT = "dd/MM/yyyy"
-    const val BUTTON_CLICK_DELAY: Long = 2000
     const val INVALID_CREDENTIALS_CODE = 403
     const val SUCCESS_RESPONSE_CODE = 200
     const val CURRENT_EMAIL = "Current email"
@@ -25,7 +24,7 @@ object Constants {
 
     //SharedPreferencesStorage
     const val PREFS_FILE = "Storage"
-    const val USER_TOKEN = "user_token"
+    const val ACCESS_TOKEN = "access token"
 
     //ContactRecyclerAdapter
     const val CONTACT_VIEW_HOLDER_TYPE_CODE = 0

@@ -2,7 +2,6 @@ package com.shpp.eorlov.assignment1.ui.editprofile
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.shpp.eorlov.assignment1.db.ContactsDatabaseImpl
 import com.shpp.eorlov.assignment1.models.UserModel
 import com.shpp.eorlov.assignment1.utils.Results
 import com.shpp.eorlov.assignment1.validator.ValidateOperation
@@ -13,12 +12,21 @@ import javax.inject.Inject
 
 @HiltViewModel
 class EditProfileViewModel @Inject constructor(
-    private val contactsDatabase: ContactsDatabaseImpl,
     private val validator: Validator
 ) : ViewModel() {
 
-    val userLiveData: MutableLiveData<UserModel> by lazy(LazyThreadSafetyMode.NONE)  {
-        MutableLiveData(contactsDatabase.getDefaultUserModel())
+    val userLiveData: MutableLiveData<UserModel> by lazy(LazyThreadSafetyMode.NONE) {
+        MutableLiveData(
+            UserModel(
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                ""
+            )
+        )
     }
 
     val loadEvent = MutableLiveData<Results>()

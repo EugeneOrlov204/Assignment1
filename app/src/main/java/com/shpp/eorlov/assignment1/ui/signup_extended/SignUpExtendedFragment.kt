@@ -19,7 +19,6 @@ import androidx.navigation.fragment.navArgs
 import com.shpp.eorlov.assignment1.R
 import com.shpp.eorlov.assignment1.base.BaseFragment
 import com.shpp.eorlov.assignment1.databinding.FragmentSignUpExtendedBinding
-import com.shpp.eorlov.assignment1.models.UserModel
 import com.shpp.eorlov.assignment1.ui.SharedViewModel
 import com.shpp.eorlov.assignment1.ui.image_loader_dialog_fragment.ImageLoaderDialogFragment
 import com.shpp.eorlov.assignment1.utils.Constants
@@ -135,7 +134,6 @@ class SignUpExtendedFragment : BaseFragment() {
                     birthday = "",
                     accessToken = it.data.accessToken
                 )
-                viewModel.saveToken(args.email, it.data.accessToken)
                 viewModel.rememberCurrentEmail(args.email)
                 pathToLoadedImageFromGallery = ""
 

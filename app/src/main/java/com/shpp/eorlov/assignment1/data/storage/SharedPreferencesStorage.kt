@@ -34,6 +34,4 @@ interface SharedPreferencesStorage {
     fun removePrefValue(key: String)
     fun contains(_key: String): Boolean
     fun clearPrefs()
-    fun saveToken(email: String, accessToken: String)
-    fun fetchToken(email: String): String?
 }

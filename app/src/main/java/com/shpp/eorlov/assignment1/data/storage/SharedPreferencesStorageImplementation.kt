@@ -2,7 +2,7 @@ package com.shpp.eorlov.assignment1.data.storage
 
 import android.content.Context
 import com.shpp.eorlov.assignment1.utils.Constants.PREFS_FILE
-import com.shpp.eorlov.assignment1.utils.Constants.USER_TOKEN
+import com.shpp.eorlov.assignment1.utils.Constants.ACCESS_TOKEN
 import dagger.hilt.android.qualifiers.ApplicationContext
 import javax.inject.Inject
 
@@ -132,24 +132,6 @@ class SharedPreferencesStorageImplementation @Inject constructor(@ApplicationCon
     override fun clearPrefs() {
         val prefs = context.getSharedPreferences(PREFS_FILE, Context.MODE_PRIVATE)
         prefs.edit().clear().apply()
-    }
-
-    /**
-     * Function to save auth token
-     */
-    override fun saveToken(email: String, accessToken: String) {
-        val prefs = context.getSharedPreferences(PREFS_FILE, Context.MODE_PRIVATE)
-        val editor = prefs.edit()
-        editor.putString("$USER_TOKEN $email", accessToken)
-        editor.apply()
-    }
-
-    /**
-     * Function to fetch auth token
-     */
-    override fun fetchToken(email: String): String? {
-        val prefs = context.getSharedPreferences(PREFS_FILE, Context.MODE_PRIVATE)
-        return prefs.getString("$USER_TOKEN $email", null)
     }
 }
 

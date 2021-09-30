@@ -53,8 +53,7 @@ class ContactsViewHolder(
 
             constraintLayoutContactListItem.clickWithDebounce {
                 if (!multiSelect) {
-                    onContactClickListener.onContactSelected(contact)
-                } else {
+                    onContactClickListener.onContactSelected(contact) } else {
                     checkBoxSelectedState.isChecked = !checkBoxSelectedState.isChecked
                     selectItem(contact)
                     onContactClickListener.onContactSelectedStateChanged()
