@@ -8,7 +8,9 @@ object Constants {
     const val DATE_FORMAT = "dd/MM/yyyy"
     const val INVALID_CREDENTIALS_CODE = 403
     const val SUCCESS_RESPONSE_CODE = 200
-    const val CURRENT_EMAIL = "Current email"
+    const val CURRENT_EMAIL = "Current email for user profile"
+    const val EMAIL = "Email for autologin"
+    const val PASSWORD = "Password for autologin"
 
     //Validator
     const val MIN_SIZE_OF_PASSWORD: Int = 8

@@ -59,18 +59,11 @@ class SignInFragment : BaseFragment() {
 
     private fun initializeData() {
         viewModel.initializeData()
-        //todo implement autologin
-//        if (!viewModel.getLogin().isNullOrEmpty()
-//            && !viewModel.getPassword().isNullOrEmpty()
-//        ) {
-//            val action =
-//                SignInFragmentDirections.actionSignInFragmentToCollectionContactFragment(
-//                    if (viewModel.getLogin().isNullOrEmpty()) {
-//                        viewModel.getUserModelFromStorage()
-//                    } else return
-//                )
-//            findNavController().navigate(action)
-//        }
+        if (viewModel.isRememberedUser()) {
+            val action =
+                SignInFragmentDirections.actionSignInFragmentToCollectionContactFragment()
+            findNavController().navigate(action)
+        }
     }
 
     private fun setObservers() {
@@ -211,13 +204,16 @@ class SignInFragment : BaseFragment() {
                 return
             }
 
-            //todo implement autologin
-//            if (checkBoxRememberMe.isChecked) {
-//                viewModel.saveLoginData(
-//                    email, //Login
-//                    textInputEditTextPassword.text.toString() //Password
-//                )
-//            }
+            if (checkBoxRememberMe.isChecked) {
+                viewModel.saveLoginData(
+                    email, //Login
+                    textInputEditTextPassword.text.toString() //Password
+                )
+            } else {
+                viewModel.clearLoginData()
+            }
+
+
             try {
                 sharedViewModel.authorizeUser(email, password)
             } catch (exception: Exception) {
