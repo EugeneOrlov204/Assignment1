@@ -19,7 +19,7 @@ import com.google.android.material.snackbar.Snackbar
 import com.shpp.eorlov.assignment1.R
 import com.shpp.eorlov.assignment1.base.BaseFragment
 import com.shpp.eorlov.assignment1.databinding.FragmentMyContactsBinding
-import com.shpp.eorlov.assignment1.models.UserModel
+import com.shpp.eorlov.assignment1.model.UserModel
 import com.shpp.eorlov.assignment1.ui.SharedViewModel
 import com.shpp.eorlov.assignment1.ui.contact_dialog_fragment.ContactDialogFragment
 import com.shpp.eorlov.assignment1.ui.myContacts.adapter.MyContactsRecyclerAdapter

@@ -2,7 +2,7 @@ package com.shpp.eorlov.assignment1.ui.editprofile
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.shpp.eorlov.assignment1.models.UserModel
+import com.shpp.eorlov.assignment1.model.UserModel
 import com.shpp.eorlov.assignment1.utils.Results
 import com.shpp.eorlov.assignment1.validator.ValidateOperation
 import com.shpp.eorlov.assignment1.validator.Validator
@@ -18,13 +18,13 @@ class EditProfileViewModel @Inject constructor(
     val userLiveData: MutableLiveData<UserModel> by lazy(LazyThreadSafetyMode.NONE) {
         MutableLiveData(
             UserModel(
-                "",
-                "",
-                "",
-                "",
-                "",
-                "",
-                ""
+                name = "",
+                career = "",
+                photo = "",
+                address = "",
+                birthday = "",
+                phone = "",
+                email = ""
             )
         )
     }

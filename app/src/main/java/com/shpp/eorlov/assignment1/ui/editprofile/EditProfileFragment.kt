@@ -21,7 +21,7 @@ import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
 import com.shpp.eorlov.assignment1.base.BaseFragment
 import com.shpp.eorlov.assignment1.databinding.FragmentEditProfileBinding
-import com.shpp.eorlov.assignment1.models.UserModel
+import com.shpp.eorlov.assignment1.model.UserModel
 import com.shpp.eorlov.assignment1.data.storage.SharedPreferencesStorage
 import com.shpp.eorlov.assignment1.ui.SharedViewModel
 import com.shpp.eorlov.assignment1.utils.Constants.DATE_FORMAT
@@ -128,9 +128,9 @@ class EditProfileFragment : BaseFragment() {
             binding.apply {
                 textInputEditTextUsername.setText(receivedUserModel.name)
                 textInputEditTextCareer.setText(career)
-                textInputEditTextAddress.setText(residenceAddress)
-                textInputEditTextBirthdate.setText(birthDate)
-                textInputEditTextPhone.setText(receivedUserModel.phoneNumber)
+                textInputEditTextAddress.setText(address)
+                textInputEditTextBirthdate.setText(birthday)
+                textInputEditTextPhone.setText(receivedUserModel.phone)
                 textInputEditTextEmail.setText(receivedUserModel.email)
                 imageViewPersonPhoto.loadImage(pathToLoadedImageFromGallery)
             }
@@ -222,13 +222,13 @@ class EditProfileFragment : BaseFragment() {
     }
 
     private fun getProfileData() = UserModel(
-        binding.textInputEditTextUsername.text.toString(),
-        binding.textInputEditTextCareer.text.toString(),
-        pathToLoadedImageFromGallery,
-        binding.textInputEditTextAddress.text.toString(),
-        binding.textInputEditTextBirthdate.text.toString(),
-        binding.textInputEditTextPhone.text.toString(),
-        binding.textInputEditTextEmail.text.toString(),
+        name = binding.textInputEditTextUsername.text.toString(),
+        career = binding.textInputEditTextCareer.text.toString(),
+        photo = pathToLoadedImageFromGallery,
+        address = binding.textInputEditTextAddress.text.toString(),
+        birthday = binding.textInputEditTextBirthdate.text.toString(),
+        phone = binding.textInputEditTextPhone.text.toString(),
+        email = binding.textInputEditTextEmail.text.toString(),
     )
 
 

@@ -1,6 +1,6 @@
 package com.shpp.eorlov.assignment1.data.retrofit
 
-import com.shpp.eorlov.assignment1.models.*
+import com.shpp.eorlov.assignment1.model.*
 import retrofit2.Response
 import retrofit2.http.*
 

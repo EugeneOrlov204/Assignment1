@@ -3,12 +3,10 @@ package com.shpp.eorlov.assignment1.ui
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.shpp.eorlov.assignment1.models.*
+import com.shpp.eorlov.assignment1.model.*
 import com.shpp.eorlov.assignment1.repository.MainRepository
-import com.shpp.eorlov.assignment1.utils.Results
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
-import java.net.ConnectException
 import javax.inject.Inject
 
 @HiltViewModel

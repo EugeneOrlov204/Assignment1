@@ -1,6 +1,6 @@
-package com.shpp.eorlov.assignment1.models
+package com.shpp.eorlov.assignment1.model
 
-data class EditUserResponseModel(
+data class AuthorizationResponseModel(
     val status: String,
     val code: Int,
     val message: String,

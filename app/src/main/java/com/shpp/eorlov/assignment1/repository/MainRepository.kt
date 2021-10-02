@@ -1,9 +1,9 @@
 package com.shpp.eorlov.assignment1.repository
 
 import com.shpp.eorlov.assignment1.data.retrofit.MainRemoteData
-import com.shpp.eorlov.assignment1.models.AuthorizeModel
-import com.shpp.eorlov.assignment1.models.EditUserModel
-import com.shpp.eorlov.assignment1.models.RegisterModel
+import com.shpp.eorlov.assignment1.model.AuthorizeModel
+import com.shpp.eorlov.assignment1.model.EditUserModel
+import com.shpp.eorlov.assignment1.model.RegisterModel
 import javax.inject.Inject
 import javax.inject.Singleton
 

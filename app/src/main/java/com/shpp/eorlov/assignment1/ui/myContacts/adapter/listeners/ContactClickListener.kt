@@ -1,6 +1,6 @@
 package com.shpp.eorlov.assignment1.ui.myContacts.adapter.listeners
 
-import com.shpp.eorlov.assignment1.models.UserModel
+import com.shpp.eorlov.assignment1.model.UserModel
 
 interface ContactClickListener {
     fun onContactRemove(position: Int)

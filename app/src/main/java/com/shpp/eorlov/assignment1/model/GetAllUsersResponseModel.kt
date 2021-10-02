@@ -1,4 +1,4 @@
-package com.shpp.eorlov.assignment1.models
+package com.shpp.eorlov.assignment1.model
 
 data class GetAllUsersResponseModel(
     val status: String,

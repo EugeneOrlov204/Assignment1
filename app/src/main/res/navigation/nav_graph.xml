@@ -12,7 +12,7 @@
         tools:layout="@layout/fragment_detail_view" >
         <argument
             android:name="contact"
-            app:argType="com.shpp.eorlov.assignment1.models.UserModel" />
+            app:argType="com.shpp.eorlov.assignment1.model.UserModel" />
     </fragment>
     <fragment
         android:id="@+id/collectionContactFragment"
@@ -33,7 +33,7 @@
         tools:layout="@layout/fragment_edit_profile" >
         <argument
             android:name="userModel"
-            app:argType="com.shpp.eorlov.assignment1.models.UserModel" />
+            app:argType="com.shpp.eorlov.assignment1.model.UserModel" />
     </fragment>
     <fragment
         android:id="@+id/signUpFragment"

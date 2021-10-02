@@ -19,7 +19,7 @@ import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
 import com.shpp.eorlov.assignment1.R
 import com.shpp.eorlov.assignment1.databinding.AddContactDialogBinding
-import com.shpp.eorlov.assignment1.models.UserModel
+import com.shpp.eorlov.assignment1.model.UserModel
 import com.shpp.eorlov.assignment1.ui.SharedViewModel
 import com.shpp.eorlov.assignment1.utils.Constants
 import com.shpp.eorlov.assignment1.utils.ext.clickWithDebounce
@@ -111,13 +111,13 @@ class ContactDialogFragment : DialogFragment() {
 
         val newContact =
             UserModel(
-                dialogBinding.textInputEditTextUsername.text.toString(),
-                dialogBinding.textInputEditTextCareer.text.toString(),
-                imageData,
-                dialogBinding.textInputEditTextAddress.text.toString(),
-                dialogBinding.textInputEditTextBirthdate.text.toString(),
-                dialogBinding.textInputEditTextPhone.text.toString(),
-                dialogBinding.textInputEditTextEmail.text.toString()
+                name = dialogBinding.textInputEditTextUsername.text.toString(),
+                career = dialogBinding.textInputEditTextCareer.text.toString(),
+                photo = imageData,
+                address = dialogBinding.textInputEditTextAddress.text.toString(),
+                birthday = dialogBinding.textInputEditTextBirthdate.text.toString(),
+                phone = dialogBinding.textInputEditTextPhone.text.toString(),
+                email = dialogBinding.textInputEditTextEmail.text.toString()
             )
 
         pathToLoadedImageFromGallery = ""
@@ -254,7 +254,6 @@ class ContactDialogFragment : DialogFragment() {
         )
         imageLoaderLauncher.launch(gallery)
     }
-
 
 
     private fun setOnEditorActionListener(

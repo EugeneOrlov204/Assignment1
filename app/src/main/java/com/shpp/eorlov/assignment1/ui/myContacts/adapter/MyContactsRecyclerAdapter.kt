@@ -4,7 +4,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.ListAdapter
 import com.shpp.eorlov.assignment1.databinding.ContactListItemBinding
-import com.shpp.eorlov.assignment1.models.UserModel
+import com.shpp.eorlov.assignment1.model.UserModel
 import com.shpp.eorlov.assignment1.ui.myContacts.adapter.listeners.ContactClickListener
 import com.shpp.eorlov.assignment1.ui.myContacts.adapter.viewholders.ContactsViewHolder
 import com.shpp.eorlov.assignment1.utils.Constants

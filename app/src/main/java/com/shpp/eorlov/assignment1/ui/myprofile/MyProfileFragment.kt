@@ -12,7 +12,7 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.shpp.eorlov.assignment1.base.BaseFragment
 import com.shpp.eorlov.assignment1.databinding.FragmentMyProfileBinding
-import com.shpp.eorlov.assignment1.models.UserModel
+import com.shpp.eorlov.assignment1.model.UserModel
 import com.shpp.eorlov.assignment1.ui.SharedViewModel
 import com.shpp.eorlov.assignment1.ui.viewpager.CollectionContactFragment
 import com.shpp.eorlov.assignment1.ui.viewpager.CollectionContactFragmentDirections
@@ -145,7 +145,7 @@ class MyProfileFragment : BaseFragment() {
         binding.apply {
             textViewUserNameMyProfile.text = userModel.name
             textViewUserProfessionMyProfile.text = userModel.career
-            textViewPersonResidence.text = userModel.residenceAddress
+            textViewPersonResidence.text = userModel.address
             imageViewUserImageMyProfile.loadImage(userModel.photo ?: "")
             textViewGoToSettingsAndFillOutTheProfile.isVisible = !viewModel.isProfileFilledOut()
         }

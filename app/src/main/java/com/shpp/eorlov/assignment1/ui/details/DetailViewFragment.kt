@@ -104,7 +104,7 @@ class DetailViewFragment : BaseFragment() {
             binding.draweeViewUserImageDetailView.setImageURI(photo)
             binding.textViewUserNameDetailView.text = name
             binding.textViewUserProfessionDetailView.text = career
-            binding.textViewUserResidenceDetailView.text = residenceAddress
+            binding.textViewUserResidenceDetailView.text = address
         }
     }
 }
