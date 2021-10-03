@@ -13,7 +13,8 @@ class ContactsViewHolder(
     private val binding: ContactListItemBinding,
     private val onContactClickListener: ContactClickListener,
     private val multiSelect: Boolean,
-    private val selectedItems: ArrayList<UserModel>
+    private val selectedItems: ArrayList<UserModel>,
+    private val addContactsState: Boolean
 ) :
     RecyclerView.ViewHolder(binding.root) {
 
@@ -42,7 +43,21 @@ class ContactsViewHolder(
             binding.draweeViewPersonImage.setImageURI(photo)
         }
 
+        if(addContactsState) {
+            hideMyContactsUI()
+            showAddContactsUI()
+        }
+
         setListeners()
+    }
+
+    private fun showAddContactsUI() {
+        binding.imageViewAddContact.visibility = View.VISIBLE
+        binding.textViewAddContact.visibility = View.VISIBLE
+    }
+
+    private fun hideMyContactsUI() {
+        binding.imageViewRemoveButton.visibility = View.GONE
     }
 
     private fun setListeners() {

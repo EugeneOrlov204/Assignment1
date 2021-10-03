@@ -18,6 +18,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.snackbar.Snackbar
 import com.shpp.eorlov.assignment1.R
 import com.shpp.eorlov.assignment1.base.BaseFragment
+import com.shpp.eorlov.assignment1.databinding.ContactListItemBinding
 import com.shpp.eorlov.assignment1.databinding.FragmentMyContactsBinding
 import com.shpp.eorlov.assignment1.model.UserModel
 import com.shpp.eorlov.assignment1.ui.SharedViewModel
@@ -45,7 +46,8 @@ class MyContactsFragment : BaseFragment(),
     private var swipeFlags = ItemTouchHelper.START
 
     private lateinit var binding: FragmentMyContactsBinding
-    private lateinit var dialog: ContactDialogFragment
+    private lateinit var itemBinding: ContactListItemBinding
+    private lateinit var dialog: ContactDialogFragment //fixme remove it
 
     private val contactsListAdapter: MyContactsRecyclerAdapter by lazy(LazyThreadSafetyMode.NONE) {
         MyContactsRecyclerAdapter(
@@ -59,6 +61,7 @@ class MyContactsFragment : BaseFragment(),
         savedInstanceState: Bundle?
     ): View {
         binding = FragmentMyContactsBinding.inflate(inflater, container, false)
+        itemBinding = ContactListItemBinding.inflate(inflater, container, false)
         return binding.root
     }
 
@@ -78,6 +81,7 @@ class MyContactsFragment : BaseFragment(),
         )
     }
 
+    //todo remove it?
     override fun onViewStateRestored(savedInstanceState: Bundle?) {
         super.onViewStateRestored(savedInstanceState)
         if (savedInstanceState != null) {
@@ -337,10 +341,10 @@ class MyContactsFragment : BaseFragment(),
         binding.apply {
 
             textViewAddContacts.clickWithDebounce {
-//                hideContacts()
-//                hideMyContactsUI()
-//                showAddContactsUI()
-//                sharedViewModel.getAllUsers(viewModel.fetchToken())
+                clearContactsList()
+                hideMyContactsUI()
+                showAddContactsUI()
+                sharedViewModel.getAllUsers(viewModel.fetchToken())
             }
 
             buttonGoUp.setOnClickListener {
@@ -358,5 +362,19 @@ class MyContactsFragment : BaseFragment(),
                     ContactCollectionAdapter.ViewPagerItems.PROFILE.position
             }
         }
+    }
+
+    private fun showAddContactsUI() {
+        contactsListAdapter.hideMyContactsUIAndShowAddContactsUI()
+    }
+
+    private fun hideMyContactsUI() {
+        binding.textViewContacts.text = getString(R.string.users)
+        binding.textViewAddContacts.visibility = View.INVISIBLE
+        binding.buttonRemoveSelectedContacts.visibility = View.GONE
+    }
+
+    private fun clearContactsList() {
+        viewModel.clearContactsList()
     }
 }

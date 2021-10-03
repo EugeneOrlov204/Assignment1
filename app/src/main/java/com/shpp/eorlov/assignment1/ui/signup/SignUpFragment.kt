@@ -23,6 +23,8 @@ import com.shpp.eorlov.assignment1.validator.evaluateErrorMessage
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
+//todo implement autologin
+
 @AndroidEntryPoint
 class SignUpFragment : BaseFragment() {
 

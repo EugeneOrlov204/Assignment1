@@ -87,4 +87,9 @@ class MyContactsViewModel @Inject constructor(
     fun fetchToken(): String {
         return storage.getString(Constants.ACCESS_TOKEN) ?: ""
     }
+
+    fun clearContactsList() {
+        userListLiveData.value?.clear()
+        userListLiveData.value = userListLiveData.value
+    }
 }

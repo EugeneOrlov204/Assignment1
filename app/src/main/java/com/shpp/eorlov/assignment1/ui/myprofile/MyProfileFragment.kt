@@ -26,7 +26,7 @@ import com.google.android.material.snackbar.Snackbar
 import com.shpp.eorlov.assignment1.R
 import com.shpp.eorlov.assignment1.utils.ext.loadImage
 
-
+//todo implement log out button
 @AndroidEntryPoint
 class MyProfileFragment : BaseFragment() {
     private val sharedViewModel: SharedViewModel by activityViewModels()

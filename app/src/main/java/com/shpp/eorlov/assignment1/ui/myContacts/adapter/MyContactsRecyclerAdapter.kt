@@ -19,6 +19,8 @@ class MyContactsRecyclerAdapter(
     // Keeps track of all the selected images
     private val selectedItems = arrayListOf<UserModel>()
 
+    private var addContactsState: Boolean = false
+
     /**
      * Create new views (invoked by the layout manager)
      */
@@ -29,7 +31,8 @@ class MyContactsRecyclerAdapter(
             ),
             onContactClickListener,
             multiSelect,
-            selectedItems
+            selectedItems,
+            addContactsState
         )
 
     }
@@ -65,5 +68,9 @@ class MyContactsRecyclerAdapter(
         }
         selectedItems.clear()
         multiSelect = false
+    }
+
+    fun hideMyContactsUIAndShowAddContactsUI() {
+        addContactsState = true
     }
 }
