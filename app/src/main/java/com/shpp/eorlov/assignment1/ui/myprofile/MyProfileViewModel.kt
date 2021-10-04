@@ -2,7 +2,7 @@ package com.shpp.eorlov.assignment1.ui.myprofile
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.shpp.eorlov.assignment1.data.storage.SharedPreferencesStorageImplementation
+import com.shpp.eorlov.assignment1.data.storage.SharedPreferencesStorageImpl
 import com.shpp.eorlov.assignment1.model.UserModel
 import com.shpp.eorlov.assignment1.utils.Constants.ACCESS_TOKEN
 import com.shpp.eorlov.assignment1.utils.Results
@@ -11,7 +11,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class MyProfileViewModel @Inject constructor(
-    private val storage: SharedPreferencesStorageImplementation
+    private val storage: SharedPreferencesStorageImpl
 ) : ViewModel() {
 
     val userLiveData: MutableLiveData<UserModel> by lazy(LazyThreadSafetyMode.NONE) {

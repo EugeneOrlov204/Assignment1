@@ -3,7 +3,7 @@ package com.shpp.eorlov.assignment1.ui.signin
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.shpp.eorlov.assignment1.data.storage.SharedPreferencesStorageImplementation
+import com.shpp.eorlov.assignment1.data.storage.SharedPreferencesStorageImpl
 import com.shpp.eorlov.assignment1.utils.Constants
 import com.shpp.eorlov.assignment1.utils.Constants.EMAIL
 import com.shpp.eorlov.assignment1.utils.Constants.PASSWORD
@@ -12,7 +12,7 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
 @HiltViewModel
-class SignInViewModel @Inject constructor(private val storage: SharedPreferencesStorageImplementation) :
+class SignInViewModel @Inject constructor(private val storage: SharedPreferencesStorageImpl) :
     ViewModel() {
     val loadEvent = MutableLiveData<Results>()
 
