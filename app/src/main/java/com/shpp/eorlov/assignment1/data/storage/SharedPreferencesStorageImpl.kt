@@ -7,7 +7,7 @@ import dagger.hilt.android.qualifiers.ApplicationContext
 import javax.inject.Inject
 
 
-class SharedPreferencesStorageImplementation @Inject constructor(@ApplicationContext private val context: Context) : SharedPreferencesStorage {
+class SharedPreferencesStorageImpl @Inject constructor(@ApplicationContext private val context: Context) : SharedPreferencesStorage {
 
     override fun save(_key: String, _value: String) {
         val prefs = context.getSharedPreferences(PREFS_FILE, Context.MODE_PRIVATE)
