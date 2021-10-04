@@ -14,7 +14,6 @@ class ContactsViewHolder(
     private val onContactClickListener: ContactClickListener,
     private val multiSelect: Boolean,
     private val selectedItems: ArrayList<UserModel>,
-    private val addedItems: ArrayList<UserModel>,
     private val addContactsState: Boolean
 ) :
     RecyclerView.ViewHolder(binding.root) {
@@ -65,8 +64,8 @@ class ContactsViewHolder(
     }
 
     private fun showAddContactsUI() {
-        if(!addedItems.contains(contact)) {
-          showReadyToAddUserUI()
+        if (!selectedItems.contains(contact)) {
+            showReadyToAddUserUI()
         } else {
             showAddedUserUI()
         }
@@ -97,11 +96,9 @@ class ContactsViewHolder(
             }
 
             constraintLayoutContactListItem.setOnLongClickListener {
-                if (!addContactsState) {
-                    if (!multiSelect) {
-                        onContactClickListener.onMultiselectActivated()
-                        selectItem(contact)
-                    }
+                if (!addContactsState && !multiSelect) {
+                    onContactClickListener.onMultiselectActivated()
+                    selectItem(contact)
                 }
                 return@setOnLongClickListener true
             }
@@ -121,10 +118,13 @@ class ContactsViewHolder(
     }
 
     private fun activateCheckedUserInAddContact() {
-        binding.apply {
-            addedItems.add(contact)
+        if (!selectedItems.contains(contact)) {
+            selectedItems.add(contact)
             showAddedUserUI()
-            onContactClickListener.onCheckedContactActivated()
+
+            if (selectedItems.size == 1) {
+                onContactClickListener.onCheckedContactActivated()
+            }
         }
     }
 

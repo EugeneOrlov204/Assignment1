@@ -144,7 +144,7 @@ class MyContactsFragment : BaseFragment(),
     }
 
     override fun onCheckedContactActivated() {
-        disableContactSwipe()
+        binding.textViewContacts.text = getString(R.string.recommendation)
     }
 
     /**
@@ -264,6 +264,7 @@ class MyContactsFragment : BaseFragment(),
 
         sharedViewModel.getAllUsers.observe(viewLifecycleOwner) { usersList ->
             usersList?.let {
+                viewModel.loadEvent.value = Results.LOADING
                 viewModel.initializeData(usersList.data.users)
             }
         }
@@ -275,6 +276,7 @@ class MyContactsFragment : BaseFragment(),
         viewModel.apply {
             userListLiveData.observe(viewLifecycleOwner) { list ->
                 contactsListAdapter.submitList(list.toMutableList())
+                loadEvent.value = Results.OK
 
                 // Start the transition once all views have been
                 // measured and laid out
@@ -362,10 +364,31 @@ class MyContactsFragment : BaseFragment(),
             }
 
             imageButtonExit.clickWithDebounce {
-                (parentFragment as CollectionContactFragment).viewPager.currentItem =
-                    ContactCollectionAdapter.ViewPagerItems.PROFILE.position
+                if (binding.textViewContacts.text == getString(R.string.contacts)) {
+                    (parentFragment as CollectionContactFragment).viewPager.currentItem =
+                        ContactCollectionAdapter.ViewPagerItems.PROFILE.position
+                } else {
+                    viewModel.loadEvent.value = Results.LOADING
+                    hideAddContactsUI()
+                    showMyContactsUI()
+                    println("I am here")
+                    val addedItems = contactsListAdapter.getAddedItems()
+                    println("Items is $addedItems")
+                    viewModel.addItems(addedItems)
+                }
             }
         }
+    }
+
+    private fun showMyContactsUI() {
+        enableContactSwipe()
+        binding.textViewContacts.text = getString(R.string.contacts)
+        binding.textViewAddContacts.visibility = View.VISIBLE
+        binding.buttonRemoveSelectedContacts.visibility = View.VISIBLE
+    }
+
+    private fun hideAddContactsUI() {
+        contactsListAdapter.showMyContactsUIAndHideAddContactsUI()
     }
 
     private fun showAddContactsUI() {
@@ -373,8 +396,9 @@ class MyContactsFragment : BaseFragment(),
     }
 
     private fun hideMyContactsUI() {
+        disableContactSwipe()
         binding.textViewContacts.text = getString(R.string.users)
-        binding.textViewAddContacts.visibility = View.INVISIBLE
+        binding.textViewAddContacts.visibility = View.GONE
         binding.buttonRemoveSelectedContacts.visibility = View.GONE
     }
 

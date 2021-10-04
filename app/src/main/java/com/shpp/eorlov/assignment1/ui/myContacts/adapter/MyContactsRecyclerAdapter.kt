@@ -19,9 +19,6 @@ class MyContactsRecyclerAdapter(
     // Keeps track of all the selected images
     private val selectedItems = arrayListOf<UserModel>()
 
-    // Keeps track of all the added images to the list
-    private val addedItems = arrayListOf<UserModel>()
-
     private var addContactsState: Boolean = false
 
     /**
@@ -29,14 +26,13 @@ class MyContactsRecyclerAdapter(
      */
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ContactsViewHolder {
         return ContactsViewHolder(
-            binding = ContactListItemBinding.inflate(
+            ContactListItemBinding.inflate(
                 LayoutInflater.from(parent.context), parent, false
             ),
-            onContactClickListener = onContactClickListener,
-            multiSelect = multiSelect,
-            selectedItems = selectedItems,
-            addedItems = addedItems,
-            addContactsState = addContactsState
+            onContactClickListener,
+            multiSelect,
+            selectedItems,
+            addContactsState
         )
     }
 
@@ -66,7 +62,7 @@ class MyContactsRecyclerAdapter(
     }
 
     fun removeSelectedItems() {
-        for(item in selectedItems) {
+        for (item in selectedItems) {
             onContactClickListener.onContactRemove(item)
         }
         selectedItems.clear()
@@ -75,5 +71,15 @@ class MyContactsRecyclerAdapter(
 
     fun hideMyContactsUIAndShowAddContactsUI() {
         addContactsState = true
+    }
+
+    fun showMyContactsUIAndHideAddContactsUI() {
+        addContactsState = false
+    }
+
+    fun getAddedItems(): ArrayList<UserModel> {
+        val addedItems = selectedItems
+        selectedItems.clear()
+        return addedItems
     }
 }

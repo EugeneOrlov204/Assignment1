@@ -17,7 +17,7 @@
 package com.shpp.eorlov.assignment1.di
 
 import com.shpp.eorlov.assignment1.data.storage.SharedPreferencesStorage
-import com.shpp.eorlov.assignment1.data.storage.SharedPreferencesStorageImplementation
+import com.shpp.eorlov.assignment1.data.storage.SharedPreferencesStorageImpl
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn
@@ -27,5 +27,5 @@ import dagger.hilt.components.SingletonComponent
 @Module
 abstract class StorageModule {
     @Binds
-    abstract fun provideStorage(storage: SharedPreferencesStorageImplementation): SharedPreferencesStorage
+    abstract fun provideStorage(storage: SharedPreferencesStorageImpl): SharedPreferencesStorage
 }

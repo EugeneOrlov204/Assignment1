@@ -3,7 +3,7 @@ package com.shpp.eorlov.assignment1.ui.myContacts
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.shpp.eorlov.assignment1.data.storage.SharedPreferencesStorageImplementation
+import com.shpp.eorlov.assignment1.data.storage.SharedPreferencesStorageImpl
 import com.shpp.eorlov.assignment1.model.UserModel
 import com.shpp.eorlov.assignment1.repository.UserRepositoryImpl
 import com.shpp.eorlov.assignment1.utils.Constants
@@ -14,7 +14,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class MyContactsViewModel @Inject constructor(
-    private val storage: SharedPreferencesStorageImplementation,
+    private val storage: SharedPreferencesStorageImpl,
     private val userRepository: UserRepositoryImpl
 ) : ViewModel() {
 
@@ -22,13 +22,11 @@ class MyContactsViewModel @Inject constructor(
     val loadEvent = MutableLiveData<Results>()
     val selectedEvent = MutableLiveData(false)
 
-    fun initializeData(users: ArrayList<UserModel>) {
+    fun initializeData(users: MutableList<UserModel>) {
         if (userListLiveData.value == null) {
             loadEvent.value = Results.INITIALIZE_DATA_ERROR
         } else {
-            loadEvent.value = Results.LOADING
             if (users.isNotEmpty()) {
-                loadEvent.value = Results.OK
                 userListLiveData.value = users
             } else {
                 loadEvent.value = Results.INITIALIZE_DATA_ERROR
@@ -91,5 +89,14 @@ class MyContactsViewModel @Inject constructor(
     fun clearContactsList() {
         userListLiveData.value?.clear()
         userListLiveData.value = userListLiveData.value
+    }
+
+    fun addItems(addedItems: MutableList<UserModel>) {
+        viewModelScope.launch {
+            userRepository.clearTable()
+            userRepository.insertAll(*addedItems.toTypedArray())
+            loadEvent.value = Results.LOADING
+            userListLiveData.value = userRepository.getAll().toMutableList()
+        }
     }
 }
