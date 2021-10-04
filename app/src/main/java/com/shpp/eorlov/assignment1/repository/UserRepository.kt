@@ -6,4 +6,5 @@ interface UserRepository {
     suspend fun getAll() : List<UserModel>
     suspend fun insertAll(vararg arrayOfUserModels: UserModel)
     suspend fun delete(userModel: UserModel)
+    suspend fun clearTable()
 }
