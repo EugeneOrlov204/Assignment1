@@ -33,7 +33,7 @@
         app:layout_constraintTop_toTopOf="parent"
         app:placeholderImageScaleType="fitXY"
         app:roundAsCircle="true"
-        fresco:placeholderImage="@drawable/ic_default_user_image" />
+        tools:placeholderImage="@drawable/ic_default_user_image" />
 
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/textViewPersonName"
@@ -90,6 +90,17 @@
         android:layout_height="wrap_content"
         android:layout_marginEnd="@dimen/margin_normal_16dp"
         android:src="@drawable/ic_add_contact_sign"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="@+id/textViewPersonProfession"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/textViewPersonName" />
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/imageViewCheckedContact"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="@dimen/margin_normal_16dp"
+        android:src="@drawable/ic_checked_new_contact"
         android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="@+id/textViewPersonProfession"
         app:layout_constraintEnd_toEndOf="parent"

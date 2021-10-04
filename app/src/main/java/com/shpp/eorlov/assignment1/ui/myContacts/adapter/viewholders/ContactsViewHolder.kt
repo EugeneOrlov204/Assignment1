@@ -8,12 +8,13 @@ import com.shpp.eorlov.assignment1.model.UserModel
 import com.shpp.eorlov.assignment1.ui.myContacts.adapter.listeners.ContactClickListener
 import com.shpp.eorlov.assignment1.utils.ext.clickWithDebounce
 
-
+//todo off navigation to detail view and any other fragments
 class ContactsViewHolder(
     private val binding: ContactListItemBinding,
     private val onContactClickListener: ContactClickListener,
     private val multiSelect: Boolean,
     private val selectedItems: ArrayList<UserModel>,
+    private val addedItems: ArrayList<UserModel>,
     private val addContactsState: Boolean
 ) :
     RecyclerView.ViewHolder(binding.root) {
@@ -27,15 +28,20 @@ class ContactsViewHolder(
             if (multiSelect) {
                 binding.constraintLayoutContactListItem.setBackgroundResource(R.drawable.round_view_holder_selected)
                 binding.checkBoxSelectedState.visibility = View.VISIBLE
-                binding.imageViewRemoveButton.visibility = View.INVISIBLE
+                binding.imageViewRemoveButton.visibility = View.GONE
+                if (selectedItems.contains(contact)) {
+                    binding.checkBoxSelectedState.isChecked = true
+                }
             } else {
                 binding.constraintLayoutContactListItem.setBackgroundResource(R.drawable.round_view_holder)
                 binding.checkBoxSelectedState.visibility = View.GONE
-                binding.imageViewRemoveButton.visibility = View.VISIBLE
-            }
 
-            if (selectedItems.contains(contact)) {
-                binding.checkBoxSelectedState.isChecked = true
+                if (addContactsState) {
+                    binding.imageViewRemoveButton.visibility = View.GONE
+                    showAddContactsUI()
+                } else {
+                    binding.imageViewRemoveButton.visibility = View.VISIBLE
+                }
             }
 
             binding.textViewPersonName.text = name
@@ -43,22 +49,29 @@ class ContactsViewHolder(
             binding.draweeViewPersonImage.setImageURI(photo)
         }
 
-        if(addContactsState) {
-            hideMyContactsUI()
-            showAddContactsUI()
-        }
-
         setListeners()
     }
 
-    private fun showAddContactsUI() {
-        binding.imageViewAddContact.visibility = View.VISIBLE
-        binding.textViewAddContact.visibility = View.VISIBLE
+    private fun showAddedUserUI() {
+        binding.imageViewAddContact.visibility = View.GONE
+        binding.textViewAddContact.visibility = View.GONE
+        binding.imageViewCheckedContact.visibility = View.VISIBLE
     }
 
-    private fun hideMyContactsUI() {
-        binding.imageViewRemoveButton.visibility = View.GONE
+    private fun showReadyToAddUserUI() {
+        binding.imageViewAddContact.visibility = View.VISIBLE
+        binding.textViewAddContact.visibility = View.VISIBLE
+        binding.imageViewCheckedContact.visibility = View.GONE
     }
+
+    private fun showAddContactsUI() {
+        if(!addedItems.contains(contact)) {
+          showReadyToAddUserUI()
+        } else {
+            showAddedUserUI()
+        }
+    }
+
 
     private fun setListeners() {
         binding.apply {
@@ -67,11 +80,14 @@ class ContactsViewHolder(
             }
 
             constraintLayoutContactListItem.clickWithDebounce {
-                if (!multiSelect) {
-                    onContactClickListener.onContactSelected(contact) } else {
-                    checkBoxSelectedState.isChecked = !checkBoxSelectedState.isChecked
-                    selectItem(contact)
-                    onContactClickListener.onContactSelectedStateChanged()
+                if (!addContactsState) {
+                    if (!multiSelect) {
+                        onContactClickListener.onContactClick(contact)
+                    } else {
+                        checkBoxSelectedState.isChecked = !checkBoxSelectedState.isChecked
+                        selectItem(contact)
+                        onContactClickListener.onContactSelectedStateChanged()
+                    }
                 }
             }
 
@@ -81,12 +97,34 @@ class ContactsViewHolder(
             }
 
             constraintLayoutContactListItem.setOnLongClickListener {
-                if (!multiSelect) {
-                    onContactClickListener.onMultiselectActivated()
-                    selectItem(contact)
+                if (!addContactsState) {
+                    if (!multiSelect) {
+                        onContactClickListener.onMultiselectActivated()
+                        selectItem(contact)
+                    }
                 }
                 return@setOnLongClickListener true
             }
+
+            imageViewAddContact.setOnClickListener {
+                if (imageViewCheckedContact.visibility != View.VISIBLE) {
+                    activateCheckedUserInAddContact()
+                }
+            }
+
+            textViewAddContact.setOnClickListener {
+                if (imageViewCheckedContact.visibility != View.VISIBLE) {
+                    activateCheckedUserInAddContact()
+                }
+            }
+        }
+    }
+
+    private fun activateCheckedUserInAddContact() {
+        binding.apply {
+            addedItems.add(contact)
+            showAddedUserUI()
+            onContactClickListener.onCheckedContactActivated()
         }
     }
 

@@ -19,6 +19,9 @@ class MyContactsRecyclerAdapter(
     // Keeps track of all the selected images
     private val selectedItems = arrayListOf<UserModel>()
 
+    // Keeps track of all the added images to the list
+    private val addedItems = arrayListOf<UserModel>()
+
     private var addContactsState: Boolean = false
 
     /**
@@ -26,15 +29,15 @@ class MyContactsRecyclerAdapter(
      */
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ContactsViewHolder {
         return ContactsViewHolder(
-            ContactListItemBinding.inflate(
+            binding = ContactListItemBinding.inflate(
                 LayoutInflater.from(parent.context), parent, false
             ),
-            onContactClickListener,
-            multiSelect,
-            selectedItems,
-            addContactsState
+            onContactClickListener = onContactClickListener,
+            multiSelect = multiSelect,
+            selectedItems = selectedItems,
+            addedItems = addedItems,
+            addContactsState = addContactsState
         )
-
     }
 
     /**

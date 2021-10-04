@@ -42,6 +42,11 @@ class MyContactsFragment : BaseFragment(),
 
     private val sharedViewModel: SharedViewModel by activityViewModels()
     private val viewModel: MyContactsViewModel by viewModels()
+    private val contactsListAdapter: MyContactsRecyclerAdapter by lazy(LazyThreadSafetyMode.NONE) {
+        MyContactsRecyclerAdapter(
+            onContactClickListener = this
+        )
+    }
 
     private var swipeFlags = ItemTouchHelper.START
 
@@ -49,11 +54,6 @@ class MyContactsFragment : BaseFragment(),
     private lateinit var itemBinding: ContactListItemBinding
     private lateinit var dialog: ContactDialogFragment //fixme remove it
 
-    private val contactsListAdapter: MyContactsRecyclerAdapter by lazy(LazyThreadSafetyMode.NONE) {
-        MyContactsRecyclerAdapter(
-            onContactClickListener = this
-        )
-    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -116,7 +116,7 @@ class MyContactsFragment : BaseFragment(),
         viewModel.removeItem(userModel)
     }
 
-    override fun onContactSelected(contact: UserModel) {
+    override fun onContactClick(contact: UserModel) {
         sharedElementTransitionWithSelectedContact(contact)
     }
 
@@ -141,6 +141,10 @@ class MyContactsFragment : BaseFragment(),
 
     override fun onGoUpClicked() {
         binding.recyclerViewMyContacts.smoothScrollToPosition(0)
+    }
+
+    override fun onCheckedContactActivated() {
+        disableContactSwipe()
     }
 
     /**
