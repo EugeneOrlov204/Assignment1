@@ -1,20 +1,17 @@
-package com.shpp.eorlov.assignment1.ui.image_loader_dialog_fragment
+package com.shpp.eorlov.assignment1.ui.imageLoaderDialogFragment
 
-import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import android.provider.MediaStore
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.activity.result.contract.ActivityResultContracts
-import androidx.appcompat.widget.AppCompatImageView
 import androidx.core.view.doOnPreDraw
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.shpp.eorlov.assignment1.databinding.DialogFragmentLoadImageBinding
-import com.shpp.eorlov.assignment1.ui.image_loader_dialog_fragment.adapter.ImageLoaderRecyclerAdapter
+import com.shpp.eorlov.assignment1.ui.imageLoaderDialogFragment.adapter.ImageLoaderRecyclerAdapter
 import com.shpp.eorlov.assignment1.validator.Validator
 import javax.inject.Inject
 

@@ -1,4 +1,4 @@
-package com.shpp.eorlov.assignment1.ui.myContacts.adapter.viewholders
+package com.shpp.eorlov.assignment1.ui.myContacts.adapter.viewHolder
 
 import android.view.View
 import androidx.recyclerview.widget.RecyclerView

@@ -33,14 +33,12 @@ fun AppCompatImageView.loadImage(url: String) {
 
 fun AppCompatImageView.loadImage(resource: Uri) {
     when (DEFAULT_LIBRARY) {
-
         LIBRARIES.GLIDE -> {
             Glide.with(this)
                 .load(resource)
                 .circleCrop()
                 .into(this)
         }
-
         LIBRARIES.PICASSO -> {
             Picasso.get()
                 .load(resource)

@@ -1,4 +1,4 @@
-package com.shpp.eorlov.assignment1.ui.signup
+package com.shpp.eorlov.assignment1.ui.signUp
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel

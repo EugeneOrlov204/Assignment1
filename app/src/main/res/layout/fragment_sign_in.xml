@@ -7,7 +7,7 @@
     android:layout_height="match_parent"
     android:background="@color/steel_gray"
     android:orientation="vertical"
-    tools:context=".ui.signin.SignInFragment">
+    tools:context=".ui.signIn.SignInFragment">
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideLineHello"

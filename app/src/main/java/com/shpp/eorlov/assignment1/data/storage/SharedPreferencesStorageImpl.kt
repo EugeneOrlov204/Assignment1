@@ -2,7 +2,6 @@ package com.shpp.eorlov.assignment1.data.storage
 
 import android.content.Context
 import com.shpp.eorlov.assignment1.utils.Constants.PREFS_FILE
-import com.shpp.eorlov.assignment1.utils.Constants.ACCESS_TOKEN
 import dagger.hilt.android.qualifiers.ApplicationContext
 import javax.inject.Inject
 

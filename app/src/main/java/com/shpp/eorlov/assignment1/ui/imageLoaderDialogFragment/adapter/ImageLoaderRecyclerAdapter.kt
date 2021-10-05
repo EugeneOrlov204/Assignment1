@@ -1,10 +1,10 @@
-package com.shpp.eorlov.assignment1.ui.image_loader_dialog_fragment.adapter
+package com.shpp.eorlov.assignment1.ui.imageLoaderDialogFragment.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.ListAdapter
 import com.shpp.eorlov.assignment1.databinding.PhotoListItemBinding
-import com.shpp.eorlov.assignment1.ui.image_loader_dialog_fragment.adapter.viewholder.UserPhotosViewHolder
+import com.shpp.eorlov.assignment1.ui.imageLoaderDialogFragment.adapter.viewHolder.UserPhotosViewHolder
 import com.shpp.eorlov.assignment1.utils.Constants
 
 class ImageLoaderRecyclerAdapter() : ListAdapter<String, UserPhotosViewHolder>(

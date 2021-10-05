@@ -1,4 +1,4 @@
-package com.shpp.eorlov.assignment1.ui.viewpager
+package com.shpp.eorlov.assignment1.ui.viewPager
 
 import android.os.Bundle
 import android.view.LayoutInflater

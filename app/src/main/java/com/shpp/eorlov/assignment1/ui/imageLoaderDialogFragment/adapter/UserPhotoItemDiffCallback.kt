@@ -1,4 +1,4 @@
-package com.shpp.eorlov.assignment1.ui.image_loader_dialog_fragment.adapter
+package com.shpp.eorlov.assignment1.ui.imageLoaderDialogFragment.adapter
 
 import androidx.recyclerview.widget.DiffUtil
 

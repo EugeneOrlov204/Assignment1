@@ -1,4 +1,4 @@
-package com.shpp.eorlov.assignment1.ui.signup
+package com.shpp.eorlov.assignment1.ui.signUp
 
 import android.os.Bundle
 import android.view.LayoutInflater

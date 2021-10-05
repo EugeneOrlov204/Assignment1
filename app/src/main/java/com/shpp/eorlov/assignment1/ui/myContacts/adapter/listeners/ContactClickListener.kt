@@ -1,6 +1,5 @@
 package com.shpp.eorlov.assignment1.ui.myContacts.adapter.listeners
 
-import android.view.View
 import com.shpp.eorlov.assignment1.model.UserModel
 
 interface ContactClickListener {

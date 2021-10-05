@@ -1,11 +1,11 @@
-package com.shpp.eorlov.assignment1.ui.contact_dialog_fragment
+package com.shpp.eorlov.assignment1.ui.contactDialogFragment
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.shpp.eorlov.assignment1.model.UserModel
 import com.shpp.eorlov.assignment1.validator.ValidateOperation
-import com.shpp.eorlov.assignment1.validator.evaluateErrorMessage
 import com.shpp.eorlov.assignment1.validator.Validator
+import com.shpp.eorlov.assignment1.validator.evaluateErrorMessage
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 

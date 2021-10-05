@@ -3,7 +3,7 @@ package com.shpp.eorlov.assignment1.validator
 import android.content.Context
 import android.util.Patterns
 import com.shpp.eorlov.assignment1.R
-import com.shpp.eorlov.assignment1.utils.*
+import com.shpp.eorlov.assignment1.utils.Constants
 import com.shpp.eorlov.assignment1.utils.Constants.DATE_FORMAT
 import com.shpp.eorlov.assignment1.utils.Constants.DATE_REGEX_PATTERN
 import dagger.hilt.android.qualifiers.ApplicationContext

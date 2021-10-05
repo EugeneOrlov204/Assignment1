@@ -1,4 +1,4 @@
-package com.shpp.eorlov.assignment1.ui.contact_dialog_fragment
+package com.shpp.eorlov.assignment1.ui.contactDialogFragment
 
 import android.app.Activity.RESULT_OK
 import android.app.DatePickerDialog

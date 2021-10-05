@@ -1,4 +1,4 @@
-package com.shpp.eorlov.assignment1.ui.myprofile
+package com.shpp.eorlov.assignment1.ui.myProfile
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel

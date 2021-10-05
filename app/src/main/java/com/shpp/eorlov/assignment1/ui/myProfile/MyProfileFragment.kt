@@ -1,4 +1,4 @@
-package com.shpp.eorlov.assignment1.ui.myprofile
+package com.shpp.eorlov.assignment1.ui.myProfile
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -10,21 +10,20 @@ import androidx.core.view.isVisible
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
+import com.google.android.material.snackbar.Snackbar
+import com.shpp.eorlov.assignment1.R
 import com.shpp.eorlov.assignment1.base.BaseFragment
 import com.shpp.eorlov.assignment1.databinding.FragmentMyProfileBinding
 import com.shpp.eorlov.assignment1.model.UserModel
 import com.shpp.eorlov.assignment1.ui.SharedViewModel
-import com.shpp.eorlov.assignment1.ui.viewpager.CollectionContactFragment
-import com.shpp.eorlov.assignment1.ui.viewpager.CollectionContactFragmentDirections
-import com.shpp.eorlov.assignment1.ui.viewpager.ContactCollectionAdapter
+import com.shpp.eorlov.assignment1.ui.viewPager.CollectionContactFragment
+import com.shpp.eorlov.assignment1.ui.viewPager.CollectionContactFragmentDirections
+import com.shpp.eorlov.assignment1.ui.viewPager.ContactCollectionAdapter
 import com.shpp.eorlov.assignment1.utils.Constants
 import com.shpp.eorlov.assignment1.utils.Results
 import com.shpp.eorlov.assignment1.utils.ext.clickWithDebounce
-import dagger.hilt.android.AndroidEntryPoint
-
-import com.google.android.material.snackbar.Snackbar
-import com.shpp.eorlov.assignment1.R
 import com.shpp.eorlov.assignment1.utils.ext.loadImage
+import dagger.hilt.android.AndroidEntryPoint
 
 //todo implement log out button
 @AndroidEntryPoint

@@ -1,4 +1,4 @@
-package com.shpp.eorlov.assignment1.ui.signin
+package com.shpp.eorlov.assignment1.ui.signIn
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -129,7 +129,6 @@ class SignInFragment : BaseFragment() {
                 } else {
                     viewModel.loadEvent.value = Results.NOT_EXISTED_ACCOUNT_ERROR
                 }
-
             }
         }
     }

@@ -7,7 +7,7 @@
     android:layout_height="match_parent"
     android:background="@color/steel_gray"
     android:orientation="vertical"
-    tools:context=".ui.signup_extended.SignUpExtendedFragment">
+    tools:context=".ui.signUpExtended.SignUpExtendedFragment">
 
     <androidx.appcompat.widget.AppCompatImageView
         android:id="@+id/imageViewUserImage"

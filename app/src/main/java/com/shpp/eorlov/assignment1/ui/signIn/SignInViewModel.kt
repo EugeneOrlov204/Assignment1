@@ -1,4 +1,4 @@
-package com.shpp.eorlov.assignment1.ui.signin
+package com.shpp.eorlov.assignment1.ui.signIn
 
 
 import androidx.lifecycle.MutableLiveData

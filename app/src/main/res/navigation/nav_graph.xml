@@ -16,7 +16,7 @@
     </fragment>
     <fragment
         android:id="@+id/collectionContactFragment"
-        android:name="com.shpp.eorlov.assignment1.ui.viewpager.CollectionContactFragment"
+        android:name="com.shpp.eorlov.assignment1.ui.viewPager.CollectionContactFragment"
         android:label="fragment_view_pager"
         tools:layout="@layout/fragment_view_pager" >
         <action
@@ -28,7 +28,7 @@
     </fragment>
     <fragment
         android:id="@+id/editProfileFragment"
-        android:name="com.shpp.eorlov.assignment1.ui.editprofile.EditProfileFragment"
+        android:name="com.shpp.eorlov.assignment1.ui.editProfile.EditProfileFragment"
         android:label="fragment_edit_profile"
         tools:layout="@layout/fragment_edit_profile" >
         <argument
@@ -37,7 +37,7 @@
     </fragment>
     <fragment
         android:id="@+id/signUpFragment"
-        android:name="com.shpp.eorlov.assignment1.ui.signup.SignUpFragment"
+        android:name="com.shpp.eorlov.assignment1.ui.signUp.SignUpFragment"
         android:label="fragment_sign_up"
         tools:layout="@layout/fragment_sign_up">
         <action
@@ -46,7 +46,7 @@
     </fragment>
     <fragment
         android:id="@+id/signInFragment"
-        android:name="com.shpp.eorlov.assignment1.ui.signin.SignInFragment"
+        android:name="com.shpp.eorlov.assignment1.ui.signIn.SignInFragment"
         android:label="fragment_log_in"
         tools:layout="@layout/fragment_sign_in" >
         <action
@@ -62,7 +62,7 @@
     </fragment>
     <fragment
         android:id="@+id/signUpExtendedFragment"
-        android:name="com.shpp.eorlov.assignment1.ui.signup_extended.SignUpExtendedFragment"
+        android:name="com.shpp.eorlov.assignment1.ui.signUpExtended.SignUpExtendedFragment"
         android:label="fragment_sign_up_extended"
         tools:layout="@layout/fragment_sign_up_extended" >
         <argument

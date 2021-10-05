@@ -1,9 +1,9 @@
-package com.shpp.eorlov.assignment1.ui.viewpager
+package com.shpp.eorlov.assignment1.ui.viewPager
 
 import androidx.fragment.app.Fragment
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import com.shpp.eorlov.assignment1.ui.myContacts.MyContactsFragment
-import com.shpp.eorlov.assignment1.ui.myprofile.MyProfileFragment
+import com.shpp.eorlov.assignment1.ui.myProfile.MyProfileFragment
 import com.shpp.eorlov.assignment1.utils.Constants.AMOUNT_OF_VIEWPAGER_ITEMS
 
 class ContactCollectionAdapter(fragment: Fragment) :
