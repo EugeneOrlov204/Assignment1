@@ -22,13 +22,13 @@ import com.shpp.eorlov.assignment1.databinding.ContactListItemBinding
 import com.shpp.eorlov.assignment1.databinding.FragmentMyContactsBinding
 import com.shpp.eorlov.assignment1.model.UserModel
 import com.shpp.eorlov.assignment1.ui.SharedViewModel
-import com.shpp.eorlov.assignment1.ui.contact_dialog_fragment.ContactDialogFragment
+import com.shpp.eorlov.assignment1.ui.contactDialogFragment.ContactDialogFragment
 import com.shpp.eorlov.assignment1.ui.myContacts.adapter.MyContactsRecyclerAdapter
 import com.shpp.eorlov.assignment1.ui.myContacts.adapter.listeners.ButtonClickListener
 import com.shpp.eorlov.assignment1.ui.myContacts.adapter.listeners.ContactClickListener
-import com.shpp.eorlov.assignment1.ui.viewpager.CollectionContactFragment
-import com.shpp.eorlov.assignment1.ui.viewpager.CollectionContactFragmentDirections
-import com.shpp.eorlov.assignment1.ui.viewpager.ContactCollectionAdapter
+import com.shpp.eorlov.assignment1.ui.viewPager.CollectionContactFragment
+import com.shpp.eorlov.assignment1.ui.viewPager.CollectionContactFragmentDirections
+import com.shpp.eorlov.assignment1.ui.viewPager.ContactCollectionAdapter
 import com.shpp.eorlov.assignment1.utils.Constants.LIST_OF_CONTACTS_KEY
 import com.shpp.eorlov.assignment1.utils.Constants.SNACKBAR_DURATION
 import com.shpp.eorlov.assignment1.utils.Results
@@ -70,31 +70,6 @@ class MyContactsFragment : BaseFragment(),
         initRecycler()
         setObservers()
         setListeners()
-    }
-
-    override fun onSaveInstanceState(outState: Bundle) {
-        super.onSaveInstanceState(outState)
-        val currentState = viewModel.userListLiveData.value ?: emptyList()
-        outState.putParcelableArray(
-            LIST_OF_CONTACTS_KEY,
-            currentState.toTypedArray()
-        )
-    }
-
-    //todo remove it?
-    override fun onViewStateRestored(savedInstanceState: Bundle?) {
-        super.onViewStateRestored(savedInstanceState)
-        if (savedInstanceState != null) {
-            val receivedState =
-                savedInstanceState.getParcelableArray(LIST_OF_CONTACTS_KEY) ?: return
-
-            val receivedList = mutableListOf<UserModel>()
-            for (element in receivedState) {
-                receivedList.add(element as UserModel)
-            }
-
-            viewModel.userListLiveData.value = receivedList
-        }
     }
 
     override fun onResume() {
@@ -265,7 +240,7 @@ class MyContactsFragment : BaseFragment(),
         sharedViewModel.getAllUsers.observe(viewLifecycleOwner) { usersList ->
             usersList?.let {
                 viewModel.loadEvent.value = Results.LOADING
-                viewModel.initializeData(usersList.data.users)
+                viewModel.userListLiveData.value = usersList.data.users
             }
         }
     }
@@ -369,12 +344,10 @@ class MyContactsFragment : BaseFragment(),
                         ContactCollectionAdapter.ViewPagerItems.PROFILE.position
                 } else {
                     viewModel.loadEvent.value = Results.LOADING
+                    viewModel.clearContactsList()
                     hideAddContactsUI()
                     showMyContactsUI()
-                    println("I am here")
-                    val addedItems = contactsListAdapter.getAddedItems()
-                    println("Items is $addedItems")
-                    viewModel.addItems(addedItems)
+                    viewModel.addItems(contactsListAdapter.getAddedItems())
                 }
             }
         }

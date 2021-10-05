@@ -6,7 +6,7 @@ import androidx.recyclerview.widget.ListAdapter
 import com.shpp.eorlov.assignment1.databinding.ContactListItemBinding
 import com.shpp.eorlov.assignment1.model.UserModel
 import com.shpp.eorlov.assignment1.ui.myContacts.adapter.listeners.ContactClickListener
-import com.shpp.eorlov.assignment1.ui.myContacts.adapter.viewholders.ContactsViewHolder
+import com.shpp.eorlov.assignment1.ui.myContacts.adapter.viewHolder.ContactsViewHolder
 import com.shpp.eorlov.assignment1.utils.Constants
 
 
@@ -77,8 +77,9 @@ class MyContactsRecyclerAdapter(
         addContactsState = false
     }
 
-    fun getAddedItems(): ArrayList<UserModel> {
-        val addedItems = selectedItems
+    //fixme empty list
+    fun getAddedItems(): MutableList<UserModel> {
+        val addedItems = selectedItems.toMutableList()
         selectedItems.clear()
         return addedItems
     }

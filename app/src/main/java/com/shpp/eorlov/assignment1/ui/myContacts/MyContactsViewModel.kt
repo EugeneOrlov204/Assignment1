@@ -22,17 +22,21 @@ class MyContactsViewModel @Inject constructor(
     val loadEvent = MutableLiveData<Results>()
     val selectedEvent = MutableLiveData(false)
 
-    fun initializeData(users: MutableList<UserModel>) {
-        if (userListLiveData.value == null) {
-            loadEvent.value = Results.INITIALIZE_DATA_ERROR
-        } else {
-            if (users.isNotEmpty()) {
-                userListLiveData.value = users
-            } else {
+    init {
+        viewModelScope.launch {
+            if (userListLiveData.value == null) {
                 loadEvent.value = Results.INITIALIZE_DATA_ERROR
+            } else {
+                val users = userRepository.getAll().toMutableList()
+                if (users.isNotEmpty()) {
+                    userListLiveData.value = users
+                } else {
+                    loadEvent.value = Results.INITIALIZE_DATA_ERROR
+                }
             }
         }
     }
+
 
     /**
      * Returns item from dataset
@@ -93,7 +97,7 @@ class MyContactsViewModel @Inject constructor(
 
     fun addItems(addedItems: MutableList<UserModel>) {
         viewModelScope.launch {
-            userRepository.clearTable()
+//            userRepository.clearTable() //todo remove
             userRepository.insertAll(*addedItems.toTypedArray())
             loadEvent.value = Results.LOADING
             userListLiveData.value = userRepository.getAll().toMutableList()
