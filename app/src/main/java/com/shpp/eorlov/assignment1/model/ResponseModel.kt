@@ -1,8 +1,8 @@
 package com.shpp.eorlov.assignment1.model
 
-data class EditUserResponseModel(
-    val status: String,
+data class ResponseModel<T> (
     val code: Int,
+    val data: T,
     val message: String,
-    val data: Data?
+    val status: String
 )

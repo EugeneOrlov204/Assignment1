@@ -1,58 +1,25 @@
 package com.shpp.eorlov.assignment1.data.retrofit
 
 import com.shpp.eorlov.assignment1.model.*
+import retrofit2.Response
 import javax.inject.Inject
 
 class MainRemoteData @Inject constructor(private val mainService: MainService) {
 
-    suspend fun registerUser(registerModel: RegisterModel): RegistrationResponseModel {
-        with(mainService.registerUser(registerModel)) {
-
-            return body()
-                ?: RegistrationResponseModel(
-                    this.message(),
-                    this.code(),
-                    this.message(),
-                    null
-                )
-        }
-    }
-
-    suspend fun editUser(editUserModel: EditUserModel, accessToken: String): EditUserResponseModel {
-        with(mainService.editUser(editUserModel, accessToken)) {
-
-            return body()
-                ?: EditUserResponseModel(
-                    this.message(),
-                    this.code(),
-                    this.message(),
-                    null
-                )
-        }
-    }
+    suspend fun registerUser(registerModel: RegisterModel) = mainService.registerUser(registerModel)
 
 
-    suspend fun authorizeUser(authorizeModel: AuthorizeModel): AuthorizationResponseModel {
-        with(mainService.authorizeUser(authorizeModel)) {
-            return body()
-                ?: AuthorizationResponseModel(
-                    this.message(),
-                    this.code(),
-                    this.message(),
-                    null
-                )
-        }
-    }
+    suspend fun editUser(editUserModel: EditUserModel, accessToken: String) =
+        mainService.editUser(editUserModel, accessToken)
 
-    suspend fun getUser(accessToken: String): GetUserResponseModel? {
-        with(mainService.getUser(accessToken)) {
-            return body()
-        }
-    }
 
-    suspend fun getAllUsers(accessToken: String) : GetAllUsersResponseModel? {
-        with(mainService.getAllUsers(accessToken)) {
-            return body()
-        }
-    }
+    suspend fun authorizeUser(authorizeModel: AuthorizeModel) =
+        mainService.authorizeUser(authorizeModel)
+
+
+    suspend fun getUser(accessToken: String) = mainService.getUser(accessToken)
+
+    suspend fun getAllUsers(accessToken: String) =
+        mainService.getAllUsers(accessToken)
+
 }
