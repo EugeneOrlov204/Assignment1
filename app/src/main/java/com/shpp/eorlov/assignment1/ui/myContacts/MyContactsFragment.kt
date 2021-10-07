@@ -26,15 +26,18 @@ import com.shpp.eorlov.assignment1.ui.contactDialogFragment.ContactDialogFragmen
 import com.shpp.eorlov.assignment1.ui.myContacts.adapter.MyContactsRecyclerAdapter
 import com.shpp.eorlov.assignment1.ui.myContacts.adapter.listeners.ButtonClickListener
 import com.shpp.eorlov.assignment1.ui.myContacts.adapter.listeners.ContactClickListener
+import com.shpp.eorlov.assignment1.ui.signIn.SignInFragmentDirections
 import com.shpp.eorlov.assignment1.ui.viewPager.CollectionContactFragment
 import com.shpp.eorlov.assignment1.ui.viewPager.CollectionContactFragmentDirections
 import com.shpp.eorlov.assignment1.ui.viewPager.ContactCollectionAdapter
-import com.shpp.eorlov.assignment1.utils.Constants.LIST_OF_CONTACTS_KEY
+import com.shpp.eorlov.assignment1.utils.Constants
 import com.shpp.eorlov.assignment1.utils.Constants.SNACKBAR_DURATION
 import com.shpp.eorlov.assignment1.utils.Results
 import com.shpp.eorlov.assignment1.utils.ext.clickWithDebounce
 import dagger.hilt.android.AndroidEntryPoint
 
+
+//todo fix bug with screen rotation
 @AndroidEntryPoint
 class MyContactsFragment : BaseFragment(),
     ContactClickListener,
@@ -99,7 +102,7 @@ class MyContactsFragment : BaseFragment(),
         contactsListAdapter.selectAllContacts()
         binding.buttonRemoveSelectedContacts.visibility = View.VISIBLE
         binding.textViewAddContacts.visibility = View.GONE
-        viewModel.selectedEvent.value = true
+        viewModel.selectedEventLiveData.value = true
         disableContactSwipe()
         refreshRecyclerView()
     }
@@ -107,7 +110,7 @@ class MyContactsFragment : BaseFragment(),
     override fun onContactSelectedStateChanged() {
         if (contactsListAdapter.areAllItemsUnselected()) {
             binding.buttonRemoveSelectedContacts.visibility = View.GONE
-            viewModel.selectedEvent.value = false
+            viewModel.selectedEventLiveData.value = false
             binding.textViewAddContacts.visibility = View.VISIBLE
             enableContactSwipe()
             refreshRecyclerView()
@@ -149,23 +152,22 @@ class MyContactsFragment : BaseFragment(),
         swipeFlags = ItemTouchHelper.START
     }
 
-
     private fun removeSelectedItemsFromRecyclerView() {
-        viewModel.loadEvent.value = Results.LOADING
+        viewModel.loadEventLiveData.value = Results.LOADING
         contactsListAdapter.removeSelectedItems()
         refreshRecyclerView()
-        if (viewModel.userListLiveData.value?.isEmpty() == true) {
+        if (viewModel.contactsLiveData.value?.isEmpty() == true) {
             binding.buttonRemoveSelectedContacts.visibility = View.GONE
         }
-        viewModel.loadEvent.value = Results.OK
+        viewModel.loadEventLiveData.value = Results.OK
     }
 
     @SuppressLint("NotifyDataSetChanged")
     private fun refreshRecyclerView() {
-//        contactsListAdapter.notifyDataSetChanged()
-        binding.recyclerViewMyContacts.apply {
-            adapter = contactsListAdapter
-        }
+        contactsListAdapter.notifyDataSetChanged()
+//     a   binding.recyclerViewMyContacts.apply {
+//            adapter = contactsListAdapter
+//        }
     }
 
     private fun initRecycler() {
@@ -215,7 +217,6 @@ class MyContactsFragment : BaseFragment(),
     private fun sharedElementTransitionWithSelectedContact(
         contact: UserModel,
     ) {
-
         val action =
             CollectionContactFragmentDirections.actionCollectionContactFragmentToDetailViewFragment(
                 contact
@@ -230,17 +231,10 @@ class MyContactsFragment : BaseFragment(),
     }
 
     private fun setSharedViewModelObservers() {
-        sharedViewModel.newUser.observe(viewLifecycleOwner) { newUser ->
+        sharedViewModel.newUserLiveData.observe(viewLifecycleOwner) { newUser ->
             newUser?.let {
                 viewModel.addItem(newUser)
-                sharedViewModel.newUser.value = null
-            }
-        }
-
-        sharedViewModel.getAllUsers.observe(viewLifecycleOwner) { usersList ->
-            usersList?.let {
-                viewModel.loadEvent.value = Results.LOADING
-                viewModel.userListLiveData.value = usersList.data.users
+                sharedViewModel.newUserLiveData.value = null
             }
         }
     }
@@ -249,9 +243,9 @@ class MyContactsFragment : BaseFragment(),
     private fun setViewModelObservers() {
         postponeEnterTransition()
         viewModel.apply {
-            userListLiveData.observe(viewLifecycleOwner) { list ->
+            contactsLiveData.observe(viewLifecycleOwner) { list ->
                 contactsListAdapter.submitList(list.toMutableList())
-                loadEvent.value = Results.OK
+                loadEventLiveData.value = Results.OK //move to viewmodel
 
                 // Start the transition once all views have been
                 // measured and laid out
@@ -260,35 +254,44 @@ class MyContactsFragment : BaseFragment(),
                 }
             }
 
-            loadEvent.apply {
+            usersLiveData.observe(viewLifecycleOwner) {
+                contactsListAdapter.submitList(it.toMutableList())
+                loadEventLiveData.value = Results.OK //move to viewmodel
+            }
+
+            loadEventLiveData.apply {
                 observe(viewLifecycleOwner) { event ->
                     when (event) {
                         Results.OK -> {
                             unlockUI()
                             binding.contentLoadingProgressBar.isVisible = false
                         }
-
                         Results.LOADING -> {
                             lockUI()
                             binding.contentLoadingProgressBar.isVisible = true
                         }
-
                         Results.INITIALIZE_DATA_ERROR -> {
                             unlockUI()
                             binding.contentLoadingProgressBar.isVisible = false
-                            Toast.makeText(requireContext(), event.name, Toast.LENGTH_LONG).show()
+                            Toast.makeText(requireContext(), event.name, Toast.LENGTH_LONG)
+                                .show()
                         }
                         else -> {
                         }
                     }
-
                 }
             }
 
-            selectedEvent.apply {
+            selectedEventLiveData.apply {
                 observe(viewLifecycleOwner) {
-                    userListLiveData.value = userListLiveData.value
+                    contactsLiveData.value = contactsLiveData.value
                 }
+            }
+
+            allUsersLiveData.observe(viewLifecycleOwner) {
+                println("Work with ${it.data}")
+                loadEventLiveData.value = Results.LOADING
+                usersLiveData.value = it.data.users
             }
         }
     }
@@ -301,7 +304,8 @@ class MyContactsFragment : BaseFragment(),
 
     private fun setOnScrollListener() {
         binding.apply {
-            recyclerViewMyContacts.addOnScrollListener(object : RecyclerView.OnScrollListener() {
+            recyclerViewMyContacts.addOnScrollListener(object :
+                RecyclerView.OnScrollListener() {
                 override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
                     super.onScrolled(recyclerView, dx, dy)
                     val userList = contactsListAdapter.currentList
@@ -322,10 +326,13 @@ class MyContactsFragment : BaseFragment(),
         binding.apply {
 
             textViewAddContacts.clickWithDebounce {
-                clearContactsList()
-                hideMyContactsUI()
+                viewModel.getAllUsers(viewModel.fetchToken())
+                lockUI()
+//                showProgressBar()
+
                 showAddContactsUI()
-                sharedViewModel.getAllUsers(viewModel.fetchToken())
+                hideMyContactsUI()
+//                refreshRecyclerView()
             }
 
             buttonGoUp.setOnClickListener {
@@ -343,11 +350,12 @@ class MyContactsFragment : BaseFragment(),
                     (parentFragment as CollectionContactFragment).viewPager.currentItem =
                         ContactCollectionAdapter.ViewPagerItems.PROFILE.position
                 } else {
-                    viewModel.loadEvent.value = Results.LOADING
+                    viewModel.loadEventLiveData.value = Results.LOADING
                     viewModel.clearContactsList()
                     hideAddContactsUI()
                     showMyContactsUI()
                     viewModel.addItems(contactsListAdapter.getAddedItems())
+                    refreshRecyclerView()
                 }
             }
         }
@@ -361,11 +369,13 @@ class MyContactsFragment : BaseFragment(),
     }
 
     private fun hideAddContactsUI() {
-        contactsListAdapter.showMyContactsUIAndHideAddContactsUI()
+        contactsListAdapter.disableAddContactsState()
     }
 
     private fun showAddContactsUI() {
-        contactsListAdapter.hideMyContactsUIAndShowAddContactsUI()
+        viewModel.contactsLiveData.value?.let {
+            contactsListAdapter.enableAddContactsState(it)
+        }
     }
 
     private fun hideMyContactsUI() {
@@ -373,9 +383,5 @@ class MyContactsFragment : BaseFragment(),
         binding.textViewContacts.text = getString(R.string.users)
         binding.textViewAddContacts.visibility = View.GONE
         binding.buttonRemoveSelectedContacts.visibility = View.GONE
-    }
-
-    private fun clearContactsList() {
-        viewModel.clearContactsList()
     }
 }

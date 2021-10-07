@@ -89,7 +89,7 @@ class EditProfileFragment : BaseFragment() {
     private fun setObservers() {
         viewModel.apply {
             userLiveData.observe(viewLifecycleOwner) { list ->
-                sharedViewModel.updatedUser.value = list
+                sharedViewModel.updatedUserLiveData.value = list
             }
             loadEvent.apply {
                 observe(viewLifecycleOwner) { event ->

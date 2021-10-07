@@ -2,16 +2,24 @@ package com.shpp.eorlov.assignment1.ui.myProfile
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.shpp.eorlov.assignment1.data.storage.SharedPreferencesStorageImpl
+import com.shpp.eorlov.assignment1.model.Data
+import com.shpp.eorlov.assignment1.model.ResponseModel
 import com.shpp.eorlov.assignment1.model.UserModel
+import com.shpp.eorlov.assignment1.repository.MainRepositoryImpl
 import com.shpp.eorlov.assignment1.utils.Constants.ACCESS_TOKEN
 import com.shpp.eorlov.assignment1.utils.Results
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.launch
+import retrofit2.HttpException
+import java.io.IOException
 import javax.inject.Inject
 
 @HiltViewModel
 class MyProfileViewModel @Inject constructor(
-    private val storage: SharedPreferencesStorageImpl
+    private val storage: SharedPreferencesStorageImpl,
+    private val repository: MainRepositoryImpl
 ) : ViewModel() {
 
     val userLiveData: MutableLiveData<UserModel> by lazy(LazyThreadSafetyMode.NONE) {
@@ -27,18 +35,39 @@ class MyProfileViewModel @Inject constructor(
             )
         )
     }
+    val loadEventLiveData = MutableLiveData<Results>()
+    val getUserLiveData = MutableLiveData<ResponseModel<Data>>()
 
-    val loadEvent = MutableLiveData<Results>()
-
+    //fixme replace with init
     fun initializeData(userModel: UserModel) {
         if (userLiveData.value == null) {
-            loadEvent.value = Results.INITIALIZE_DATA_ERROR
+            loadEventLiveData.value = Results.INITIALIZE_DATA_ERROR
         } else {
-            loadEvent.value = Results.LOADING
+            loadEventLiveData.value = Results.LOADING
 
             userLiveData.value = userModel
 
-            loadEvent.value = Results.OK
+            loadEventLiveData.value = Results.OK
+        }
+    }
+
+    fun getUser(accessToken: String) {
+        viewModelScope.launch {
+            loadEventLiveData.value = Results.LOADING
+            val response = try {
+                repository.getUser(accessToken = "Bearer $accessToken")
+            }catch (exception: IOException) {
+                loadEventLiveData.value = Results.INTERNET_ERROR
+                return@launch
+            } catch (exception: HttpException) {
+                loadEventLiveData.value = Results.UNEXPECTED_RESPONSE
+                return@launch
+            }
+            if (response.isSuccessful && response.body() != null) {
+                getUserLiveData.postValue(response.body()!!)
+            } else {
+                loadEventLiveData.value = Results.NOT_SUCCESSFUL_RESPONSE
+            }
         }
     }
 

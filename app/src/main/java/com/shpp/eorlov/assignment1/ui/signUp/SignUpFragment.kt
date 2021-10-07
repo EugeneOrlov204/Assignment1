@@ -32,7 +32,6 @@ class SignUpFragment : BaseFragment() {
     lateinit var validator: Validator
 
     private val viewModel: SignUpViewModel by viewModels()
-    private val sharedViewModel: SharedViewModel by activityViewModels()
     private lateinit var binding: FragmentSignUpBinding
 
     override fun onCreateView(
@@ -87,8 +86,27 @@ class SignUpFragment : BaseFragment() {
                         getString(R.string.internet_error),
                         Toast.LENGTH_LONG
                     ).show()
+                    unlockUI()
+                    binding.contentLoadingProgressBar.isVisible = false
                 }
-
+                Results.UNEXPECTED_RESPONSE -> {
+                    Toast.makeText(
+                        requireContext(),
+                        getString(R.string.unexpected_response),
+                        Toast.LENGTH_LONG
+                    ).show()
+                    unlockUI()
+                    binding.contentLoadingProgressBar.isVisible = false
+                }
+                Results.NOT_SUCCESSFUL_RESPONSE -> {
+                    Toast.makeText(
+                        requireContext(),
+                        getString(R.string.not_successful_response),
+                        Toast.LENGTH_LONG
+                    ).show()
+                    unlockUI()
+                    binding.contentLoadingProgressBar.isVisible = false
+                }
                 Results.EXISTED_ACCOUNT_ERROR -> {
                     Toast.makeText(
                         requireContext(),
@@ -104,7 +122,7 @@ class SignUpFragment : BaseFragment() {
     }
 
     private fun setSharedViewModelObserver() {
-        sharedViewModel.authorizeUser.observe(viewLifecycleOwner) {
+        viewModel.authorizeUserLiveData.observe(viewLifecycleOwner) {
             if (it?.code != SUCCESS_RESPONSE_CODE) {
                 val action =
                     SignUpFragmentDirections.actionSignUpFragmentToSignUpExtendedFragment(
@@ -188,7 +206,7 @@ class SignUpFragment : BaseFragment() {
                 return
             }
 
-            sharedViewModel.authorizeUser(
+            viewModel.authorizeUser(
                 email = textInputEditTextEmail.text.toString(),
                 password = textInputEditTextPassword.text.toString()
             )

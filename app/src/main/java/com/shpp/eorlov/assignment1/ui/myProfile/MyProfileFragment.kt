@@ -46,7 +46,7 @@ class MyProfileFragment : BaseFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        sharedViewModel.getUser(viewModel.fetchToken())
+        viewModel.getUser(viewModel.fetchToken())
         setListeners()
         setObservers()
     }
@@ -78,27 +78,30 @@ class MyProfileFragment : BaseFragment() {
     }
 
     private fun setSharedViewModelObservers() {
-        sharedViewModel.updatedUser.observe(viewLifecycleOwner) { userModel ->
+        sharedViewModel.updatedUserLiveData.observe(viewLifecycleOwner) { userModel ->
             userModel?.let {
                 viewModel.updateProfile(userModel)
             }
-        }
-        sharedViewModel.getUser.observe(viewLifecycleOwner) { userModel ->
-            userModel?.let {
-                receivedUserModel = userModel.data.user
-                initializeProfile()
-            }
-
         }
     }
 
     private fun setViewModelObservers() {
         setUserLiveDataObserver()
         setLoadEventObserver()
+        setGetUserObserver()
+    }
+
+    private fun setGetUserObserver() {
+        viewModel.getUserLiveData.observe(viewLifecycleOwner) { userModel ->
+            userModel?.let {
+                receivedUserModel = userModel.data.user
+                initializeProfile()
+            }
+        }
     }
 
     private fun setLoadEventObserver() {
-        viewModel.loadEvent.apply {
+        viewModel.loadEventLiveData.apply {
             observe(viewLifecycleOwner) { event ->
                 when (event) {
                     Results.OK -> {

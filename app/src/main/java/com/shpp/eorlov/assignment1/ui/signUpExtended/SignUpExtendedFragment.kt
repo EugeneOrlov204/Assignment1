@@ -76,13 +76,15 @@ class SignUpExtendedFragment : BaseFragment() {
         printLog("On resume")
     }
 
+
+    //todo remove "shared" from methods' name
     private fun setObservers() {
         setViewModelObserver()
         setSharedViewModelObserver()
     }
 
     private fun setViewModelObserver() {
-        viewModel.loadEvent.observe(viewLifecycleOwner) { event ->
+        viewModel.loadEventLiveData.observe(viewLifecycleOwner) { event ->
             when (event) {
                 Results.OK -> {
                     unlockUI()
@@ -123,10 +125,10 @@ class SignUpExtendedFragment : BaseFragment() {
     }
 
     private fun setSharedViewModelObserver() {
-        sharedViewModel.registerUser.observe(viewLifecycleOwner) {
+        viewModel.registerUserLiveData.observe(viewLifecycleOwner) {
             if (it?.code == Constants.SUCCESS_RESPONSE_CODE && it.data != null) {
 
-                sharedViewModel.editUser(
+                viewModel.editUser(
                     name = binding.textInputEditTextUserName.text.toString(),
                     phone = binding.textInputEditTextMobilePhone.text.toString(),
                     address = "",
@@ -138,21 +140,21 @@ class SignUpExtendedFragment : BaseFragment() {
                 pathToLoadedImageFromGallery = ""
 
             } else if (it == null) {
-                viewModel.loadEvent.value = Results.INTERNET_ERROR
+                viewModel.loadEventLiveData.value = Results.INTERNET_ERROR
             } else {
-                viewModel.loadEvent.value = Results.EXISTED_ACCOUNT_ERROR
+                viewModel.loadEventLiveData.value = Results.EXISTED_ACCOUNT_ERROR
             }
         }
 
-        sharedViewModel.editUser.observe(viewLifecycleOwner) {
-            if (it?.code == Constants.SUCCESS_RESPONSE_CODE && it.data != null) {
+        viewModel.editUserLiveData.observe(viewLifecycleOwner) {
+            if (it?.code == Constants.SUCCESS_RESPONSE_CODE) {
                 val action =
                     SignUpExtendedFragmentDirections.actionSignUpExtendedFragmentToCollectionContactFragment()
                 findNavController().navigate(action)
             } else if (it == null) {
-                viewModel.loadEvent.value = Results.INTERNET_ERROR
+                viewModel.loadEventLiveData.value = Results.INTERNET_ERROR
             } else {
-                viewModel.loadEvent.value = Results.NOT_EXISTED_ACCOUNT_ERROR
+                viewModel.loadEventLiveData.value = Results.NOT_EXISTED_ACCOUNT_ERROR
             }
         }
     }
@@ -233,10 +235,7 @@ class SignUpExtendedFragment : BaseFragment() {
                 return
             }
 
-            sharedViewModel.registerUser(
-                email = args.email,
-                password = args.password
-            )
+            viewModel.registerUser(email = args.email, password = args.password)
         }
     }
 

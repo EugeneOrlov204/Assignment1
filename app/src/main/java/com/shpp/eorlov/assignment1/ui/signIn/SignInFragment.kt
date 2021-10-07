@@ -7,13 +7,11 @@ import android.view.ViewGroup
 import android.view.inputmethod.EditorInfo
 import android.widget.Toast
 import androidx.core.view.isVisible
-import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.shpp.eorlov.assignment1.R
 import com.shpp.eorlov.assignment1.base.BaseFragment
 import com.shpp.eorlov.assignment1.databinding.FragmentSignInBinding
-import com.shpp.eorlov.assignment1.ui.SharedViewModel
 import com.shpp.eorlov.assignment1.utils.Constants
 import com.shpp.eorlov.assignment1.utils.Constants.INVALID_CREDENTIALS_CODE
 import com.shpp.eorlov.assignment1.utils.Results
@@ -31,7 +29,6 @@ class SignInFragment : BaseFragment() {
     lateinit var validator: Validator
 
     private val viewModel: SignInViewModel by viewModels()
-    private val sharedViewModel: SharedViewModel by activityViewModels()
 
     private lateinit var binding: FragmentSignInBinding
 
@@ -56,20 +53,18 @@ class SignInFragment : BaseFragment() {
         printLog("On resume")
     }
 
-
     private fun initializeData() {
         viewModel.initializeData()
-        if (viewModel.isRememberedUser()) {
-            val action =
-                SignInFragmentDirections.actionSignInFragmentToCollectionContactFragment()
-            findNavController().navigate(action)
-        }
+//        if (viewModel.isRememberedUser()) {
+//            val action =
+//                SignInFragmentDirections.actionSignInFragmentToCollectionContactFragment()
+//            findNavController().navigate(action)
+//        }
     }
 
     private fun setObservers() {
         viewModel.apply {
-
-            loadEvent.apply {
+            loadEventLiveData.apply {
                 observe(viewLifecycleOwner) { event ->
                     when (event) {
                         Results.OK -> {
@@ -91,6 +86,8 @@ class SignInFragment : BaseFragment() {
                                 getString(R.string.invalid_credentials),
                                 Toast.LENGTH_LONG
                             ).show()
+                            unlockUI()
+                            binding.contentLoadingProgressBar.isVisible = false
                         }
                         Results.INTERNET_ERROR -> {
                             Toast.makeText(
@@ -98,6 +95,26 @@ class SignInFragment : BaseFragment() {
                                 getString(R.string.internet_error),
                                 Toast.LENGTH_LONG
                             ).show()
+                            unlockUI()
+                            binding.contentLoadingProgressBar.isVisible = false
+                        }
+                        Results.UNEXPECTED_RESPONSE -> {
+                            Toast.makeText(
+                                requireContext(),
+                                getString(R.string.unexpected_response),
+                                Toast.LENGTH_LONG
+                            ).show()
+                            unlockUI()
+                            binding.contentLoadingProgressBar.isVisible = false
+                        }
+                        Results.NOT_SUCCESSFUL_RESPONSE -> {
+                            Toast.makeText(
+                                requireContext(),
+                                getString(R.string.not_successful_response),
+                                Toast.LENGTH_LONG
+                            ).show()
+                            unlockUI()
+                            binding.contentLoadingProgressBar.isVisible = false
                         }
                         Results.NOT_EXISTED_ACCOUNT_ERROR -> {
                             Toast.makeText(
@@ -114,20 +131,27 @@ class SignInFragment : BaseFragment() {
             }
         }
 
-        sharedViewModel.authorizeUser.apply {
+        //todo remove redundant when's error checkers
+        viewModel.authorizeUserLiveData.apply {
             observe(viewLifecycleOwner) {
-                if (it?.code == Constants.SUCCESS_RESPONSE_CODE && it.data != null) {
-                    viewModel.rememberCurrentEmail(binding.textInputEditTextEmail.text.toString())
-                    viewModel.saveToken(it.data.accessToken)
-                    val action =
-                        SignInFragmentDirections.actionSignInFragmentToCollectionContactFragment()
-                    findNavController().navigate(action)
-                } else if (it == null) {
-                    viewModel.loadEvent.value = Results.INTERNET_ERROR
-                } else if (it.code == INVALID_CREDENTIALS_CODE) {
-                    viewModel.loadEvent.value = Results.INVALID_CREDENTIALS
-                } else {
-                    viewModel.loadEvent.value = Results.NOT_EXISTED_ACCOUNT_ERROR
+                when {
+                    it?.code == Constants.SUCCESS_RESPONSE_CODE -> {
+                        viewModel.rememberCurrentEmail(binding.textInputEditTextEmail.text.toString())
+                        viewModel.saveToken(it.data.accessToken)
+                        viewModel.loadEventLiveData.value = Results.OK
+                        val action =
+                            SignInFragmentDirections.actionSignInFragmentToCollectionContactFragment()
+                        findNavController().navigate(action)
+                    }
+                    it == null -> {
+                        viewModel.loadEventLiveData.value = Results.INTERNET_ERROR
+                    }
+                    it.code == INVALID_CREDENTIALS_CODE -> {
+                        viewModel.loadEventLiveData.value = Results.INVALID_CREDENTIALS
+                    }
+                    else -> {
+                        viewModel.loadEventLiveData.value = Results.NOT_EXISTED_ACCOUNT_ERROR
+                    }
                 }
             }
         }
@@ -164,7 +188,7 @@ class SignInFragment : BaseFragment() {
 
         }
         binding.textInputEditTextEmail.apply {
-            setOnEditorActionListener { _, actionId, _ ->
+            setOnEditorActionListener { _, _, _ ->
                 binding.textInputLayoutEmail.error = evaluateErrorMessage(
                     validator.validateEmail(text.toString())
                 )
@@ -212,12 +236,8 @@ class SignInFragment : BaseFragment() {
                 viewModel.clearLoginData()
             }
 
-
-            try {
-                sharedViewModel.authorizeUser(email, password)
-            } catch (exception: Exception) {
-                println("Caught!")
-            }
+            viewModel.loadEventLiveData.value = Results.LOADING
+            viewModel.authorizeUser(email, password)
         }
     }
 
