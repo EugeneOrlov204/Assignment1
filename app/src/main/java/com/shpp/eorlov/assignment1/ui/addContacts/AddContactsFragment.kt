@@ -7,12 +7,15 @@ import android.view.ViewGroup
 import android.view.inputmethod.EditorInfo
 import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.shpp.eorlov.assignment1.R
 import com.shpp.eorlov.assignment1.base.BaseFragment
 import com.shpp.eorlov.assignment1.databinding.FragmentAddContactsBinding
-import com.shpp.eorlov.assignment1.ui.addContacts.adapter.AddContactsRecyclerAdapter
+import com.shpp.eorlov.assignment1.model.UserModel
+import com.shpp.eorlov.assignment1.model.Users
+import com.shpp.eorlov.assignment1.ui.addContacts.adapter.AddContactsListAdapter
 import com.shpp.eorlov.assignment1.ui.addContacts.adapter.listeners.IAddContactClickListener
 import com.shpp.eorlov.assignment1.utils.ext.clickWithDebounce
 import com.shpp.eorlov.assignment1.utils.ext.gone
@@ -23,10 +26,11 @@ import dagger.hilt.android.AndroidEntryPoint
 class AddContactsFragment : BaseFragment(), IAddContactClickListener {
     private val viewModel: AddContactsViewModel by viewModels()
     private val args: AddContactsFragmentArgs by navArgs()
-    private val contactsListAdapter: AddContactsRecyclerAdapter by lazy(LazyThreadSafetyMode.NONE) {
-        AddContactsRecyclerAdapter(
+    private val selectedItems = Users()
+    private val contactsListAdapter: AddContactsListAdapter by lazy(LazyThreadSafetyMode.NONE) {
+        AddContactsListAdapter(
             contactClickListener = this,
-            arrayListOf(*args.addedContacts)
+            selectedItems
         )
     }
 
@@ -40,13 +44,13 @@ class AddContactsFragment : BaseFragment(), IAddContactClickListener {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        binding = FragmentAddContactsBinding.inflate(inflater, container, false)
+            binding = FragmentAddContactsBinding.inflate(inflater, container, false)
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        if (args.addedContacts.isNotEmpty()) onCheckedContacts()
+        initViews()
         initRecycler()
         setObservers()
         setListeners()
@@ -57,12 +61,27 @@ class AddContactsFragment : BaseFragment(), IAddContactClickListener {
         printLog("On resume")
     }
 
-    override fun onCheckedContacts() {
-        binding.textViewTitle.text = getString(R.string.recommendation)
+    override fun onAddContact(contact: UserModel) {
+        if (binding.textViewTitle.text != getString(R.string.recommendation)) {
+            binding.textViewTitle.text = getString(R.string.recommendation)
+        }
+        val action =
+            AddContactsFragmentDirections.actionAddContactsFragmentToContactProfileFragment(
+                contact,
+                selectedItems
+            )
+        findNavController().navigate(action)
     }
 
+    private fun initViews() {
+        if (args.addedContacts.isNotEmpty()) {
+            binding.textViewTitle.text = getString(R.string.recommendation)
+        }
+    }
 
     private fun initRecycler() {
+        args.addedContacts.map { selectedItems.add(it)}
+
         binding.recyclerViewAddContacts.apply {
             layoutManager = LinearLayoutManager(
                 requireContext(),
@@ -100,7 +119,7 @@ class AddContactsFragment : BaseFragment(), IAddContactClickListener {
             imageButtonCancelButton.clickWithDebounce {
                 hideSearchFieldUI()
                 showUsersTitleUI()
-                if(!foundContacts) {
+                if (!foundContacts) {
                     showRecyclerViewUI()
                     hideNoResultsFoundUI()
                 }
@@ -145,6 +164,7 @@ class AddContactsFragment : BaseFragment(), IAddContactClickListener {
                 }
             }
         }
+
     }
 
     private fun searchContacts() {

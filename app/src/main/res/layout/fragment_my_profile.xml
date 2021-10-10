@@ -134,7 +134,7 @@
         android:fontFamily="@font/open_sans"
         android:text="@string/edit_profile"
         android:textColor="@color/black_russian"
-        android:textSize="14sp"
+        android:textSize="@dimen/text_size_small_14sp"
         android:textAllCaps="false"
         app:layout_constraintBottom_toTopOf="@id/buttonViewMyContacts"
         app:layout_constraintEnd_toEndOf="parent"

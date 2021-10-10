@@ -32,7 +32,6 @@
     <string name="default_person_name">Some Name</string>
     <string name="default_profession_name">Some Profession</string>
     <string name="default_residence_address">Some Address</string>
-    <string name="message">Message</string>
     <string name="profile">Profile</string>
     <string name="invalid_birthdate">Invalid birthdate, ex: 01/01/2021</string>
     <string name="empty_field">This field should not be empty</string>
@@ -72,5 +71,7 @@
     <string name="not_successful_response">Response not successful</string>
     <string name="no_results_found">No results found</string>
     <string name="you_can_see_more_contacts_in_the_recommendation">You can see more contacts in the recommendation</string>
+    <string name="message">Message</string>
+    <string name="add_to_my_contacts">Add to my contacts</string>
 
 </resources>
