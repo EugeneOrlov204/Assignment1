@@ -1,4 +1,4 @@
-package com.shpp.eorlov.assignment1.ui.contactDialogFragment
+package com.shpp.eorlov.assignment1.ui.contactDialog
 
 import android.app.Activity.RESULT_OK
 import android.app.DatePickerDialog
@@ -86,7 +86,7 @@ class ContactDialogFragment : DialogFragment() {
 
     private fun setObserver() {
         viewModel.newUser.observe(viewLifecycleOwner) { user ->
-            sharedViewModel.newUser.value = user
+            sharedViewModel.newUserLiveData.value = user
             dismiss()
         }
     }

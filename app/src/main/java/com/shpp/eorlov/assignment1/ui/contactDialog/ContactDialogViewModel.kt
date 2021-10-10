@@ -1,4 +1,4 @@
-package com.shpp.eorlov.assignment1.ui.contactDialogFragment
+package com.shpp.eorlov.assignment1.ui.contactDialog
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel

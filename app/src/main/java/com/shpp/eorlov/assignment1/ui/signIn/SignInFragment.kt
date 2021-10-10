@@ -55,11 +55,11 @@ class SignInFragment : BaseFragment() {
 
     private fun initializeData() {
         viewModel.initializeData()
-//        if (viewModel.isRememberedUser()) {
-//            val action =
-//                SignInFragmentDirections.actionSignInFragmentToCollectionContactFragment()
-//            findNavController().navigate(action)
-//        }
+        if (viewModel.isRememberedUser()) {
+            val action =
+                SignInFragmentDirections.actionSignInFragmentToCollectionContactFragment()
+            findNavController().navigate(action)
+        }
     }
 
     private fun setObservers() {

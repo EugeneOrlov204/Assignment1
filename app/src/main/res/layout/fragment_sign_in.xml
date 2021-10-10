@@ -9,6 +9,14 @@
     android:orientation="vertical"
     tools:context=".ui.signIn.SignInFragment">
 
+    <androidx.appcompat.widget.AppCompatImageView
+        android:layout_width="@dimen/theme_checker_size_50dp"
+        android:layout_height="@dimen/theme_checker_size_50dp"
+        android:src="@drawable/ic_theme_checker_light"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_margin="@dimen/margin_normal_16dp"/>
+
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideLineHello"
         android:layout_width="wrap_content"

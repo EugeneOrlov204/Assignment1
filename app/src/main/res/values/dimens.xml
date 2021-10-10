@@ -13,7 +13,7 @@
     <dimen name="margin_top_socials_62dp">62dp</dimen>
     <dimen name="circle_button_radius_60dp">60dp</dimen>
     <dimen name="text_size_small_14sp">14sp</dimen>
-
+    <dimen name="theme_checker_size_50dp">50dp</dimen>
 
     <!--My profile-->
     <dimen name="size_of_picture_108dp">108dp</dimen>

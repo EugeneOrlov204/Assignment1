@@ -20,7 +20,7 @@ import com.shpp.eorlov.assignment1.R
 import com.shpp.eorlov.assignment1.base.BaseFragment
 import com.shpp.eorlov.assignment1.databinding.FragmentSignUpExtendedBinding
 import com.shpp.eorlov.assignment1.ui.SharedViewModel
-import com.shpp.eorlov.assignment1.ui.imageLoaderDialogFragment.ImageLoaderDialogFragment
+import com.shpp.eorlov.assignment1.ui.imageLoaderDialog.ImageLoaderDialogFragment
 import com.shpp.eorlov.assignment1.utils.Constants
 import com.shpp.eorlov.assignment1.utils.Results
 import com.shpp.eorlov.assignment1.utils.ext.clickWithDebounce

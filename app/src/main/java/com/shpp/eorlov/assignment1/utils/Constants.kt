@@ -20,16 +20,13 @@ object Constants {
     const val DEFAULT_PATH_TO_IMAGE = "https://i.pravatar.cc/50"
 
     //MyContactsFragment
-    const val SNACKBAR_DURATION: Int = 5000
+    val SNACKBAR_DURATION: Int = 5000
     const val LIST_OF_CONTACTS_KEY = "List of contacts"
     const val CONTACT_DIALOG_TAG = "Contact dialog"
 
     //SharedPreferencesStorage
     const val PREFS_FILE = "Storage"
     const val ACCESS_TOKEN = "access token"
-
-    //ContactRecyclerAdapter
-    const val CONTACT_VIEW_HOLDER_TYPE_CODE = 0
 
     //ContactCollectionAdapter
     const val AMOUNT_OF_VIEWPAGER_ITEMS = 2

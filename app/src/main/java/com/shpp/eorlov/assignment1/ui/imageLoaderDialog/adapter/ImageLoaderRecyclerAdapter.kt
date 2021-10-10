@@ -1,17 +1,15 @@
-package com.shpp.eorlov.assignment1.ui.imageLoaderDialogFragment.adapter
+package com.shpp.eorlov.assignment1.ui.imageLoaderDialog.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.ListAdapter
 import com.shpp.eorlov.assignment1.databinding.PhotoListItemBinding
-import com.shpp.eorlov.assignment1.ui.imageLoaderDialogFragment.adapter.viewHolder.UserPhotosViewHolder
+import com.shpp.eorlov.assignment1.ui.imageLoaderDialog.adapter.viewHolder.UserPhotosViewHolder
 import com.shpp.eorlov.assignment1.utils.Constants
 
 class ImageLoaderRecyclerAdapter() : ListAdapter<String, UserPhotosViewHolder>(
     UserPhotoItemDiffCallback()
 ) {
-
-
     /**
      * Create new views (invoked by the layout manager)
      */
@@ -23,17 +21,12 @@ class ImageLoaderRecyclerAdapter() : ListAdapter<String, UserPhotosViewHolder>(
         )
     }
 
-
     /**
      * Replace the contents of a view (invoked by the layout manager)
      */
     override fun onBindViewHolder(holder: UserPhotosViewHolder, position: Int) {
         holder.bindTo(getItem(position))
     }
-
-
-    override fun getItemViewType(position: Int): Int = Constants.CONTACT_VIEW_HOLDER_TYPE_CODE
-
 
     override fun getItemId(position: Int): Long = position.toLong()
 }

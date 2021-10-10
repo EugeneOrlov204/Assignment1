@@ -1,4 +1,4 @@
-package com.shpp.eorlov.assignment1.ui.imageLoaderDialogFragment
+package com.shpp.eorlov.assignment1.ui.imageLoaderDialog
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel

@@ -1,4 +1,4 @@
-package com.shpp.eorlov.assignment1.ui.imageLoaderDialogFragment
+package com.shpp.eorlov.assignment1.ui.imageLoaderDialog
 
 import android.content.Intent
 import android.os.Bundle
@@ -11,7 +11,7 @@ import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.shpp.eorlov.assignment1.databinding.DialogFragmentLoadImageBinding
-import com.shpp.eorlov.assignment1.ui.imageLoaderDialogFragment.adapter.ImageLoaderRecyclerAdapter
+import com.shpp.eorlov.assignment1.ui.imageLoaderDialog.adapter.ImageLoaderRecyclerAdapter
 import com.shpp.eorlov.assignment1.validator.Validator
 import javax.inject.Inject
 
