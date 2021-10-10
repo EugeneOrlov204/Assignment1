@@ -11,6 +11,7 @@ object Constants {
     const val CURRENT_EMAIL = "Current email for user profile"
     const val EMAIL = "Email for autologin"
     const val PASSWORD = "Password for autologin"
+    const val IS_ADDED_CONTACT = "Is added contact?"
 
     //Validator
     const val MIN_SIZE_OF_PASSWORD: Int = 8
@@ -21,8 +22,6 @@ object Constants {
 
     //MyContactsFragment
     val SNACKBAR_DURATION: Int = 5000
-    const val LIST_OF_CONTACTS_KEY = "List of contacts"
-    const val CONTACT_DIALOG_TAG = "Contact dialog"
 
     //SharedPreferencesStorage
     const val PREFS_FILE = "Storage"

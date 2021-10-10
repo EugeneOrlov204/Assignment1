@@ -9,6 +9,7 @@ import com.shpp.eorlov.assignment1.model.UserModel
 import com.shpp.eorlov.assignment1.repository.MainRepositoryImpl
 import com.shpp.eorlov.assignment1.repository.UserRepositoryImpl
 import com.shpp.eorlov.assignment1.utils.Constants
+import com.shpp.eorlov.assignment1.utils.Constants.IS_ADDED_CONTACT
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import retrofit2.HttpException
@@ -84,5 +85,9 @@ class AddContactsViewModel @Inject constructor(
 
     fun clearSearchedContacts() {
         searchedContactsLiveData.value?.clear()
+    }
+
+    fun getResult(): Boolean {
+        return storage.getBoolean(IS_ADDED_CONTACT)
     }
 }

@@ -38,9 +38,7 @@ class AddContactsListAdapter(
 
     override fun getItemId(position: Int): Long = position.toLong()
 
-
     fun getAddedItems(): MutableList<UserModel> {
         return selectedItems.toMutableList()
     }
-
 }
