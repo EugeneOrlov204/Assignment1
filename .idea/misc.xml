@@ -19,6 +19,7 @@
         <entry key="..\:/MyCode/Android/Assignment1/app/src/main/res/drawable/ic_remember_me_checked_light.xml" value="0.19583333333333333" />
         <entry key="..\:/MyCode/Android/Assignment1/app/src/main/res/drawable/ic_remember_me_unchecked.xml" value="0.19583333333333333" />
         <entry key="..\:/MyCode/Android/Assignment1/app/src/main/res/drawable/ic_remember_me_unchecked_light.xml" value="0.19583333333333333" />
+        <entry key="..\:/MyCode/Android/Assignment1/app/src/main/res/drawable/ic_search_button.xml" value="0.19583333333333333" />
         <entry key="..\:/MyCode/Android/Assignment1/app/src/main/res/drawable/ic_trash_bin.xml" value="0.25972222222222224" />
         <entry key="..\:/MyCode/Android/Assignment1/app/src/main/res/drawable/ic_trash_bin_white.xml" value="0.19583333333333333" />
         <entry key="..\:/MyCode/Android/Assignment1/app/src/main/res/drawable/ic_unchecked.xml" value="0.18020833333333333" />
@@ -32,15 +33,17 @@
         <entry key="..\:/MyCode/Android/Assignment1/app/src/main/res/drawable/round_corner_7dp.xml" value="0.18020833333333333" />
         <entry key="..\:/MyCode/Android/Assignment1/app/src/main/res/drawable/round_view_holder.xml" value="0.19583333333333333" />
         <entry key="..\:/MyCode/Android/Assignment1/app/src/main/res/drawable/round_view_holder_selected.xml" value="0.18020833333333333" />
+        <entry key="..\:/MyCode/Android/Assignment1/app/src/main/res/drawable/search_field_edit_text.xml" value="0.19282051282051282" />
         <entry key="..\:/MyCode/Android/Assignment1/app/src/main/res/drawable/social_network_button.xml" value="0.18020833333333333" />
         <entry key="..\:/MyCode/Android/Assignment1/app/src/main/res/layout/activity_main.xml" value="0.16666666666666666" />
         <entry key="..\:/MyCode/Android/Assignment1/app/src/main/res/layout/add_contact_dialog.xml" value="0.15" />
         <entry key="..\:/MyCode/Android/Assignment1/app/src/main/res/layout/contact_list_item.xml" value="0.3333333333333333" />
         <entry key="..\:/MyCode/Android/Assignment1/app/src/main/res/layout/dialog_fragment_load_image.xml" value="0.26953125" />
-        <entry key="..\:/MyCode/Android/Assignment1/app/src/main/res/layout/fragment_add_contacts.xml" value="0.1" />
+        <entry key="..\:/MyCode/Android/Assignment1/app/src/main/res/layout/fragment_add_contacts.xml" value="0.16666666666666666" />
+        <entry key="..\:/MyCode/Android/Assignment1/app/src/main/res/layout/fragment_contact_profile.xml" value="0.15462962962962962" />
         <entry key="..\:/MyCode/Android/Assignment1/app/src/main/res/layout/fragment_detail_view.xml" value="0.26953125" />
         <entry key="..\:/MyCode/Android/Assignment1/app/src/main/res/layout/fragment_edit_profile.xml" value="0.1" />
-        <entry key="..\:/MyCode/Android/Assignment1/app/src/main/res/layout/fragment_my_contacts.xml" value="0.3333333333333333" />
+        <entry key="..\:/MyCode/Android/Assignment1/app/src/main/res/layout/fragment_my_contacts.xml" value="0.22" />
         <entry key="..\:/MyCode/Android/Assignment1/app/src/main/res/layout/fragment_my_profile.xml" value="0.24609375" />
         <entry key="..\:/MyCode/Android/Assignment1/app/src/main/res/layout/fragment_sign_in.xml" value="0.22" />
         <entry key="..\:/MyCode/Android/Assignment1/app/src/main/res/layout/fragment_sign_in_dark.xml" value="0.22" />

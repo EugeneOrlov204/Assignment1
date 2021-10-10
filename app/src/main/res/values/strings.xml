@@ -70,5 +70,7 @@
     <string name="recommendation">Recommendation</string>
     <string name="unexpected_response">Something went wrong: unexpected response!</string>
     <string name="not_successful_response">Response not successful</string>
+    <string name="no_results_found">No results found</string>
+    <string name="you_can_see_more_contacts_in_the_recommendation">You can see more contacts in the recommendation</string>
 
 </resources>

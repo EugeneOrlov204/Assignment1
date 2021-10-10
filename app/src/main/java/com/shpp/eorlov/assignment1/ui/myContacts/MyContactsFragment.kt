@@ -1,10 +1,10 @@
 package com.shpp.eorlov.assignment1.ui.myContacts
 
-import android.R.attr
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.inputmethod.EditorInfo
 import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
 import androidx.core.view.doOnPreDraw
@@ -32,10 +32,6 @@ import com.shpp.eorlov.assignment1.utils.ext.clickWithDebounce
 import com.shpp.eorlov.assignment1.utils.ext.gone
 import com.shpp.eorlov.assignment1.utils.ext.visible
 import dagger.hilt.android.AndroidEntryPoint
-import android.R.attr.data
-
-
-
 
 
 @AndroidEntryPoint
@@ -51,6 +47,9 @@ class MyContactsFragment : BaseFragment(), ContactClickListener {
 
     //Swiping direction for recycler view's items
     private var swipeFlags = ItemTouchHelper.START
+
+    //True if user find some contacts using search field, otherwise false
+    private var foundContacts = false
 
     private lateinit var binding: FragmentMyContactsBinding
 
@@ -76,13 +75,6 @@ class MyContactsFragment : BaseFragment(), ContactClickListener {
         super.onResume()
         printLog("On resume")
         goToMyProfile()
-    }
-
-    /**
-     * Removes item from recycler view by clicking the remove button by position
-     */
-    override fun onContactRemove(position: Int) {
-        removeItemFromRecyclerView(position)
     }
 
     /**
@@ -126,7 +118,7 @@ class MyContactsFragment : BaseFragment(), ContactClickListener {
         position: Int,
     ) {
         val removedItem: UserModel = viewModel.getItem(position) ?: return
-        viewModel.removeItem(position)
+        viewModel.removeItem(removedItem)
 
         Snackbar.make(
             binding.root,
@@ -178,37 +170,10 @@ class MyContactsFragment : BaseFragment(), ContactClickListener {
     }
 
     private fun refreshRecyclerView() {
-       binding.recyclerViewMyContacts.adapter = contactsListAdapter
+        binding.recyclerViewMyContacts.adapter = contactsListAdapter
     }
 
     private fun initRecycler() {
-        /* Variable that implements swipe-to-delete */
-        val itemTouchHelperCallBack: ItemTouchHelper.SimpleCallback =
-            object : ItemTouchHelper.SimpleCallback(
-                0,
-                ItemTouchHelper.START
-            ) {
-                override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
-                    removeItemFromRecyclerView(viewHolder.bindingAdapterPosition)
-                }
-
-                override fun getMovementFlags(
-                    recyclerView: RecyclerView,
-                    viewHolder: RecyclerView.ViewHolder
-                ): Int {
-
-                    return makeMovementFlags(0, swipeFlags)
-                }
-
-                override fun onMove(
-                    recyclerView: RecyclerView,
-                    viewHolder: RecyclerView.ViewHolder,
-                    target: RecyclerView.ViewHolder
-                ): Boolean {
-                    return false
-                }
-            }
-
         binding.recyclerViewMyContacts.apply {
             layoutManager = LinearLayoutManager(
                 requireContext(),
@@ -218,10 +183,37 @@ class MyContactsFragment : BaseFragment(), ContactClickListener {
             adapter = contactsListAdapter
 
             //Implement swipe-to-delete
-            ItemTouchHelper(itemTouchHelperCallBack).attachToRecyclerView(this)
+            ItemTouchHelper(getItemTouchHelperCallBack()).attachToRecyclerView(this)
         }
     }
 
+    /**
+     * Return itemTouchHelperCallBack for recycler view
+     */
+    private fun getItemTouchHelperCallBack() = object : ItemTouchHelper.SimpleCallback(
+        0,
+        ItemTouchHelper.START
+    ) {
+        override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
+            removeItemFromRecyclerView(viewHolder.bindingAdapterPosition)
+        }
+
+        override fun getMovementFlags(
+            recyclerView: RecyclerView,
+            viewHolder: RecyclerView.ViewHolder
+        ): Int {
+
+            return makeMovementFlags(0, swipeFlags)
+        }
+
+        override fun onMove(
+            recyclerView: RecyclerView,
+            viewHolder: RecyclerView.ViewHolder,
+            target: RecyclerView.ViewHolder
+        ): Boolean {
+            return false
+        }
+    }
 
     private fun goToDetail(contact: UserModel) {
         val action =
@@ -230,7 +222,6 @@ class MyContactsFragment : BaseFragment(), ContactClickListener {
             )
         findNavController().navigate(action)
     }
-
 
     private fun setObservers() {
         setViewModelObservers()
@@ -253,6 +244,8 @@ class MyContactsFragment : BaseFragment(), ContactClickListener {
         viewModel.apply {
             contactsLiveData.observe(viewLifecycleOwner) { list ->
                 contactsListAdapter.submitList(list.toMutableList())
+                viewModel.clearSearchedContacts()
+                clearSearchField()
                 viewModel.ok()
 
                 // Start the transition once all views have been
@@ -260,6 +253,13 @@ class MyContactsFragment : BaseFragment(), ContactClickListener {
                 (view?.parent as? ViewGroup)?.doOnPreDraw {
                     startPostponedEnterTransition()
                 }
+            }
+
+            searchedContactsLiveData.observe(viewLifecycleOwner) { list ->
+                if (list.isNotEmpty()) {
+                    contactsListAdapter.submitList(list.toMutableList())
+                }
+                viewModel.ok()
             }
 
             loadEventLiveData.apply {
@@ -287,13 +287,22 @@ class MyContactsFragment : BaseFragment(), ContactClickListener {
         }
     }
 
-
     private fun setListeners() {
         setOnClickListeners()
-        setOnScrollListener()
+        addOnScrollListeners()
+        setOnEditorActionListeners()
     }
 
-    private fun setOnScrollListener() {
+    private fun setOnEditorActionListeners() {
+        binding.textInputEditTextSearchContacts.setOnEditorActionListener { _, actionId, _ ->
+            if (actionId == EditorInfo.IME_ACTION_DONE) {
+                searchContacts()
+            }
+            false
+        }
+    }
+
+    private fun addOnScrollListeners() {
         binding.apply {
             recyclerViewMyContacts.addOnScrollListener(object :
                 RecyclerView.OnScrollListener() {
@@ -317,11 +326,7 @@ class MyContactsFragment : BaseFragment(), ContactClickListener {
         binding.apply {
 
             textViewAddContacts.clickWithDebounce {
-                val action =
-                    CollectionContactFragmentDirections.actionCollectionContactFragmentToAddContactsFragment(
-                        viewModel.contactsLiveData.value?.toTypedArray() ?: return@clickWithDebounce
-                    )
-                findNavController().navigate(action)
+                goToAddContacts()
             }
 
             buttonGoUp.setOnClickListener {
@@ -338,6 +343,100 @@ class MyContactsFragment : BaseFragment(), ContactClickListener {
                 (parentFragment as CollectionContactFragment).viewPager.currentItem =
                     ContactCollectionAdapter.ViewPagerItems.PROFILE.position
             }
+
+            imageButtonSearchButton.clickWithDebounce {
+                hideUsersTitleUI()
+                showSearchFieldUI()
+            }
+
+            imageButtonCancelButton.clickWithDebounce {
+                hideSearchFieldUI()
+                showUsersTitleUI()
+                if(!foundContacts) {
+                    showRecyclerViewUI()
+                    hideNoResultsFoundUI()
+                }
+                viewModel.contactsLiveData.value = viewModel.contactsLiveData.value
+            }
+
+            textInputLayoutSearchContacts.setEndIconOnClickListener {
+                searchContacts()
+            }
+        }
+    }
+
+    private fun goToAddContacts() {
+        val action =
+            CollectionContactFragmentDirections.actionCollectionContactFragmentToAddContactsFragment(
+                viewModel.contactsLiveData.value?.toTypedArray() ?: return
+            )
+        findNavController().navigate(action)
+    }
+
+    private fun searchContacts() {
+        foundContacts =
+            viewModel.searchContacts(binding.textInputEditTextSearchContacts.text.toString())
+
+        apply {
+            if (!foundContacts) {
+                hideRecyclerViewUI()
+                showNoResultsFoundUI()
+            } else {
+                showRecyclerViewUI()
+                hideNoResultsFoundUI()
+            }
+        }
+    }
+
+    private fun hideNoResultsFoundUI() {
+        binding.textViewNoResultsFound.gone()
+        binding.textViewMoreContactsInRecommendation.gone()
+    }
+
+    private fun showNoResultsFoundUI() {
+        binding.textViewNoResultsFound.visible()
+        binding.textViewMoreContactsInRecommendation.visible()
+    }
+
+    private fun showRecyclerViewUI() {
+        binding.recyclerViewMyContacts.visible()
+    }
+
+    private fun hideRecyclerViewUI() {
+        binding.recyclerViewMyContacts.gone()
+    }
+
+    private fun hideSearchFieldUI() {
+        binding.apply {
+            textInputLayoutSearchContacts.gone()
+            imageButtonCancelButton.gone()
+        }
+    }
+
+    private fun clearSearchField() {
+        binding.textInputEditTextSearchContacts.setText("")
+    }
+
+    private fun showSearchFieldUI() {
+        binding.apply {
+            textInputLayoutSearchContacts.visible()
+            imageButtonCancelButton.visible()
+        }
+    }
+
+    private fun showUsersTitleUI() {
+        binding.apply {
+            textViewContacts.visible()
+            imageButtonExit.visible()
+            imageButtonSearchButton.visible()
+        }
+    }
+
+    private fun hideUsersTitleUI() {
+        binding.apply {
+            textViewContacts.gone()
+            imageButtonExit.gone()
+            imageButtonSearchButton.gone()
         }
     }
 }

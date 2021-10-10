@@ -4,22 +4,18 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
+import android.view.inputmethod.EditorInfo
 import androidx.core.view.isVisible
-import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.google.android.material.snackbar.Snackbar
 import com.shpp.eorlov.assignment1.R
 import com.shpp.eorlov.assignment1.base.BaseFragment
 import com.shpp.eorlov.assignment1.databinding.FragmentAddContactsBinding
-import com.shpp.eorlov.assignment1.model.UserModel
-import com.shpp.eorlov.assignment1.ui.SharedViewModel
 import com.shpp.eorlov.assignment1.ui.addContacts.adapter.AddContactsRecyclerAdapter
 import com.shpp.eorlov.assignment1.ui.addContacts.adapter.listeners.IAddContactClickListener
-import com.shpp.eorlov.assignment1.ui.details.DetailViewFragmentArgs
 import com.shpp.eorlov.assignment1.utils.ext.clickWithDebounce
+import com.shpp.eorlov.assignment1.utils.ext.gone
 import com.shpp.eorlov.assignment1.utils.ext.visible
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -30,9 +26,12 @@ class AddContactsFragment : BaseFragment(), IAddContactClickListener {
     private val contactsListAdapter: AddContactsRecyclerAdapter by lazy(LazyThreadSafetyMode.NONE) {
         AddContactsRecyclerAdapter(
             contactClickListener = this,
-             arrayListOf(*args.addedContacts)
+            arrayListOf(*args.addedContacts)
         )
     }
+
+    //True if user find some contacts using search field, otherwise false
+    private var foundContacts = false
 
     private lateinit var binding: FragmentAddContactsBinding
 
@@ -47,6 +46,7 @@ class AddContactsFragment : BaseFragment(), IAddContactClickListener {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        if (args.addedContacts.isNotEmpty()) onCheckedContacts()
         initRecycler()
         setObservers()
         setListeners()
@@ -57,10 +57,8 @@ class AddContactsFragment : BaseFragment(), IAddContactClickListener {
         printLog("On resume")
     }
 
-    override fun onCheckedContacts(contact: UserModel) {
-        if (binding.textViewTitle.text != getString(R.string.recommendation)) {
-            binding.textViewTitle.text = getString(R.string.recommendation)
-        }
+    override fun onCheckedContacts() {
+        binding.textViewTitle.text = getString(R.string.recommendation)
     }
 
 
@@ -76,6 +74,11 @@ class AddContactsFragment : BaseFragment(), IAddContactClickListener {
     }
 
     private fun setListeners() {
+        setOnClickListeners()
+        setOnEditorActionListeners()
+    }
+
+    private fun setOnClickListeners() {
         binding.apply {
             imageButtonExit.clickWithDebounce {
                 lockUI()
@@ -88,6 +91,34 @@ class AddContactsFragment : BaseFragment(), IAddContactClickListener {
                 recyclerViewAddContacts.smoothScrollToPosition(0)
                 buttonGoUp.visible()
             }
+
+            imageButtonSearchButton.clickWithDebounce {
+                hideUsersTitleUI()
+                showSearchFieldUI()
+            }
+
+            imageButtonCancelButton.clickWithDebounce {
+                hideSearchFieldUI()
+                showUsersTitleUI()
+                if(!foundContacts) {
+                    showRecyclerViewUI()
+                    hideNoResultsFoundUI()
+                }
+                viewModel.usersLiveData.value = viewModel.usersLiveData.value //todo replace it
+            }
+
+            textInputLayoutSearchContacts.setEndIconOnClickListener {
+                searchContacts()
+            }
+        }
+    }
+
+    private fun setOnEditorActionListeners() {
+        binding.textInputEditTextSearchContacts.setOnEditorActionListener { _, actionId, _ ->
+            if (actionId == EditorInfo.IME_ACTION_DONE) {
+                searchContacts()
+            }
+            false
         }
     }
 
@@ -95,6 +126,15 @@ class AddContactsFragment : BaseFragment(), IAddContactClickListener {
         viewModel.apply {
             usersLiveData.observe(viewLifecycleOwner) {
                 contactsListAdapter.submitList(it.toMutableList())
+                viewModel.clearSearchedContacts()
+                clearSearchField()
+            }
+
+            searchedContactsLiveData.observe(viewLifecycleOwner) { list ->
+                if (list.isNotEmpty()) {
+                    contactsListAdapter.submitList(list.toMutableList())
+                }
+                viewModel.ok()
             }
 
             isLoadedListLiveData.observe(viewLifecycleOwner) { isLoaded ->
@@ -104,6 +144,73 @@ class AddContactsFragment : BaseFragment(), IAddContactClickListener {
                     activity?.onBackPressed()
                 }
             }
+        }
+    }
+
+    private fun searchContacts() {
+        foundContacts =
+            viewModel.searchContacts(binding.textInputEditTextSearchContacts.text.toString())
+
+        apply {
+            if (!foundContacts) {
+                hideRecyclerViewUI()
+                showNoResultsFoundUI()
+            } else {
+                showRecyclerViewUI()
+                hideNoResultsFoundUI()
+            }
+        }
+    }
+
+    private fun hideNoResultsFoundUI() {
+        binding.textViewNoResultsFound.gone()
+        binding.textViewMoreContactsInRecommendation.gone()
+    }
+
+    private fun showNoResultsFoundUI() {
+        binding.textViewNoResultsFound.visible()
+        binding.textViewMoreContactsInRecommendation.visible()
+    }
+
+    private fun showRecyclerViewUI() {
+        binding.recyclerViewAddContacts.visible()
+    }
+
+    private fun hideRecyclerViewUI() {
+        binding.recyclerViewAddContacts.gone()
+    }
+
+    private fun hideSearchFieldUI() {
+        binding.apply {
+            textInputLayoutSearchContacts.gone()
+            imageButtonCancelButton.gone()
+        }
+    }
+
+    private fun clearSearchField() {
+        binding.textInputEditTextSearchContacts.setText("")
+    }
+
+    private fun showSearchFieldUI() {
+        binding.apply {
+            textInputLayoutSearchContacts.visible()
+            imageButtonCancelButton.visible()
+        }
+    }
+
+    private fun showUsersTitleUI() {
+        binding.apply {
+            textViewTitle.visible()
+            imageButtonExit.visible()
+            imageButtonSearchButton.visible()
+        }
+    }
+
+    private fun hideUsersTitleUI() {
+        binding.apply {
+            textViewTitle.gone()
+            imageButtonExit.gone()
+            imageButtonSearchButton.gone()
         }
     }
 }

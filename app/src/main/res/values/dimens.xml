@@ -82,5 +82,9 @@
     <dimen name="height_image_loader_container_219dp">219dp</dimen>
     <dimen name="size_photo_list_item_85dp">85dp</dimen>
     <dimen name="recycler_view_my_contacts_padding_bottom_100dp">100dp</dimen>
+    <dimen name="text_view_no_results_found_margin_top_56dp">56dp</dimen>
+    <dimen name="text_view_no_results_found_text_size_31sp">31sp</dimen>
+    <dimen name="search_contacts_layout_margin_top_10dp">10dp</dimen>
+    <dimen name="search_contacts_edit_text_text_size_18sp">18sp</dimen>
 
 </resources>

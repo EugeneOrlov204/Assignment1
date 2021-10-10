@@ -46,7 +46,7 @@ class ContactsViewHolder(
     private fun setListeners() {
         binding.apply {
             imageViewRemoveButton.clickWithDebounce {
-                contactClickListener.onContactRemove(bindingAdapterPosition)
+                contactClickListener.onContactRemove(contact)
             }
 
             constraintLayoutContactListItem.clickWithDebounce {

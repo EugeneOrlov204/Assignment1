@@ -23,8 +23,6 @@
             android:layout_marginStart="@dimen/close_button_margin_start_21dp"
             android:src="@drawable/ic_arrow_back"
             app:layout_constraintBottom_toBottomOf="@id/textViewTitle"
-            app:layout_constraintEnd_toStartOf="@+id/textViewTitle"
-            app:layout_constraintHorizontal_chainStyle="spread_inside"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="@id/textViewTitle" />
 
@@ -34,8 +32,8 @@
             android:layout_marginTop="@dimen/contacts_text_margin_top_10dp"
             android:text="@string/users"
             android:textSize="@dimen/contacts_text_size_24sp"
-            app:layout_constraintEnd_toStartOf="@id/imageButtonSearchButton"
-            app:layout_constraintStart_toEndOf="@id/imageButtonExit"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
         <androidx.appcompat.widget.AppCompatImageButton
@@ -45,9 +43,32 @@
             android:src="@drawable/ic_search_button"
             app:layout_constraintBottom_toBottomOf="@id/textViewTitle"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/textViewTitle"
-            app:layout_constraintTop_toTopOf="@id/textViewTitle" />
+            app:layout_constraintTop_toTopOf="@id/textViewTitle"/>
 
+        <androidx.appcompat.widget.AppCompatImageButton
+            android:id="@+id/imageButtonCancelButton"
+            style="@style/ImageButton"
+            android:layout_marginEnd="@dimen/search_button_margin_end_19dp"
+            android:src="@drawable/ic_cancel_button"
+            android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="@id/textInputLayoutSearchContacts"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@id/textInputLayoutSearchContacts" />
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/textInputLayoutSearchContacts"
+            style="@style/TextInputLayoutSearchField"
+            android:layout_marginHorizontal="@dimen/margin_normal_16dp"
+            android:layout_marginTop="@dimen/search_contacts_layout_margin_top_10dp"
+            android:visibility="gone"
+            app:layout_constraintEnd_toStartOf="@id/imageButtonCancelButton"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/textInputEditTextSearchContacts"
+                style="@style/TextInputEditTextSearchField" />
+        </com.google.android.material.textfield.TextInputLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -61,6 +82,34 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/textViewNoResultsFound"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/text_view_no_results_found_margin_top_56dp"
+        android:fontFamily="@font/open_sans"
+        android:text="@string/no_results_found"
+        android:textColor="@color/black"
+        android:textSize="@dimen/text_view_no_results_found_text_size_31sp"
+        android:visibility="gone"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/constraintLayoutHeader" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/textViewMoreContactsInRecommendation"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/margin_small_8dp"
+        android:fontFamily="@font/open_sans"
+        android:text="@string/you_can_see_more_contacts_in_the_recommendation"
+        android:textColor="@color/gray"
+        android:textSize="@dimen/text_size_small_12sp"
+        android:visibility="gone"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/textViewNoResultsFound" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerViewAddContacts"
@@ -79,7 +128,7 @@
         android:id="@+id/buttonGoUp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_margin="16dp"
+        android:layout_margin="@dimen/margin_normal_16dp"
         android:backgroundTint="@color/orange"
         app:tint="@android:color/white"
         android:contentDescription="@string/edit_profile"

@@ -73,7 +73,9 @@ class AddContactsViewHolder(
         if (!selectedItems.contains(contact)) {
             selectedItems.add(contact)
             showAddedUserUI()
-            contactClickListener.onCheckedContacts(contact)
+            if(selectedItems.size == 1) {
+                contactClickListener.onCheckedContacts()
+            }
         }
     }
 }

@@ -1,5 +1,6 @@
 package com.shpp.eorlov.assignment1.ui.addContacts
 
+import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.shpp.eorlov.assignment1.base.BaseViewModel
@@ -23,6 +24,7 @@ class AddContactsViewModel @Inject constructor(
 
     val usersLiveData = MutableLiveData<MutableList<UserModel>>(ArrayList())
     val isLoadedListLiveData = MutableLiveData(false)
+    val searchedContactsLiveData = MutableLiveData<MutableList<UserModel>>(ArrayList())
 
     private var accessToken: String = ""
         get() = fetchToken(field)
@@ -64,5 +66,23 @@ class AddContactsViewModel @Inject constructor(
         return if (token.isEmpty()) {
             storage.getString(Constants.ACCESS_TOKEN) ?: ""
         } else token
+    }
+
+    /**
+     * Searches contacts by given pattern.
+     * Returns true if contacts were found, otherwise false
+     */
+    fun searchContacts(pattern: String) : Boolean {
+        loading()
+        usersLiveData.value.apply {
+            searchedContactsLiveData.value =
+                this?.filter { it.name?.indexOf(pattern) != -1 && it.name?.isNotEmpty() == true }
+                    ?.toMutableList()
+        }
+        return searchedContactsLiveData.value?.isNotEmpty() == true
+    }
+
+    fun clearSearchedContacts() {
+        searchedContactsLiveData.value?.clear()
     }
 }
