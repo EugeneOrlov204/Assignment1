@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:fresco="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/constraintLayoutContactListItem"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/list_item_height_66dp"
+    android:layout_marginHorizontal="@dimen/margin_normal_16dp"
+    android:layout_marginTop="@dimen/margin_normal_16dp"
+    android:background="@drawable/round_view_holder">
+
+    <com.facebook.drawee.view.SimpleDraweeView
+        android:id="@+id/draweeViewPersonImage"
+        android:layout_width="@dimen/person_image_size_50dp"
+        android:layout_height="@dimen/person_image_size_50dp"
+        android:layout_marginStart="@dimen/margin_normal_16dp"
+        android:transitionName="contactPhoto"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:placeholderImageScaleType="fitXY"
+        app:roundAsCircle="true"
+        tools:placeholderImage="@drawable/ic_default_user_image" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/textViewPersonName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/margin_normal_16dp"
+        android:fontFamily="@font/open_sans"
+        android:textColor="@color/black_russian"
+        android:textSize="@dimen/text_size_normal_18sp"
+        android:transitionName="contactName"
+        app:layout_constraintBottom_toTopOf="@+id/textViewPersonProfession"
+        app:layout_constraintStart_toEndOf="@id/draweeViewPersonImage"
+        app:layout_constraintTop_toTopOf="@id/draweeViewPersonImage"
+        tools:text="Ava Smith" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/textViewPersonProfession"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/open_sans"
+        android:textColor="@color/gray"
+        android:textSize="@dimen/text_size_small_12sp"
+        android:transitionName="contactProfession"
+        app:layout_constraintBottom_toBottomOf="@+id/draweeViewPersonImage"
+        app:layout_constraintStart_toStartOf="@id/textViewPersonName"
+        tools:text="Photograph" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/textViewAddContact"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="@dimen/margin_normal_16dp"
+        android:fontFamily="@font/open_sans"
+        android:text="@string/add"
+        android:textColor="@color/orange"
+        app:layout_constraintBottom_toBottomOf="@+id/textViewPersonProfession"
+        app:layout_constraintEnd_toStartOf="@id/imageViewAddContact"
+        app:layout_constraintTop_toTopOf="@+id/textViewPersonName" />
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/imageViewAddContact"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="@dimen/margin_normal_16dp"
+        android:src="@drawable/ic_add_contact_sign"
+        app:layout_constraintBottom_toBottomOf="@+id/textViewPersonProfession"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/textViewPersonName" />
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/imageViewCheckedContact"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="@dimen/margin_normal_16dp"
+        android:src="@drawable/ic_checked_new_contact"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="@+id/textViewPersonProfession"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/textViewPersonName" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,6 +1,6 @@
 package com.shpp.eorlov.assignment1.ui.myContacts
 
-import android.annotation.SuppressLint
+import android.R.attr
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -18,30 +18,28 @@ import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.snackbar.Snackbar
 import com.shpp.eorlov.assignment1.R
 import com.shpp.eorlov.assignment1.base.BaseFragment
-import com.shpp.eorlov.assignment1.databinding.ContactListItemBinding
 import com.shpp.eorlov.assignment1.databinding.FragmentMyContactsBinding
 import com.shpp.eorlov.assignment1.model.UserModel
 import com.shpp.eorlov.assignment1.ui.SharedViewModel
-import com.shpp.eorlov.assignment1.ui.contactDialogFragment.ContactDialogFragment
 import com.shpp.eorlov.assignment1.ui.myContacts.adapter.MyContactsRecyclerAdapter
-import com.shpp.eorlov.assignment1.ui.myContacts.adapter.listeners.ButtonClickListener
 import com.shpp.eorlov.assignment1.ui.myContacts.adapter.listeners.ContactClickListener
-import com.shpp.eorlov.assignment1.ui.signIn.SignInFragmentDirections
 import com.shpp.eorlov.assignment1.ui.viewPager.CollectionContactFragment
 import com.shpp.eorlov.assignment1.ui.viewPager.CollectionContactFragmentDirections
 import com.shpp.eorlov.assignment1.ui.viewPager.ContactCollectionAdapter
-import com.shpp.eorlov.assignment1.utils.Constants
 import com.shpp.eorlov.assignment1.utils.Constants.SNACKBAR_DURATION
 import com.shpp.eorlov.assignment1.utils.Results
 import com.shpp.eorlov.assignment1.utils.ext.clickWithDebounce
+import com.shpp.eorlov.assignment1.utils.ext.gone
+import com.shpp.eorlov.assignment1.utils.ext.visible
 import dagger.hilt.android.AndroidEntryPoint
+import android.R.attr.data
 
 
-//todo fix bug with screen rotation
+
+
+
 @AndroidEntryPoint
-class MyContactsFragment : BaseFragment(),
-    ContactClickListener,
-    ButtonClickListener {
+class MyContactsFragment : BaseFragment(), ContactClickListener {
 
     private val sharedViewModel: SharedViewModel by activityViewModels()
     private val viewModel: MyContactsViewModel by viewModels()
@@ -51,11 +49,10 @@ class MyContactsFragment : BaseFragment(),
         )
     }
 
+    //Swiping direction for recycler view's items
     private var swipeFlags = ItemTouchHelper.START
 
     private lateinit var binding: FragmentMyContactsBinding
-    private lateinit var itemBinding: ContactListItemBinding
-    private lateinit var dialog: ContactDialogFragment //fixme remove it
 
 
     override fun onCreateView(
@@ -64,12 +61,12 @@ class MyContactsFragment : BaseFragment(),
         savedInstanceState: Bundle?
     ): View {
         binding = FragmentMyContactsBinding.inflate(inflater, container, false)
-        itemBinding = ContactListItemBinding.inflate(inflater, container, false)
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        viewModel.refreshContactsList()
         initRecycler()
         setObservers()
         setListeners()
@@ -78,51 +75,48 @@ class MyContactsFragment : BaseFragment(),
     override fun onResume() {
         super.onResume()
         printLog("On resume")
-        activity?.onBackPressedDispatcher?.addCallback(this, object : OnBackPressedCallback(true) {
-            override fun handleOnBackPressed() {
-                (parentFragment as CollectionContactFragment).viewPager.currentItem =
-                    ContactCollectionAdapter.ViewPagerItems.PROFILE.position
-            }
-        })
+        goToMyProfile()
     }
 
+    /**
+     * Removes item from recycler view by clicking the remove button by position
+     */
     override fun onContactRemove(position: Int) {
         removeItemFromRecyclerView(position)
     }
 
+    /**
+     * Removes item from recycler view by clicking the remove button by item
+     */
     override fun onContactRemove(userModel: UserModel) {
         viewModel.removeItem(userModel)
     }
 
+    /**
+     * Goes to my detail fragment by clicking a contact
+     */
     override fun onContactClick(contact: UserModel) {
-        sharedElementTransitionWithSelectedContact(contact)
+        goToDetail(contact)
     }
 
-    override fun onMultiselectActivated() {
-        contactsListAdapter.selectAllContacts()
-        binding.buttonRemoveSelectedContacts.visibility = View.VISIBLE
-        binding.textViewAddContacts.visibility = View.GONE
-        viewModel.selectedEventLiveData.value = true
+    /**
+     * Enables multi select state
+     */
+    override fun onMultiSelectEnabled() {
+        contactsListAdapter.switchToMultiSelect()
+        binding.buttonRemoveSelectedContacts.visible()
+        binding.textViewAddContacts.gone()
         disableContactSwipe()
         refreshRecyclerView()
     }
 
+    /**
+     * Disables multi select if all recycler view's items is unselected
+     */
     override fun onContactSelectedStateChanged() {
         if (contactsListAdapter.areAllItemsUnselected()) {
-            binding.buttonRemoveSelectedContacts.visibility = View.GONE
-            viewModel.selectedEventLiveData.value = false
-            binding.textViewAddContacts.visibility = View.VISIBLE
-            enableContactSwipe()
-            refreshRecyclerView()
+            disableMultiSelect()
         }
-    }
-
-    override fun onGoUpClicked() {
-        binding.recyclerViewMyContacts.smoothScrollToPosition(0)
-    }
-
-    override fun onCheckedContactActivated() {
-        binding.textViewContacts.text = getString(R.string.recommendation)
     }
 
     /**
@@ -131,7 +125,6 @@ class MyContactsFragment : BaseFragment(),
     fun removeItemFromRecyclerView(
         position: Int,
     ) {
-
         val removedItem: UserModel = viewModel.getItem(position) ?: return
         viewModel.removeItem(position)
 
@@ -142,6 +135,28 @@ class MyContactsFragment : BaseFragment(),
         ).setAction("Cancel") {
             viewModel.addItem(position, removedItem)
         }.show()
+    }
+
+    /**
+     * Disables multi select state
+     */
+    private fun disableMultiSelect() {
+        binding.buttonRemoveSelectedContacts.visible()
+        binding.textViewAddContacts.visible()
+        enableContactSwipe()
+        refreshRecyclerView()
+    }
+
+    /**
+     * Goes back to my profile fragment by clicking the back button
+     */
+    private fun goToMyProfile() {
+        activity?.onBackPressedDispatcher?.addCallback(this, object : OnBackPressedCallback(true) {
+            override fun handleOnBackPressed() {
+                (parentFragment as CollectionContactFragment).viewPager.currentItem =
+                    ContactCollectionAdapter.ViewPagerItems.PROFILE.position
+            }
+        })
     }
 
     private fun disableContactSwipe() {
@@ -157,17 +172,13 @@ class MyContactsFragment : BaseFragment(),
         contactsListAdapter.removeSelectedItems()
         refreshRecyclerView()
         if (viewModel.contactsLiveData.value?.isEmpty() == true) {
-            binding.buttonRemoveSelectedContacts.visibility = View.GONE
+            binding.buttonRemoveSelectedContacts.gone()
         }
-        viewModel.loadEventLiveData.value = Results.OK
+        viewModel.ok()
     }
 
-    @SuppressLint("NotifyDataSetChanged")
     private fun refreshRecyclerView() {
-        contactsListAdapter.notifyDataSetChanged()
-//     a   binding.recyclerViewMyContacts.apply {
-//            adapter = contactsListAdapter
-//        }
+       binding.recyclerViewMyContacts.adapter = contactsListAdapter
     }
 
     private fun initRecycler() {
@@ -178,9 +189,7 @@ class MyContactsFragment : BaseFragment(),
                 ItemTouchHelper.START
             ) {
                 override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
-                    removeItemFromRecyclerView(
-                        viewHolder.bindingAdapterPosition
-                    )
+                    removeItemFromRecyclerView(viewHolder.bindingAdapterPosition)
                 }
 
                 override fun getMovementFlags(
@@ -214,9 +223,7 @@ class MyContactsFragment : BaseFragment(),
     }
 
 
-    private fun sharedElementTransitionWithSelectedContact(
-        contact: UserModel,
-    ) {
+    private fun goToDetail(contact: UserModel) {
         val action =
             CollectionContactFragmentDirections.actionCollectionContactFragmentToDetailViewFragment(
                 contact
@@ -231,32 +238,28 @@ class MyContactsFragment : BaseFragment(),
     }
 
     private fun setSharedViewModelObservers() {
-        sharedViewModel.newUserLiveData.observe(viewLifecycleOwner) { newUser ->
-            newUser?.let {
-                viewModel.addItem(newUser)
-                sharedViewModel.newUserLiveData.value = null
+        sharedViewModel.apply {
+            newUserLiveData.observe(viewLifecycleOwner) { newUser ->
+                newUser?.let {
+                    viewModel.addItem(newUser)
+                    sharedViewModel.newUserLiveData.value = null
+                }
             }
         }
     }
 
-    //fixme decomposition
     private fun setViewModelObservers() {
         postponeEnterTransition()
         viewModel.apply {
             contactsLiveData.observe(viewLifecycleOwner) { list ->
                 contactsListAdapter.submitList(list.toMutableList())
-                loadEventLiveData.value = Results.OK //move to viewmodel
+                viewModel.ok()
 
                 // Start the transition once all views have been
                 // measured and laid out
                 (view?.parent as? ViewGroup)?.doOnPreDraw {
                     startPostponedEnterTransition()
                 }
-            }
-
-            usersLiveData.observe(viewLifecycleOwner) {
-                contactsListAdapter.submitList(it.toMutableList())
-                loadEventLiveData.value = Results.OK //move to viewmodel
             }
 
             loadEventLiveData.apply {
@@ -281,18 +284,6 @@ class MyContactsFragment : BaseFragment(),
                     }
                 }
             }
-
-            selectedEventLiveData.apply {
-                observe(viewLifecycleOwner) {
-                    contactsLiveData.value = contactsLiveData.value
-                }
-            }
-
-            allUsersLiveData.observe(viewLifecycleOwner) {
-                println("Work with ${it.data}")
-                loadEventLiveData.value = Results.LOADING
-                usersLiveData.value = it.data.users
-            }
         }
     }
 
@@ -312,9 +303,9 @@ class MyContactsFragment : BaseFragment(),
                     if (userList.isEmpty()) return
                     if (!contactsListAdapter.isMultiSelect()) {
                         if (dy > 0 && buttonGoUp.visibility == View.VISIBLE) {
-                            buttonGoUp.visibility = View.GONE
+                            buttonGoUp.gone()
                         } else if (dy < 0 && buttonGoUp.visibility != View.VISIBLE) {
-                            buttonGoUp.visibility = View.VISIBLE
+                            buttonGoUp.visible()
                         }
                     }
                 }
@@ -326,62 +317,27 @@ class MyContactsFragment : BaseFragment(),
         binding.apply {
 
             textViewAddContacts.clickWithDebounce {
-                viewModel.getAllUsers(viewModel.fetchToken())
-                lockUI()
-//                showProgressBar()
-
-                showAddContactsUI()
-                hideMyContactsUI()
-//                refreshRecyclerView()
+                val action =
+                    CollectionContactFragmentDirections.actionCollectionContactFragmentToAddContactsFragment(
+                        viewModel.contactsLiveData.value?.toTypedArray() ?: return@clickWithDebounce
+                    )
+                findNavController().navigate(action)
             }
 
             buttonGoUp.setOnClickListener {
                 recyclerViewMyContacts.smoothScrollToPosition(0)
-                buttonGoUp.visibility = View.GONE
+                buttonGoUp.gone()
             }
 
             buttonRemoveSelectedContacts.clickWithDebounce {
                 removeSelectedItemsFromRecyclerView()
-                buttonRemoveSelectedContacts.visibility = View.GONE
+                buttonRemoveSelectedContacts.gone()
             }
 
             imageButtonExit.clickWithDebounce {
-                if (binding.textViewContacts.text == getString(R.string.contacts)) {
-                    (parentFragment as CollectionContactFragment).viewPager.currentItem =
-                        ContactCollectionAdapter.ViewPagerItems.PROFILE.position
-                } else {
-                    viewModel.loadEventLiveData.value = Results.LOADING
-                    viewModel.clearContactsList()
-                    hideAddContactsUI()
-                    showMyContactsUI()
-                    viewModel.addItems(contactsListAdapter.getAddedItems())
-                    refreshRecyclerView()
-                }
+                (parentFragment as CollectionContactFragment).viewPager.currentItem =
+                    ContactCollectionAdapter.ViewPagerItems.PROFILE.position
             }
         }
-    }
-
-    private fun showMyContactsUI() {
-        enableContactSwipe()
-        binding.textViewContacts.text = getString(R.string.contacts)
-        binding.textViewAddContacts.visibility = View.VISIBLE
-        binding.buttonRemoveSelectedContacts.visibility = View.VISIBLE
-    }
-
-    private fun hideAddContactsUI() {
-        contactsListAdapter.disableAddContactsState()
-    }
-
-    private fun showAddContactsUI() {
-        viewModel.contactsLiveData.value?.let {
-            contactsListAdapter.enableAddContactsState(it)
-        }
-    }
-
-    private fun hideMyContactsUI() {
-        disableContactSwipe()
-        binding.textViewContacts.text = getString(R.string.users)
-        binding.textViewAddContacts.visibility = View.GONE
-        binding.buttonRemoveSelectedContacts.visibility = View.GONE
     }
 }

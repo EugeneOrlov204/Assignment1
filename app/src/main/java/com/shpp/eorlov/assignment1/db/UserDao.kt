@@ -11,8 +11,8 @@ interface UserDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertAll(vararg arrayOfUserModels: UserModel)
 
-    @Delete
-    suspend fun delete(userModel: UserModel)
+    @Query("DELETE FROM usermodel WHERE id = :userId")
+    suspend fun delete(userId: Int)
 
     @Query("DELETE FROM usermodel")
     suspend fun clearTable()

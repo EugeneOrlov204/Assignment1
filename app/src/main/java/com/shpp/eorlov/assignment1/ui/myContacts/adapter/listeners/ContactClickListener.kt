@@ -6,7 +6,6 @@ interface ContactClickListener {
     fun onContactRemove(position: Int)
     fun onContactRemove(userModel: UserModel)
     fun onContactClick(contact: UserModel)
-    fun onMultiselectActivated()
+    fun onMultiSelectEnabled()
     fun onContactSelectedStateChanged()
-    fun onCheckedContactActivated()
 }

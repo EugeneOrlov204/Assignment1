@@ -20,8 +20,8 @@ class UserRepositoryImpl @Inject constructor(private val userDao: UserDao) :
         userDao.insertAll(*arrayOfUserModels)
     }
 
-    override suspend fun delete(userModel: UserModel) {
-        userDao.delete(userModel)
+    override suspend fun delete(userId: Int) {
+        userDao.delete(userId)
     }
 
     override suspend fun clearTable() {
