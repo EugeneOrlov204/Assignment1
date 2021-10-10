@@ -25,6 +25,9 @@
         <action
             android:id="@+id/action_collectionContactFragment_to_editProfileFragment"
             app:destination="@id/editProfileFragment" />
+        <action
+            android:id="@+id/action_collectionContactFragment_to_addContactsFragment"
+            app:destination="@id/addContactsFragment" />
     </fragment>
     <fragment
         android:id="@+id/editProfileFragment"
@@ -74,5 +77,14 @@
         <action
             android:id="@+id/action_signUpExtendedFragment_to_collectionContactFragment"
             app:destination="@id/collectionContactFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/addContactsFragment"
+        android:name="com.shpp.eorlov.assignment1.ui.addContacts.AddContactsFragment"
+        android:label="fragment_add_contacts"
+        tools:layout="@layout/fragment_add_contacts" >
+        <argument
+            android:name="addedContacts"
+            app:argType="com.shpp.eorlov.assignment1.model.UserModel[]" />
     </fragment>
 </navigation>
