@@ -58,7 +58,6 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent" />
 
-
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <androidx.core.widget.ContentLoadingProgressBar
@@ -81,7 +80,9 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/constraintLayoutHeader" />
+        app:layout_constraintTop_toBottomOf="@id/constraintLayoutHeader"
+        tools:listitem="@layout/layout_contact_list_item"
+        tools:itemCount="7"/>
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/buttonGoUp"
