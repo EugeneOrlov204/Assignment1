@@ -11,7 +11,7 @@ import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.shpp.eorlov.assignment1.databinding.DialogFragmentLoadImageBinding
-import com.shpp.eorlov.assignment1.ui.imageLoaderDialog.adapter.ImageLoaderRecyclerAdapter
+import com.shpp.eorlov.assignment1.ui.imageLoaderDialog.adapter.ImageLoaderListAdapter
 import com.shpp.eorlov.assignment1.validator.Validator
 import javax.inject.Inject
 
@@ -21,8 +21,8 @@ class ImageLoaderDialogFragment : DialogFragment() {
     lateinit var validator: Validator
 
     private val viewModel: ImageLoaderViewModel by viewModels()
-    private val imageLoaderRecyclerAdapter: ImageLoaderRecyclerAdapter by lazy(LazyThreadSafetyMode.NONE) {
-        ImageLoaderRecyclerAdapter()
+    private val imageLoaderAdapter: ImageLoaderListAdapter by lazy(LazyThreadSafetyMode.NONE) {
+        ImageLoaderListAdapter()
     }
 
     private lateinit var dialogBinding: DialogFragmentLoadImageBinding
@@ -63,7 +63,7 @@ class ImageLoaderDialogFragment : DialogFragment() {
 
         viewModel.apply {
             imagesListLiveData.observe(viewLifecycleOwner) { list ->
-                imageLoaderRecyclerAdapter.submitList(list.toMutableList())
+                imageLoaderAdapter.submitList(list.toMutableList())
 
                 // Start the transition once all views have been
                 // measured and laid out
@@ -112,7 +112,7 @@ class ImageLoaderDialogFragment : DialogFragment() {
                 LinearLayoutManager.HORIZONTAL,
                 false
             )
-            adapter = imageLoaderRecyclerAdapter
+            adapter = imageLoaderAdapter
         }
     }
 

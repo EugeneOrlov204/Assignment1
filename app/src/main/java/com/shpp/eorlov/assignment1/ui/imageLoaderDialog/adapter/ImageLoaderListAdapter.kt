@@ -7,7 +7,7 @@ import com.shpp.eorlov.assignment1.databinding.PhotoListItemBinding
 import com.shpp.eorlov.assignment1.ui.imageLoaderDialog.adapter.viewHolder.UserPhotosViewHolder
 import com.shpp.eorlov.assignment1.utils.Constants
 
-class ImageLoaderRecyclerAdapter() : ListAdapter<String, UserPhotosViewHolder>(
+class ImageLoaderListAdapter() : ListAdapter<String, UserPhotosViewHolder>(
     UserPhotoItemDiffCallback()
 ) {
     /**

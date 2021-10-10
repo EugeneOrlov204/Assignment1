@@ -12,7 +12,7 @@ import com.shpp.eorlov.assignment1.ui.myContacts.adapter.viewHolder.ContactsView
 import com.shpp.eorlov.assignment1.utils.ContactItemDiffCallback
 
 
-class MyContactsRecyclerAdapter(
+class MyContactsListAdapter(
     private val onContactClickListener: ContactClickListener
 ) : ListAdapter<UserModel, ContactsViewHolder>(ContactItemDiffCallback()) {
 

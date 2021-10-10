@@ -21,7 +21,7 @@ import com.shpp.eorlov.assignment1.base.BaseFragment
 import com.shpp.eorlov.assignment1.databinding.FragmentMyContactsBinding
 import com.shpp.eorlov.assignment1.model.UserModel
 import com.shpp.eorlov.assignment1.ui.SharedViewModel
-import com.shpp.eorlov.assignment1.ui.myContacts.adapter.MyContactsRecyclerAdapter
+import com.shpp.eorlov.assignment1.ui.myContacts.adapter.MyContactsListAdapter
 import com.shpp.eorlov.assignment1.ui.myContacts.adapter.listeners.ContactClickListener
 import com.shpp.eorlov.assignment1.ui.viewPager.CollectionContactFragment
 import com.shpp.eorlov.assignment1.ui.viewPager.CollectionContactFragmentDirections
@@ -39,8 +39,8 @@ class MyContactsFragment : BaseFragment(), ContactClickListener {
 
     private val sharedViewModel: SharedViewModel by activityViewModels()
     private val viewModel: MyContactsViewModel by viewModels()
-    private val contactsListAdapter: MyContactsRecyclerAdapter by lazy(LazyThreadSafetyMode.NONE) {
-        MyContactsRecyclerAdapter(
+    private val contactsListAdapter: MyContactsListAdapter by lazy(LazyThreadSafetyMode.NONE) {
+        MyContactsListAdapter(
             onContactClickListener = this
         )
     }

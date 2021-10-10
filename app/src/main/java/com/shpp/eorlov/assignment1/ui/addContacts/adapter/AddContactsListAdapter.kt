@@ -9,7 +9,7 @@ import com.shpp.eorlov.assignment1.ui.addContacts.adapter.listeners.IAddContactC
 import com.shpp.eorlov.assignment1.ui.addContacts.adapter.viewHolder.AddContactsViewHolder
 import com.shpp.eorlov.assignment1.utils.ContactItemDiffCallback
 
-class AddContactsRecyclerAdapter(
+class AddContactsListAdapter(
     private val contactClickListener: IAddContactClickListener,
     private val selectedItems: ArrayList<UserModel>
 ) : ListAdapter<UserModel, AddContactsViewHolder>(
