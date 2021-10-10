@@ -20,9 +20,7 @@ import dagger.hilt.android.AndroidEntryPoint
 @AndroidEntryPoint
 class DetailViewFragment : BaseFragment() {
 
-
     private val args: DetailViewFragmentArgs by navArgs()
-    private val viewModel: DetailViewViewModel by viewModels()
 
 
     private lateinit var binding: FragmentDetailViewBinding
@@ -45,10 +43,8 @@ class DetailViewFragment : BaseFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        viewModel.initializeData(args.contact)
         initViews()
         setListeners()
-        setObservers()
     }
 
     @SuppressLint("SourceLockedOrientationActivity")
@@ -63,34 +59,6 @@ class DetailViewFragment : BaseFragment() {
         activity?.requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_FULL_SENSOR
     }
 
-    private fun setObservers() {
-        viewModel.apply {
-
-            loadEvent.apply {
-                observe(viewLifecycleOwner) { event ->
-                    when (event) {
-                        Results.OK -> {
-                            unlockUI()
-                            binding.contentLoadingProgressBar.isVisible = false
-                        }
-
-                        Results.LOADING -> {
-                            lockUI()
-                            binding.contentLoadingProgressBar.isVisible = true
-                        }
-
-                        Results.INITIALIZE_DATA_ERROR -> {
-                            unlockUI()
-                            binding.contentLoadingProgressBar.isVisible = false
-                            Toast.makeText(requireContext(), event.name, Toast.LENGTH_LONG).show()
-                        }
-                        else -> {
-                        }
-                    }
-                }
-            }
-        }
-    }
 
     private fun setListeners() {
 
@@ -100,7 +68,7 @@ class DetailViewFragment : BaseFragment() {
     }
 
     private fun initViews() {
-        viewModel.userLiveData.value?.apply {
+        args.contact.apply {
             binding.draweeViewUserImageDetailView.setImageURI(photo)
             binding.textViewUserNameDetailView.text = name
             binding.textViewUserProfessionDetailView.text = career
