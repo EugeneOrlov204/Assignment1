@@ -7,14 +7,11 @@ import android.view.ViewGroup
 import android.view.inputmethod.EditorInfo
 import android.widget.Toast
 import androidx.core.view.isVisible
-import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.shpp.eorlov.assignment1.R
 import com.shpp.eorlov.assignment1.base.BaseFragment
 import com.shpp.eorlov.assignment1.databinding.FragmentSignUpBinding
-import com.shpp.eorlov.assignment1.ui.SharedViewModel
-import com.shpp.eorlov.assignment1.utils.Constants.SUCCESS_RESPONSE_CODE
 import com.shpp.eorlov.assignment1.utils.Results
 import com.shpp.eorlov.assignment1.utils.ext.clickWithDebounce
 import com.shpp.eorlov.assignment1.utils.ext.hideKeyboard
@@ -45,7 +42,6 @@ class SignUpFragment : BaseFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        viewModel.initializeData()
         setListeners()
         setObservers()
     }
@@ -98,23 +94,14 @@ class SignUpFragment : BaseFragment() {
                     unlockUI()
                     binding.contentLoadingProgressBar.isVisible = false
                 }
-                Results.NOT_SUCCESSFUL_RESPONSE -> {
-                    Toast.makeText(
-                        requireContext(),
-                        getString(R.string.not_successful_response),
-                        Toast.LENGTH_LONG
-                    ).show()
-                    unlockUI()
-                    binding.contentLoadingProgressBar.isVisible = false
-                }
                 Results.EXISTED_ACCOUNT_ERROR -> {
                     Toast.makeText(
                         requireContext(),
                         getString(R.string.existed_account_error_text),
                         Toast.LENGTH_LONG
                     ).show()
+                    binding.contentLoadingProgressBar.isVisible = false
                 }
-
                 else -> {
                 }
             }
@@ -122,17 +109,13 @@ class SignUpFragment : BaseFragment() {
     }
 
     private fun setSharedViewModelObserver() {
-        viewModel.authorizeUserLiveData.observe(viewLifecycleOwner) {
-            if (it?.code != SUCCESS_RESPONSE_CODE) {
-                val action =
-                    SignUpFragmentDirections.actionSignUpFragmentToSignUpExtendedFragment(
-                        binding.textInputEditTextEmail.text.toString(),
-                        binding.textInputEditTextPassword.text.toString(),
-                    )
-                findNavController().navigate(action)
-            } else {
-                viewModel.loadEvent.value = Results.EXISTED_ACCOUNT_ERROR
-            }
+        viewModel.canRegisterUserLiveData.observe(viewLifecycleOwner) {
+            val action =
+                SignUpFragmentDirections.actionSignUpFragmentToSignUpExtendedFragment(
+                    binding.textInputEditTextEmail.text.toString(),
+                    binding.textInputEditTextPassword.text.toString(),
+                )
+            findNavController().navigate(action)
         }
     }
 
@@ -206,7 +189,7 @@ class SignUpFragment : BaseFragment() {
                 return
             }
 
-            viewModel.authorizeUser(
+            viewModel.registerUser(
                 email = textInputEditTextEmail.text.toString(),
                 password = textInputEditTextPassword.text.toString()
             )

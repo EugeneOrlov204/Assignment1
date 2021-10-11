@@ -27,7 +27,7 @@ class MyProfileViewModel @Inject constructor(
             UserModel(
                 name = "",
                 career = "",
-                photo = "",
+                image = "",
                 address = "",
                 birthday = "",
                 phone = "",
@@ -88,7 +88,7 @@ class MyProfileViewModel @Inject constructor(
                 userModel.email?.isNotEmpty() ?: false &&
                 userModel.name?.isNotEmpty() ?: false &&
                 userModel.phone?.isNotEmpty() ?: false &&
-                userModel.photo?.isNotEmpty() ?: false &&
+                userModel.image?.isNotEmpty() ?: false &&
                 userModel.career?.isNotEmpty() ?: false &&
                 userModel.address?.isNotEmpty() ?: false
 

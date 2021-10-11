@@ -20,11 +20,12 @@ class SignUpViewModel @Inject constructor(
 ) :
     ViewModel() {
 
-    val authorizeUserLiveData = MutableLiveData<ResponseModel<Data>>()
+    val canRegisterUserLiveData = MutableLiveData<Boolean>()
+    val loadEvent = MutableLiveData<Results>()
 
-    fun authorizeUser(email: String, password: String) {
+    fun registerUser(email: String, password: String) {
+        loadEvent.value = Results.LOADING
         viewModelScope.launch {
-            loadEvent.value = Results.LOADING
             val response = try {
                 repository.authorizeUser(
                     AuthorizeModel(
@@ -40,17 +41,9 @@ class SignUpViewModel @Inject constructor(
                 return@launch
             }
 
-            if (response.isSuccessful && response.body() != null) {
-                authorizeUserLiveData.postValue(response.body()!!)
-            } else {
-                loadEvent.value = Results.NOT_SUCCESSFUL_RESPONSE
+            if (!response.isSuccessful || response.body() == null) {
+                canRegisterUserLiveData.postValue(true)
             }
         }
-    }
-
-    val loadEvent = MutableLiveData<Results>()
-
-    fun initializeData() {
-        loadEvent.value = Results.OK
     }
 }

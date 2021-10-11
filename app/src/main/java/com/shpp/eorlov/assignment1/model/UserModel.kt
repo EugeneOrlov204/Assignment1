@@ -11,7 +11,7 @@ data class UserModel(
     @PrimaryKey(autoGenerate = true) val id: Int = 0,
     val name: String?,
     val career: String?,
-    val photo: String?,
+    val image: String?,
     val address: String?,
     val birthday: String?,
     val phone: String?,

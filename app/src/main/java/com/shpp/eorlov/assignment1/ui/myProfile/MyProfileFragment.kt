@@ -22,7 +22,6 @@ import com.shpp.eorlov.assignment1.ui.viewPager.ContactCollectionAdapter
 import com.shpp.eorlov.assignment1.utils.Constants
 import com.shpp.eorlov.assignment1.utils.Results
 import com.shpp.eorlov.assignment1.utils.ext.clickWithDebounce
-import com.shpp.eorlov.assignment1.utils.ext.loadImage
 import dagger.hilt.android.AndroidEntryPoint
 
 //todo implement log out button
@@ -148,9 +147,10 @@ class MyProfileFragment : BaseFragment() {
             textViewUserNameMyProfile.text = userModel.name
             textViewUserProfessionMyProfile.text = userModel.career
             textViewPersonResidence.text = userModel.address
-            imageViewUserImageMyProfile.loadImage(userModel.photo ?: "")
+            simpleDraweeViewUserImageMyProfile.setImageURI(userModel.image ?: "")
             textViewGoToSettingsAndFillOutTheProfile.isVisible = !viewModel.isProfileFilledOut()
         }
+        println("Image path is ${userModel.image?.replace("\\","") ?: ""}")
     }
 
 

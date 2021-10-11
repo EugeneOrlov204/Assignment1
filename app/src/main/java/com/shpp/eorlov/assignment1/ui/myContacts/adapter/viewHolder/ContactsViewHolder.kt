@@ -37,7 +37,7 @@ class ContactsViewHolder(
 
             binding.textViewPersonName.text = name
             binding.textViewPersonProfession.text = career
-            binding.draweeViewPersonImage.setImageURI(photo)
+            binding.draweeViewPersonImage.setImageURI(image)
         }
 
         setListeners()

@@ -5,6 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    xmlns:fresco="http://schemas.android.com/apk/res-auto"
     tools:context=".ui.myProfile.MyProfileFragment">
 
     <View
@@ -34,14 +35,17 @@
         android:orientation="horizontal"
         app:layout_constraintGuide_percent="0.09" />
 
-    <androidx.appcompat.widget.AppCompatImageView
-        android:id="@+id/imageViewUserImageMyProfile"
+
+    <com.facebook.drawee.view.SimpleDraweeView
+        android:id="@+id/simpleDraweeViewUserImageMyProfile"
         android:layout_width="@dimen/size_of_picture_108dp"
         android:layout_height="@dimen/size_of_picture_108dp"
         app:layout_constraintEnd_toEndOf="@id/viewTopContainerMyProfile"
         app:layout_constraintStart_toStartOf="@id/viewTopContainerMyProfile"
         app:layout_constraintTop_toTopOf="@id/guideLineUserImageMyProfile"
-        tools:src="@tools:sample/avatars" />
+        fresco:roundAsCircle="true"
+        app:placeholderImageScaleType="fitXY"
+        fresco:placeholderImage="@drawable/ic_default_user_image"/>
 
 
     <androidx.appcompat.widget.AppCompatTextView
@@ -51,7 +55,7 @@
         android:text="@string/person_name"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/imageViewUserImageMyProfile" />
+        app:layout_constraintTop_toBottomOf="@id/simpleDraweeViewUserImageMyProfile" />
 
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/textViewUserProfessionMyProfile"

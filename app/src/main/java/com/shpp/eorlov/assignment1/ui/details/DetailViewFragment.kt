@@ -7,13 +7,9 @@ import android.transition.TransitionInflater
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
-import androidx.core.view.isVisible
-import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.navArgs
 import com.shpp.eorlov.assignment1.base.BaseFragment
 import com.shpp.eorlov.assignment1.databinding.FragmentDetailViewBinding
-import com.shpp.eorlov.assignment1.utils.Results
 import com.shpp.eorlov.assignment1.utils.ext.clickWithDebounce
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -69,7 +65,7 @@ class DetailViewFragment : BaseFragment() {
 
     private fun initViews() {
         args.contact.apply {
-            binding.draweeViewUserImageDetailView.setImageURI(photo)
+            binding.draweeViewUserImageDetailView.setImageURI(image)
             binding.textViewUserNameDetailView.text = name
             binding.textViewUserProfessionDetailView.text = career
             binding.textViewUserResidenceDetailView.text = address

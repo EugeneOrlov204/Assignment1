@@ -5,5 +5,6 @@ data class EditUserModel(
     val phone: String?,
     val address: String?,
     val career: String?,
-    val birthday: String?
+    val birthday: String?,
+    val image: String?
 )

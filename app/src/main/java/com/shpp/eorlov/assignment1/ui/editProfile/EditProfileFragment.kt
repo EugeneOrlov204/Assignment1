@@ -50,6 +50,7 @@ class EditProfileFragment : BaseFragment() {
     private val myCalendar: Calendar = Calendar.getInstance()
     private val sharedViewModel: SharedViewModel by activityViewModels()
     private val viewModel: EditProfileViewModel by viewModels()
+//    private val imageLoader: ImageLoaderDialogFragment
 
     private lateinit var binding: FragmentEditProfileBinding
 
@@ -76,7 +77,7 @@ class EditProfileFragment : BaseFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        initializeData()
+        initViews()
         setListeners()
         setObservers()
     }
@@ -118,20 +119,19 @@ class EditProfileFragment : BaseFragment() {
     }
 
 
-    private fun initializeData() {
-        val receivedUserModel = args.userModel
-        viewModel.initializeData(receivedUserModel)
+    private fun initViews() {
+        viewModel.initializeData(args.userModel)
 
         viewModel.userLiveData.value?.apply {
-            pathToLoadedImageFromGallery = photo ?: ""
+            pathToLoadedImageFromGallery = image ?: ""
 
             binding.apply {
-                textInputEditTextUsername.setText(receivedUserModel.name)
+                textInputEditTextUsername.setText(args.userModel.name)
                 textInputEditTextCareer.setText(career)
                 textInputEditTextAddress.setText(address)
                 textInputEditTextBirthdate.setText(birthday)
-                textInputEditTextPhone.setText(receivedUserModel.phone)
-                textInputEditTextEmail.setText(receivedUserModel.email)
+                textInputEditTextPhone.setText(args.userModel.phone)
+                textInputEditTextEmail.setText(args.userModel.email)
                 imageViewPersonPhoto.loadImage(pathToLoadedImageFromGallery)
             }
         }
@@ -156,10 +156,8 @@ class EditProfileFragment : BaseFragment() {
 
             buttonSave.clickWithDebounce {
                 if (canAddNewContact()) {
-
                     viewModel.userLiveData.value = getProfileData()
                     activity?.onBackPressed()
-
                 }
             }
 
@@ -224,7 +222,7 @@ class EditProfileFragment : BaseFragment() {
     private fun getProfileData() = UserModel(
         name = binding.textInputEditTextUsername.text.toString(),
         career = binding.textInputEditTextCareer.text.toString(),
-        photo = pathToLoadedImageFromGallery,
+        image = "https://i.pravatar.cc/500",
         address = binding.textInputEditTextAddress.text.toString(),
         birthday = binding.textInputEditTextBirthdate.text.toString(),
         phone = binding.textInputEditTextPhone.text.toString(),

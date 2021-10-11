@@ -58,7 +58,7 @@ class ContactProfileFragment : BaseFragment() {
 
     private fun initViews() {
         args.userModel.apply {
-            binding.draweeViewUserImage.setImageURI(photo)
+            binding.draweeViewUserImage.setImageURI(image)
             binding.textViewUserName.text = name
             binding.textViewUserProfession.text = career
             binding.textViewUserResidence.text = address

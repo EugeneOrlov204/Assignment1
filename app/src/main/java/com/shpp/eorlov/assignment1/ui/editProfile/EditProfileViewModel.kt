@@ -20,7 +20,7 @@ class EditProfileViewModel @Inject constructor(
             UserModel(
                 name = "",
                 career = "",
-                photo = "",
+                image = "",
                 address = "",
                 birthday = "",
                 phone = "",
@@ -31,6 +31,7 @@ class EditProfileViewModel @Inject constructor(
 
     val loadEvent = MutableLiveData<Results>()
 
+    //todo remove all methods initializeData
     fun initializeData(userModel: UserModel) {
         if (userLiveData.value == null) {
             loadEvent.value = Results.INITIALIZE_DATA_ERROR

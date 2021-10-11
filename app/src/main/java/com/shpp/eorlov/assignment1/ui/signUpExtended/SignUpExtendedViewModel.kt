@@ -9,6 +9,7 @@ import com.shpp.eorlov.assignment1.model.EditUserModel
 import com.shpp.eorlov.assignment1.model.RegisterModel
 import com.shpp.eorlov.assignment1.model.ResponseModel
 import com.shpp.eorlov.assignment1.repository.MainRepositoryImpl
+import com.shpp.eorlov.assignment1.utils.Constants
 import com.shpp.eorlov.assignment1.utils.Constants.CURRENT_EMAIL
 import com.shpp.eorlov.assignment1.utils.Results
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -34,6 +35,7 @@ class SignUpExtendedViewModel @Inject constructor(
         address: String?,
         career: String?,
         birthday: String?,
+        image: String?,
         accessToken: String
     ) {
         viewModelScope.launch {
@@ -46,6 +48,7 @@ class SignUpExtendedViewModel @Inject constructor(
                         address,
                         career,
                         birthday,
+                        image
                     ),
                     accessToken = "Bearer $accessToken"
                 )
@@ -96,5 +99,9 @@ class SignUpExtendedViewModel @Inject constructor(
 
     fun rememberCurrentEmail(email: String) {
         storage.save(CURRENT_EMAIL, email)
+    }
+
+    fun saveToken(accessToken: String) {
+        storage.save(Constants.ACCESS_TOKEN, accessToken)
     }
 }

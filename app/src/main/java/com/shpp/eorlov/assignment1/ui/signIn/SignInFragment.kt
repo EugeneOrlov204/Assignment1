@@ -25,6 +25,7 @@ import javax.inject.Inject
 @AndroidEntryPoint
 class SignInFragment : BaseFragment() {
 
+    //fixme remove all inject from fragments
     @Inject
     lateinit var validator: Validator
 
@@ -55,11 +56,12 @@ class SignInFragment : BaseFragment() {
 
     private fun initializeData() {
         viewModel.initializeData()
-        if (viewModel.isRememberedUser()) {
-            val action =
-                SignInFragmentDirections.actionSignInFragmentToCollectionContactFragment()
-            findNavController().navigate(action)
-        }
+        //todo fix autologin
+//        if (viewModel.isRememberedUser()) {
+//            val action =
+//                SignInFragmentDirections.actionSignInFragmentToCollectionContactFragment()
+//            findNavController().navigate(action)
+//        }
     }
 
     private fun setObservers() {

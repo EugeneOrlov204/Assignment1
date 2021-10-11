@@ -126,36 +126,24 @@ class SignUpExtendedFragment : BaseFragment() {
 
     private fun setSharedViewModelObserver() {
         viewModel.registerUserLiveData.observe(viewLifecycleOwner) {
-            if (it?.code == Constants.SUCCESS_RESPONSE_CODE && it.data != null) {
-
-                viewModel.editUser(
-                    name = binding.textInputEditTextUserName.text.toString(),
-                    phone = binding.textInputEditTextMobilePhone.text.toString(),
-                    address = "",
-                    career = "",
-                    birthday = "",
-                    accessToken = it.data.accessToken
-                )
-                viewModel.rememberCurrentEmail(args.email)
-                pathToLoadedImageFromGallery = ""
-
-            } else if (it == null) {
-                viewModel.loadEventLiveData.value = Results.INTERNET_ERROR
-            } else {
-                viewModel.loadEventLiveData.value = Results.EXISTED_ACCOUNT_ERROR
-            }
+            viewModel.saveToken(it.data?.accessToken ?: "")
+            viewModel.editUser(
+                name = binding.textInputEditTextUserName.text.toString(),
+                phone = binding.textInputEditTextMobilePhone.text.toString(),
+                address = "",
+                career = "",
+                birthday = "",
+                image = pathToLoadedImageFromGallery,
+                accessToken = it.data?.accessToken ?: ""
+            )
+            viewModel.rememberCurrentEmail(args.email)
+            pathToLoadedImageFromGallery = ""
         }
 
         viewModel.editUserLiveData.observe(viewLifecycleOwner) {
-            if (it?.code == Constants.SUCCESS_RESPONSE_CODE) {
-                val action =
-                    SignUpExtendedFragmentDirections.actionSignUpExtendedFragmentToCollectionContactFragment()
-                findNavController().navigate(action)
-            } else if (it == null) {
-                viewModel.loadEventLiveData.value = Results.INTERNET_ERROR
-            } else {
-                viewModel.loadEventLiveData.value = Results.NOT_EXISTED_ACCOUNT_ERROR
-            }
+            val action =
+                SignUpExtendedFragmentDirections.actionSignUpExtendedFragmentToCollectionContactFragment()
+            findNavController().navigate(action)
         }
     }
 
@@ -205,7 +193,7 @@ class SignUpExtendedFragment : BaseFragment() {
 
         }
         binding.textInputEditTextUserName.apply {
-            setOnEditorActionListener { _, actionId, _ ->
+            setOnEditorActionListener { _, _, _ ->
                 binding.textInputLayoutUserName.error = evaluateErrorMessage(
                     validator.validateUserName(text.toString())
                 )

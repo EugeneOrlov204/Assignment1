@@ -1,44 +1,45 @@
 package com.shpp.eorlov.assignment1.ui.imageLoaderDialog
 
+import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import android.provider.MediaStore
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.activity.result.contract.ActivityResultContracts
+import androidx.appcompat.widget.AppCompatImageView
 import androidx.core.view.doOnPreDraw
+import androidx.core.view.get
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.shpp.eorlov.assignment1.databinding.DialogFragmentLoadImageBinding
 import com.shpp.eorlov.assignment1.ui.imageLoaderDialog.adapter.ImageLoaderListAdapter
-import com.shpp.eorlov.assignment1.validator.Validator
-import javax.inject.Inject
+import com.shpp.eorlov.assignment1.utils.ext.clickWithDebounce
+import com.shpp.eorlov.assignment1.utils.ext.loadImage
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class ImageLoaderDialogFragment : DialogFragment() {
-
-    @Inject
-    lateinit var validator: Validator
 
     private val viewModel: ImageLoaderViewModel by viewModels()
     private val imageLoaderAdapter: ImageLoaderListAdapter by lazy(LazyThreadSafetyMode.NONE) {
         ImageLoaderListAdapter()
     }
 
-    private lateinit var dialogBinding: DialogFragmentLoadImageBinding
+    private lateinit var binding: DialogFragmentLoadImageBinding
 
     private var pathToLoadedImageFromGallery: String = ""
-
-    //fixme fix bug with loading image from gallery
-//    private var imageLoaderLauncher =
-//        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
-//            val imageView: AppCompatImageView = dialogBinding.recyclerViewImageLoader.
-//            if (result.resultCode == Activity.RESULT_OK && result.data?.data != null) {
-//                val imageData = result.data?.data ?: return@registerForActivityResult
-//                pathToLoadedImageFromGallery = imageData.toString()
-//                imageView.loadImage(imageData)
-//            }
-//        }
+    private var imageLoaderLauncher =
+        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+            val imageView: AppCompatImageView = binding.recyclerViewImageLoader.get(0) as AppCompatImageView
+            if (result.resultCode == Activity.RESULT_OK && result.data?.data != null) {
+                val imageData = result.data?.data ?: return@registerForActivityResult
+                pathToLoadedImageFromGallery = imageData.toString()
+                imageView.loadImage(imageData)
+            }
+        }
 
 
     override fun onCreateView(
@@ -46,8 +47,8 @@ class ImageLoaderDialogFragment : DialogFragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        dialogBinding = DialogFragmentLoadImageBinding.inflate(LayoutInflater.from(context))
-        return dialogBinding.root
+        binding = DialogFragmentLoadImageBinding.inflate(LayoutInflater.from(context))
+        return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -71,48 +72,12 @@ class ImageLoaderDialogFragment : DialogFragment() {
                     startPostponedEnterTransition()
                 }
             }
-
-//            loadEvent.apply {
-//                observe(viewLifecycleOwner) { event ->
-//                    when (event) {
-//                        Results.OK -> {
-//                            unlockUI()
-//                            binding.contentLoadingProgressBar.isVisible = false
-//                        }
-//
-//                        Results.LOADING -> {
-//                            lockUI()
-//                            binding.contentLoadingProgressBar.isVisible = true
-//                        }
-//
-//                        Results.INITIALIZE_DATA_ERROR -> {
-//                            unlockUI()
-//                            binding.contentLoadingProgressBar.isVisible = false
-//                            Toast.makeText(requireContext(), event.name, Toast.LENGTH_LONG).show()
-//                        }
-//                        else -> {
-//                        }
-//                    }
-//
-//                }
-//            }
         }
     }
 
     private fun setListeners() {
-        //todo "Not yet implemented"
-    }
-
-
-    private fun initRecycler() {
-
-        dialogBinding.recyclerViewImageLoader.apply {
-            layoutManager = LinearLayoutManager(
-                requireContext(),
-                LinearLayoutManager.HORIZONTAL,
-                false
-            )
-            adapter = imageLoaderAdapter
+        binding.recyclerViewImageLoader.get(0).clickWithDebounce {
+            loadImageFromGallery()
         }
     }
 
@@ -121,6 +86,20 @@ class ImageLoaderDialogFragment : DialogFragment() {
             Intent.ACTION_PICK,
             MediaStore.Images.Media.INTERNAL_CONTENT_URI
         )
-//   fixme     imageLoaderLauncher.launch(gallery)
+        imageLoaderLauncher.launch(gallery)
+    }
+
+
+
+    private fun initRecycler() {
+
+        binding.recyclerViewImageLoader.apply {
+            layoutManager = LinearLayoutManager(
+                requireContext(),
+                LinearLayoutManager.HORIZONTAL,
+                false
+            )
+            adapter = imageLoaderAdapter
+        }
     }
 }

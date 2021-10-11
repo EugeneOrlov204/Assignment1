@@ -25,7 +25,7 @@ class AddContactsViewHolder(
             binding.constraintLayoutContactListItem.setBackgroundResource(R.drawable.round_view_holder)
             binding.textViewPersonName.text = name
             binding.textViewPersonProfession.text = career
-            binding.draweeViewPersonImage.setImageURI(photo)
+            binding.draweeViewPersonImage.setImageURI(image)
             showAddContactsUI()
         }
 
