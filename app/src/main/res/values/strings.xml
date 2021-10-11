@@ -73,5 +73,7 @@
     <string name="you_can_see_more_contacts_in_the_recommendation">You can see more contacts in the recommendation</string>
     <string name="message">Message</string>
     <string name="add_to_my_contacts">Add to my contacts</string>
+    <string name="open_gallery">Open gallery</string>
+    <string name="delete_current_photo">Delete current photo</string>
 
 </resources>

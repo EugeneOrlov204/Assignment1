@@ -1,27 +1,59 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="@dimen/height_image_loader_container_219dp">
-
-    <View
-        android:id="@+id/viewHeader"
-        android:layout_width="0dp"
-        android:layout_height="@dimen/header_height_244dp"
-        android:background="@color/steel_gray"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+    android:layout_height="@dimen/height_image_loader_container_219dp"
+    android:background="@drawable/image_loader">
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerViewImageLoader"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"/>
+        tools:itemCount="5"
+        tools:listitem="@layout/photo_list_item" />
 
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/textViewOpenGallery"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/margin_normal_16dp"
+        android:fontFamily="@font/open_sans"
+        android:text="@string/open_gallery"
+        android:textColor="@android:color/white"
+        android:textSize="@dimen/text_size_small_14sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/recyclerViewImageLoader" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/textViewDeleteCurrentPhoto"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/margin_normal_16dp"
+        android:fontFamily="@font/open_sans"
+        android:text="@string/delete_current_photo"
+        android:textColor="@color/light_gray"
+        android:textSize="@dimen/text_size_small_14sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/textViewOpenGallery" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/margin_normal_16dp"
+        android:fontFamily="@font/open_sans"
+        android:text="@string/cancel"
+        android:textColor="@android:color/white"
+        android:textSize="@dimen/text_size_small_14sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/textViewDeleteCurrentPhoto" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

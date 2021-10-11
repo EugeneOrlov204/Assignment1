@@ -4,7 +4,8 @@
     android:id="@+id/constraintLayoutPhotoListItem"
     android:layout_width="@dimen/size_photo_list_item_85dp"
     android:layout_height="@dimen/size_photo_list_item_85dp"
-    android:layout_margin="@dimen/margin_small_8dp"
+    android:layout_marginStart="@dimen/margin_small_8dp"
+    android:layout_marginTop="@dimen/margin_small_8dp"
     android:background="@drawable/ic_photo_list_item_background">
     <androidx.appcompat.widget.AppCompatImageView
         android:id="@+id/imageViewUserImage"
