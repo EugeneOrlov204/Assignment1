@@ -1,5 +1,6 @@
 package com.shpp.eorlov.assignment1.ui.myContacts
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View

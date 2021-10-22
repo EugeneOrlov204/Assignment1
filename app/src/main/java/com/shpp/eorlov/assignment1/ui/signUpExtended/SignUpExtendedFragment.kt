@@ -19,6 +19,7 @@ import androidx.navigation.fragment.navArgs
 import com.shpp.eorlov.assignment1.R
 import com.shpp.eorlov.assignment1.base.BaseFragment
 import com.shpp.eorlov.assignment1.databinding.FragmentSignUpExtendedBinding
+import com.shpp.eorlov.assignment1.model.UserModel
 import com.shpp.eorlov.assignment1.ui.SharedViewModel
 import com.shpp.eorlov.assignment1.ui.imageLoaderDialog.ImageLoaderDialogFragment
 import com.shpp.eorlov.assignment1.utils.Constants
@@ -128,13 +129,16 @@ class SignUpExtendedFragment : BaseFragment() {
         viewModel.registerUserLiveData.observe(viewLifecycleOwner) {
             viewModel.saveToken(it.data?.accessToken ?: "")
             viewModel.editUser(
-                name = binding.textInputEditTextUserName.text.toString(),
-                phone = binding.textInputEditTextMobilePhone.text.toString(),
-                address = "",
-                career = "",
-                birthday = "",
-                image = pathToLoadedImageFromGallery,
-                accessToken = it.data?.accessToken ?: ""
+                user = UserModel(
+                    name = binding.textInputEditTextUserName.text.toString(),
+                    phone = binding.textInputEditTextMobilePhone.text.toString(),
+                    address = "",
+                    career = "",
+                    birthday = "",
+                    image = pathToLoadedImageFromGallery,
+                    email = args.email
+                ),
+                accessToken = it.data?.accessToken ?: "",
             )
             viewModel.rememberCurrentEmail(args.email)
             pathToLoadedImageFromGallery = ""

@@ -4,10 +4,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.shpp.eorlov.assignment1.data.storage.SharedPreferencesStorageImpl
-import com.shpp.eorlov.assignment1.model.Data
-import com.shpp.eorlov.assignment1.model.EditUserModel
-import com.shpp.eorlov.assignment1.model.RegisterModel
-import com.shpp.eorlov.assignment1.model.ResponseModel
+import com.shpp.eorlov.assignment1.model.*
 import com.shpp.eorlov.assignment1.repository.MainRepositoryImpl
 import com.shpp.eorlov.assignment1.utils.Constants
 import com.shpp.eorlov.assignment1.utils.Constants.CURRENT_EMAIL
@@ -30,26 +27,14 @@ class SignUpExtendedViewModel @Inject constructor(
     val editUserLiveData = MutableLiveData<ResponseModel<Data?>>()
 
     fun editUser(
-        name: String?,
-        phone: String?,
-        address: String?,
-        career: String?,
-        birthday: String?,
-        image: String?,
+        user: UserModel,
         accessToken: String
     ) {
         viewModelScope.launch {
             loadEventLiveData.value = Results.LOADING
             val response = try {
                 repository.editUser(
-                    EditUserModel(
-                        name,
-                        phone,
-                        address,
-                        career,
-                        birthday,
-                        image
-                    ),
+                    EditUserModel(user),
                     accessToken = "Bearer $accessToken"
                 )
             } catch (exception: IOException) {

@@ -36,27 +36,14 @@ class MyProfileViewModel @Inject constructor(
         )
     }
     val loadEventLiveData = MutableLiveData<Results>()
-    val getUserLiveData = MutableLiveData<ResponseModel<Data>>()
 
-    //fixme replace with init
-    fun initializeData(userModel: UserModel) {
-        if (userLiveData.value == null) {
-            loadEventLiveData.value = Results.INITIALIZE_DATA_ERROR
-        } else {
-            loadEventLiveData.value = Results.LOADING
-
-            userLiveData.value = userModel
-
-            loadEventLiveData.value = Results.OK
-        }
-    }
-
-    fun getUser(accessToken: String) {
+    init {
         viewModelScope.launch {
+            val accessToken = fetchToken()
             loadEventLiveData.value = Results.LOADING
             val response = try {
                 repository.getUser(accessToken = "Bearer $accessToken")
-            }catch (exception: IOException) {
+            } catch (exception: IOException) {
                 loadEventLiveData.value = Results.INTERNET_ERROR
                 return@launch
             } catch (exception: HttpException) {
@@ -64,18 +51,12 @@ class MyProfileViewModel @Inject constructor(
                 return@launch
             }
             if (response.isSuccessful && response.body() != null) {
-                getUserLiveData.postValue(response.body()!!)
+                userLiveData.postValue(response.body()!!.data.user)
             } else {
                 loadEventLiveData.value = Results.NOT_SUCCESSFUL_RESPONSE
             }
         }
     }
-
-    //fixme remove hardcoded data
-    fun saveData(login: String) {
-//        contactsDatabase.saveUserModelToStorage(userLiveData.value ?: return, login)
-    }
-
 
     /**
      * Returns true if all field of profile in
@@ -98,7 +79,7 @@ class MyProfileViewModel @Inject constructor(
         userLiveData.value = userModel
     }
 
-    fun fetchToken(): String {
+    private fun fetchToken(): String {
         return storage.getString(ACCESS_TOKEN) ?: ""
     }
 }

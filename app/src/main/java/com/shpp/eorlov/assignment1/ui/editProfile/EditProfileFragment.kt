@@ -16,6 +16,7 @@ import androidx.appcompat.widget.AppCompatImageView
 import androidx.core.view.isVisible
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
@@ -24,6 +25,7 @@ import com.shpp.eorlov.assignment1.data.storage.SharedPreferencesStorage
 import com.shpp.eorlov.assignment1.databinding.FragmentEditProfileBinding
 import com.shpp.eorlov.assignment1.model.UserModel
 import com.shpp.eorlov.assignment1.ui.SharedViewModel
+import com.shpp.eorlov.assignment1.ui.signUpExtended.SignUpExtendedFragmentDirections
 import com.shpp.eorlov.assignment1.utils.Constants.DATE_FORMAT
 import com.shpp.eorlov.assignment1.utils.Results
 import com.shpp.eorlov.assignment1.utils.ext.clickWithDebounce
@@ -50,6 +52,7 @@ class EditProfileFragment : BaseFragment() {
     private val myCalendar: Calendar = Calendar.getInstance()
     private val sharedViewModel: SharedViewModel by activityViewModels()
     private val viewModel: EditProfileViewModel by viewModels()
+
 //    private val imageLoader: ImageLoaderDialogFragment
 
     private lateinit var binding: FragmentEditProfileBinding
@@ -87,12 +90,17 @@ class EditProfileFragment : BaseFragment() {
         printLog("On resume")
     }
 
+
     private fun setObservers() {
         viewModel.apply {
             userLiveData.observe(viewLifecycleOwner) { list ->
                 sharedViewModel.updatedUserLiveData.value = list
             }
-            loadEvent.apply {
+            viewModel.editUserLiveData.observe(viewLifecycleOwner) {
+                loadEventLiveData.value = Results.OK
+                activity?.onBackPressed()
+            }
+            loadEventLiveData.apply {
                 observe(viewLifecycleOwner) { event ->
                     when (event) {
                         Results.OK -> {
@@ -156,8 +164,9 @@ class EditProfileFragment : BaseFragment() {
 
             buttonSave.clickWithDebounce {
                 if (canAddNewContact()) {
-                    viewModel.userLiveData.value = getProfileData()
-                    activity?.onBackPressed()
+                    val newContact = getProfileData()
+                    viewModel.editUser(newContact)
+                    viewModel.userLiveData.value = newContact
                 }
             }
 
@@ -222,7 +231,7 @@ class EditProfileFragment : BaseFragment() {
     private fun getProfileData() = UserModel(
         name = binding.textInputEditTextUsername.text.toString(),
         career = binding.textInputEditTextCareer.text.toString(),
-        image = "https://i.pravatar.cc/500",
+        image = pathToLoadedImageFromGallery,
         address = binding.textInputEditTextAddress.text.toString(),
         birthday = binding.textInputEditTextBirthdate.text.toString(),
         phone = binding.textInputEditTextPhone.text.toString(),

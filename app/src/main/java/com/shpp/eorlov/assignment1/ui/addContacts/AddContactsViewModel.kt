@@ -86,8 +86,4 @@ class AddContactsViewModel @Inject constructor(
     fun clearSearchedContacts() {
         searchedContactsLiveData.value?.clear()
     }
-
-    fun getResult(): Boolean {
-        return storage.getBoolean(IS_ADDED_CONTACT)
-    }
 }

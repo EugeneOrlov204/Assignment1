@@ -32,7 +32,6 @@ class MyProfileFragment : BaseFragment() {
 
     private lateinit var binding: FragmentMyProfileBinding
     private lateinit var userModel: UserModel
-    private lateinit var receivedUserModel: UserModel
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -45,7 +44,6 @@ class MyProfileFragment : BaseFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        viewModel.getUser(viewModel.fetchToken())
         setListeners()
         setObservers()
     }
@@ -77,9 +75,9 @@ class MyProfileFragment : BaseFragment() {
     }
 
     private fun setSharedViewModelObservers() {
-        sharedViewModel.updatedUserLiveData.observe(viewLifecycleOwner) { userModel ->
-            userModel?.let {
-                viewModel.updateProfile(userModel)
+        sharedViewModel.updatedUserLiveData.observe(viewLifecycleOwner) {
+            it?.let {
+                viewModel.updateProfile(it)
             }
         }
     }
@@ -87,15 +85,16 @@ class MyProfileFragment : BaseFragment() {
     private fun setViewModelObservers() {
         setUserLiveDataObserver()
         setLoadEventObserver()
-        setGetUserObserver()
     }
 
-    private fun setGetUserObserver() {
-        viewModel.getUserLiveData.observe(viewLifecycleOwner) { userModel ->
-            userModel?.let {
-                receivedUserModel = userModel.data.user
-                initializeProfile()
+
+    private fun setUserLiveDataObserver() {
+        viewModel.userLiveData.observe(viewLifecycleOwner) {
+            if (it != null) {
+                userModel = it
+                updateProfile()
             }
+            viewModel.loadEventLiveData.value = Results.OK
         }
     }
 
@@ -111,7 +110,6 @@ class MyProfileFragment : BaseFragment() {
                         lockUI()
                         binding.contentLoadingProgressBar.isVisible = true
                     }
-
                     Results.INITIALIZE_DATA_ERROR -> {
                         unlockUI()
                         binding.contentLoadingProgressBar.isVisible = false
@@ -124,25 +122,7 @@ class MyProfileFragment : BaseFragment() {
         }
     }
 
-    private fun setUserLiveDataObserver() {
-        viewModel.userLiveData.observe(viewLifecycleOwner) { userModel ->
-            if (userModel != null) {
-                receivedUserModel = userModel
-                updateProfile()
-                viewModel.saveData(receivedUserModel.email ?: "")
-            }
-        }
-    }
-
-    private fun initializeProfile() {
-        viewModel.initializeData(receivedUserModel)
-
-        updateProfile()
-    }
-
     private fun updateProfile() {
-        userModel = viewModel.userLiveData.value ?: return
-
         binding.apply {
             textViewUserNameMyProfile.text = userModel.name
             textViewUserProfessionMyProfile.text = userModel.career
@@ -150,7 +130,6 @@ class MyProfileFragment : BaseFragment() {
             simpleDraweeViewUserImageMyProfile.setImageURI(userModel.image ?: "")
             textViewGoToSettingsAndFillOutTheProfile.isVisible = !viewModel.isProfileFilledOut()
         }
-        println("Image path is ${userModel.image?.replace("\\","") ?: ""}")
     }
 
 
