@@ -86,5 +86,7 @@
     <dimen name="text_view_no_results_found_text_size_31sp">31sp</dimen>
     <dimen name="search_contacts_layout_margin_top_10dp">10dp</dimen>
     <dimen name="search_contacts_edit_text_text_size_18sp">18sp</dimen>
+    <dimen name="google_button_radius">7dp</dimen>
+
 
 </resources>

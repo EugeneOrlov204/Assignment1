@@ -14,9 +14,13 @@
         <entry key="..\:/MyCode/Android/Assignment1/app/src/main/res/drawable/ic_arrow_upward_24.xml" value="0.2703125" />
         <entry key="..\:/MyCode/Android/Assignment1/app/src/main/res/drawable/ic_camera.xml" value="0.19583333333333333" />
         <entry key="..\:/MyCode/Android/Assignment1/app/src/main/res/drawable/ic_cancel_button.xml" value="0.13703703703703704" />
+        <entry key="..\:/MyCode/Android/Assignment1/app/src/main/res/drawable/ic_checked.xml" value="0.18020833333333333" />
+        <entry key="..\:/MyCode/Android/Assignment1/app/src/main/res/drawable/ic_checked_new_contact.xml" value="0.18020833333333333" />
         <entry key="..\:/MyCode/Android/Assignment1/app/src/main/res/drawable/ic_circle_trash_bin.xml" value="0.2703125" />
         <entry key="..\:/MyCode/Android/Assignment1/app/src/main/res/drawable/ic_default_user_image.xml" value="0.19583333333333333" />
         <entry key="..\:/MyCode/Android/Assignment1/app/src/main/res/drawable/ic_go_up_button.xml" value="0.25972222222222224" />
+        <entry key="..\:/MyCode/Android/Assignment1/app/src/main/res/drawable/ic_google_icon.xml" value="0.18020833333333333" />
+        <entry key="..\:/MyCode/Android/Assignment1/app/src/main/res/drawable/ic_load_image.xml" value="0.18020833333333333" />
         <entry key="..\:/MyCode/Android/Assignment1/app/src/main/res/drawable/ic_main_facebook.xml" value="0.1" />
         <entry key="..\:/MyCode/Android/Assignment1/app/src/main/res/drawable/ic_photo_list_item_background.xml" value="0.13703703703703704" />
         <entry key="..\:/MyCode/Android/Assignment1/app/src/main/res/drawable/ic_remember_me_checked.xml" value="0.19583333333333333" />
@@ -57,7 +61,7 @@
         <entry key="..\:/MyCode/Android/Assignment1/app/src/main/res/layout/fragment_sign_in_dark.xml" value="0.22" />
         <entry key="..\:/MyCode/Android/Assignment1/app/src/main/res/layout/fragment_sign_in_light.xml" value="0.22" />
         <entry key="..\:/MyCode/Android/Assignment1/app/src/main/res/layout/fragment_sign_up.xml" value="0.22" />
-        <entry key="..\:/MyCode/Android/Assignment1/app/src/main/res/layout/fragment_sign_up_extended.xml" value="0.4466666666666667" />
+        <entry key="..\:/MyCode/Android/Assignment1/app/src/main/res/layout/fragment_sign_up_extended.xml" value="0.22" />
         <entry key="..\:/MyCode/Android/Assignment1/app/src/main/res/layout/fragment_view_pager.xml" value="0.26953125" />
         <entry key="..\:/MyCode/Android/Assignment1/app/src/main/res/layout/layout_add_contact_list_item.xml" value="0.15462962962962962" />
         <entry key="..\:/MyCode/Android/Assignment1/app/src/main/res/layout/layout_contact_list_item.xml" value="0.1796875" />

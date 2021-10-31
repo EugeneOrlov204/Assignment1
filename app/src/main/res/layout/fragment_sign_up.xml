@@ -58,9 +58,9 @@
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/textInputEditTextEmail"
             style="@style/InputFieldTextStyle"
+            android:layout_gravity=""
             android:inputType="textEmailAddress"
-            android:textColor="@color/alabaster"
-            android:layout_gravity=""/>
+            android:textColor="@color/alabaster" />
 
 
     </com.google.android.material.textfield.TextInputLayout>
@@ -113,45 +113,20 @@
         app:layout_constraintStart_toEndOf="@id/checkBoxRememberMe"
         app:layout_constraintTop_toTopOf="@id/checkBoxRememberMe" />
 
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/constraintLayoutGoogle"
+    <com.shpp.eorlov.assignment1.ui.custom.GoogleButton
+        android:id="@+id/googleButton"
         android:layout_width="0dp"
-        android:layout_height="@dimen/google_button_height_40dp"
+        android:layout_height="30dp"
         android:layout_marginHorizontal="@dimen/margin_normal_16dp"
+        android:layout_marginTop="10dp"
         android:layout_marginBottom="@dimen/register_button_margin_bottom_12dp"
         android:background="@drawable/google_button"
-        android:layout_marginTop="10dp"
-        app:layout_constraintTop_toBottomOf="@id/checkBoxRememberMe"
+        app:radius="@dimen/google_button_radius"
+        app:layout_constraintBottom_toTopOf="@id/textViewOr"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent">
-
-        <androidx.appcompat.widget.AppCompatImageView
-            android:id="@+id/imageViewGoogle"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:src="@drawable/ic_google_icon"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@id/textViewGoogle"
-            app:layout_constraintHorizontal_chainStyle="packed"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/textViewGoogle"
-            style="@style/ProfileButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/margin_normal_16dp"
-            android:text="@string/google"
-            android:textAllCaps="true"
-            android:textColor="@color/black_russian"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@id/imageViewGoogle"
-            app:layout_constraintTop_toTopOf="parent" />
-
-    </androidx.constraintlayout.widget.ConstraintLayout>
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/checkBoxRememberMe"
+        app:layout_constraintVertical_chainStyle="packed" />
 
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/textViewOr"
@@ -159,13 +134,12 @@
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/margin_small_8dp"
         android:text="@string/or"
-        android:textAlignment="center"
         android:textColor="@color/alabaster"
         android:textSize="@dimen/text_size_normal_18sp"
-        app:layout_constraintTop_toBottomOf="@id/constraintLayoutGoogle"
         app:layout_constraintBottom_toTopOf="@id/buttonRegister"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/googleButton" />
 
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/buttonRegister"
