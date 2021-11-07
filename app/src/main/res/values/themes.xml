@@ -28,6 +28,10 @@
 
     </style>
 
+    <style name="SignInBackground">
+        <item name="android:background">@color/steel_gray</item>
+    </style>
+
     <!-- Code from here https://medium.com/mobile-app-development-publication/animate-android-activities-transition-bf7f89a74b35-->
     <style name="WindowAnimations">
         <item name="android:activityOpenEnterAnimation">
@@ -100,6 +104,14 @@
         <item name="android:textColor">@color/alabaster</item>
         <item name="android:fontFamily">@font/open_sans</item>
         <item name="android:textSize">24sp</item>
+    </style>
+
+    <style name="SignInTextColor">
+        <item name="android:textColor">@color/alabaster</item>
+    </style>
+
+    <style name="SignInSecondTextColor">
+        <item name="android:textColor">@color/light_gray</item>
     </style>
 
     <style name="DescriptionText">
