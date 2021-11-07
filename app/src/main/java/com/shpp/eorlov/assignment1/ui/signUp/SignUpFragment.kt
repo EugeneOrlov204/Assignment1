@@ -21,7 +21,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
 //todo implement autologin
-
+//fixme bug with registration
 @AndroidEntryPoint
 class SignUpFragment : BaseFragment() {
 
