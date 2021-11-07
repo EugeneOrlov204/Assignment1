@@ -1,6 +1,5 @@
 package com.shpp.eorlov.assignment1.ui.myContacts
 
-import android.annotation.SuppressLint
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -34,7 +33,7 @@ import com.shpp.eorlov.assignment1.utils.ext.gone
 import com.shpp.eorlov.assignment1.utils.ext.visible
 import dagger.hilt.android.AndroidEntryPoint
 
-
+//todo add keyboard's enter to start searching users
 @AndroidEntryPoint
 class MyContactsFragment : BaseFragment(), ContactClickListener {
 
