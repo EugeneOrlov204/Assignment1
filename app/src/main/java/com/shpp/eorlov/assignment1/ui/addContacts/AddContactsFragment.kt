@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.EditorInfo
 import androidx.core.view.isVisible
+import androidx.fragment.app.commit
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
@@ -17,6 +18,11 @@ import com.shpp.eorlov.assignment1.model.UserModel
 import com.shpp.eorlov.assignment1.model.Users
 import com.shpp.eorlov.assignment1.ui.addContacts.adapter.AddContactsListAdapter
 import com.shpp.eorlov.assignment1.ui.addContacts.adapter.listeners.IAddContactClickListener
+import com.shpp.eorlov.assignment1.ui.contactProfile.ContactProfileFragment
+import com.shpp.eorlov.assignment1.utils.FeatureNavigationEnabled
+import com.shpp.eorlov.assignment1.utils.TransitionKeys.ADDED_CONTACTS_KEY
+import com.shpp.eorlov.assignment1.utils.TransitionKeys.USERS_KEY
+import com.shpp.eorlov.assignment1.utils.TransitionKeys.USER_MODEL_KEY
 import com.shpp.eorlov.assignment1.utils.ext.clickWithDebounce
 import com.shpp.eorlov.assignment1.utils.ext.gone
 import com.shpp.eorlov.assignment1.utils.ext.visible
@@ -38,13 +44,23 @@ class AddContactsFragment : BaseFragment(), IAddContactClickListener {
     private var foundContacts = false
 
     private lateinit var binding: FragmentAddContactsBinding
+    private lateinit var addedContacts: Array<*>
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        addedContacts = if (FeatureNavigationEnabled.featureNavigationEnabled) {
+            args.addedContacts
+        } else {
+            requireArguments().getParcelableArray(ADDED_CONTACTS_KEY) ?: return
+        }
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-            binding = FragmentAddContactsBinding.inflate(inflater, container, false)
+        binding = FragmentAddContactsBinding.inflate(inflater, container, false)
         return binding.root
     }
 
@@ -65,22 +81,40 @@ class AddContactsFragment : BaseFragment(), IAddContactClickListener {
         if (binding.textViewTitle.text != getString(R.string.recommendation)) {
             binding.textViewTitle.text = getString(R.string.recommendation)
         }
-        val action =
-            AddContactsFragmentDirections.actionAddContactsFragmentToContactProfileFragment(
-                contact,
-                selectedItems
-            )
-        findNavController().navigate(action)
+
+        if (FeatureNavigationEnabled.featureNavigationEnabled) {
+            val action =
+                AddContactsFragmentDirections.actionAddContactsFragmentToContactProfileFragment(
+                    contact,
+                    selectedItems
+                )
+            findNavController().navigate(action)
+        } else {
+            val fragmentManager = activity?.supportFragmentManager
+
+            val arguments = Bundle().apply {
+                putParcelable(USER_MODEL_KEY, contact)
+                putParcelable(USERS_KEY, selectedItems)
+            }
+
+            fragmentManager?.commit {
+                setReorderingAllowed(true)
+                replace(R.id.fragmentContainerView, ContactProfileFragment().apply {
+                    this.arguments = arguments
+                })
+                addToBackStack(null)
+            }
+        }
     }
 
     private fun initViews() {
-        if (args.addedContacts.isNotEmpty()) {
+        if (addedContacts.isNotEmpty()) {
             binding.textViewTitle.text = getString(R.string.recommendation)
         }
     }
 
     private fun initRecycler() {
-        args.addedContacts.map { selectedItems.add(it)}
+        addedContacts.map { selectedItems.add(it as UserModel) }
 
         binding.recyclerViewAddContacts.apply {
             layoutManager = LinearLayoutManager(

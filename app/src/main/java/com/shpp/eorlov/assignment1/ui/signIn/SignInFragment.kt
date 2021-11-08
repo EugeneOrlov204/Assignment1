@@ -7,13 +7,18 @@ import android.view.ViewGroup
 import android.view.inputmethod.EditorInfo
 import android.widget.Toast
 import androidx.core.view.isVisible
+import androidx.fragment.app.add
+import androidx.fragment.app.commit
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.shpp.eorlov.assignment1.R
 import com.shpp.eorlov.assignment1.base.BaseFragment
 import com.shpp.eorlov.assignment1.databinding.FragmentSignInBinding
+import com.shpp.eorlov.assignment1.ui.signUp.SignUpFragment
+import com.shpp.eorlov.assignment1.ui.viewPager.CollectionContactFragment
 import com.shpp.eorlov.assignment1.utils.Constants
 import com.shpp.eorlov.assignment1.utils.Constants.INVALID_CREDENTIALS_CODE
+import com.shpp.eorlov.assignment1.utils.FeatureNavigationEnabled.featureNavigationEnabled
 import com.shpp.eorlov.assignment1.utils.Results
 import com.shpp.eorlov.assignment1.utils.ext.clickWithDebounce
 import com.shpp.eorlov.assignment1.utils.ext.hideKeyboard
@@ -56,11 +61,20 @@ class SignInFragment : BaseFragment() {
 
     private fun initializeData() {
         viewModel.initializeData()
+
         //todo fix autologin
 //        if (viewModel.isRememberedUser()) {
-//            val action =
-//                SignInFragmentDirections.actionSignInFragmentToCollectionContactFragment()
-//            findNavController().navigate(action)
+//            if(featureNavigationEnabled) {
+//                val action =
+//                    SignInFragmentDirections.actionSignInFragmentToCollectionContactFragment()
+//                findNavController().navigate(action)
+//            } else {
+//        val fragmentManager = activity?.supportFragmentManager
+//        fragmentManager?.commit {
+//            setReorderingAllowed(true)
+//            add<>(R.id.fragmentContainerView)
+//        }
+//            }
 //        }
     }
 
@@ -141,9 +155,17 @@ class SignInFragment : BaseFragment() {
                         viewModel.rememberCurrentEmail(binding.textInputEditTextEmail.text.toString())
                         viewModel.saveToken(it.data.accessToken)
                         viewModel.loadEventLiveData.value = Results.OK
-                        val action =
-                            SignInFragmentDirections.actionSignInFragmentToCollectionContactFragment()
-                        findNavController().navigate(action)
+                        if (featureNavigationEnabled) {
+                            val action =
+                                SignInFragmentDirections.actionSignInFragmentToCollectionContactFragment()
+                            findNavController().navigate(action)
+                        } else {
+                            val fragmentManager = activity?.supportFragmentManager
+                            fragmentManager?.commit {
+                                setReorderingAllowed(true)
+                                replace(R.id.fragmentContainerView, CollectionContactFragment())
+                            }
+                        }
                     }
                     it == null -> {
                         viewModel.loadEventLiveData.value = Results.INTERNET_ERROR
@@ -205,9 +227,19 @@ class SignInFragment : BaseFragment() {
     }
 
     private fun goToSignUpProfile() {
-        val action =
-            SignInFragmentDirections.actionSignInFragmentToSignUpFragment()
-        findNavController().navigate(action)
+        if (featureNavigationEnabled) {
+            val action =
+                SignInFragmentDirections.actionSignInFragmentToSignUpFragment()
+
+            findNavController().navigate(action)
+        } else {
+            val fragmentManager = activity?.supportFragmentManager
+            fragmentManager?.commit {
+                setReorderingAllowed(true)
+                replace(R.id.fragmentContainerView, SignUpFragment())
+                addToBackStack(null)
+            }
+        }
     }
 
     /**

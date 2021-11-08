@@ -7,18 +7,24 @@ import android.view.ViewGroup
 import android.view.inputmethod.EditorInfo
 import android.widget.Toast
 import androidx.core.view.isVisible
+import androidx.fragment.app.commit
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.shpp.eorlov.assignment1.R
 import com.shpp.eorlov.assignment1.base.BaseFragment
 import com.shpp.eorlov.assignment1.databinding.FragmentSignUpBinding
+import com.shpp.eorlov.assignment1.ui.signUpExtended.SignUpExtendedFragment
+import com.shpp.eorlov.assignment1.utils.FeatureNavigationEnabled.featureNavigationEnabled
 import com.shpp.eorlov.assignment1.utils.Results
+import com.shpp.eorlov.assignment1.utils.TransitionKeys.EMAIL_KEY
+import com.shpp.eorlov.assignment1.utils.TransitionKeys.PASSWORD_KEY
 import com.shpp.eorlov.assignment1.utils.ext.clickWithDebounce
 import com.shpp.eorlov.assignment1.utils.ext.hideKeyboard
 import com.shpp.eorlov.assignment1.validator.Validator
 import com.shpp.eorlov.assignment1.validator.evaluateErrorMessage
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
+
 
 //todo implement autologin
 //fixme bug with registration
@@ -45,7 +51,6 @@ class SignUpFragment : BaseFragment() {
         setListeners()
         setObservers()
     }
-
 
     override fun onResume() {
         super.onResume()
@@ -110,12 +115,30 @@ class SignUpFragment : BaseFragment() {
 
     private fun setSharedViewModelObserver() {
         viewModel.canRegisterUserLiveData.observe(viewLifecycleOwner) {
-            val action =
-                SignUpFragmentDirections.actionSignUpFragmentToSignUpExtendedFragment(
-                    binding.textInputEditTextEmail.text.toString(),
-                    binding.textInputEditTextPassword.text.toString(),
-                )
-            findNavController().navigate(action)
+            if (featureNavigationEnabled) {
+                val action =
+                    SignUpFragmentDirections.actionSignUpFragmentToSignUpExtendedFragment(
+                        binding.textInputEditTextEmail.text.toString(),
+                        binding.textInputEditTextPassword.text.toString(),
+                    )
+                findNavController().navigate(action)
+            } else {
+                val fragmentManager = activity?.supportFragmentManager
+
+                val arguments = Bundle().apply {
+                    putString(EMAIL_KEY, binding.textInputEditTextEmail.text.toString())
+                    putString(PASSWORD_KEY, binding.textInputEditTextPassword.text.toString())
+                }
+
+                fragmentManager?.commit {
+                    setReorderingAllowed(true)
+                    replace(R.id.fragmentContainerView, SignUpExtendedFragment().apply {
+                        this.arguments = arguments
+                    })
+                    addToBackStack(null)
+                }
+            }
+            viewModel.loadEvent.value = Results.OK
         }
     }
 
@@ -160,7 +183,7 @@ class SignUpFragment : BaseFragment() {
 
     private fun setOnClickListeners() {
         binding.textViewSignIn.clickWithDebounce {
-            goToSignInProfile()
+            goToSignIn()
         }
 
         binding.buttonRegister.clickWithDebounce {
@@ -172,8 +195,13 @@ class SignUpFragment : BaseFragment() {
         }
     }
 
-    private fun goToSignInProfile() {
-        activity?.onBackPressed()
+    private fun goToSignIn() {
+        if (featureNavigationEnabled) {
+            activity?.onBackPressed()
+        } else {
+            val fragmentManager = activity?.supportFragmentManager
+            fragmentManager?.popBackStack()
+        }
     }
 
 

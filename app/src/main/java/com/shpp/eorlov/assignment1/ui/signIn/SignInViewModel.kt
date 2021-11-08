@@ -55,6 +55,7 @@ class SignInViewModel @Inject constructor(
 
     fun initializeData() {
         loadEventLiveData.value = Results.OK
+
     }
 
     fun rememberCurrentEmail(email: String) {

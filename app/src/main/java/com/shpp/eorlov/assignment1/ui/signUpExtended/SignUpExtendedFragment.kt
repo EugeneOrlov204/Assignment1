@@ -9,10 +9,13 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.EditorInfo
 import android.widget.Toast
+import androidx.activity.OnBackPressedCallback
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.widget.AppCompatImageView
 import androidx.core.view.isVisible
 import androidx.fragment.app.activityViewModels
+import androidx.fragment.app.add
+import androidx.fragment.app.commit
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
@@ -22,8 +25,13 @@ import com.shpp.eorlov.assignment1.databinding.FragmentSignUpExtendedBinding
 import com.shpp.eorlov.assignment1.model.UserModel
 import com.shpp.eorlov.assignment1.ui.SharedViewModel
 import com.shpp.eorlov.assignment1.ui.imageLoaderDialog.ImageLoaderDialogFragment
+import com.shpp.eorlov.assignment1.ui.viewPager.CollectionContactFragment
 import com.shpp.eorlov.assignment1.utils.Constants
+import com.shpp.eorlov.assignment1.utils.FeatureNavigationEnabled
 import com.shpp.eorlov.assignment1.utils.Results
+import com.shpp.eorlov.assignment1.utils.TransitionKeys
+import com.shpp.eorlov.assignment1.utils.TransitionKeys.EMAIL_KEY
+import com.shpp.eorlov.assignment1.utils.TransitionKeys.PASSWORD_KEY
 import com.shpp.eorlov.assignment1.utils.ext.clickWithDebounce
 import com.shpp.eorlov.assignment1.utils.ext.hideKeyboard
 import com.shpp.eorlov.assignment1.utils.ext.loadImage
@@ -43,6 +51,9 @@ class SignUpExtendedFragment : BaseFragment() {
     private val args: SignUpExtendedFragmentArgs by navArgs()
     private lateinit var binding: FragmentSignUpExtendedBinding
     private lateinit var dialog: ImageLoaderDialogFragment
+    private lateinit var email: String
+    private lateinit var password: String
+
 
     private var pathToLoadedImageFromGallery: String = ""
     private var imageLoaderLauncher =
@@ -55,6 +66,18 @@ class SignUpExtendedFragment : BaseFragment() {
             }
         }
 
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        if (FeatureNavigationEnabled.featureNavigationEnabled) {
+            email = args.email
+            password = args.password
+        } else {
+            requireArguments().run {
+                email = getString(EMAIL_KEY) ?: ""
+                password = getString(PASSWORD_KEY) ?: ""
+            }
+        }
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -75,6 +98,12 @@ class SignUpExtendedFragment : BaseFragment() {
     override fun onResume() {
         super.onResume()
         printLog("On resume")
+
+        activity?.onBackPressedDispatcher?.addCallback(this, object : OnBackPressedCallback(true) {
+            override fun handleOnBackPressed() {
+                goToSignUp()
+            }
+        })
     }
 
 
@@ -136,18 +165,26 @@ class SignUpExtendedFragment : BaseFragment() {
                     career = "",
                     birthday = "",
                     image = pathToLoadedImageFromGallery,
-                    email = args.email
+                    email = email
                 ),
                 accessToken = it.data?.accessToken ?: "",
             )
-            viewModel.rememberCurrentEmail(args.email)
+            viewModel.rememberCurrentEmail(email)
             pathToLoadedImageFromGallery = ""
         }
 
         viewModel.editUserLiveData.observe(viewLifecycleOwner) {
-            val action =
-                SignUpExtendedFragmentDirections.actionSignUpExtendedFragmentToCollectionContactFragment()
-            findNavController().navigate(action)
+            if (FeatureNavigationEnabled.featureNavigationEnabled) {
+                val action =
+                    SignUpExtendedFragmentDirections.actionSignUpExtendedFragmentToCollectionContactFragment()
+                findNavController().navigate(action)
+            } else {
+                val fragmentManager = activity?.supportFragmentManager
+                fragmentManager?.commit {
+                    setReorderingAllowed(true)
+                    replace(R.id.fragmentContainerView, CollectionContactFragment())
+                }
+            }
         }
     }
 
@@ -166,7 +203,7 @@ class SignUpExtendedFragment : BaseFragment() {
         }
 
         binding.buttonCancel.clickWithDebounce {
-            activity?.onBackPressed()
+            goToSignUp()
         }
 
         binding.imageViewImageLoader.clickWithDebounce {
@@ -212,6 +249,15 @@ class SignUpExtendedFragment : BaseFragment() {
         }
     }
 
+    private fun goToSignUp() {
+        if (FeatureNavigationEnabled.featureNavigationEnabled) {
+            activity?.onBackPressed()
+        } else {
+            val fragmentManager = activity?.supportFragmentManager
+            fragmentManager?.popBackStack()
+        }
+    }
+
     private fun goToMyProfile() {
         binding.apply {
             if (isFieldsInvalid()) {
@@ -227,7 +273,7 @@ class SignUpExtendedFragment : BaseFragment() {
                 return
             }
 
-            viewModel.registerUser(email = args.email, password = args.password)
+            viewModel.registerUser(email = email, password = password)
         }
     }
 

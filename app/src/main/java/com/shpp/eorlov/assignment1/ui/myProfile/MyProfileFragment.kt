@@ -7,8 +7,7 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
 import androidx.core.view.isVisible
-import androidx.fragment.app.activityViewModels
-import androidx.fragment.app.viewModels
+import androidx.fragment.app.*
 import androidx.navigation.fragment.findNavController
 import com.google.android.material.snackbar.Snackbar
 import com.shpp.eorlov.assignment1.R
@@ -16,11 +15,15 @@ import com.shpp.eorlov.assignment1.base.BaseFragment
 import com.shpp.eorlov.assignment1.databinding.FragmentMyProfileBinding
 import com.shpp.eorlov.assignment1.model.UserModel
 import com.shpp.eorlov.assignment1.ui.SharedViewModel
+import com.shpp.eorlov.assignment1.ui.editProfile.EditProfileFragment
+import com.shpp.eorlov.assignment1.ui.signUpExtended.SignUpExtendedFragment
 import com.shpp.eorlov.assignment1.ui.viewPager.CollectionContactFragment
 import com.shpp.eorlov.assignment1.ui.viewPager.CollectionContactFragmentDirections
 import com.shpp.eorlov.assignment1.ui.viewPager.ContactCollectionAdapter
 import com.shpp.eorlov.assignment1.utils.Constants
+import com.shpp.eorlov.assignment1.utils.FeatureNavigationEnabled
 import com.shpp.eorlov.assignment1.utils.Results
+import com.shpp.eorlov.assignment1.utils.TransitionKeys.USER_MODEL_KEY
 import com.shpp.eorlov.assignment1.utils.ext.clickWithDebounce
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -135,11 +138,27 @@ class MyProfileFragment : BaseFragment() {
 
     private fun setListeners() {
         binding.buttonEditProfile.setOnClickListener {
-            val action =
-                CollectionContactFragmentDirections.actionCollectionContactFragmentToEditProfileFragment(
-                    userModel
-                )
-            findNavController().navigate(action)
+            if(FeatureNavigationEnabled.featureNavigationEnabled) {
+                val action =
+                    CollectionContactFragmentDirections.actionCollectionContactFragmentToEditProfileFragment(
+                        userModel
+                    )
+                findNavController().navigate(action)
+            } else {
+                val fragmentManager = activity?.supportFragmentManager
+
+                val arguments = Bundle().apply {
+                    putParcelable(USER_MODEL_KEY, userModel)
+                }
+
+                fragmentManager?.commit {
+                    setReorderingAllowed(true)
+                    replace(R.id.fragmentContainerView, EditProfileFragment().apply {
+                        this.arguments = arguments
+                    })
+                    addToBackStack(null)
+                }
+            }
         }
 
         binding.buttonViewMyContacts.clickWithDebounce {

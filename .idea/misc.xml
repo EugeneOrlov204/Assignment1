@@ -3,86 +3,10 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
-        <entry key="..\:/MyCode/Android/Assignment1/app/src/main/res/drawable-v24/default_image_foreground.xml" value="0.19583333333333333" />
-        <entry key="..\:/MyCode/Android/Assignment1/app/src/main/res/drawable/cancel_button.xml" value="0.25972222222222224" />
-        <entry key="..\:/MyCode/Android/Assignment1/app/src/main/res/drawable/default_image_background.xml" value="0.19583333333333333" />
-        <entry key="..\:/MyCode/Android/Assignment1/app/src/main/res/drawable/drawable.xml" value="0.18020833333333333" />
-        <entry key="..\:/MyCode/Android/Assignment1/app/src/main/res/drawable/edit_profile.xml" value="0.18020833333333333" />
-        <entry key="..\:/MyCode/Android/Assignment1/app/src/main/res/drawable/google_button.xml" value="0.18020833333333333" />
-        <entry key="..\:/MyCode/Android/Assignment1/app/src/main/res/drawable/ic_add_contact_sign.xml" value="0.18020833333333333" />
-        <entry key="..\:/MyCode/Android/Assignment1/app/src/main/res/drawable/ic_arrow_back.xml" value="0.25972222222222224" />
-        <entry key="..\:/MyCode/Android/Assignment1/app/src/main/res/drawable/ic_arrow_upward_24.xml" value="0.2703125" />
-        <entry key="..\:/MyCode/Android/Assignment1/app/src/main/res/drawable/ic_camera.xml" value="0.19583333333333333" />
-        <entry key="..\:/MyCode/Android/Assignment1/app/src/main/res/drawable/ic_cancel_button.xml" value="0.13703703703703704" />
-        <entry key="..\:/MyCode/Android/Assignment1/app/src/main/res/drawable/ic_checked.xml" value="0.18020833333333333" />
-        <entry key="..\:/MyCode/Android/Assignment1/app/src/main/res/drawable/ic_checked_new_contact.xml" value="0.18020833333333333" />
-        <entry key="..\:/MyCode/Android/Assignment1/app/src/main/res/drawable/ic_circle_trash_bin.xml" value="0.2703125" />
-        <entry key="..\:/MyCode/Android/Assignment1/app/src/main/res/drawable/ic_default_user_image.xml" value="0.19583333333333333" />
-        <entry key="..\:/MyCode/Android/Assignment1/app/src/main/res/drawable/ic_go_up_button.xml" value="0.25972222222222224" />
-        <entry key="..\:/MyCode/Android/Assignment1/app/src/main/res/drawable/ic_google_icon.xml" value="0.18020833333333333" />
-        <entry key="..\:/MyCode/Android/Assignment1/app/src/main/res/drawable/ic_load_image.xml" value="0.18020833333333333" />
-        <entry key="..\:/MyCode/Android/Assignment1/app/src/main/res/drawable/ic_main_facebook.xml" value="0.1" />
-        <entry key="..\:/MyCode/Android/Assignment1/app/src/main/res/drawable/ic_photo_list_item_background.xml" value="0.13703703703703704" />
-        <entry key="..\:/MyCode/Android/Assignment1/app/src/main/res/drawable/ic_remember_me_checked.xml" value="0.19583333333333333" />
-        <entry key="..\:/MyCode/Android/Assignment1/app/src/main/res/drawable/ic_remember_me_checked_light.xml" value="0.19583333333333333" />
-        <entry key="..\:/MyCode/Android/Assignment1/app/src/main/res/drawable/ic_remember_me_unchecked.xml" value="0.19583333333333333" />
-        <entry key="..\:/MyCode/Android/Assignment1/app/src/main/res/drawable/ic_remember_me_unchecked_light.xml" value="0.19583333333333333" />
-        <entry key="..\:/MyCode/Android/Assignment1/app/src/main/res/drawable/ic_search_button.xml" value="0.19583333333333333" />
-        <entry key="..\:/MyCode/Android/Assignment1/app/src/main/res/drawable/ic_theme_checker_dark.xml" value="0.13703703703703704" />
-        <entry key="..\:/MyCode/Android/Assignment1/app/src/main/res/drawable/ic_theme_checker_light.xml" value="0.13703703703703704" />
-        <entry key="..\:/MyCode/Android/Assignment1/app/src/main/res/drawable/ic_trash_bin.xml" value="0.25972222222222224" />
-        <entry key="..\:/MyCode/Android/Assignment1/app/src/main/res/drawable/ic_trash_bin_white.xml" value="0.19583333333333333" />
-        <entry key="..\:/MyCode/Android/Assignment1/app/src/main/res/drawable/ic_unchecked.xml" value="0.18020833333333333" />
-        <entry key="..\:/MyCode/Android/Assignment1/app/src/main/res/drawable/ic_user_mockup.xml" value="0.18020833333333333" />
-        <entry key="..\:/MyCode/Android/Assignment1/app/src/main/res/drawable/ic_user_mockup_background.xml" value="0.18020833333333333" />
-        <entry key="..\:/MyCode/Android/Assignment1/app/src/main/res/drawable/ic_user_mockup_foreground.xml" value="0.1" />
-        <entry key="..\:/MyCode/Android/Assignment1/app/src/main/res/drawable/image_loader.xml" value="0.18020833333333333" />
-        <entry key="..\:/MyCode/Android/Assignment1/app/src/main/res/drawable/item_background.xml" value="0.18020833333333333" />
-        <entry key="..\:/MyCode/Android/Assignment1/app/src/main/res/drawable/register_button.xml" value="0.18020833333333333" />
-        <entry key="..\:/MyCode/Android/Assignment1/app/src/main/res/drawable/remember_me_check_box.xml" value="0.18020833333333333" />
-        <entry key="..\:/MyCode/Android/Assignment1/app/src/main/res/drawable/remember_me_check_box_light.xml" value="0.19583333333333333" />
-        <entry key="..\:/MyCode/Android/Assignment1/app/src/main/res/drawable/remove_contact_check_box.xml" value="0.25972222222222224" />
-        <entry key="..\:/MyCode/Android/Assignment1/app/src/main/res/drawable/round_corner_7dp.xml" value="0.18020833333333333" />
-        <entry key="..\:/MyCode/Android/Assignment1/app/src/main/res/drawable/round_view_holder.xml" value="0.19583333333333333" />
-        <entry key="..\:/MyCode/Android/Assignment1/app/src/main/res/drawable/round_view_holder_selected.xml" value="0.18020833333333333" />
-        <entry key="..\:/MyCode/Android/Assignment1/app/src/main/res/drawable/search_field_edit_text.xml" value="0.19282051282051282" />
-        <entry key="..\:/MyCode/Android/Assignment1/app/src/main/res/drawable/social_network_button.xml" value="0.18020833333333333" />
-        <entry key="..\:/MyCode/Android/Assignment1/app/src/main/res/layout/activity_main.xml" value="0.16666666666666666" />
-        <entry key="..\:/MyCode/Android/Assignment1/app/src/main/res/layout/add_contact_dialog.xml" value="0.15" />
-        <entry key="..\:/MyCode/Android/Assignment1/app/src/main/res/layout/contact_list_item.xml" value="0.3333333333333333" />
-        <entry key="..\:/MyCode/Android/Assignment1/app/src/main/res/layout/dialog_fragment_load_image.xml" value="0.3333333333333333" />
-        <entry key="..\:/MyCode/Android/Assignment1/app/src/main/res/layout/fragment_add_contacts.xml" value="0.16666666666666666" />
-        <entry key="..\:/MyCode/Android/Assignment1/app/src/main/res/layout/fragment_contact_profile.xml" value="0.22" />
-        <entry key="..\:/MyCode/Android/Assignment1/app/src/main/res/layout/fragment_detail_view.xml" value="0.26953125" />
-        <entry key="..\:/MyCode/Android/Assignment1/app/src/main/res/layout/fragment_edit_profile.xml" value="0.1" />
-        <entry key="..\:/MyCode/Android/Assignment1/app/src/main/res/layout/fragment_my_contacts.xml" value="0.22" />
-        <entry key="..\:/MyCode/Android/Assignment1/app/src/main/res/layout/fragment_my_profile.xml" value="0.24609375" />
-        <entry key="..\:/MyCode/Android/Assignment1/app/src/main/res/layout/fragment_sign_in.xml" value="0.3333333333333333" />
-        <entry key="..\:/MyCode/Android/Assignment1/app/src/main/res/layout/fragment_sign_in_dark.xml" value="0.22" />
-        <entry key="..\:/MyCode/Android/Assignment1/app/src/main/res/layout/fragment_sign_in_light.xml" value="0.22" />
-        <entry key="..\:/MyCode/Android/Assignment1/app/src/main/res/layout/fragment_sign_up.xml" value="0.22" />
-        <entry key="..\:/MyCode/Android/Assignment1/app/src/main/res/layout/fragment_sign_up_extended.xml" value="0.22" />
-        <entry key="..\:/MyCode/Android/Assignment1/app/src/main/res/layout/fragment_view_pager.xml" value="0.26953125" />
-        <entry key="..\:/MyCode/Android/Assignment1/app/src/main/res/layout/layout_add_contact_list_item.xml" value="0.15462962962962962" />
-        <entry key="..\:/MyCode/Android/Assignment1/app/src/main/res/layout/layout_contact_list_item.xml" value="0.1796875" />
-        <entry key="..\:/MyCode/Android/Assignment1/app/src/main/res/layout/photo_list_item.xml" value="0.26953125" />
-        <entry key="..\:/MyCode/Android/Assignment1/app/src/main/res/layout/view_color_options.xml" value="0.1640625" />
-        <entry key="..\:/MyCode/Android/Assignment1/app/src/main/res/menu/ic_arrow_back.xml" value="0.1640625" />
-        <entry key="..\:/MyCode/Android/Assignment1/app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml" value="0.18020833333333333" />
+        <entry key="..\:/MyCode/Android/Assignment1/app/src/main/res/layout/fragment_sign_in.xml" value="0.1640625" />
       </map>
     </option>
   </component>
-  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" project-jdk-name="1.8" project-jdk-type="JavaSDK">
-    <output url="file://$PROJECT_DIR$/build/classes" />
-  </component>
-  <component name="ProjectType">
-    <option name="id" value="Android" />
-  </component>
-  <component name="VisualizationToolProject">
-    <option name="state">
-      <ProjectState>
-        <option name="scale" value="0.1" />
-      </ProjectState>
-    </option>
-  </component>
+  <component name="ExternalStorageConfigurationManager" enabled="true" />
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_15" project-jdk-name="16" project-jdk-type="JavaSDK" />
 </project>

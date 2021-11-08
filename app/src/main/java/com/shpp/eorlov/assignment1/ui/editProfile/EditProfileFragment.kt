@@ -4,6 +4,7 @@ import android.app.Activity
 import android.app.DatePickerDialog
 import android.app.DatePickerDialog.OnDateSetListener
 import android.content.Intent
+import android.icu.util.Calendar
 import android.os.Bundle
 import android.provider.MediaStore
 import android.view.LayoutInflater
@@ -27,7 +28,9 @@ import com.shpp.eorlov.assignment1.model.UserModel
 import com.shpp.eorlov.assignment1.ui.SharedViewModel
 import com.shpp.eorlov.assignment1.ui.signUpExtended.SignUpExtendedFragmentDirections
 import com.shpp.eorlov.assignment1.utils.Constants.DATE_FORMAT
+import com.shpp.eorlov.assignment1.utils.FeatureNavigationEnabled.featureNavigationEnabled
 import com.shpp.eorlov.assignment1.utils.Results
+import com.shpp.eorlov.assignment1.utils.TransitionKeys.USER_MODEL_KEY
 import com.shpp.eorlov.assignment1.utils.ext.clickWithDebounce
 import com.shpp.eorlov.assignment1.utils.ext.loadImage
 import com.shpp.eorlov.assignment1.validator.ValidateOperation
@@ -56,6 +59,7 @@ class EditProfileFragment : BaseFragment() {
 //    private val imageLoader: ImageLoaderDialogFragment
 
     private lateinit var binding: FragmentEditProfileBinding
+    private lateinit var userModel: UserModel
 
     private var pathToLoadedImageFromGallery: String = ""
     private var imageLoaderLauncher =
@@ -68,6 +72,15 @@ class EditProfileFragment : BaseFragment() {
             }
         }
 
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        userModel = if (featureNavigationEnabled) {
+            args.userModel
+        } else {
+            requireArguments().getParcelable(USER_MODEL_KEY) ?: return
+        }
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -128,18 +141,19 @@ class EditProfileFragment : BaseFragment() {
 
 
     private fun initViews() {
-        viewModel.initializeData(args.userModel)
+
+        viewModel.initializeData(userModel)
 
         viewModel.userLiveData.value?.apply {
             pathToLoadedImageFromGallery = image ?: ""
 
             binding.apply {
-                textInputEditTextUsername.setText(args.userModel.name)
+                textInputEditTextUsername.setText(userModel.name)
                 textInputEditTextCareer.setText(career)
                 textInputEditTextAddress.setText(address)
                 textInputEditTextBirthdate.setText(birthday)
-                textInputEditTextPhone.setText(args.userModel.phone)
-                textInputEditTextEmail.setText(args.userModel.email)
+                textInputEditTextPhone.setText(userModel.phone)
+                textInputEditTextEmail.setText(userModel.email)
                 imageViewPersonPhoto.loadImage(pathToLoadedImageFromGallery)
             }
         }

@@ -10,6 +10,10 @@ import android.view.ViewGroup
 import androidx.navigation.fragment.navArgs
 import com.shpp.eorlov.assignment1.base.BaseFragment
 import com.shpp.eorlov.assignment1.databinding.FragmentDetailViewBinding
+import com.shpp.eorlov.assignment1.model.UserModel
+import com.shpp.eorlov.assignment1.utils.FeatureNavigationEnabled
+import com.shpp.eorlov.assignment1.utils.TransitionKeys
+import com.shpp.eorlov.assignment1.utils.TransitionKeys.CONTACT_KEY
 import com.shpp.eorlov.assignment1.utils.ext.clickWithDebounce
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -20,12 +24,18 @@ class DetailViewFragment : BaseFragment() {
 
 
     private lateinit var binding: FragmentDetailViewBinding
-
+    private lateinit var userModel: UserModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         sharedElementEnterTransition =
             TransitionInflater.from(context).inflateTransition(android.R.transition.explode)
+
+        userModel = if (FeatureNavigationEnabled.featureNavigationEnabled) {
+            args.contact
+        } else {
+            requireArguments().getParcelable(CONTACT_KEY) ?: return
+        }
     }
 
     override fun onCreateView(
@@ -57,7 +67,6 @@ class DetailViewFragment : BaseFragment() {
 
 
     private fun setListeners() {
-
         binding.imageButtonContactDialogCloseButton.clickWithDebounce {
             activity?.onBackPressed()
         }

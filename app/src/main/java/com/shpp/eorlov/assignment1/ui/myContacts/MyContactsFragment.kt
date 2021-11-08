@@ -10,6 +10,8 @@ import androidx.activity.OnBackPressedCallback
 import androidx.core.view.doOnPreDraw
 import androidx.core.view.isVisible
 import androidx.fragment.app.activityViewModels
+import androidx.fragment.app.add
+import androidx.fragment.app.commit
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.ItemTouchHelper
@@ -21,13 +23,21 @@ import com.shpp.eorlov.assignment1.base.BaseFragment
 import com.shpp.eorlov.assignment1.databinding.FragmentMyContactsBinding
 import com.shpp.eorlov.assignment1.model.UserModel
 import com.shpp.eorlov.assignment1.ui.SharedViewModel
+import com.shpp.eorlov.assignment1.ui.addContacts.AddContactsFragment
+import com.shpp.eorlov.assignment1.ui.details.DetailViewFragment
+import com.shpp.eorlov.assignment1.ui.editProfile.EditProfileFragment
 import com.shpp.eorlov.assignment1.ui.myContacts.adapter.MyContactsListAdapter
 import com.shpp.eorlov.assignment1.ui.myContacts.adapter.listeners.ContactClickListener
+import com.shpp.eorlov.assignment1.ui.signUpExtended.SignUpExtendedFragment
 import com.shpp.eorlov.assignment1.ui.viewPager.CollectionContactFragment
 import com.shpp.eorlov.assignment1.ui.viewPager.CollectionContactFragmentDirections
 import com.shpp.eorlov.assignment1.ui.viewPager.ContactCollectionAdapter
 import com.shpp.eorlov.assignment1.utils.Constants.SNACKBAR_DURATION
+import com.shpp.eorlov.assignment1.utils.FeatureNavigationEnabled
 import com.shpp.eorlov.assignment1.utils.Results
+import com.shpp.eorlov.assignment1.utils.TransitionKeys
+import com.shpp.eorlov.assignment1.utils.TransitionKeys.ADDED_CONTACTS_KEY
+import com.shpp.eorlov.assignment1.utils.TransitionKeys.CONTACT_KEY
 import com.shpp.eorlov.assignment1.utils.ext.clickWithDebounce
 import com.shpp.eorlov.assignment1.utils.ext.gone
 import com.shpp.eorlov.assignment1.utils.ext.visible
@@ -216,11 +226,27 @@ class MyContactsFragment : BaseFragment(), ContactClickListener {
     }
 
     private fun goToDetail(contact: UserModel) {
-        val action =
-            CollectionContactFragmentDirections.actionCollectionContactFragmentToDetailViewFragment(
-                contact
-            )
-        findNavController().navigate(action)
+        if(FeatureNavigationEnabled.featureNavigationEnabled) {
+            val action =
+                CollectionContactFragmentDirections.actionCollectionContactFragmentToDetailViewFragment(
+                    contact
+                )
+            findNavController().navigate(action)
+        } else {
+            val fragmentManager = activity?.supportFragmentManager
+
+            val arguments = Bundle().apply {
+                putParcelable(CONTACT_KEY, contact)
+            }
+
+            fragmentManager?.commit {
+                setReorderingAllowed(true)
+                replace(R.id.fragmentContainerView, DetailViewFragment().apply {
+                    this.arguments = arguments
+                })
+                addToBackStack(null)
+            }
+        }
     }
 
     private fun setObservers() {
@@ -366,11 +392,27 @@ class MyContactsFragment : BaseFragment(), ContactClickListener {
     }
 
     private fun goToAddContacts() {
-        val action =
-            CollectionContactFragmentDirections.actionCollectionContactFragmentToAddContactsFragment(
-                viewModel.contactsLiveData.value?.toTypedArray() ?: return
-            )
-        findNavController().navigate(action)
+        if(FeatureNavigationEnabled.featureNavigationEnabled) {
+            val action =
+                CollectionContactFragmentDirections.actionCollectionContactFragmentToAddContactsFragment(
+                    viewModel.contactsLiveData.value?.toTypedArray() ?: return
+                )
+            findNavController().navigate(action)
+        } else {
+            val fragmentManager = activity?.supportFragmentManager
+
+            val arguments = Bundle().apply {
+                putParcelableArray(ADDED_CONTACTS_KEY, viewModel.contactsLiveData.value?.toTypedArray() ?: return)
+            }
+
+            fragmentManager?.commit {
+                setReorderingAllowed(true)
+                replace(R.id.fragmentContainerView, AddContactsFragment().apply {
+                    this.arguments = arguments
+                })
+                addToBackStack(null)
+            }
+        }
     }
 
     private fun searchContacts() {

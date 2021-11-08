@@ -8,6 +8,7 @@ import com.shpp.eorlov.assignment1.model.Data
 import com.shpp.eorlov.assignment1.model.ResponseModel
 import com.shpp.eorlov.assignment1.repository.MainRepositoryImpl
 import com.shpp.eorlov.assignment1.utils.Results
+import com.shpp.eorlov.assignment1.utils.SingleLiveEvent
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import retrofit2.HttpException
@@ -20,7 +21,7 @@ class SignUpViewModel @Inject constructor(
 ) :
     ViewModel() {
 
-    val canRegisterUserLiveData = MutableLiveData<Boolean>()
+    val canRegisterUserLiveData = SingleLiveEvent<Boolean>()
     val loadEvent = MutableLiveData<Results>()
 
     fun registerUser(email: String, password: String) {

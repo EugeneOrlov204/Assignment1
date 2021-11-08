@@ -8,6 +8,11 @@ import android.view.ViewGroup
 import androidx.navigation.fragment.navArgs
 import com.shpp.eorlov.assignment1.base.BaseFragment
 import com.shpp.eorlov.assignment1.databinding.FragmentContactProfileBinding
+import com.shpp.eorlov.assignment1.model.UserModel
+import com.shpp.eorlov.assignment1.model.Users
+import com.shpp.eorlov.assignment1.utils.FeatureNavigationEnabled
+import com.shpp.eorlov.assignment1.utils.TransitionKeys.USERS_KEY
+import com.shpp.eorlov.assignment1.utils.TransitionKeys.USER_MODEL_KEY
 import com.shpp.eorlov.assignment1.utils.ext.clickWithDebounce
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -17,11 +22,23 @@ class ContactProfileFragment : BaseFragment() {
     private val args: ContactProfileFragmentArgs by navArgs()
 
     private lateinit var binding: FragmentContactProfileBinding
+    private lateinit var userModel: UserModel
+    private lateinit var users: Users
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         sharedElementEnterTransition =
             TransitionInflater.from(context).inflateTransition(android.R.transition.explode)
+
+        if (FeatureNavigationEnabled.featureNavigationEnabled) {
+            userModel = args.userModel
+            users = args.users
+        } else {
+            requireArguments().run {
+                userModel = getParcelable(USER_MODEL_KEY) ?: return
+                users = getParcelable(USERS_KEY) ?: return
+            }
+        }
     }
 
     override fun onCreateView(
@@ -50,14 +67,14 @@ class ContactProfileFragment : BaseFragment() {
                 activity?.onBackPressed()
             }
             buttonAddToMyContacts.clickWithDebounce {
-                args.users.add(args.userModel)
+                users.add(userModel)
                 activity?.onBackPressed()
             }
         }
     }
 
     private fun initViews() {
-        args.userModel.apply {
+        userModel.apply {
             binding.draweeViewUserImage.setImageURI(image)
             binding.textViewUserName.text = name
             binding.textViewUserProfession.text = career
