@@ -13,8 +13,6 @@ import androidx.activity.OnBackPressedCallback
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.widget.AppCompatImageView
 import androidx.core.view.isVisible
-import androidx.fragment.app.activityViewModels
-import androidx.fragment.app.add
 import androidx.fragment.app.commit
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
@@ -23,13 +21,10 @@ import com.shpp.eorlov.assignment1.R
 import com.shpp.eorlov.assignment1.base.BaseFragment
 import com.shpp.eorlov.assignment1.databinding.FragmentSignUpExtendedBinding
 import com.shpp.eorlov.assignment1.model.UserModel
-import com.shpp.eorlov.assignment1.ui.SharedViewModel
 import com.shpp.eorlov.assignment1.ui.imageLoaderDialog.ImageLoaderDialogFragment
 import com.shpp.eorlov.assignment1.ui.viewPager.CollectionContactFragment
-import com.shpp.eorlov.assignment1.utils.Constants
 import com.shpp.eorlov.assignment1.utils.FeatureNavigationEnabled
 import com.shpp.eorlov.assignment1.utils.Results
-import com.shpp.eorlov.assignment1.utils.TransitionKeys
 import com.shpp.eorlov.assignment1.utils.TransitionKeys.EMAIL_KEY
 import com.shpp.eorlov.assignment1.utils.TransitionKeys.PASSWORD_KEY
 import com.shpp.eorlov.assignment1.utils.ext.clickWithDebounce
@@ -47,7 +42,6 @@ class SignUpExtendedFragment : BaseFragment() {
     lateinit var validator: Validator
 
     private val viewModel: SignUpExtendedViewModel by viewModels()
-    private val sharedViewModel: SharedViewModel by activityViewModels()
     private val args: SignUpExtendedFragmentArgs by navArgs()
     private lateinit var binding: FragmentSignUpExtendedBinding
     private lateinit var dialog: ImageLoaderDialogFragment
@@ -106,11 +100,9 @@ class SignUpExtendedFragment : BaseFragment() {
         })
     }
 
-
-    //todo remove "shared" from methods' name
     private fun setObservers() {
         setViewModelObserver()
-        setSharedViewModelObserver()
+        setRegisterUserLiveDataObserver()
     }
 
     private fun setViewModelObserver() {
@@ -154,7 +146,7 @@ class SignUpExtendedFragment : BaseFragment() {
         }
     }
 
-    private fun setSharedViewModelObserver() {
+    private fun setRegisterUserLiveDataObserver() {
         viewModel.registerUserLiveData.observe(viewLifecycleOwner) {
             viewModel.saveToken(it.data?.accessToken ?: "")
             viewModel.editUser(

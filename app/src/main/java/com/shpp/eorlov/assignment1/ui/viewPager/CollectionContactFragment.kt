@@ -38,7 +38,6 @@ class CollectionContactFragment : BaseFragment() {
     private fun initAdapter() {
         viewPager = binding.pager
 
-        //fixme get userModel from internet
         contactCollectionAdapter = ContactCollectionAdapter(
             this
         )
