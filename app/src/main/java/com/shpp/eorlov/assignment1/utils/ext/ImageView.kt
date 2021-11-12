@@ -18,6 +18,23 @@ fun AppCompatImageView.loadImage(url: String) {
         LIBRARIES.GLIDE -> {
             Glide.with(this)
                 .load(url)
+                .into(this)
+        }
+
+        LIBRARIES.PICASSO -> {
+            Picasso.get()
+                .load(url)
+                .into(this)
+        }
+    }
+}
+
+fun AppCompatImageView.loadCircleImage(url: String) {
+    when (DEFAULT_LIBRARY) {
+
+        LIBRARIES.GLIDE -> {
+            Glide.with(this)
+                .load(url)
                 .circleCrop()
                 .into(this)
         }
@@ -31,7 +48,7 @@ fun AppCompatImageView.loadImage(url: String) {
     }
 }
 
-fun AppCompatImageView.loadImage(resource: Uri) {
+fun AppCompatImageView.loadCircleImage(resource: Uri) {
     when (DEFAULT_LIBRARY) {
         LIBRARIES.GLIDE -> {
             Glide.with(this)
@@ -48,7 +65,7 @@ fun AppCompatImageView.loadImage(resource: Uri) {
     }
 }
 
-fun AppCompatImageView.loadImage(resource: Int) {
+fun AppCompatImageView.loadCircleImage(resource: Int) {
     when (DEFAULT_LIBRARY) {
 
         LIBRARIES.GLIDE -> {
