@@ -32,7 +32,7 @@ import com.shpp.eorlov.assignment1.utils.FeatureNavigationEnabled.featureNavigat
 import com.shpp.eorlov.assignment1.utils.Results
 import com.shpp.eorlov.assignment1.utils.TransitionKeys.USER_MODEL_KEY
 import com.shpp.eorlov.assignment1.utils.ext.clickWithDebounce
-import com.shpp.eorlov.assignment1.utils.ext.loadImage
+import com.shpp.eorlov.assignment1.utils.ext.loadCircleImage
 import com.shpp.eorlov.assignment1.validator.ValidateOperation
 import com.shpp.eorlov.assignment1.validator.Validator
 import com.shpp.eorlov.assignment1.validator.evaluateErrorMessage
@@ -68,7 +68,7 @@ class EditProfileFragment : BaseFragment() {
             if (result.resultCode == Activity.RESULT_OK && result.data?.data != null) {
                 val imageData = result.data?.data ?: return@registerForActivityResult
                 pathToLoadedImageFromGallery = imageData.toString()
-                imageView.loadImage(imageData)
+                imageView.loadCircleImage(imageData)
             }
         }
 
@@ -154,7 +154,7 @@ class EditProfileFragment : BaseFragment() {
                 textInputEditTextBirthdate.setText(birthday)
                 textInputEditTextPhone.setText(userModel.phone)
                 textInputEditTextEmail.setText(userModel.email)
-                imageViewPersonPhoto.loadImage(pathToLoadedImageFromGallery)
+                imageViewPersonPhoto.loadCircleImage(pathToLoadedImageFromGallery)
             }
         }
     }
