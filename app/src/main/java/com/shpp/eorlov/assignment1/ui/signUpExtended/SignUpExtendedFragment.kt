@@ -23,13 +23,14 @@ import com.shpp.eorlov.assignment1.databinding.FragmentSignUpExtendedBinding
 import com.shpp.eorlov.assignment1.model.UserModel
 import com.shpp.eorlov.assignment1.ui.imageLoaderDialog.ImageLoaderDialogFragment
 import com.shpp.eorlov.assignment1.ui.viewPager.CollectionContactFragment
+import com.shpp.eorlov.assignment1.utils.Constants
 import com.shpp.eorlov.assignment1.utils.FeatureNavigationEnabled
 import com.shpp.eorlov.assignment1.utils.Results
 import com.shpp.eorlov.assignment1.utils.TransitionKeys.EMAIL_KEY
 import com.shpp.eorlov.assignment1.utils.TransitionKeys.PASSWORD_KEY
 import com.shpp.eorlov.assignment1.utils.ext.clickWithDebounce
 import com.shpp.eorlov.assignment1.utils.ext.hideKeyboard
-import com.shpp.eorlov.assignment1.utils.ext.loadImage
+import com.shpp.eorlov.assignment1.utils.ext.loadCircleImage
 import com.shpp.eorlov.assignment1.validator.Validator
 import com.shpp.eorlov.assignment1.validator.evaluateErrorMessage
 import dagger.hilt.android.AndroidEntryPoint
@@ -56,7 +57,7 @@ class SignUpExtendedFragment : BaseFragment() {
             if (result.resultCode == Activity.RESULT_OK && result.data?.data != null) {
                 val imageData = result.data?.data ?: return@registerForActivityResult
                 pathToLoadedImageFromGallery = imageData.toString()
-                imageView.loadImage(imageData)
+                imageView.loadCircleImage(imageData)
             }
         }
 
@@ -199,9 +200,9 @@ class SignUpExtendedFragment : BaseFragment() {
         }
 
         binding.imageViewImageLoader.clickWithDebounce {
-//            dialog = ImageLoaderDialogFragment()
-//            dialog.show(childFragmentManager, Constants.IMAGE_LOADER_DIALOG_TAG)
-            loadImageFromGallery()
+            dialog = ImageLoaderDialogFragment()
+            dialog.show(childFragmentManager, Constants.IMAGE_LOADER_DIALOG_TAG)
+//            loadImageFromGallery()
         }
 
         binding.root.setOnClickListener {
