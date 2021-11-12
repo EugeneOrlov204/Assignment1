@@ -49,18 +49,6 @@ class SignUpExtendedFragment : BaseFragment() {
     private lateinit var email: String
     private lateinit var password: String
 
-
-    private var pathToLoadedImageFromGallery: String = ""
-    private var imageLoaderLauncher =
-        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
-            val imageView: AppCompatImageView = binding.imageViewUserImage
-            if (result.resultCode == Activity.RESULT_OK && result.data?.data != null) {
-                val imageData = result.data?.data ?: return@registerForActivityResult
-                pathToLoadedImageFromGallery = imageData.toString()
-                imageView.loadCircleImage(imageData)
-            }
-        }
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         if (FeatureNavigationEnabled.featureNavigationEnabled) {
@@ -157,13 +145,12 @@ class SignUpExtendedFragment : BaseFragment() {
                     address = "",
                     career = "",
                     birthday = "",
-                    image = pathToLoadedImageFromGallery,
+                    image = "", //todo get image from dialog fragment
                     email = email
                 ),
                 accessToken = it.data?.accessToken ?: "",
             )
             viewModel.rememberCurrentEmail(email)
-            pathToLoadedImageFromGallery = ""
         }
 
         viewModel.editUserLiveData.observe(viewLifecycleOwner) {
@@ -181,13 +168,6 @@ class SignUpExtendedFragment : BaseFragment() {
         }
     }
 
-    private fun loadImageFromGallery() {
-        val gallery = Intent(
-            Intent.ACTION_PICK,
-            MediaStore.Images.Media.INTERNAL_CONTENT_URI
-        )
-        imageLoaderLauncher.launch(gallery)
-    }
 
     private fun setListeners() {
 
