@@ -42,6 +42,8 @@
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/textViewEmail"
         style="@style/InputFieldTitleText"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="24dp"
         android:text="@string/email"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textViewFillOutTheProfile" />
@@ -58,7 +60,6 @@
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/textInputEditTextEmail"
             style="@style/InputFieldTextStyle"
-            android:layout_gravity=""
             android:inputType="textEmailAddress"
             android:textColor="@color/alabaster" />
 
@@ -69,6 +70,7 @@
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/textViewPassword"
         style="@style/InputFieldTitleText"
+        android:layout_marginStart="16dp"
         android:text="@string/password"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textInputLayoutEmail" />
@@ -97,6 +99,7 @@
         android:layout_marginTop="@dimen/remember_me_margin_top_18dp"
         android:button="@drawable/remember_me_check_box"
         android:checked="true"
+
         app:layout_constraintStart_toStartOf="@+id/textInputLayoutPassword"
         app:layout_constraintTop_toBottomOf="@+id/textInputLayoutPassword" />
 
@@ -121,12 +124,10 @@
         android:layout_marginTop="10dp"
         android:layout_marginBottom="@dimen/register_button_margin_bottom_12dp"
         android:background="@drawable/google_button"
-        app:radius="@dimen/google_button_radius"
-        app:layout_constraintBottom_toTopOf="@id/textViewOr"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/checkBoxRememberMe"
-        app:layout_constraintVertical_chainStyle="packed" />
+        app:radius="@dimen/google_button_radius" />
 
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/textViewOr"
@@ -148,10 +149,9 @@
         android:layout_marginBottom="@dimen/register_button_margin_bottom_12dp"
         android:background="@drawable/register_button"
         android:text="@string/register"
-        app:layout_constraintBottom_toTopOf="@id/textViewCopyright"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textViewOr" />
+        app:layout_constraintBottom_toTopOf="@id/textViewCopyright"/>
 
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/textViewCopyright"
@@ -163,7 +163,7 @@
         android:textAlignment="center"
         android:textColor="@color/silver"
         android:textSize="@dimen/text_size_small_12sp"
-        app:layout_constraintBottom_toTopOf="@+id/textViewAlreadyHaveAccount"
+        app:layout_constraintBottom_toTopOf="@id/textViewAlreadyHaveAccount"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
