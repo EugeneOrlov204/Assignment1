@@ -85,5 +85,6 @@ class AddContactsViewModel @Inject constructor(
 
     fun clearSearchedContacts() {
         searchedContactsLiveData.value?.clear()
+        usersLiveData.value = usersLiveData.value
     }
 }

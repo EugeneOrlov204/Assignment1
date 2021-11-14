@@ -157,7 +157,7 @@ class AddContactsFragment : BaseFragment(), IAddContactClickListener {
                     showRecyclerViewUI()
                     hideNoResultsFoundUI()
                 }
-                viewModel.usersLiveData.value = viewModel.usersLiveData.value //todo replace it
+                viewModel.clearSearchedContacts()
             }
 
             textInputLayoutSearchContacts.setEndIconOnClickListener {
@@ -179,7 +179,6 @@ class AddContactsFragment : BaseFragment(), IAddContactClickListener {
         viewModel.apply {
             usersLiveData.observe(viewLifecycleOwner) {
                 contactsListAdapter.submitList(it.toMutableList())
-                viewModel.clearSearchedContacts()
                 clearSearchField()
             }
 
