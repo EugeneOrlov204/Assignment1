@@ -3,6 +3,7 @@ package com.shpp.eorlov.assignment1.di
 import android.content.Context
 import androidx.room.Room
 import com.shpp.eorlov.assignment1.db.AppDatabase
+import com.shpp.eorlov.assignment1.db.PhotoDao
 import com.shpp.eorlov.assignment1.db.UserDao
 import dagger.Module
 import dagger.Provides
@@ -15,10 +16,14 @@ import javax.inject.Singleton
 @Module
 class DatabaseModule {
     @Provides
-    fun provideWeatherDao(appDatabase: AppDatabase): UserDao {
+    fun provideUserDao(appDatabase: AppDatabase): UserDao {
         return appDatabase.userDao()
     }
 
+    @Provides
+    fun providePhotoDao(appDatabase: AppDatabase): PhotoDao {
+        return appDatabase.photoDao()
+    }
 
     @Provides
     @Singleton

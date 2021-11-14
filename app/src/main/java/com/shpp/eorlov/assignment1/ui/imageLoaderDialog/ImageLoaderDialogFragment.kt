@@ -15,11 +15,18 @@ import androidx.core.content.FileProvider
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
+import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.snackbar.Snackbar
+import com.shpp.eorlov.assignment1.R
 import com.shpp.eorlov.assignment1.databinding.DialogFragmentLoadImageBinding
+import com.shpp.eorlov.assignment1.model.PhotoModel
+import com.shpp.eorlov.assignment1.model.UserModel
 import com.shpp.eorlov.assignment1.ui.SharedViewModel
 import com.shpp.eorlov.assignment1.ui.imageLoaderDialog.adapter.ImageLoaderListAdapter
 import com.shpp.eorlov.assignment1.ui.imageLoaderDialog.adapter.listeners.ImageClickListener
+import com.shpp.eorlov.assignment1.utils.Constants
 import com.shpp.eorlov.assignment1.utils.ext.clickWithDebounce
 import dagger.hilt.android.AndroidEntryPoint
 import java.io.File
@@ -37,9 +44,6 @@ class ImageLoaderDialogFragment : DialogFragment(), ImageClickListener {
         ImageLoaderListAdapter(this)
     }
 
-    private lateinit var binding: DialogFragmentLoadImageBinding
-
-
     private var pathToLoadedImageFromGallery: String = ""
     private var imageLoaderLauncher =
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
@@ -52,12 +56,13 @@ class ImageLoaderDialogFragment : DialogFragment(), ImageClickListener {
     private var takePictureLauncher =
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
             if (result.resultCode == Activity.RESULT_OK) {
+                viewModel.addImage(currentPhotoPath)
                 getImage(currentPhotoPath)
             }
         }
 
+    private lateinit var binding: DialogFragmentLoadImageBinding
     private lateinit var currentPhotoPath: String
-
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -92,7 +97,6 @@ class ImageLoaderDialogFragment : DialogFragment(), ImageClickListener {
      * Returns an image from DialogFragment to a Fragment
      */
     override fun getImage(imagePath: String) {
-        viewModel.addImage(currentPhotoPath)
         sharedViewModel.newPhotoLiveData.value = imagePath
         dismiss()
     }
@@ -123,6 +127,44 @@ class ImageLoaderDialogFragment : DialogFragment(), ImageClickListener {
                 exception.printStackTrace()
             }
         }
+    }
+
+    /**
+     * Returns itemTouchHelperCallBack for recycler view
+     */
+    private fun getItemTouchHelperCallBack() = object : ItemTouchHelper.SimpleCallback(
+        0,
+        ItemTouchHelper.UP
+    ) {
+        override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
+
+            removeItemFromRecyclerView(viewHolder.bindingAdapterPosition)
+        }
+
+        override fun getMovementFlags(
+            recyclerView: RecyclerView,
+            viewHolder: RecyclerView.ViewHolder
+        ): Int {
+            if (viewHolder.bindingAdapterPosition != 0) {
+                return makeMovementFlags(0, ItemTouchHelper.UP)
+            }
+            return makeMovementFlags(0, 0)
+        }
+
+        override fun onMove(
+            recyclerView: RecyclerView,
+            viewHolder: RecyclerView.ViewHolder,
+            target: RecyclerView.ViewHolder
+        ): Boolean {
+            return false
+        }
+    }
+
+    private fun removeItemFromRecyclerView(
+        position: Int,
+    ) {
+        val removedItem: String = viewModel.getItem(position) ?: return
+        viewModel.removeItem(removedItem)
     }
 
     private fun setObservers() {
@@ -173,7 +215,6 @@ class ImageLoaderDialogFragment : DialogFragment(), ImageClickListener {
     }
 
     private fun initRecycler() {
-
         binding.recyclerViewImageLoader.apply {
             layoutManager = LinearLayoutManager(
                 requireContext(),
@@ -181,6 +222,9 @@ class ImageLoaderDialogFragment : DialogFragment(), ImageClickListener {
                 false
             )
             adapter = imageLoaderAdapter
+
+            //Implement swipe-to-delete
+            ItemTouchHelper(getItemTouchHelperCallBack()).attachToRecyclerView(this)
         }
     }
 }

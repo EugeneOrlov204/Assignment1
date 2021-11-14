@@ -124,7 +124,7 @@ class MyContactsFragment : BaseFragment(), ContactClickListener {
     /**
      * Removes item on given position from RecyclerView
      */
-    fun removeItemFromRecyclerView(
+    private fun removeItemFromRecyclerView(
         position: Int,
     ) {
         val removedItem: UserModel = viewModel.getItem(position) ?: return
@@ -198,7 +198,7 @@ class MyContactsFragment : BaseFragment(), ContactClickListener {
     }
 
     /**
-     * Return itemTouchHelperCallBack for recycler view
+     * Returns itemTouchHelperCallBack for recycler view
      */
     private fun getItemTouchHelperCallBack() = object : ItemTouchHelper.SimpleCallback(
         0,
