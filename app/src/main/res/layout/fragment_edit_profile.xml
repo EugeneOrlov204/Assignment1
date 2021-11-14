@@ -49,10 +49,11 @@
             android:layout_width="@dimen/person_photo_size_113dp"
             android:layout_height="@dimen/person_photo_size_113dp"
             android:layout_marginTop="@dimen/person_photo_margin_top_28dp"
+            android:src="@drawable/ic_user_mockup"
             app:layout_constraintEnd_toEndOf="@id/viewHeader"
             app:layout_constraintStart_toStartOf="@id/viewHeader"
             app:layout_constraintTop_toBottomOf="@id/textViewAddContact"
-            tools:src="@tools:sample/avatars" />
+             />
 
         <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/imageViewImageLoader"

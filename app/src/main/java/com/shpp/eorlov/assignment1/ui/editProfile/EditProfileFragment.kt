@@ -1,32 +1,28 @@
 package com.shpp.eorlov.assignment1.ui.editProfile
 
-import android.app.Activity
 import android.app.DatePickerDialog
 import android.app.DatePickerDialog.OnDateSetListener
-import android.content.Intent
 import android.icu.util.Calendar
 import android.os.Bundle
-import android.provider.MediaStore
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.EditorInfo
 import android.widget.Toast
-import androidx.activity.result.contract.ActivityResultContracts
-import androidx.appcompat.widget.AppCompatImageView
 import androidx.core.view.isVisible
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
-import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
+import com.shpp.eorlov.assignment1.R
 import com.shpp.eorlov.assignment1.base.BaseFragment
 import com.shpp.eorlov.assignment1.data.storage.SharedPreferencesStorage
 import com.shpp.eorlov.assignment1.databinding.FragmentEditProfileBinding
 import com.shpp.eorlov.assignment1.model.UserModel
 import com.shpp.eorlov.assignment1.ui.SharedViewModel
-import com.shpp.eorlov.assignment1.ui.signUpExtended.SignUpExtendedFragmentDirections
+import com.shpp.eorlov.assignment1.ui.imageLoaderDialog.ImageLoaderDialogFragment
+import com.shpp.eorlov.assignment1.utils.Constants
 import com.shpp.eorlov.assignment1.utils.Constants.DATE_FORMAT
 import com.shpp.eorlov.assignment1.utils.FeatureNavigationEnabled.featureNavigationEnabled
 import com.shpp.eorlov.assignment1.utils.Results
@@ -56,21 +52,13 @@ class EditProfileFragment : BaseFragment() {
     private val sharedViewModel: SharedViewModel by activityViewModels()
     private val viewModel: EditProfileViewModel by viewModels()
 
-//    private val imageLoader: ImageLoaderDialogFragment
+    private lateinit var dialog: ImageLoaderDialogFragment
 
     private lateinit var binding: FragmentEditProfileBinding
     private lateinit var userModel: UserModel
 
-    private var pathToLoadedImageFromGallery: String = ""
-    private var imageLoaderLauncher =
-        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
-            val imageView: AppCompatImageView = binding.imageViewPersonPhoto
-            if (result.resultCode == Activity.RESULT_OK && result.data?.data != null) {
-                val imageData = result.data?.data ?: return@registerForActivityResult
-                pathToLoadedImageFromGallery = imageData.toString()
-                imageView.loadCircleImage(imageData)
-            }
-        }
+    private var pathToLoadedImage: String = ""
+
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -137,6 +125,11 @@ class EditProfileFragment : BaseFragment() {
                 }
             }
         }
+
+        sharedViewModel.newPhotoLiveData.observe(viewLifecycleOwner) {
+            pathToLoadedImage = it
+            loadProfileImage()
+        }
     }
 
 
@@ -145,7 +138,7 @@ class EditProfileFragment : BaseFragment() {
         viewModel.initializeData(userModel)
 
         viewModel.userLiveData.value?.apply {
-            pathToLoadedImageFromGallery = image ?: ""
+            pathToLoadedImage = image ?: ""
 
             binding.apply {
                 textInputEditTextUsername.setText(userModel.name)
@@ -154,19 +147,19 @@ class EditProfileFragment : BaseFragment() {
                 textInputEditTextBirthdate.setText(birthday)
                 textInputEditTextPhone.setText(userModel.phone)
                 textInputEditTextEmail.setText(userModel.email)
-                imageViewPersonPhoto.loadCircleImage(pathToLoadedImageFromGallery)
+                loadProfileImage()
             }
         }
     }
 
-
-    private fun loadImageFromGallery() {
-        val gallery = Intent(
-            Intent.ACTION_PICK,
-            MediaStore.Images.Media.INTERNAL_CONTENT_URI
-        )
-        imageLoaderLauncher.launch(gallery)
+    private fun loadProfileImage() {
+        if(pathToLoadedImage.isNotEmpty()) {
+            binding.imageViewPersonPhoto.loadCircleImage(pathToLoadedImage)
+        } else {
+            binding.imageViewPersonPhoto.loadCircleImage(R.drawable.ic_user_mockup)
+        }
     }
+
 
     private fun setListeners() {
         setOnClickListeners()
@@ -185,7 +178,8 @@ class EditProfileFragment : BaseFragment() {
             }
 
             imageViewImageLoader.clickWithDebounce {
-                loadImageFromGallery()
+                dialog = ImageLoaderDialogFragment()
+                dialog.show(childFragmentManager, Constants.IMAGE_LOADER_DIALOG_TAG)
             }
 
             imageButtonContactDialogCloseButton.clickWithDebounce {
@@ -245,7 +239,7 @@ class EditProfileFragment : BaseFragment() {
     private fun getProfileData() = UserModel(
         name = binding.textInputEditTextUsername.text.toString(),
         career = binding.textInputEditTextCareer.text.toString(),
-        image = pathToLoadedImageFromGallery,
+        image = pathToLoadedImage,
         address = binding.textInputEditTextAddress.text.toString(),
         birthday = binding.textInputEditTextBirthdate.text.toString(),
         phone = binding.textInputEditTextPhone.text.toString(),
