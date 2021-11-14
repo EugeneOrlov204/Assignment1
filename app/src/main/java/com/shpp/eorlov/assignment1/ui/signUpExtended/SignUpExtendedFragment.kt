@@ -156,7 +156,7 @@ class SignUpExtendedFragment : BaseFragment() {
                     address = "",
                     career = "",
                     birthday = "",
-                    image = "", //todo get image from dialog fragment
+                    image = sharedViewModel.newPhotoLiveData.value,
                     email = email
                 ),
                 accessToken = it.data?.accessToken ?: "",
@@ -193,7 +193,6 @@ class SignUpExtendedFragment : BaseFragment() {
         binding.imageViewImageLoader.clickWithDebounce {
             dialog = ImageLoaderDialogFragment()
             dialog.show(childFragmentManager, Constants.IMAGE_LOADER_DIALOG_TAG)
-//            loadImageFromGallery()
         }
 
         binding.root.setOnClickListener {
