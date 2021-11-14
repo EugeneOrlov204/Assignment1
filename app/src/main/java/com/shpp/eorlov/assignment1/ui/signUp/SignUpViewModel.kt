@@ -7,6 +7,8 @@ import com.shpp.eorlov.assignment1.model.AuthorizeModel
 import com.shpp.eorlov.assignment1.repository.MainRepositoryImpl
 import com.shpp.eorlov.assignment1.utils.Results
 import com.shpp.eorlov.assignment1.utils.SingleLiveEvent
+import com.shpp.eorlov.assignment1.validator.ValidationError
+import com.shpp.eorlov.assignment1.validator.Validator
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import retrofit2.HttpException
@@ -15,7 +17,8 @@ import javax.inject.Inject
 
 @HiltViewModel
 class SignUpViewModel @Inject constructor(
-    private val repository: MainRepositoryImpl
+    private val repository: MainRepositoryImpl,
+    private val validator: Validator
 ) :
     ViewModel() {
 
@@ -44,5 +47,13 @@ class SignUpViewModel @Inject constructor(
                 canRegisterUserLiveData.postValue(true)
             }
         }
+    }
+
+    fun validatePassword(password: String): ValidationError {
+        return validator.validatePassword(password)
+    }
+
+    fun validateEmail(email: String): ValidationError {
+        return validator.validateEmail(email)
     }
 }

@@ -9,6 +9,8 @@ import com.shpp.eorlov.assignment1.repository.MainRepositoryImpl
 import com.shpp.eorlov.assignment1.utils.Constants
 import com.shpp.eorlov.assignment1.utils.Constants.CURRENT_EMAIL
 import com.shpp.eorlov.assignment1.utils.Results
+import com.shpp.eorlov.assignment1.validator.ValidationError
+import com.shpp.eorlov.assignment1.validator.Validator
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import retrofit2.HttpException
@@ -18,7 +20,8 @@ import javax.inject.Inject
 @HiltViewModel
 class SignUpExtendedViewModel @Inject constructor(
     private val storage: SharedPreferencesStorageImpl,
-    private val repository: MainRepositoryImpl
+    private val repository: MainRepositoryImpl,
+    private val validator: Validator
 ) :
     ViewModel() {
 
@@ -88,5 +91,13 @@ class SignUpExtendedViewModel @Inject constructor(
 
     fun saveToken(accessToken: String) {
         storage.save(Constants.ACCESS_TOKEN, accessToken)
+    }
+
+    fun validatePhoneNumber(phoneNumber: String): ValidationError {
+        return validator.validatePhoneNumber(phoneNumber)
+    }
+
+    fun validateUserName(userName: String): ValidationError {
+        return validator.validateUserName(userName)
     }
 }

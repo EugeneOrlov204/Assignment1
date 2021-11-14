@@ -1,11 +1,9 @@
 package com.shpp.eorlov.assignment1.ui.myContacts
 
 import android.os.Bundle
-import android.view.KeyEvent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.view.inputmethod.EditorInfo
 import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
 import androidx.core.view.doOnPreDraw
@@ -38,10 +36,8 @@ import com.shpp.eorlov.assignment1.utils.TransitionKeys.CONTACT_KEY
 import com.shpp.eorlov.assignment1.utils.ext.clickWithDebounce
 import com.shpp.eorlov.assignment1.utils.ext.gone
 import com.shpp.eorlov.assignment1.utils.ext.visible
-import com.shpp.eorlov.assignment1.validator.evaluateErrorMessage
 import dagger.hilt.android.AndroidEntryPoint
 
-//todo
 @AndroidEntryPoint
 class MyContactsFragment : BaseFragment(), ContactClickListener {
 

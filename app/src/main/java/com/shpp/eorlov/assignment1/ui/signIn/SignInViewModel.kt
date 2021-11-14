@@ -13,6 +13,8 @@ import com.shpp.eorlov.assignment1.utils.Constants
 import com.shpp.eorlov.assignment1.utils.Constants.EMAIL
 import com.shpp.eorlov.assignment1.utils.Constants.PASSWORD
 import com.shpp.eorlov.assignment1.utils.Results
+import com.shpp.eorlov.assignment1.validator.ValidationError
+import com.shpp.eorlov.assignment1.validator.Validator
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import retrofit2.HttpException
@@ -22,7 +24,8 @@ import javax.inject.Inject
 @HiltViewModel
 class SignInViewModel @Inject constructor(
     private val storage: SharedPreferencesStorageImpl,
-    private val repository: MainRepositoryImpl
+    private val repository: MainRepositoryImpl,
+    private val validator: Validator
 ) :
     ViewModel() {
     val authorizeUserLiveData = MutableLiveData<ResponseModel<Data>>()
@@ -81,5 +84,13 @@ class SignInViewModel @Inject constructor(
     fun clearLoginData() {
         storage.save(EMAIL, "")
         storage.save(PASSWORD, "")
+    }
+
+    fun validatePassword(password: String): ValidationError {
+        return validator.validatePassword(password)
+    }
+
+    fun validateEmail(email: String): ValidationError {
+        return validator.validateEmail(email)
     }
 }

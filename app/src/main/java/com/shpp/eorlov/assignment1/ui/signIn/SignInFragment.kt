@@ -21,17 +21,11 @@ import com.shpp.eorlov.assignment1.utils.FeatureNavigationEnabled.featureNavigat
 import com.shpp.eorlov.assignment1.utils.Results
 import com.shpp.eorlov.assignment1.utils.ext.clickWithDebounce
 import com.shpp.eorlov.assignment1.utils.ext.hideKeyboard
-import com.shpp.eorlov.assignment1.validator.Validator
 import com.shpp.eorlov.assignment1.validator.evaluateErrorMessage
 import dagger.hilt.android.AndroidEntryPoint
-import javax.inject.Inject
 
 @AndroidEntryPoint
 class SignInFragment : BaseFragment() {
-
-    //fixme remove all inject from fragments
-    @Inject
-    lateinit var validator: Validator
 
     private val viewModel: SignInViewModel by viewModels()
 
@@ -61,7 +55,6 @@ class SignInFragment : BaseFragment() {
     private fun initializeData() {
         viewModel.initializeData()
 
-        //todo fix autologin
 //        if (viewModel.isRememberedUser()) {
 //            if(featureNavigationEnabled) {
 //                val action =
@@ -146,7 +139,6 @@ class SignInFragment : BaseFragment() {
             }
         }
 
-        //todo remove redundant when's error checkers
         viewModel.authorizeUserLiveData.apply {
             observe(viewLifecycleOwner) {
                 when {
@@ -197,7 +189,7 @@ class SignInFragment : BaseFragment() {
             setOnEditorActionListener { _, actionId, _ ->
                 if (actionId == EditorInfo.IME_ACTION_DONE) {
                     binding.textInputLayoutPassword.error = evaluateErrorMessage(
-                        validator.validatePassword(text.toString())
+                        viewModel.validatePassword(text.toString())
                     )
                     goToMyProfile()
                 }
@@ -213,7 +205,7 @@ class SignInFragment : BaseFragment() {
         binding.textInputEditTextEmail.apply {
             setOnEditorActionListener { _, _, _ ->
                 binding.textInputLayoutEmail.error = evaluateErrorMessage(
-                    validator.validateEmail(text.toString())
+                    viewModel.validateEmail(text.toString())
                 )
                 false
             }
@@ -250,11 +242,11 @@ class SignInFragment : BaseFragment() {
             val password = textInputEditTextPassword.text.toString()
             if (isFieldsInvalid()) {
                 textInputLayoutPassword.error = evaluateErrorMessage(
-                    validator.validatePassword(textInputEditTextPassword.text.toString())
+                    viewModel.validatePassword(textInputEditTextPassword.text.toString())
                 )
 
                 textInputLayoutEmail.error = evaluateErrorMessage(
-                    validator.validateEmail(textInputEditTextEmail.text.toString())
+                    viewModel.validateEmail(textInputEditTextEmail.text.toString())
                 )
 
                 return

@@ -27,16 +27,11 @@ import com.shpp.eorlov.assignment1.utils.TransitionKeys.PASSWORD_KEY
 import com.shpp.eorlov.assignment1.utils.ext.clickWithDebounce
 import com.shpp.eorlov.assignment1.utils.ext.hideKeyboard
 import com.shpp.eorlov.assignment1.utils.ext.loadCircleImage
-import com.shpp.eorlov.assignment1.validator.Validator
 import com.shpp.eorlov.assignment1.validator.evaluateErrorMessage
 import dagger.hilt.android.AndroidEntryPoint
-import javax.inject.Inject
 
 @AndroidEntryPoint
 class SignUpExtendedFragment : BaseFragment() {
-
-    @Inject
-    lateinit var validator: Validator
 
     private val viewModel: SignUpExtendedViewModel by viewModels()
     private val args: SignUpExtendedFragmentArgs by navArgs()
@@ -191,7 +186,7 @@ class SignUpExtendedFragment : BaseFragment() {
             setOnEditorActionListener { _, actionId, _ ->
                 if (actionId == EditorInfo.IME_ACTION_DONE) {
                     binding.textInputLayoutMobilePhone.error = evaluateErrorMessage(
-                        validator.validatePhoneNumber(text.toString())
+                        viewModel.validatePhoneNumber(text.toString())
                     )
                     goToMyProfile()
                 }
@@ -207,7 +202,7 @@ class SignUpExtendedFragment : BaseFragment() {
         binding.textInputEditTextUserName.apply {
             setOnEditorActionListener { _, _, _ ->
                 binding.textInputLayoutUserName.error = evaluateErrorMessage(
-                    validator.validateUserName(text.toString())
+                    viewModel.validateUserName(text.toString())
                 )
 
                 false
@@ -234,11 +229,11 @@ class SignUpExtendedFragment : BaseFragment() {
             if (isFieldsInvalid()) {
 
                 textInputLayoutMobilePhone.error = evaluateErrorMessage(
-                    validator.validatePhoneNumber(textInputEditTextMobilePhone.text.toString())
+                    viewModel.validatePhoneNumber(textInputEditTextMobilePhone.text.toString())
                 )
 
                 textInputLayoutUserName.error = evaluateErrorMessage(
-                    validator.validateUserName(textInputEditTextUserName.text.toString())
+                    viewModel.validateUserName(textInputEditTextUserName.text.toString())
                 )
 
                 return

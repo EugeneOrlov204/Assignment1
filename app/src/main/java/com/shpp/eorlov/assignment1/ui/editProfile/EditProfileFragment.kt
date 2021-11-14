@@ -17,7 +17,6 @@ import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
 import com.shpp.eorlov.assignment1.R
 import com.shpp.eorlov.assignment1.base.BaseFragment
-import com.shpp.eorlov.assignment1.data.storage.SharedPreferencesStorage
 import com.shpp.eorlov.assignment1.databinding.FragmentEditProfileBinding
 import com.shpp.eorlov.assignment1.model.UserModel
 import com.shpp.eorlov.assignment1.ui.SharedViewModel
@@ -30,22 +29,13 @@ import com.shpp.eorlov.assignment1.utils.TransitionKeys.USER_MODEL_KEY
 import com.shpp.eorlov.assignment1.utils.ext.clickWithDebounce
 import com.shpp.eorlov.assignment1.utils.ext.loadCircleImage
 import com.shpp.eorlov.assignment1.validator.ValidateOperation
-import com.shpp.eorlov.assignment1.validator.Validator
 import com.shpp.eorlov.assignment1.validator.evaluateErrorMessage
 import dagger.hilt.android.AndroidEntryPoint
 import java.text.SimpleDateFormat
 import java.util.*
-import javax.inject.Inject
 
 @AndroidEntryPoint
 class EditProfileFragment : BaseFragment() {
-
-
-    @Inject
-    lateinit var validator: Validator
-
-    @Inject
-    lateinit var storage: SharedPreferencesStorage
 
     private val args: EditProfileFragmentArgs by navArgs()
     private val myCalendar: Calendar = Calendar.getInstance()
@@ -58,8 +48,6 @@ class EditProfileFragment : BaseFragment() {
     private lateinit var userModel: UserModel
 
     private var pathToLoadedImage: String = ""
-
-
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -316,22 +304,22 @@ class EditProfileFragment : BaseFragment() {
                 textInput.error =
                     when (validateOperation) {
                         ValidateOperation.EMAIL -> evaluateErrorMessage(
-                            validator.validateEmail(
+                            viewModel.validateEmail(
                                 editText.text.toString()
                             )
                         )
                         ValidateOperation.PHONE_NUMBER -> evaluateErrorMessage(
-                            validator.validatePhoneNumber(
+                            viewModel.validatePhoneNumber(
                                 editText.text.toString()
                             )
                         )
                         ValidateOperation.BIRTHDAY -> evaluateErrorMessage(
-                            validator.validateBirthdate(
+                            viewModel.validateBirthdate(
                                 editText.text.toString()
                             )
                         )
                         ValidateOperation.EMPTY -> evaluateErrorMessage(
-                            validator.checkIfFieldIsNotEmpty(
+                            viewModel.checkIfFieldIsNotEmpty(
                                 editText.text.toString()
                             )
                         )

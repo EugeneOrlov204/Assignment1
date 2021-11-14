@@ -12,6 +12,7 @@ import com.shpp.eorlov.assignment1.repository.MainRepositoryImpl
 import com.shpp.eorlov.assignment1.utils.Constants
 import com.shpp.eorlov.assignment1.utils.Results
 import com.shpp.eorlov.assignment1.validator.ValidateOperation
+import com.shpp.eorlov.assignment1.validator.ValidationError
 import com.shpp.eorlov.assignment1.validator.Validator
 import com.shpp.eorlov.assignment1.validator.evaluateErrorMessage
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -24,7 +25,7 @@ import javax.inject.Inject
 class EditProfileViewModel @Inject constructor(
     private val validator: Validator,
     private val repository: MainRepositoryImpl,
-    private val storage: SharedPreferencesStorageImpl
+    private val storage: SharedPreferencesStorageImpl,
 ) : ViewModel() {
 
     val editUserLiveData = MutableLiveData<ResponseModel<Data?>>()
@@ -117,5 +118,21 @@ class EditProfileViewModel @Inject constructor(
         return if (token.isEmpty()) {
             storage.getString(Constants.ACCESS_TOKEN) ?: ""
         } else token
+    }
+
+    fun validateEmail(email: String): ValidationError {
+        return validator.validateEmail(email)
+    }
+
+    fun validatePhoneNumber(phoneNumber: String): ValidationError {
+        return validator.validatePhoneNumber(phoneNumber)
+    }
+
+    fun validateBirthdate(birthdate: String): ValidationError {
+        return validator.validateBirthdate(birthdate)
+    }
+
+    fun checkIfFieldIsNotEmpty(text: String): ValidationError {
+        return validator.checkIfFieldIsNotEmpty(text)
     }
 }

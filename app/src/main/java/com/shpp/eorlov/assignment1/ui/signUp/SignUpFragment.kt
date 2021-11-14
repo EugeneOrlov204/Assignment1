@@ -20,19 +20,12 @@ import com.shpp.eorlov.assignment1.utils.TransitionKeys.EMAIL_KEY
 import com.shpp.eorlov.assignment1.utils.TransitionKeys.PASSWORD_KEY
 import com.shpp.eorlov.assignment1.utils.ext.clickWithDebounce
 import com.shpp.eorlov.assignment1.utils.ext.hideKeyboard
-import com.shpp.eorlov.assignment1.validator.Validator
 import com.shpp.eorlov.assignment1.validator.evaluateErrorMessage
 import dagger.hilt.android.AndroidEntryPoint
-import javax.inject.Inject
 
 
-//todo implement autologin
-//fixme bug with registration
 @AndroidEntryPoint
 class SignUpFragment : BaseFragment() {
-
-    @Inject
-    lateinit var validator: Validator
 
     private val viewModel: SignUpViewModel by viewModels()
     private lateinit var binding: FragmentSignUpBinding
@@ -152,7 +145,7 @@ class SignUpFragment : BaseFragment() {
             setOnEditorActionListener { _, actionId, _ ->
                 if (actionId == EditorInfo.IME_ACTION_DONE) {
                     binding.textInputLayoutPassword.error = evaluateErrorMessage(
-                        validator.validatePassword(text.toString())
+                        viewModel.validatePassword(text.toString())
                     )
                     goToSignUpExtended()
                 }
@@ -168,7 +161,7 @@ class SignUpFragment : BaseFragment() {
         binding.textInputEditTextEmail.apply {
             setOnEditorActionListener { _, actionId, _ ->
                 binding.textInputLayoutEmail.error = evaluateErrorMessage(
-                    validator.validateEmail(text.toString())
+                    viewModel.validateEmail(text.toString())
                 )
 
                 false
@@ -209,10 +202,10 @@ class SignUpFragment : BaseFragment() {
         binding.apply {
             if (isFieldsInvalid()) {
                 textInputLayoutPassword.error = evaluateErrorMessage(
-                    validator.validatePassword(textInputEditTextPassword.text.toString())
+                    viewModel.validatePassword(textInputEditTextPassword.text.toString())
                 )
                 textInputLayoutEmail.error = evaluateErrorMessage(
-                    validator.validateEmail(textInputEditTextEmail.text.toString())
+                    viewModel.validateEmail(textInputEditTextEmail.text.toString())
                 )
                 return
             }
