@@ -12,14 +12,28 @@ class UserPhotosViewHolder constructor(
 ) :
     RecyclerView.ViewHolder(binding.root) {
     fun bindTo(imagePath: String) {
-        binding.imageViewUserImage.loadImage(imagePath)
+        if(imagePath.isNotEmpty()) {
+            binding.imageViewUserImage.loadImage(imagePath)
+        }
 
         setListeners(imagePath)
     }
 
     private fun setListeners(imagePath: String) {
         binding.constraintLayoutPhotoListItem.clickWithDebounce {
-            imageClickListener.getImage(imagePath)
+            if(bindingAdapterPosition == 0) {
+                takePicture()
+            } else {
+                returnImageToParent(imagePath)
+            }
         }
+    }
+
+    private fun takePicture() {
+        imageClickListener.takePicture()
+    }
+
+    private fun returnImageToParent(imagePath: String) {
+        imageClickListener.getImage(imagePath)
     }
 }

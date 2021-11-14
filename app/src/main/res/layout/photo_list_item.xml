@@ -6,13 +6,13 @@
     android:layout_height="@dimen/size_photo_list_item_85dp"
     android:layout_marginStart="@dimen/margin_small_8dp"
     android:layout_marginTop="@dimen/margin_small_8dp"
-    tools:background="@color/gallery_item_background_color">
+    android:background="@color/gallery_item_background_color">
 
     <androidx.appcompat.widget.AppCompatImageView
         android:id="@+id/imageViewUserImage"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        tools:src="@drawable/ic_camera"
+        android:src="@drawable/ic_camera"
         android:scaleType="center"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"

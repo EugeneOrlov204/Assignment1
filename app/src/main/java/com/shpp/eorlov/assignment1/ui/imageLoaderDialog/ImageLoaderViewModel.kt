@@ -12,26 +12,15 @@ class ImageLoaderViewModel @Inject constructor() : ViewModel() {
     val imagesListLiveData = MutableLiveData<MutableList<String>>(ArrayList())
 
     init {
-        val data = loadImages()
-        if (data.isNotEmpty()) {
-            imagesListLiveData.value = data
-        }
+        imagesListLiveData.value = loadDefaultImage()
     }
 
     fun addImage(imagePath: String) {
-        imagesListLiveData.value?.add(0, imagePath)
+        imagesListLiveData.value?.add(1, imagePath)
         imagesListLiveData.value = imagesListLiveData.value
     }
 
-    private fun loadImages(): MutableList<String> {
-        val urlOfPhoto = Constants.DEFAULT_PATH_TO_IMAGE
-        val result = mutableListOf<String>()
-
-        //todo remove hardcoded data
-//        for (i in 0..9) {
-//            result.add(urlOfPhoto + i)
-//        }
-
-        return result
+    private fun loadDefaultImage(): MutableList<String> {
+        return mutableListOf("")
     }
 }

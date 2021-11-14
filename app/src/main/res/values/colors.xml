@@ -16,6 +16,7 @@
     <color name="light_gray">#B2B2B3</color>
     <color name="optional_field_color">#E0E0E0</color>
     <color name="gallery_item_background_color">#4F4D5C</color>
+    <color name="image_loader_background_color">#34324E</color>
 
 
 </resources>

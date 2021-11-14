@@ -2,15 +2,16 @@ package com.shpp.eorlov.assignment1.ui.imageLoaderDialog
 
 import android.app.Activity
 import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
+import android.os.Environment
 import android.provider.MediaStore
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.WindowManager
 import androidx.activity.result.contract.ActivityResultContracts
-import androidx.core.view.doOnPreDraw
+import androidx.core.content.FileProvider
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
@@ -19,9 +20,13 @@ import com.shpp.eorlov.assignment1.databinding.DialogFragmentLoadImageBinding
 import com.shpp.eorlov.assignment1.ui.SharedViewModel
 import com.shpp.eorlov.assignment1.ui.imageLoaderDialog.adapter.ImageLoaderListAdapter
 import com.shpp.eorlov.assignment1.ui.imageLoaderDialog.adapter.listeners.ImageClickListener
-import com.shpp.eorlov.assignment1.utils.Constants.LOADED_IMAGE
 import com.shpp.eorlov.assignment1.utils.ext.clickWithDebounce
 import dagger.hilt.android.AndroidEntryPoint
+import java.io.File
+import java.io.IOException
+import java.text.SimpleDateFormat
+import java.util.*
+
 
 @AndroidEntryPoint
 class ImageLoaderDialogFragment : DialogFragment(), ImageClickListener {
@@ -31,9 +36,9 @@ class ImageLoaderDialogFragment : DialogFragment(), ImageClickListener {
     private val imageLoaderAdapter: ImageLoaderListAdapter by lazy(LazyThreadSafetyMode.NONE) {
         ImageLoaderListAdapter(this)
     }
-    private val TAG = "ImageLoaderDialogFragment"
 
     private lateinit var binding: DialogFragmentLoadImageBinding
+
 
     private var pathToLoadedImageFromGallery: String = ""
     private var imageLoaderLauncher =
@@ -44,6 +49,15 @@ class ImageLoaderDialogFragment : DialogFragment(), ImageClickListener {
                 viewModel.addImage(pathToLoadedImageFromGallery)
             }
         }
+    private var takePictureLauncher =
+        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+            if (result.resultCode == Activity.RESULT_OK) {
+                getImage(currentPhotoPath)
+            }
+        }
+
+    private lateinit var currentPhotoPath: String
+
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -78,8 +92,37 @@ class ImageLoaderDialogFragment : DialogFragment(), ImageClickListener {
      * Returns an image from DialogFragment to a Fragment
      */
     override fun getImage(imagePath: String) {
+        viewModel.addImage(currentPhotoPath)
         sharedViewModel.newPhotoLiveData.value = imagePath
         dismiss()
+    }
+
+    override fun takePicture() {
+
+        Intent(MediaStore.ACTION_IMAGE_CAPTURE).also { takePictureIntent ->
+            // Ensure that there's a camera activity to handle the intent
+            try {
+                // Create the File where the photo should go
+                val photoFile: File? = try {
+                    createImageFile()
+                } catch (ex: IOException) {
+                    ex.printStackTrace()
+                    null
+                }
+                // Continue only if the File was successfully created
+                photoFile?.also { photo ->
+                    val photoURI: Uri = FileProvider.getUriForFile(
+                        context ?: return,
+                        "com.shpp.eorlov.assignment1.fileprovider",
+                        photo
+                    )
+                    takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI)
+                    takePictureLauncher.launch(takePictureIntent)
+                }
+            } catch (exception: Exception) {
+                exception.printStackTrace()
+            }
+        }
     }
 
     private fun setObservers() {
@@ -91,10 +134,6 @@ class ImageLoaderDialogFragment : DialogFragment(), ImageClickListener {
     }
 
     private fun setListeners() {
-        //todo implement me
-//        binding.recyclerViewImageLoader[0].clickWithDebounce {
-//            loadImageFromGallery()
-//        }
 
         binding.textViewOpenGallery.clickWithDebounce {
             loadImageFromGallery()
@@ -116,6 +155,21 @@ class ImageLoaderDialogFragment : DialogFragment(), ImageClickListener {
             MediaStore.Images.Media.INTERNAL_CONTENT_URI
         )
         imageLoaderLauncher.launch(gallery)
+    }
+
+    @Throws(IOException::class)
+    private fun createImageFile(): File {
+        // Create an image file name
+        val timeStamp: String = SimpleDateFormat("yyyyMMdd_HHmmss", Locale.CANADA).format(Date())
+        val storageDir: File? = activity?.getExternalFilesDir(Environment.DIRECTORY_PICTURES)
+        return File.createTempFile(
+            "JPEG_${timeStamp}_", /* prefix */
+            ".jpg", /* suffix */
+            storageDir /* directory */
+        ).apply {
+            // Save a file: path for use with ACTION_VIEW intents
+            currentPhotoPath = absolutePath
+        }
     }
 
     private fun initRecycler() {
