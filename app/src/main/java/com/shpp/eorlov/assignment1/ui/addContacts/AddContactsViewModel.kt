@@ -1,15 +1,13 @@
 package com.shpp.eorlov.assignment1.ui.addContacts
 
-import android.util.Log
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.shpp.eorlov.assignment1.base.BaseViewModel
 import com.shpp.eorlov.assignment1.data.storage.SharedPreferencesStorage
 import com.shpp.eorlov.assignment1.model.UserModel
 import com.shpp.eorlov.assignment1.repository.MainRepositoryImpl
 import com.shpp.eorlov.assignment1.repository.UserRepositoryImpl
 import com.shpp.eorlov.assignment1.utils.Constants
-import com.shpp.eorlov.assignment1.utils.Constants.IS_ADDED_CONTACT
 import com.shpp.eorlov.assignment1.utils.Results
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
@@ -22,7 +20,7 @@ class AddContactsViewModel @Inject constructor(
     private val storage: SharedPreferencesStorage,
     private val repository: MainRepositoryImpl,
     private val userRepository: UserRepositoryImpl
-) : BaseViewModel() {
+) : ViewModel() {
 
     val usersLiveData = MutableLiveData<MutableList<UserModel>>(ArrayList())
     val isLoadedListLiveData = MutableLiveData(false)

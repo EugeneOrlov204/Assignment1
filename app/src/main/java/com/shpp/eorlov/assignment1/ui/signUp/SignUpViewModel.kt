@@ -4,8 +4,6 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.shpp.eorlov.assignment1.model.AuthorizeModel
-import com.shpp.eorlov.assignment1.model.Data
-import com.shpp.eorlov.assignment1.model.ResponseModel
 import com.shpp.eorlov.assignment1.repository.MainRepositoryImpl
 import com.shpp.eorlov.assignment1.utils.Results
 import com.shpp.eorlov.assignment1.utils.SingleLiveEvent
@@ -22,10 +20,10 @@ class SignUpViewModel @Inject constructor(
     ViewModel() {
 
     val canRegisterUserLiveData = SingleLiveEvent<Boolean>()
-    val loadEvent = MutableLiveData<Results>()
+    val loadEventLiveData = MutableLiveData<Results>()
 
     fun registerUser(email: String, password: String) {
-        loadEvent.value = Results.LOADING
+        loadEventLiveData.value = Results.LOADING
         viewModelScope.launch {
             val response = try {
                 repository.authorizeUser(
@@ -35,10 +33,10 @@ class SignUpViewModel @Inject constructor(
                     )
                 )
             } catch (e: IOException) {
-                loadEvent.value = Results.INTERNET_ERROR
+                loadEventLiveData.value = Results.INTERNET_ERROR
                 return@launch
             } catch (e: HttpException) {
-                loadEvent.value = Results.UNEXPECTED_RESPONSE
+                loadEventLiveData.value = Results.UNEXPECTED_RESPONSE
                 return@launch
             }
 

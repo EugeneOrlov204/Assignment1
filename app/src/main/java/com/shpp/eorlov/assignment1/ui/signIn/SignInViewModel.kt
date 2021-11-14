@@ -2,8 +2,8 @@ package com.shpp.eorlov.assignment1.ui.signIn
 
 
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.shpp.eorlov.assignment1.base.BaseViewModel
 import com.shpp.eorlov.assignment1.data.storage.SharedPreferencesStorageImpl
 import com.shpp.eorlov.assignment1.model.AuthorizeModel
 import com.shpp.eorlov.assignment1.model.Data
@@ -24,8 +24,9 @@ class SignInViewModel @Inject constructor(
     private val storage: SharedPreferencesStorageImpl,
     private val repository: MainRepositoryImpl
 ) :
-    BaseViewModel() {
+    ViewModel() {
     val authorizeUserLiveData = MutableLiveData<ResponseModel<Data>>()
+    val loadEventLiveData = MutableLiveData<Results>()
 
     fun authorizeUser(email: String, password: String) {
         viewModelScope.launch {

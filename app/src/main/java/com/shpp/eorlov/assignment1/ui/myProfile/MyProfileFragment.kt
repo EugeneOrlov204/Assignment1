@@ -16,7 +16,6 @@ import com.shpp.eorlov.assignment1.databinding.FragmentMyProfileBinding
 import com.shpp.eorlov.assignment1.model.UserModel
 import com.shpp.eorlov.assignment1.ui.SharedViewModel
 import com.shpp.eorlov.assignment1.ui.editProfile.EditProfileFragment
-import com.shpp.eorlov.assignment1.ui.signUpExtended.SignUpExtendedFragment
 import com.shpp.eorlov.assignment1.ui.viewPager.CollectionContactFragment
 import com.shpp.eorlov.assignment1.ui.viewPager.CollectionContactFragmentDirections
 import com.shpp.eorlov.assignment1.ui.viewPager.ContactCollectionAdapter
@@ -164,6 +163,11 @@ class MyProfileFragment : BaseFragment() {
         binding.buttonViewMyContacts.clickWithDebounce {
             (parentFragment as CollectionContactFragment).viewPager.currentItem =
                 ContactCollectionAdapter.ViewPagerItems.LIST.position
+        }
+
+        binding.textViewLogOutMyProfile.clickWithDebounce {
+           val action = CollectionContactFragmentDirections.actionCollectionContactFragmentToSignInFragment()
+            findNavController().navigate(action)
         }
     }
 }
