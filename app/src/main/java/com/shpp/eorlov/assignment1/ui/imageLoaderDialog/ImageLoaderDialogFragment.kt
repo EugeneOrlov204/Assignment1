@@ -101,7 +101,8 @@ class ImageLoaderDialogFragment : DialogFragment(), ImageClickListener {
         }
 
         binding.textViewDeleteCurrentPhoto.clickWithDebounce {
-            Log.d(TAG, "Photo has been deleted")
+            sharedViewModel.newPhotoLiveData.value = ""
+            dismiss()
         }
 
         binding.textViewCancel.clickWithDebounce {
