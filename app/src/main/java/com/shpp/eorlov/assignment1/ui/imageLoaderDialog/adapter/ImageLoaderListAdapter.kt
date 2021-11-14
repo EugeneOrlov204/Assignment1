@@ -4,10 +4,12 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.ListAdapter
 import com.shpp.eorlov.assignment1.databinding.PhotoListItemBinding
+import com.shpp.eorlov.assignment1.ui.imageLoaderDialog.adapter.listeners.ImageClickListener
 import com.shpp.eorlov.assignment1.ui.imageLoaderDialog.adapter.viewHolder.UserPhotosViewHolder
-import com.shpp.eorlov.assignment1.utils.Constants
 
-class ImageLoaderListAdapter() : ListAdapter<String, UserPhotosViewHolder>(
+class ImageLoaderListAdapter(
+    private val imageClickListener: ImageClickListener
+) : ListAdapter<String, UserPhotosViewHolder>(
     UserPhotoItemDiffCallback()
 ) {
     /**
@@ -17,7 +19,8 @@ class ImageLoaderListAdapter() : ListAdapter<String, UserPhotosViewHolder>(
         return UserPhotosViewHolder(
             PhotoListItemBinding.inflate(
                 LayoutInflater.from(parent.context), parent, false
-            )
+            ),
+            imageClickListener
         )
     }
 

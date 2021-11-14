@@ -13,6 +13,7 @@ import androidx.activity.OnBackPressedCallback
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.widget.AppCompatImageView
 import androidx.core.view.isVisible
+import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.commit
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
@@ -21,6 +22,7 @@ import com.shpp.eorlov.assignment1.R
 import com.shpp.eorlov.assignment1.base.BaseFragment
 import com.shpp.eorlov.assignment1.databinding.FragmentSignUpExtendedBinding
 import com.shpp.eorlov.assignment1.model.UserModel
+import com.shpp.eorlov.assignment1.ui.SharedViewModel
 import com.shpp.eorlov.assignment1.ui.imageLoaderDialog.ImageLoaderDialogFragment
 import com.shpp.eorlov.assignment1.ui.viewPager.CollectionContactFragment
 import com.shpp.eorlov.assignment1.utils.Constants
@@ -44,6 +46,8 @@ class SignUpExtendedFragment : BaseFragment() {
 
     private val viewModel: SignUpExtendedViewModel by viewModels()
     private val args: SignUpExtendedFragmentArgs by navArgs()
+    private val sharedViewModel: SharedViewModel by activityViewModels()
+
     private lateinit var binding: FragmentSignUpExtendedBinding
     private lateinit var dialog: ImageLoaderDialogFragment
     private lateinit var email: String
@@ -92,6 +96,13 @@ class SignUpExtendedFragment : BaseFragment() {
     private fun setObservers() {
         setViewModelObserver()
         setRegisterUserLiveDataObserver()
+        setSharedViewModelObserver()
+    }
+
+    private fun setSharedViewModelObserver() {
+        sharedViewModel.newPhotoLiveData.observe(viewLifecycleOwner) {
+            binding.imageViewUserImage.loadCircleImage(it)
+        }
     }
 
     private fun setViewModelObserver() {

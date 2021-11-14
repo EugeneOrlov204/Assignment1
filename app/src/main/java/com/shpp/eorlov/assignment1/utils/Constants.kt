@@ -12,6 +12,8 @@ object Constants {
     const val EMAIL = "Email for autologin"
     const val PASSWORD = "Password for autologin"
     const val IS_ADDED_CONTACT = "Is added contact?"
+    const val LOADED_IMAGE = "Image from database"
+
 
     //Validator
     const val MIN_SIZE_OF_PASSWORD: Int = 8

@@ -12,19 +12,24 @@ import android.view.WindowManager
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.view.doOnPreDraw
 import androidx.fragment.app.DialogFragment
+import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.shpp.eorlov.assignment1.databinding.DialogFragmentLoadImageBinding
+import com.shpp.eorlov.assignment1.ui.SharedViewModel
 import com.shpp.eorlov.assignment1.ui.imageLoaderDialog.adapter.ImageLoaderListAdapter
+import com.shpp.eorlov.assignment1.ui.imageLoaderDialog.adapter.listeners.ImageClickListener
+import com.shpp.eorlov.assignment1.utils.Constants.LOADED_IMAGE
 import com.shpp.eorlov.assignment1.utils.ext.clickWithDebounce
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class ImageLoaderDialogFragment : DialogFragment() {
+class ImageLoaderDialogFragment : DialogFragment(), ImageClickListener {
 
     private val viewModel: ImageLoaderViewModel by viewModels()
+    private val sharedViewModel: SharedViewModel by activityViewModels()
     private val imageLoaderAdapter: ImageLoaderListAdapter by lazy(LazyThreadSafetyMode.NONE) {
-        ImageLoaderListAdapter()
+        ImageLoaderListAdapter(this)
     }
     private val TAG = "ImageLoaderDialogFragment"
 
@@ -39,7 +44,6 @@ class ImageLoaderDialogFragment : DialogFragment() {
                 viewModel.addImage(pathToLoadedImageFromGallery)
             }
         }
-
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -70,24 +74,24 @@ class ImageLoaderDialogFragment : DialogFragment() {
         }
     }
 
+    /**
+     * Returns an image from DialogFragment to a Fragment
+     */
+    override fun getImage(imagePath: String) {
+        sharedViewModel.newPhotoLiveData.value = imagePath
+        dismiss()
+    }
+
     private fun setObservers() {
-
-        postponeEnterTransition()
-
         viewModel.apply {
             imagesListLiveData.observe(viewLifecycleOwner) { list ->
                 imageLoaderAdapter.submitList(list.toMutableList())
-
-                // Start the transition once all views have been
-                // measured and laid out
-                (view?.parent as? ViewGroup)?.doOnPreDraw {
-                    startPostponedEnterTransition()
-                }
             }
         }
     }
 
     private fun setListeners() {
+        //todo implement me
 //        binding.recyclerViewImageLoader[0].clickWithDebounce {
 //            loadImageFromGallery()
 //        }
