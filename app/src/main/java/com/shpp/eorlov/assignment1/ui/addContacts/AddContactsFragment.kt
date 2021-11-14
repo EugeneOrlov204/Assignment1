@@ -168,9 +168,7 @@ class AddContactsFragment : BaseFragment(), IAddContactClickListener {
 
     private fun setOnEditorActionListeners() {
         binding.textInputEditTextSearchContacts.setOnEditorActionListener { _, actionId, _ ->
-            if (actionId == EditorInfo.IME_ACTION_DONE) {
-                searchContacts()
-            }
+            searchContacts()
             false
         }
     }

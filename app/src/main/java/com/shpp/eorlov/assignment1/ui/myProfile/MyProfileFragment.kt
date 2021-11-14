@@ -26,7 +26,6 @@ import com.shpp.eorlov.assignment1.utils.TransitionKeys.USER_MODEL_KEY
 import com.shpp.eorlov.assignment1.utils.ext.clickWithDebounce
 import dagger.hilt.android.AndroidEntryPoint
 
-//todo implement log out button
 @AndroidEntryPoint
 class MyProfileFragment : BaseFragment() {
     private val sharedViewModel: SharedViewModel by activityViewModels()

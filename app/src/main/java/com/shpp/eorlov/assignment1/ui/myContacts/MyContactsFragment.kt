@@ -1,6 +1,7 @@
 package com.shpp.eorlov.assignment1.ui.myContacts
 
 import android.os.Bundle
+import android.view.KeyEvent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -10,7 +11,6 @@ import androidx.activity.OnBackPressedCallback
 import androidx.core.view.doOnPreDraw
 import androidx.core.view.isVisible
 import androidx.fragment.app.activityViewModels
-import androidx.fragment.app.add
 import androidx.fragment.app.commit
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
@@ -25,25 +25,23 @@ import com.shpp.eorlov.assignment1.model.UserModel
 import com.shpp.eorlov.assignment1.ui.SharedViewModel
 import com.shpp.eorlov.assignment1.ui.addContacts.AddContactsFragment
 import com.shpp.eorlov.assignment1.ui.details.DetailViewFragment
-import com.shpp.eorlov.assignment1.ui.editProfile.EditProfileFragment
 import com.shpp.eorlov.assignment1.ui.myContacts.adapter.MyContactsListAdapter
 import com.shpp.eorlov.assignment1.ui.myContacts.adapter.listeners.ContactClickListener
-import com.shpp.eorlov.assignment1.ui.signUpExtended.SignUpExtendedFragment
 import com.shpp.eorlov.assignment1.ui.viewPager.CollectionContactFragment
 import com.shpp.eorlov.assignment1.ui.viewPager.CollectionContactFragmentDirections
 import com.shpp.eorlov.assignment1.ui.viewPager.ContactCollectionAdapter
 import com.shpp.eorlov.assignment1.utils.Constants.SNACKBAR_DURATION
 import com.shpp.eorlov.assignment1.utils.FeatureNavigationEnabled
 import com.shpp.eorlov.assignment1.utils.Results
-import com.shpp.eorlov.assignment1.utils.TransitionKeys
 import com.shpp.eorlov.assignment1.utils.TransitionKeys.ADDED_CONTACTS_KEY
 import com.shpp.eorlov.assignment1.utils.TransitionKeys.CONTACT_KEY
 import com.shpp.eorlov.assignment1.utils.ext.clickWithDebounce
 import com.shpp.eorlov.assignment1.utils.ext.gone
 import com.shpp.eorlov.assignment1.utils.ext.visible
+import com.shpp.eorlov.assignment1.validator.evaluateErrorMessage
 import dagger.hilt.android.AndroidEntryPoint
 
-//todo add keyboard's enter to start searching users
+//todo
 @AndroidEntryPoint
 class MyContactsFragment : BaseFragment(), ContactClickListener {
 
@@ -226,7 +224,7 @@ class MyContactsFragment : BaseFragment(), ContactClickListener {
     }
 
     private fun goToDetail(contact: UserModel) {
-        if(FeatureNavigationEnabled.featureNavigationEnabled) {
+        if (FeatureNavigationEnabled.featureNavigationEnabled) {
             val action =
                 CollectionContactFragmentDirections.actionCollectionContactFragmentToDetailViewFragment(
                     contact
@@ -320,10 +318,8 @@ class MyContactsFragment : BaseFragment(), ContactClickListener {
     }
 
     private fun setOnEditorActionListeners() {
-        binding.textInputEditTextSearchContacts.setOnEditorActionListener { _, actionId, _ ->
-            if (actionId == EditorInfo.IME_ACTION_DONE) {
-                searchContacts()
-            }
+        binding.textInputEditTextSearchContacts.setOnEditorActionListener { _, _, _ ->
+            searchContacts()
             false
         }
     }
@@ -378,7 +374,7 @@ class MyContactsFragment : BaseFragment(), ContactClickListener {
             imageButtonCancelButton.clickWithDebounce {
                 hideSearchFieldUI()
                 showUsersTitleUI()
-                if(!foundContacts) {
+                if (!foundContacts) {
                     showRecyclerViewUI()
                     hideNoResultsFoundUI()
                 }
@@ -392,7 +388,7 @@ class MyContactsFragment : BaseFragment(), ContactClickListener {
     }
 
     private fun goToAddContacts() {
-        if(FeatureNavigationEnabled.featureNavigationEnabled) {
+        if (FeatureNavigationEnabled.featureNavigationEnabled) {
             val action =
                 CollectionContactFragmentDirections.actionCollectionContactFragmentToAddContactsFragment(
                     viewModel.contactsLiveData.value?.toTypedArray() ?: return
@@ -402,7 +398,10 @@ class MyContactsFragment : BaseFragment(), ContactClickListener {
             val fragmentManager = activity?.supportFragmentManager
 
             val arguments = Bundle().apply {
-                putParcelableArray(ADDED_CONTACTS_KEY, viewModel.contactsLiveData.value?.toTypedArray() ?: return)
+                putParcelableArray(
+                    ADDED_CONTACTS_KEY,
+                    viewModel.contactsLiveData.value?.toTypedArray() ?: return
+                )
             }
 
             fragmentManager?.commit {
