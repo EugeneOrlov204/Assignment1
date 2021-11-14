@@ -1,17 +1,11 @@
 package com.shpp.eorlov.assignment1.ui.signUpExtended
 
-import android.app.Activity
-import android.content.Intent
 import android.os.Bundle
-import android.provider.MediaStore
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.EditorInfo
 import android.widget.Toast
-import androidx.activity.OnBackPressedCallback
-import androidx.activity.result.contract.ActivityResultContracts
-import androidx.appcompat.widget.AppCompatImageView
 import androidx.core.view.isVisible
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.commit
@@ -85,12 +79,6 @@ class SignUpExtendedFragment : BaseFragment() {
     override fun onResume() {
         super.onResume()
         printLog("On resume")
-
-        activity?.onBackPressedDispatcher?.addCallback(this, object : OnBackPressedCallback(true) {
-            override fun handleOnBackPressed() {
-                goToSignUp()
-            }
-        })
     }
 
     private fun setObservers() {
