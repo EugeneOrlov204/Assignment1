@@ -10,6 +10,7 @@ import com.shpp.eorlov.assignment1.repository.MainRepositoryImpl
 import com.shpp.eorlov.assignment1.repository.UserRepositoryImpl
 import com.shpp.eorlov.assignment1.utils.Constants
 import com.shpp.eorlov.assignment1.utils.Constants.IS_ADDED_CONTACT
+import com.shpp.eorlov.assignment1.utils.Results
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import retrofit2.HttpException
@@ -26,12 +27,12 @@ class AddContactsViewModel @Inject constructor(
     val usersLiveData = MutableLiveData<MutableList<UserModel>>(ArrayList())
     val isLoadedListLiveData = MutableLiveData(false)
     val searchedContactsLiveData = MutableLiveData<MutableList<UserModel>>(ArrayList())
+    val loadEventLiveData = MutableLiveData<Results>()
 
     private var accessToken: String = ""
         get() = fetchToken(field)
 
 
-    //todo how to show progress bar?
     init {
         loading()
 
@@ -40,17 +41,17 @@ class AddContactsViewModel @Inject constructor(
             val response = try {
                 repository.getAllUsers(accessToken = "Bearer $accessToken")
             } catch (e: IOException) {
-                internetError()
+                loadEventLiveData.value = Results.INTERNET_ERROR
                 return@launch
             } catch (e: HttpException) {
-                unexpectedResponse()
+                loadEventLiveData.value = Results.UNEXPECTED_RESPONSE
                 return@launch
             }
 
             if (response.isSuccessful && response.body() != null) {
                 usersLiveData.postValue(response.body()!!.data.users)
             } else {
-                notSuccessfulResponse()
+                loadEventLiveData.value = Results.NOT_SUCCESSFUL_RESPONSE
             }
         }
     }
@@ -86,5 +87,13 @@ class AddContactsViewModel @Inject constructor(
     fun clearSearchedContacts() {
         searchedContactsLiveData.value?.clear()
         usersLiveData.value = usersLiveData.value
+    }
+
+    fun ok() {
+        loadEventLiveData.value = Results.OK
+    }
+
+    fun loading() {
+        loadEventLiveData.value = Results.LOADING
     }
 }
