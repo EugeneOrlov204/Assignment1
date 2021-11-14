@@ -63,7 +63,7 @@ class SignUpFragment : BaseFragment() {
     }
 
     private fun setViewModelObserver() {
-        viewModel.loadEvent.observe(viewLifecycleOwner) { event ->
+        viewModel.loadEventLiveData.observe(viewLifecycleOwner) { event ->
             when (event) {
                 Results.OK -> {
                     unlockUI()
@@ -138,7 +138,7 @@ class SignUpFragment : BaseFragment() {
                     addToBackStack(null)
                 }
             }
-            viewModel.loadEvent.value = Results.OK
+            viewModel.loadEventLiveData.value = Results.OK
         }
     }
 

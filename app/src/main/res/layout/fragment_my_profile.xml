@@ -29,6 +29,15 @@
         app:layout_constraintStart_toStartOf="@id/viewTopContainerMyProfile"
         app:layout_constraintTop_toTopOf="@id/viewTopContainerMyProfile" />
 
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/textViewLogOutMyProfile"
+        style="@style/RegularText"
+        android:layout_marginEnd="@dimen/margin_normal_16dp"
+        android:layout_marginTop="@dimen/margin_normal_16dp"
+        android:text="Log out"
+        app:layout_constraintEnd_toEndOf="@id/viewTopContainerMyProfile"
+        app:layout_constraintTop_toTopOf="@id/viewTopContainerMyProfile" />
+
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideLineUserImageMyProfile"
         android:layout_width="wrap_content"
