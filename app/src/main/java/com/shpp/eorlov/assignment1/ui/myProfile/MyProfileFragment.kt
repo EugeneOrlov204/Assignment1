@@ -24,6 +24,7 @@ import com.shpp.eorlov.assignment1.utils.FeatureNavigationEnabled
 import com.shpp.eorlov.assignment1.utils.Results
 import com.shpp.eorlov.assignment1.utils.TransitionKeys.USER_MODEL_KEY
 import com.shpp.eorlov.assignment1.utils.ext.clickWithDebounce
+import com.shpp.eorlov.assignment1.utils.ext.loadCircleImage
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -78,6 +79,7 @@ class MyProfileFragment : BaseFragment() {
     private fun setSharedViewModelObservers() {
         sharedViewModel.updatedUserLiveData.observe(viewLifecycleOwner) {
             it?.let {
+                println("Profile $it")
                 viewModel.updateProfile(it)
             }
         }
@@ -128,7 +130,7 @@ class MyProfileFragment : BaseFragment() {
             textViewUserNameMyProfile.text = userModel.name
             textViewUserProfessionMyProfile.text = userModel.career
             textViewPersonResidence.text = userModel.address
-            simpleDraweeViewUserImageMyProfile.setImageURI(userModel.image ?: "")
+            imageViewUserImageMyProfile.loadCircleImage(userModel.image ?: "")
             textViewGoToSettingsAndFillOutTheProfile.isVisible = !viewModel.isProfileFilledOut()
         }
     }

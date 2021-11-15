@@ -7,6 +7,7 @@ import com.shpp.eorlov.assignment1.databinding.LayoutContactListItemBinding
 import com.shpp.eorlov.assignment1.model.UserModel
 import com.shpp.eorlov.assignment1.ui.myContacts.adapter.listeners.ContactClickListener
 import com.shpp.eorlov.assignment1.utils.ext.clickWithDebounce
+import com.shpp.eorlov.assignment1.utils.ext.loadCircleImage
 
 class ContactsViewHolder(
     private val binding: LayoutContactListItemBinding,
@@ -37,7 +38,7 @@ class ContactsViewHolder(
 
             binding.textViewPersonName.text = name
             binding.textViewPersonProfession.text = career
-            binding.draweeViewPersonImage.setImageURI(image)
+            binding.imageViewPersonImage.loadCircleImage(image ?: "")
         }
 
         setListeners()

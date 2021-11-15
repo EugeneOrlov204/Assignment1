@@ -21,8 +21,8 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <com.facebook.drawee.view.SimpleDraweeView
-        android:id="@+id/draweeViewPersonImage"
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/imageViewPersonImage"
         android:layout_width="@dimen/person_image_size_50dp"
         android:layout_height="@dimen/person_image_size_50dp"
         android:layout_marginStart="@dimen/margin_normal_16dp"
@@ -44,8 +44,8 @@
         android:textSize="@dimen/text_size_normal_18sp"
         android:transitionName="contactName"
         app:layout_constraintBottom_toTopOf="@+id/textViewPersonProfession"
-        app:layout_constraintStart_toEndOf="@id/draweeViewPersonImage"
-        app:layout_constraintTop_toTopOf="@id/draweeViewPersonImage"
+        app:layout_constraintStart_toEndOf="@id/imageViewPersonImage"
+        app:layout_constraintTop_toTopOf="@id/imageViewPersonImage"
         tools:text="Ava Smith" />
 
     <androidx.appcompat.widget.AppCompatTextView
@@ -56,7 +56,7 @@
         android:textColor="@color/gray"
         android:textSize="@dimen/text_size_small_12sp"
         android:transitionName="contactProfession"
-        app:layout_constraintBottom_toBottomOf="@+id/draweeViewPersonImage"
+        app:layout_constraintBottom_toBottomOf="@+id/imageViewPersonImage"
         app:layout_constraintStart_toStartOf="@id/textViewPersonName"
         tools:text="Photograph" />
 

@@ -52,8 +52,7 @@
             android:src="@drawable/ic_user_mockup"
             app:layout_constraintEnd_toEndOf="@id/viewHeader"
             app:layout_constraintStart_toStartOf="@id/viewHeader"
-            app:layout_constraintTop_toBottomOf="@id/textViewAddContact"
-             />
+            app:layout_constraintTop_toBottomOf="@id/textViewAddContact" />
 
         <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/imageViewImageLoader"
@@ -68,6 +67,8 @@
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/textViewUsername"
             style="@style/InputFieldTitleText"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="24dp"
             android:text="@string/add_contact_username"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/viewHeader" />
@@ -90,6 +91,8 @@
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/textViewCareer"
             style="@style/InputFieldTitleText"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="24dp"
             android:text="@string/career"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textInputLayoutUsername" />
@@ -113,6 +116,8 @@
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/textViewEmail"
             style="@style/InputFieldTitleText"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="24dp"
             android:text="@string/email"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textInputLayoutCareer" />
@@ -136,6 +141,8 @@
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/textViewPhone"
             style="@style/InputFieldTitleText"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="24dp"
             android:text="@string/phone"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textInputLayoutEmail" />
@@ -158,6 +165,8 @@
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/textViewAddress"
             style="@style/InputFieldTitleText"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="24dp"
             android:text="@string/address"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textInputLayoutPhone" />
@@ -180,6 +189,8 @@
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/textViewBirthdate"
             style="@style/InputFieldTitleText"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="24dp"
             android:text="@string/date_of_birth"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textInputLayoutAddress" />
